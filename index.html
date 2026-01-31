@@ -36,7 +36,7 @@
     <div id="dashboard" style="display:none;">
         <div class="card">
             <div class="kpi-row">
-                <div class="kpi-box"><div class="kpi-val" id="kpi-vol">--</div><div class="kpi-lbl">Vol. Último Dia</div></div>
+                <div class="kpi-box"><div class="kpi-val" id="kpi-vol">--</div><div class="kpi-lbl" id="lbl-vol">Vol. Recente</div></div>
                 <div class="kpi-box"><div class="kpi-val" id="kpi-avg">--</div><div class="kpi-lbl">Média (14d)</div></div>
                 <div class="kpi-box"><div class="kpi-val" id="kpi-records">--</div><div class="kpi-lbl">Registros</div></div>
             </div>
@@ -121,16 +121,11 @@
             processedData = csvData
                 .filter(row => row.Data && row.Hora && row['Volume (ml)'])
                 .map(row => {
-                    // Converter data DD/MM/YYYY para Date object correto
-                    // A planilha pode vir como YYYY-MM-DD ou DD/MM/YYYY dependendo do locale
                     let dStr = row.Data;
-                    // Se for DD/MM/YYYY
                     if(dStr.includes('/')) {
                         const parts = dStr.split('/');
-                        // Assumindo DD/MM/YYYY
                         dStr = `${parts[2]}-${parts[1]}-${parts[0]}`;
                     }
-                    
                     return {
                         d: dStr, 
                         t: row.Hora, 
@@ -138,14 +133,16 @@
                     };
                 });
 
-            // Sort chronology
+            // Sort
             processedData = processedData
                 .map(r => ({ ...r, dateObj: new Date(r.d + "T" + r.t), dayStr: r.d.split('-').reverse().slice(0,2).join('/') }))
                 .sort((a,b) => a.dateObj - b.dateObj);
 
             // Set Globals
-            lastDataDate = processedData[processedData.length-1].dateObj;
-            document.getElementById('last-update').innerText = "Dados até: " + processedData[processedData.length-1].d.split('-').reverse().join('/');
+            if (processedData.length > 0) {
+                lastDataDate = processedData[processedData.length-1].dateObj;
+                document.getElementById('last-update').innerText = "Dados até: " + processedData[processedData.length-1].d.split('-').reverse().join('/');
+            }
             
             // Build Maps
             dailyMap = {};
@@ -170,10 +167,8 @@
 
         function getFilteredData(daysLimit) {
             if (daysLimit > 100) return processedData;
-            // Baseado no último dado, não em Today
             const limitTime = new Date(lastDataDate);
             limitTime.setDate(limitTime.getDate() - daysLimit);
-            // Ajustar para inicio do dia
             limitTime.setHours(0,0,0,0);
             return processedData.filter(d => d.dateObj >= limitTime);
         }
@@ -189,30 +184,37 @@
             return days ? (total/days) : 0;
         }
 
-        // Charts Vars
         let chartHist, chartHourly, chartInterval;
 
         function initCharts() {
-            // KPI Logic
+            // KPI Logic (Smart Title)
             const lastDataObj = processedData[processedData.length-1];
             const lastDataDateStr = lastDataObj.d;
             
-            // Check if last data is from Today
-            const todayStr = new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-'); // YYYY-MM-DD local
-            // Ajuste fuso horário simples (comparação string serve se ISO)
-            const isToday = lastDataDateStr === todayStr;
+            // Simples check de data hoje (cliente)
+            const todayStr = new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-'); 
+            // Comparação simples de string YYYY-MM-DD
+            // Nota: Se o fuso do usuário for muito diferente do servidor, pode dar warning, mas visualmente resolve.
+            // Melhor abordagem: new Date().toISOString().split('T')[0] se garantir UTC.
+            // Vamos usar o date object local do browser.
+            
+            // Check
+            const now = new Date();
+            const last = new Date(lastDataDateStr + "T12:00:00");
+            const isSameDay = (now.getDate() === last.getDate() && now.getMonth() === last.getMonth());
 
             document.getElementById('kpi-vol').innerText = dailyMap[lastDataDateStr].vol + " ml";
             
-            // Atualiza Label dinamicamente
-            const kpiLabel = document.querySelector('.kpi-box .kpi-lbl'); // Pega o primeiro label (Vol)
-            if(isToday) {
+            const kpiLabel = document.getElementById('lbl-vol');
+            if(isSameDay) {
                 kpiLabel.innerText = "Vol. Hoje (Parcial)";
-                kpiLabel.style.color = "#2563eb"; // Azul para destacar que é hoje
+                kpiLabel.style.color = "#2563eb";
             } else {
                 kpiLabel.innerText = "Vol. Ontem (Fechado)";
                 kpiLabel.style.color = "#9ca3af";
             }
+
+            const avg14d = Math.round(calculatePeriodDailyAvg(getFilteredData(14)));
             document.getElementById('kpi-avg').innerText = avg14d + " ml";
             document.getElementById('kpi-records').innerText = processedData.length;
 
