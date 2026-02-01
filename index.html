@@ -56,10 +56,10 @@
             <div class="chart-container"><canvas id="cTotal"></canvas></div>
         </div>
 
-        <!-- 2a. Média por Mamada -->
+        <!-- 2a. Média por Mamada com Dispersão -->
         <div class="card">
             <div class="card-header">
-                <span>📈 Média por Mamada (ml)</span>
+                <span>📈 Média/Mamada vs Individual</span>
                 <div class="filter-group">
                     <button class="btn-filter" onclick="updateFilter('avgOnly', 14, this)">14D</button>
                     <button class="btn-filter" onclick="updateFilter('avgOnly', 30, this)">30D</button>
@@ -299,19 +299,28 @@
             const avgs = keys.map(k => Math.round(dMap[k].vol / dMap[k].count));
             const movingAvg = calculateMovingAverage(avgs, 5);
 
+            const scatterPts = data.map(r => ({
+                x: r.dayStr,
+                y: r.v
+            }));
+
             if(chartAvgOnly) chartAvgOnly.destroy();
             chartAvgOnly = new Chart(document.getElementById('cAvgOnly'), {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [
-                        { label: 'Média (ml)', data: avgs, backgroundColor: '#10b981', borderRadius: 4, order: 2 },
+                        { label: 'Média (ml)', data: avgs, backgroundColor: '#10b981', borderRadius: 4, order: 3 },
+                        { label: 'Individual', data: scatterPts, backgroundColor: 'rgba(156, 163, 175, 0.4)', pointRadius: 3, type: 'scatter', order: 2 },
                         { label: 'Tendência (5d)', data: movingAvg, borderColor: '#ef4444', borderWidth: 2, type: 'line', pointRadius: 0, tension: 0.3, order: 1 }
                     ]
                 },
                 options: {
                     maintainAspectRatio: false,
-                    scales: { x: {grid:{display:false}}, y: { title: {display:true, text:'Média ml'} } },
+                    scales: { 
+                        x: { type: 'category', labels: labels, grid:{display:false} }, 
+                        y: { title: {display:true, text:'Volume ml'} } 
+                    },
                     plugins: { legend: {display: false} }
                 }
             });
@@ -330,10 +339,10 @@
 
             if(chartCountOnly) chartCountOnly.destroy();
             chartCountOnly = new Chart(document.getElementById('cCountOnly'), {
-                type: 'line',
+                type: 'bar',
                 data: { 
                     labels: labels, 
-                    datasets: [{ label: 'Qtd Mamadas', data: values, borderColor: '#f59e0b', backgroundColor: '#f59e0b', tension: 0.3, fill: false, pointRadius: 3 }] 
+                    datasets: [{ label: 'Qtd Mamadas', data: values, backgroundColor: '#f59e0b', borderRadius: 4 }] 
                 },
                 options: { maintainAspectRatio: false, plugins: {legend:{display:false}}, scales: { x: {grid:{display:false}}, y: {beginAtZero: true, ticks: {stepSize: 1}} } }
             });
