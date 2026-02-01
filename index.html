@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🍼 BI do Matheus</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@3.10.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
@@ -81,17 +82,17 @@
             <div class="chart-container"><canvas id="cCountOnly"></canvas></div>
         </div>
 
-        <!-- 3. Dispersão Diária (Alinhada) -->
+        <!-- 3. Boxplot Diário -->
         <div class="card">
             <div class="card-header">
-                <span>📍 Distribuição por Dia</span>
+                <span>📦 Distribuição Estatística (Boxplot)</span>
                 <div class="filter-group">
-                    <button class="btn-filter" onclick="updateFilter('scatter', 14, this)">14D</button>
-                    <button class="btn-filter" onclick="updateFilter('scatter', 30, this)">30D</button>
-                    <button class="btn-filter active" onclick="updateFilter('scatter', 999, this)">Tudo</button>
+                    <button class="btn-filter" onclick="updateFilter('boxplot', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('boxplot', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('boxplot', 999, this)">Tudo</button>
                 </div>
             </div>
-            <div class="chart-container"><canvas id="cScatterDay"></canvas></div>
+            <div class="chart-container"><canvas id="cBoxPlot"></canvas></div>
         </div>
 
         <!-- 4. Histograma -->
@@ -180,9 +181,10 @@
             
             dailyMap = {};
             processedData.forEach(r => {
-                if(!dailyMap[r.d]) dailyMap[r.d] = { vol:0, count:0 };
+                if(!dailyMap[r.d]) dailyMap[r.d] = { vol:0, count:0, list: [] };
                 dailyMap[r.d].vol += r.v;
                 dailyMap[r.d].count++;
+                dailyMap[r.d].list.push(r.v);
             });
 
             for(let i=1; i<processedData.length; i++) {
@@ -226,7 +228,7 @@
             return days ? (total/days) : 0;
         }
 
-        let chartTotal, chartAvgOnly, chartCountOnly, chartScatter, chartHist, chartHourly, chartInterval;
+        let chartTotal, chartAvgOnly, chartCountOnly, chartBoxPlot, chartHist, chartHourly, chartInterval;
 
         function initCharts() {
             const lastDataObj = processedData[processedData.length-1];
@@ -252,7 +254,7 @@
             renderTotal(999);
             renderAvgOnly(999);
             renderCountOnly(999);
-            renderScatter(999);
+            renderBoxPlot(999);
             renderHist(999);
             renderHourly(999);
             renderInterval(999);
@@ -337,30 +339,34 @@
             });
         }
 
-        function renderScatter(limit) {
+        function renderBoxPlot(limit) {
             const data = getFilteredData(limit);
-            const keys = [...new Set(data.map(d => d.d))].sort();
-            const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+            const days = [...new Set(data.map(d => d.d))].sort();
+            const labels = days.map(k => k.split('-').reverse().slice(0,2).join('/'));
+            
+            const boxData = days.map(day => {
+                return data.filter(r => r.d === day).map(r => r.v);
+            });
 
-            if(chartScatter) chartScatter.destroy();
-            chartScatter = new Chart(document.getElementById('cScatterDay'), {
-                type: 'scatter',
+            if(chartBoxPlot) chartBoxPlot.destroy();
+            chartBoxPlot = new Chart(document.getElementById('cBoxPlot'), {
+                type: 'boxplot',
                 data: {
+                    labels: labels,
                     datasets: [{
-                        label: 'Mamada',
-                        data: data.map(d => ({ x: d.dayStr, y: d.v })),
-                        backgroundColor: 'rgba(37, 99, 235, 0.6)',
+                        label: 'Volumes do Dia',
+                        data: boxData,
+                        backgroundColor: 'rgba(37, 99, 235, 0.4)',
                         borderColor: '#2563eb',
-                        borderWidth: 1
+                        borderWidth: 1,
+                        outlierColor: '#ef4444',
+                        itemRadius: 2
                     }]
                 },
                 options: {
                     maintainAspectRatio: false,
-                    scales: {
-                        x: { type: 'category', labels: labels, grid:{display:false} },
-                        y: { title: {display:true, text:'Volume (ml)'} }
-                    },
-                    plugins: { legend: {display:false} }
+                    scales: { x: { grid: {display: false} }, y: { title: {display:true, text: 'Volume (ml)'}, min: 0 } },
+                    plugins: { legend: { display: false } }
                 }
             });
         }
@@ -475,7 +481,7 @@
             if(chartName === 'total') renderTotal(days);
             if(chartName === 'avgOnly') renderAvgOnly(days);
             if(chartName === 'countOnly') renderCountOnly(days);
-            if(chartName === 'scatter') renderScatter(days);
+            if(chartName === 'boxplot') renderBoxPlot(days);
             if(chartName === 'hist') renderHist(days);
             if(chartName === 'hourly') renderHourly(days);
             if(chartName === 'interval') renderInterval(days);
