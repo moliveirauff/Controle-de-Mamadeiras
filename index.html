@@ -44,19 +44,40 @@
 
         <!-- 1. Volume Total -->
         <div class="card">
-            <div class="card-header">📊 Volume Diário (ml)</div>
+            <div class="card-header">
+                <span>📊 Volume Diário (ml)</span>
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateFilter('total', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('total', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('total', 999, this)">Tudo</button>
+                </div>
+            </div>
             <div class="chart-container"><canvas id="cTotal"></canvas></div>
         </div>
 
         <!-- 2. Média e Qtd -->
         <div class="card">
-            <div class="card-header">📉 Média/Mamada vs Qtd</div>
+            <div class="card-header">
+                <span>📉 Média/Mamada vs Qtd</span>
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateFilter('avg', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('avg', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('avg', 999, this)">Tudo</button>
+                </div>
+            </div>
             <div class="chart-container"><canvas id="cAvg"></canvas></div>
         </div>
 
         <!-- 3. Dispersão Diária (Alinhada) -->
         <div class="card">
-            <div class="card-header">📍 Distribuição por Dia</div>
+            <div class="card-header">
+                <span>📍 Distribuição por Dia</span>
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateFilter('scatter', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('scatter', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('scatter', 999, this)">Tudo</button>
+                </div>
+            </div>
             <div class="chart-container"><canvas id="cScatterDay"></canvas></div>
         </div>
 
@@ -65,8 +86,9 @@
             <div class="card-header">
                 <span>🔔 Frequência de Volume</span>
                 <div class="filter-group">
-                    <button class="btn-filter active" onclick="updateFilter('hist', 14, this)">14D</button>
-                    <button class="btn-filter" onclick="updateFilter('hist', 999, this)">Tudo</button>
+                    <button class="btn-filter" onclick="updateFilter('hist', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('hist', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('hist', 999, this)">Tudo</button>
                 </div>
             </div>
             <div class="chart-container"><canvas id="cHist"></canvas></div>
@@ -77,8 +99,9 @@
             <div class="card-header">
                 <span>🕐 Tendência Horária (2h)</span>
                 <div class="filter-group">
-                    <button class="btn-filter active" onclick="updateFilter('hourly', 14, this)">14D</button>
-                    <button class="btn-filter" onclick="updateFilter('hourly', 999, this)">Tudo</button>
+                    <button class="btn-filter" onclick="updateFilter('hourly', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('hourly', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('hourly', 999, this)">Tudo</button>
                 </div>
             </div>
             <div class="chart-container"><canvas id="cHourly"></canvas></div>
@@ -89,8 +112,9 @@
             <div class="card-header">
                 <span>⏳ Intervalo vs Volume</span>
                 <div class="filter-group">
-                    <button class="btn-filter active" onclick="updateFilter('interval', 14, this)">14D</button>
-                    <button class="btn-filter" onclick="updateFilter('interval', 999, this)">Tudo</button>
+                    <button class="btn-filter" onclick="updateFilter('interval', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('interval', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('interval', 999, this)">Tudo</button>
                 </div>
             </div>
             <div class="chart-container"><canvas id="cInterval"></canvas></div>
@@ -117,7 +141,6 @@
         });
 
         function processAndRender(csvData) {
-            // Filtrar linhas vazias e tratar formatos
             processedData = csvData
                 .filter(row => row.Data && row.Hora && row['Volume (ml)'])
                 .map(row => {
@@ -133,18 +156,15 @@
                     };
                 });
 
-            // Sort
             processedData = processedData
                 .map(r => ({ ...r, dateObj: new Date(r.d + "T" + r.t), dayStr: r.d.split('-').reverse().slice(0,2).join('/') }))
                 .sort((a,b) => a.dateObj - b.dateObj);
 
-            // Set Globals
             if (processedData.length > 0) {
                 lastDataDate = processedData[processedData.length-1].dateObj;
                 document.getElementById('last-update').innerText = "Dados até: " + processedData[processedData.length-1].d.split('-').reverse().join('/');
             }
             
-            // Build Maps
             dailyMap = {};
             processedData.forEach(r => {
                 if(!dailyMap[r.d]) dailyMap[r.d] = { vol:0, count:0 };
@@ -152,13 +172,11 @@
                 dailyMap[r.d].count++;
             });
 
-            // Calculate Intervals
             for(let i=1; i<processedData.length; i++) {
                 const diffMs = processedData[i].dateObj - processedData[i-1].dateObj;
                 processedData[i].intervalHours = (diffMs / 60000) / 60;
             }
 
-            // Render UI
             document.getElementById('loading').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
             
@@ -184,27 +202,16 @@
             return days ? (total/days) : 0;
         }
 
-        let chartHist, chartHourly, chartInterval;
+        let chartTotal, chartAvg, chartScatter, chartHist, chartHourly, chartInterval;
 
         function initCharts() {
-            // KPI Logic (Smart Title)
             const lastDataObj = processedData[processedData.length-1];
             const lastDataDateStr = lastDataObj.d;
-            
-            // Simples check de data hoje (cliente)
-            const todayStr = new Date().toLocaleDateString('pt-BR').split('/').reverse().join('-'); 
-            // Comparação simples de string YYYY-MM-DD
-            // Nota: Se o fuso do usuário for muito diferente do servidor, pode dar warning, mas visualmente resolve.
-            // Melhor abordagem: new Date().toISOString().split('T')[0] se garantir UTC.
-            // Vamos usar o date object local do browser.
-            
-            // Check
             const now = new Date();
             const last = new Date(lastDataDateStr + "T12:00:00");
             const isSameDay = (now.getDate() === last.getDate() && now.getMonth() === last.getMonth());
 
             document.getElementById('kpi-vol').innerText = dailyMap[lastDataDateStr].vol + " ml";
-            
             const kpiLabel = document.getElementById('lbl-vol');
             if(isSameDay) {
                 kpiLabel.innerText = "Vol. Hoje (Parcial)";
@@ -218,26 +225,54 @@
             document.getElementById('kpi-avg').innerText = avg14d + " ml";
             document.getElementById('kpi-records').innerText = processedData.length;
 
-            // Overview Charts
-            const dailyKeys = Object.keys(dailyMap).sort();
-            const lbls = dailyKeys.map(k => k.split('-').reverse().slice(0,2).join('/'));
-            const dVols = dailyKeys.map(k => dailyMap[k].vol);
-            const dCounts = dailyKeys.map(k => dailyMap[k].count);
-            const dAvgs = dailyKeys.map(k => Math.round(dailyMap[k].vol / dailyMap[k].count));
+            renderTotal(999);
+            renderAvg(999);
+            renderScatter(999);
+            renderHist(999);
+            renderHourly(999);
+            renderInterval(999);
+        }
 
-            new Chart(document.getElementById('cTotal'), {
+        function renderTotal(limit) {
+            const data = getFilteredData(limit);
+            const dMap = {};
+            data.forEach(r => {
+                if(!dMap[r.d]) dMap[r.d] = 0;
+                dMap[r.d] += r.v;
+            });
+            const keys = Object.keys(dMap).sort();
+            const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+            const values = keys.map(k => dMap[k]);
+
+            if(chartTotal) chartTotal.destroy();
+            chartTotal = new Chart(document.getElementById('cTotal'), {
                 type: 'bar',
-                data: { labels: lbls, datasets: [{ label: 'Total', data: dVols, backgroundColor: '#3b82f6', borderRadius: 4 }] },
+                data: { labels: labels, datasets: [{ label: 'Total', data: values, backgroundColor: '#3b82f6', borderRadius: 4 }] },
                 options: { maintainAspectRatio: false, plugins: {legend:{display:false}}, scales: { x: {grid:{display:false}} } }
             });
+        }
 
-            new Chart(document.getElementById('cAvg'), {
+        function renderAvg(limit) {
+            const data = getFilteredData(limit);
+            const dMap = {};
+            data.forEach(r => {
+                if(!dMap[r.d]) dMap[r.d] = {vol:0, count:0};
+                dMap[r.d].vol += r.v;
+                dMap[r.d].count++;
+            });
+            const keys = Object.keys(dMap).sort();
+            const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+            const avgs = keys.map(k => Math.round(dMap[k].vol / dMap[k].count));
+            const counts = keys.map(k => dMap[k].count);
+
+            if(chartAvg) chartAvg.destroy();
+            chartAvg = new Chart(document.getElementById('cAvg'), {
                 type: 'bar',
                 data: {
-                    labels: lbls,
+                    labels: labels,
                     datasets: [
-                        { label: 'Média (ml)', data: dAvgs, backgroundColor: '#10b981', order: 2, yAxisID: 'y' },
-                        { type: 'line', label: 'Qtd', data: dCounts, borderColor: '#f59e0b', pointBackgroundColor:'white', order: 1, yAxisID: 'y1' }
+                        { label: 'Média (ml)', data: avgs, backgroundColor: '#10b981', order: 2, yAxisID: 'y' },
+                        { type: 'line', label: 'Qtd', data: counts, borderColor: '#f59e0b', pointBackgroundColor:'white', order: 1, yAxisID: 'y1' }
                     ]
                 },
                 options: {
@@ -249,13 +284,20 @@
                     }
                 }
             });
+        }
 
-            new Chart(document.getElementById('cScatterDay'), {
+        function renderScatter(limit) {
+            const data = getFilteredData(limit);
+            const keys = [...new Set(data.map(d => d.d))].sort();
+            const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+
+            if(chartScatter) chartScatter.destroy();
+            chartScatter = new Chart(document.getElementById('cScatterDay'), {
                 type: 'scatter',
                 data: {
                     datasets: [{
                         label: 'Mamada',
-                        data: processedData.map(d => ({ x: d.dayStr, y: d.v })),
+                        data: data.map(d => ({ x: d.dayStr, y: d.v })),
                         backgroundColor: 'rgba(37, 99, 235, 0.6)',
                         borderColor: '#2563eb',
                         borderWidth: 1
@@ -264,20 +306,13 @@
                 options: {
                     maintainAspectRatio: false,
                     scales: {
-                        x: { type: 'category', labels: lbls, grid:{display:false} },
+                        x: { type: 'category', labels: labels, grid:{display:false} },
                         y: { title: {display:true, text:'Volume (ml)'} }
                     },
                     plugins: { legend: {display:false} }
                 }
             });
-
-            // Init Dynamics
-            renderHist(14);
-            renderHourly(14);
-            renderInterval(14);
         }
-
-        // --- DYNAMIC RENDERERS ---
 
         function renderHist(limit) {
             const data = getFilteredData(limit);
@@ -289,17 +324,15 @@
             });
             const sortedKeys = Object.keys(bins).sort((a,b) => parseInt(a) - parseInt(b));
             
-            const config = {
+            if(chartHist) chartHist.destroy();
+            chartHist = new Chart(document.getElementById('cHist'), {
                 type: 'bar',
                 data: {
                     labels: sortedKeys,
                     datasets: [{ label: 'Frequência', data: sortedKeys.map(k => bins[k]), backgroundColor: '#8b5cf6', borderRadius: 4 }]
                 },
                 options: { maintainAspectRatio: false, plugins: {legend:{display:false}}, scales: {x:{grid:{display:false}}, y:{beginAtZero:true}} }
-            };
-
-            if(chartHist) chartHist.destroy();
-            chartHist = new Chart(document.getElementById('cHist'), config);
+            });
         }
 
         function renderHourly(limit) {
@@ -316,8 +349,7 @@
             const labels = Object.keys(bins);
             const avgs = labels.map(k => {
                 const vols = bins[k];
-                if(vols.length === 0) return 0;
-                return Math.round(vols.reduce((a,b)=>a+b,0) / vols.length);
+                return vols.length === 0 ? 0 : Math.round(vols.reduce((a,b)=>a+b,0) / vols.length);
             });
 
             const scatterPts = data.map(r => ({
@@ -325,25 +357,13 @@
                 y: r.v
             }));
 
-            const config = {
+            if(chartHourly) chartHourly.destroy();
+            chartHourly = new Chart(document.getElementById('cHourly'), {
                 type: 'scatter',
                 data: {
                     datasets: [
-                        {
-                            type: 'line',
-                            label: 'Média',
-                            data: avgs.map((v, i) => ({x: i*2 + 1, y: v})),
-                            borderColor: '#ec4899',
-                            borderWidth: 3,
-                            pointRadius: 0,
-                            tension: 0.4
-                        },
-                        {
-                            label: 'Mamada',
-                            data: scatterPts,
-                            backgroundColor: 'rgba(156, 163, 175, 0.4)',
-                            pointRadius: 3
-                        }
+                        { type: 'line', label: 'Média', data: avgs.map((v, i) => ({x: i*2 + 1, y: v})), borderColor: '#ec4899', borderWidth: 3, pointRadius: 0, tension: 0.4 },
+                        { label: 'Mamada', data: scatterPts, backgroundColor: 'rgba(156, 163, 175, 0.4)', pointRadius: 3 }
                     ]
                 },
                 options: {
@@ -353,17 +373,15 @@
                         y: { title: {display:true, text:'Volume'} }
                     }
                 }
-            };
-
-            if(chartHourly) chartHourly.destroy();
-            chartHourly = new Chart(document.getElementById('cHourly'), config);
+            });
         }
 
         function renderInterval(limit) {
             const data = getFilteredData(limit).filter(r => r.intervalHours);
             const periodDailyAvg = calculatePeriodDailyAvg(data);
 
-            const config = {
+            if(chartInterval) chartInterval.destroy();
+            chartInterval = new Chart(document.getElementById('cInterval'), {
                 type: 'scatter',
                 data: {
                     datasets: [{
@@ -389,25 +407,23 @@
                             callbacks: {
                                 label: function(ctx) {
                                     const dayKey = ctx.raw.dateRef;
-                                    const dayVol = dailyMap[dayKey].vol;
-                                    const status = dayVol >= periodDailyAvg ? 'Dia Bom' : 'Dia Ruim';
-                                    return `${ctx.raw.y}ml (${status}: ${dayVol}ml vs Avg ${Math.round(periodDailyAvg)})`;
+                                    const status = dailyMap[dayKey].vol >= periodDailyAvg ? 'Dia Bom' : 'Dia Ruim';
+                                    return `${ctx.raw.y}ml (${status})`;
                                 }
                             }
-                        },
-                        title: { display: true, text: `Média do Período: ${Math.round(periodDailyAvg)} ml/dia` }
+                        }
                     }
                 }
-            };
-
-            if(chartInterval) chartInterval.destroy();
-            chartInterval = new Chart(document.getElementById('cInterval'), config);
+            });
         }
 
         window.updateFilter = function(chartName, days, btn) {
             const parent = btn.parentNode;
             parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            if(chartName === 'total') renderTotal(days);
+            if(chartName === 'avg') renderAvg(days);
+            if(chartName === 'scatter') renderScatter(days);
             if(chartName === 'hist') renderHist(days);
             if(chartName === 'hourly') renderHourly(days);
             if(chartName === 'interval') renderInterval(days);
