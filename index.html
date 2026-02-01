@@ -297,7 +297,6 @@
             const keys = Object.keys(dMap).sort();
             const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
             const avgs = keys.map(k => Math.round(dMap[k].vol / dMap[k].count));
-            const movingAvg = calculateMovingAverage(avgs, 5);
 
             const scatterPts = data.map(r => ({
                 x: r.dayStr,
@@ -306,13 +305,12 @@
 
             if(chartAvgOnly) chartAvgOnly.destroy();
             chartAvgOnly = new Chart(document.getElementById('cAvgOnly'), {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: labels,
                     datasets: [
-                        { label: 'Média (ml)', data: avgs, backgroundColor: '#10b981', borderRadius: 4, order: 3 },
-                        { label: 'Individual', data: scatterPts, backgroundColor: 'rgba(156, 163, 175, 0.4)', pointRadius: 3, type: 'scatter', order: 2 },
-                        { label: 'Tendência (5d)', data: movingAvg, borderColor: '#ef4444', borderWidth: 2, type: 'line', pointRadius: 0, tension: 0.3, order: 1 }
+                        { label: 'Média (ml)', data: avgs, borderColor: '#10b981', backgroundColor: '#10b981', borderWidth: 3, pointRadius: 0, tension: 0.4, fill: false, order: 1 },
+                        { label: 'Individual', data: scatterPts, backgroundColor: 'rgba(156, 163, 175, 0.4)', pointRadius: 3, type: 'scatter', order: 2 }
                     ]
                 },
                 options: {
