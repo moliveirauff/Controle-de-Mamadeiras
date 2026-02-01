@@ -55,17 +55,30 @@
             <div class="chart-container"><canvas id="cTotal"></canvas></div>
         </div>
 
-        <!-- 2. Média e Qtd -->
+        <!-- 2a. Média por Mamada -->
         <div class="card">
             <div class="card-header">
-                <span>📉 Média/Mamada vs Qtd</span>
+                <span>📈 Média por Mamada (ml)</span>
                 <div class="filter-group">
-                    <button class="btn-filter" onclick="updateFilter('avg', 14, this)">14D</button>
-                    <button class="btn-filter" onclick="updateFilter('avg', 30, this)">30D</button>
-                    <button class="btn-filter active" onclick="updateFilter('avg', 999, this)">Tudo</button>
+                    <button class="btn-filter" onclick="updateFilter('avgOnly', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('avgOnly', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('avgOnly', 999, this)">Tudo</button>
                 </div>
             </div>
-            <div class="chart-container"><canvas id="cAvg"></canvas></div>
+            <div class="chart-container"><canvas id="cAvgOnly"></canvas></div>
+        </div>
+
+        <!-- 2b. Quantidade de Mamadas -->
+        <div class="card">
+            <div class="card-header">
+                <span>🔢 Qtd de Mamadas no Dia</span>
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateFilter('countOnly', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('countOnly', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('countOnly', 999, this)">Tudo</button>
+                </div>
+            </div>
+            <div class="chart-container"><canvas id="cCountOnly"></canvas></div>
         </div>
 
         <!-- 3. Dispersão Diária (Alinhada) -->
@@ -202,7 +215,7 @@
             return days ? (total/days) : 0;
         }
 
-        let chartTotal, chartAvg, chartScatter, chartHist, chartHourly, chartInterval;
+        let chartTotal, chartAvgOnly, chartCountOnly, chartScatter, chartHist, chartHourly, chartInterval;
 
         function initCharts() {
             const lastDataObj = processedData[processedData.length-1];
@@ -226,7 +239,8 @@
             document.getElementById('kpi-records').innerText = processedData.length;
 
             renderTotal(999);
-            renderAvg(999);
+            renderAvgOnly(999);
+            renderCountOnly(999);
             renderScatter(999);
             renderHist(999);
             renderHourly(999);
@@ -252,7 +266,7 @@
             });
         }
 
-        function renderAvg(limit) {
+        function renderAvgOnly(limit) {
             const data = getFilteredData(limit);
             const dMap = {};
             data.forEach(r => {
@@ -263,26 +277,37 @@
             const keys = Object.keys(dMap).sort();
             const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
             const avgs = keys.map(k => Math.round(dMap[k].vol / dMap[k].count));
-            const counts = keys.map(k => dMap[k].count);
 
-            if(chartAvg) chartAvg.destroy();
-            chartAvg = new Chart(document.getElementById('cAvg'), {
-                type: 'bar',
+            if(chartAvgOnly) chartAvgOnly.destroy();
+            chartAvgOnly = new Chart(document.getElementById('cAvgOnly'), {
+                type: 'line',
                 data: {
                     labels: labels,
-                    datasets: [
-                        { label: 'Média (ml)', data: avgs, backgroundColor: '#10b981', order: 2, yAxisID: 'y' },
-                        { type: 'line', label: 'Qtd', data: counts, borderColor: '#f59e0b', pointBackgroundColor:'white', order: 1, yAxisID: 'y1' }
-                    ]
+                    datasets: [{ label: 'Média (ml)', data: avgs, borderColor: '#10b981', backgroundColor: '#10b981', tension: 0.3, fill: false }]
                 },
                 options: {
                     maintainAspectRatio: false,
-                    scales: {
-                        x: {grid:{display:false}},
-                        y: { position: 'left', title: {display:true, text:'Média ml'}, grid: { borderDash: [2, 2] } },
-                        y1: { position: 'right', title: {display:true, text:'Qtd'}, grid:{display:false}, min: 0 }
-                    }
+                    scales: { x: {grid:{display:false}}, y: { title: {display:true, text:'Média ml'} } }
                 }
+            });
+        }
+
+        function renderCountOnly(limit) {
+            const data = getFilteredData(limit);
+            const dMap = {};
+            data.forEach(r => {
+                if(!dMap[r.d]) dMap[r.d] = 0;
+                dMap[r.d]++;
+            });
+            const keys = Object.keys(dMap).sort();
+            const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+            const values = keys.map(k => dMap[k]);
+
+            if(chartCountOnly) chartCountOnly.destroy();
+            chartCountOnly = new Chart(document.getElementById('cCountOnly'), {
+                type: 'bar',
+                data: { labels: labels, datasets: [{ label: 'Qtd Mamadas', data: values, backgroundColor: '#f59e0b', borderRadius: 4 }] },
+                options: { maintainAspectRatio: false, plugins: {legend:{display:false}}, scales: { x: {grid:{display:false}}, y: {beginAtZero: true, ticks: {stepSize: 1}} } }
             });
         }
 
@@ -422,7 +447,8 @@
             parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             if(chartName === 'total') renderTotal(days);
-            if(chartName === 'avg') renderAvg(days);
+            if(chartName === 'avgOnly') renderAvgOnly(days);
+            if(chartName === 'countOnly') renderCountOnly(days);
             if(chartName === 'scatter') renderScatter(days);
             if(chartName === 'hist') renderHist(days);
             if(chartName === 'hourly') renderHourly(days);
