@@ -388,7 +388,8 @@
                     scales: {
                         x: { type: 'linear', min: 0, max: 24, title: {display:true, text:'Hora do Dia'}, ticks: {stepSize: 2} },
                         y: { title: {display:true, text:'Volume'} }
-                    }
+                    },
+                    plugins: { legend: {display: false} }
                 }
             });
         }
@@ -428,7 +429,8 @@
                                     return `${ctx.raw.y}ml (${status})`;
                                 }
                             }
-                        }
+                        },
+                        legend: { display: false }
                     }
                 }
             });
