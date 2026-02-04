@@ -8,26 +8,37 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f3f4f6; margin: 0; padding: 10px; padding-bottom: 60px; color: #1f2937; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f3f4f6; margin: 0; padding: 10px; padding-bottom: 60px; color: #1f2937; transition: background-color 0.3s, color 0.3s; }
+        body.dark-mode { background-color: #111827; color: #f3f4f6; }
         h1 { text-align: center; font-size: 20px; margin: 15px 0 5px 0; font-weight: 800; color: #111827; }
+        body.dark-mode h1 { color: #f3f4f6; }
         .subtitle { text-align: center; font-size: 12px; color: #6b7280; margin-bottom: 20px; }
-        .card { background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 15px; margin-bottom: 24px; border: 1px solid #e5e7eb; }
+        body.dark-mode .subtitle { color: #9ca3af; }
+        .card { background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 15px; margin-bottom: 24px; border: 1px solid #e5e7eb; transition: background-color 0.3s, border-color 0.3s; }
+        body.dark-mode .card { background-color: #1f2937; border-color: #374151; }
         .card-header { font-size: 15px; font-weight: 700; color: #374151; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        body.dark-mode .card-header { color: #e5e7eb; }
         .kpi-row { display: flex; justify-content: space-between; margin-bottom: 0; }
         .kpi-box { text-align: center; flex: 1; border-right: 1px solid #f3f4f6; }
+        body.dark-mode .kpi-box { border-right: 1px solid #374151; }
         .kpi-box:last-child { border-right: none; }
         .kpi-val { font-size: 22px; font-weight: 800; color: #2563eb; }
+        body.dark-mode .kpi-val { color: #60a5fa; }
         .kpi-lbl { font-size: 10px; text-transform: uppercase; color: #9ca3af; font-weight: 600; margin-top: 2px; }
+        body.dark-mode .kpi-lbl { color: #9ca3af; }
         .filter-group { display: flex; gap: 5px; }
         .btn-filter { background: #e5e7eb; border: none; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: #4b5563; cursor: pointer; transition: all 0.2s; }
+        body.dark-mode .btn-filter { background: #374151; color: #d1d5db; }
         .btn-filter.active { background: #2563eb; color: white; }
+        body.dark-mode .btn-filter.active { background: #3b82f6; color: white; }
         .chart-container { position: relative; height: 300px; width: 100%; }
         #loading { text-align: center; padding: 50px; color: #6b7280; }
+        #theme-toggle { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer; }
         @media (min-width: 768px) { body { max-width: 900px; margin: 0 auto; } .chart-container { height: 380px; } }
     </style>
 </head>
 <body>
-
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
     <h1>🍼 BI do Matheus</h1>
     <div class="subtitle" id="last-update">Carregando dados...</div>
 
@@ -123,6 +134,28 @@
 
     <script>
         const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQuNhMpD8np684lVzD9NYKUlKfPkTdYyTVh7mYn2h-Oq-xIGa_QDcSeG-1o7Dw-Zq6EpigKjuKcUVri/pub?gid=0&single=true&output=csv';
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.getElementById('theme-toggle');
+            if (document.body.classList.contains('dark-mode')) {
+                btn.innerHTML = '☀️';
+                // Atualizar cor dos gráficos para dark mode se necessário (opcional, Chart.js usa canvas transparente, mas textos/grids precisam de ajuste global ou plugin)
+                Chart.defaults.color = '#e5e7eb';
+                Chart.defaults.borderColor = '#374151';
+            } else {
+                btn.innerHTML = '🌙';
+                Chart.defaults.color = '#666';
+                Chart.defaults.borderColor = '#e5e7eb';
+            }
+            // Redesenhar todos os gráficos ativos para aplicar novas cores padrão
+            if(chartTotal) chartTotal.update();
+            if(chartAvgOnly) chartAvgOnly.update();
+            if(chartCountOnly) chartCountOnly.update();
+            if(chartHist) chartHist.update();
+            if(chartHourly) chartHourly.update();
+            if(chartInterval) chartInterval.update();
+        }
 
         let processedData = [];
         let dailyMap = {};
@@ -423,7 +456,7 @@
                             type: 'line',
                             label: 'Média (30min)',
                             data: avgData,
-                            borderColor: '#ec4899', // Rosa/Magenta (Igual tendência horária)
+                            borderColor: '#3b82f6', // Azul (Padrão)
                             borderWidth: 3,
                             pointRadius: 0,
                             tension: 0.4,
