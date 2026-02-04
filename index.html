@@ -396,23 +396,47 @@
 
         function renderInterval(limit) {
             const data = getFilteredData(limit).filter(r => r.intervalHours);
-            const periodDailyAvg = calculatePeriodDailyAvg(data);
+            
+            // 1. Calcular Média por Bin de 0.5h (30 min)
+            const bins = {};
+            data.forEach(r => {
+                const bin = Math.round(r.intervalHours * 2) / 2;
+                if(!bins[bin]) bins[bin] = {sum:0, count:0};
+                bins[bin].sum += r.v;
+                bins[bin].count++;
+            });
+
+            const avgData = Object.keys(bins).sort((a,b)=>parseFloat(a)-parseFloat(b)).map(k => ({
+                x: parseFloat(k),
+                y: Math.round(bins[k].sum / bins[k].count)
+            }));
+
+            // 2. Pontos Individuais (Scatter)
+            const scatterPts = data.map(r => ({ x: r.intervalHours, y: r.v }));
 
             if(chartInterval) chartInterval.destroy();
             chartInterval = new Chart(document.getElementById('cInterval'), {
                 type: 'scatter',
                 data: {
-                    datasets: [{
-                        label: 'Mamada',
-                        data: data.map(r => ({ x: r.intervalHours, y: r.v, dateRef: r.d })),
-                        backgroundColor: function(context) {
-                            if(!context.raw) return '#999';
-                            const dayKey = context.raw.dateRef;
-                            const dayTotal = dailyMap[dayKey].vol;
-                            return dayTotal >= periodDailyAvg ? 'rgba(16, 185, 129, 0.8)' : 'rgba(239, 68, 68, 0.8)';
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: 'Média (30min)',
+                            data: avgData,
+                            borderColor: '#ec4899', // Rosa/Magenta (Igual tendência horária)
+                            borderWidth: 3,
+                            pointRadius: 0,
+                            tension: 0.4,
+                            order: 1
                         },
-                        pointRadius: 6
-                    }]
+                        {
+                            label: 'Mamada',
+                            data: scatterPts,
+                            backgroundColor: 'rgba(209, 213, 219, 0.8)', // Cinza Claro
+                            pointRadius: 5,
+                            order: 2
+                        }
+                    ]
                 },
                 options: {
                     maintainAspectRatio: false,
@@ -424,9 +448,8 @@
                         tooltip: {
                             callbacks: {
                                 label: function(ctx) {
-                                    const dayKey = ctx.raw.dateRef;
-                                    const status = dailyMap[dayKey].vol >= periodDailyAvg ? 'Dia Bom' : 'Dia Ruim';
-                                    return `${ctx.raw.y}ml (${status})`;
+                                    if(ctx.dataset.type === 'line') return `Média: ${ctx.raw.y}ml`;
+                                    return `${ctx.raw.y}ml`;
                                 }
                             }
                         },
