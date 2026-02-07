@@ -127,9 +127,7 @@
             color: #9ca3af; 
         }
         
-        .item-edit-btn { 
-            background: #dbeafe; 
-            color: #2563eb; 
+        .item-btn { 
             border: none; 
             padding: 4px 8px; 
             border-radius: 6px; 
@@ -138,11 +136,35 @@
             cursor: pointer; 
             transition: all 0.2s;
         }
+        
+        .item-edit-btn { 
+            background: #dbeafe; 
+            color: #2563eb; 
+        }
         body.dark-mode .item-edit-btn { 
             background: #1e3a8a; 
             color: #60a5fa; 
         }
-        .item-edit-btn:hover { opacity: 0.8; }
+        
+        .item-add-btn { 
+            background: #d1fae5; 
+            color: #059669; 
+        }
+        body.dark-mode .item-add-btn { 
+            background: #064e3b; 
+            color: #34d399; 
+        }
+        
+        .item-remove-btn { 
+            background: #fee2e2; 
+            color: #dc2626; 
+        }
+        body.dark-mode .item-remove-btn { 
+            background: #7f1d1d; 
+            color: #f87171; 
+        }
+        
+        .item-btn:hover { opacity: 0.8; }
         
         .list-master .item-row { 
             padding: 8px 0; 
@@ -150,6 +172,17 @@
         
         .list-master .item-name { 
             font-weight: 500; 
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #9ca3af;
+        }
+        
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
         }
         
         #theme-toggle { 
@@ -296,7 +329,8 @@
     </div>
 
     <script>
-        let data = [];
+        let masterData = []; // Catálogo completo (do JSON)
+        let shoppingList = []; // Itens adicionados à próxima compra
         let currentView = 'proxima';
         let editingItem = null;
         
@@ -304,35 +338,21 @@
         fetch('data/compras.json')
             .then(r => r.json())
             .then(d => {
-                data = d;
+                masterData = d;
                 loadState();
                 render();
             });
         
         // State management
         function loadState() {
-            const saved = localStorage.getItem('compras-state');
+            const saved = localStorage.getItem('compras-shopping-list');
             if (saved) {
-                const state = JSON.parse(saved);
-                data.forEach(item => {
-                    const savedItem = state.find(s => s.Item === item.Item);
-                    if (savedItem) {
-                        item.checked = savedItem.checked || false;
-                        item["Quantidade Típica"] = savedItem.qty || item["Quantidade Típica"];
-                        item["Valor Esperado (Un)"] = savedItem.price || item["Valor Esperado (Un)"];
-                    }
-                });
+                shoppingList = JSON.parse(saved);
             }
         }
         
         function saveState() {
-            const state = data.map(item => ({
-                Item: item.Item,
-                checked: item.checked || false,
-                qty: item["Quantidade Típica"],
-                price: item["Valor Esperado (Un)"]
-            }));
-            localStorage.setItem('compras-state', JSON.stringify(state));
+            localStorage.setItem('compras-shopping-list', JSON.stringify(shoppingList));
         }
         
         // View switching
@@ -350,6 +370,38 @@
             }
         }
         
+        // Add/Remove from shopping list
+        function addToList(itemName) {
+            const masterItem = masterData.find(i => i.Item === itemName);
+            if (!masterItem) return;
+            
+            const existing = shoppingList.find(i => i.Item === itemName);
+            if (existing) return; // Já está na lista
+            
+            shoppingList.push({
+                Item: masterItem.Item,
+                Categoria: masterItem.Categoria,
+                qty: masterItem["Quantidade Típica"],
+                price: masterItem["Valor Esperado (Un)"],
+                checked: false
+            });
+            
+            saveState();
+            render();
+        }
+        
+        function removeFromList(itemName) {
+            shoppingList = shoppingList.filter(i => i.Item !== itemName);
+            saveState();
+            render();
+        }
+        
+        function toggleCheck(item) {
+            item.checked = !item.checked;
+            saveState();
+            render();
+        }
+        
         // Render
         function render() {
             renderProxima();
@@ -358,7 +410,20 @@
         
         function renderProxima() {
             const container = document.getElementById('view-proxima');
-            const grouped = groupByCategory(data);
+            
+            if (shoppingList.length === 0) {
+                container.innerHTML = `
+                    <div class="card">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🛒</div>
+                            <div>Lista vazia! Adicione itens da Lista Mestre.</div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            const grouped = groupByCategory(shoppingList);
             
             container.innerHTML = '';
             
@@ -391,20 +456,26 @@
                     
                     const qty = document.createElement('span');
                     qty.className = 'item-qty';
-                    qty.textContent = `${item["Quantidade Típica"]}x`;
+                    qty.textContent = `${item.qty}x`;
                     
                     const price = document.createElement('span');
                     price.className = 'item-price';
-                    price.textContent = `R$ ${parseFloat(item["Valor Esperado (Un)"]).toFixed(2)}`;
+                    price.textContent = `R$ ${parseFloat(item.price).toFixed(2)}`;
                     
                     const editBtn = document.createElement('button');
-                    editBtn.className = 'item-edit-btn';
+                    editBtn.className = 'item-btn item-edit-btn';
                     editBtn.textContent = '✏️';
                     editBtn.onclick = () => openEditModal(item);
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'item-btn item-remove-btn';
+                    removeBtn.textContent = '🗑️';
+                    removeBtn.onclick = () => removeFromList(item.Item);
                     
                     info.appendChild(qty);
                     info.appendChild(price);
                     info.appendChild(editBtn);
+                    info.appendChild(removeBtn);
                     
                     row.appendChild(checkbox);
                     row.appendChild(name);
@@ -419,7 +490,7 @@
         
         function renderMestre() {
             const container = document.getElementById('view-mestre');
-            const grouped = groupByCategory(data);
+            const grouped = groupByCategory(masterData);
             
             container.innerHTML = '';
             
@@ -447,6 +518,16 @@
                     price.className = 'item-price';
                     price.textContent = `R$ ${parseFloat(item["Valor Esperado (Un)"]).toFixed(2)}`;
                     
+                    const inList = shoppingList.find(i => i.Item === item.Item);
+                    
+                    if (!inList) {
+                        const addBtn = document.createElement('button');
+                        addBtn.className = 'item-btn item-add-btn';
+                        addBtn.textContent = '➕';
+                        addBtn.onclick = () => addToList(item.Item);
+                        info.appendChild(addBtn);
+                    }
+                    
                     info.appendChild(price);
                     
                     row.appendChild(name);
@@ -469,18 +550,12 @@
             return grouped;
         }
         
-        function toggleCheck(item) {
-            item.checked = !item.checked;
-            saveState();
-            render();
-        }
-        
         // Edit modal
         function openEditModal(item) {
             editingItem = item;
             document.getElementById('edit-name').value = item.Item;
-            document.getElementById('edit-qty').value = item["Quantidade Típica"];
-            document.getElementById('edit-price').value = item["Valor Esperado (Un)"];
+            document.getElementById('edit-qty').value = item.qty;
+            document.getElementById('edit-price').value = item.price;
             document.getElementById('edit-modal').style.display = 'block';
         }
         
@@ -491,8 +566,8 @@
         
         function saveEdit() {
             if (editingItem) {
-                editingItem["Quantidade Típica"] = document.getElementById('edit-qty').value;
-                editingItem["Valor Esperado (Un)"] = document.getElementById('edit-price').value;
+                editingItem.qty = document.getElementById('edit-qty').value;
+                editingItem.price = document.getElementById('edit-price').value;
                 saveState();
                 render();
                 closeModal();
