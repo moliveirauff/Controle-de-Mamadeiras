@@ -5,7 +5,7 @@
     "qty": "1",
     "price": "51.45",
     "checked": false,
-    "obs": "lacfree 500g"
+    "obs": ""
   },
   {
     "Item": "Requeijão",
@@ -13,7 +13,7 @@
     "qty": "1",
     "price": "17.99",
     "checked": false,
-    "obs": "cremoso 180g lacfree"
+    "obs": ""
   },
   {
     "Item": "Sabão em Pó Lava Louças",
@@ -21,6 +21,6 @@
     "qty": "1",
     "price": "55",
     "checked": false,
-    "obs": "1kg"
+    "obs": ""
   }
 ]
