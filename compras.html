@@ -77,6 +77,27 @@
             cursor: pointer;
         }
         
+        .btn-conclude {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        body.dark-mode .btn-conclude {
+            background: #10b981;
+        }
+        .btn-conclude:hover {
+            background: #047857;
+        }
+        body.dark-mode .btn-conclude:hover {
+            background: #059669;
+        }
+        
         .total-card {
             background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
             color: white;
@@ -369,6 +390,7 @@
             <input type="checkbox" id="hide-checked" onchange="render()">
             <span>Ocultar itens riscados</span>
         </label>
+        <button class="btn-conclude" onclick="concludeShoppingConfirm()">✅ Concluir Compra</button>
     </div>
     
     <div id="filters-mestre" class="filters hidden">
@@ -722,6 +744,28 @@
                 render();
                 closeModal();
             }
+        }
+        
+        // Conclude shopping
+        function concludeShoppingConfirm() {
+            const checkedCount = shoppingList.filter(i => i.checked).length;
+            
+            if (checkedCount === 0) {
+                alert('Nenhum item foi marcado como comprado!');
+                return;
+            }
+            
+            if (confirm(`Remover ${checkedCount} item(ns) marcado(s) da lista?\n\nIsso não pode ser desfeito.`)) {
+                concludeShopping();
+            }
+        }
+        
+        function concludeShopping() {
+            // Remove checked items
+            shoppingList = shoppingList.filter(i => !i.checked);
+            saveState();
+            render();
+            alert('✅ Compra concluída! Itens marcados foram removidos.');
         }
         
         // Theme toggle
