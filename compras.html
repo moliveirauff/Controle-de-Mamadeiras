@@ -632,11 +632,17 @@
                     name.textContent = item.Item;
                     nameWrapper.appendChild(name);
                     
-                    // Add observations if available
-                    if (item.obs) {
+                    // Add observations - fetch from master if not in item
+                    let obsText = item.obs || "";
+                    if (!obsText) {
+                        const masterItem = masterData.find(m => m.Item === item.Item);
+                        obsText = masterItem?.["Observações"] || "";
+                    }
+                    
+                    if (obsText) {
                         const obs = document.createElement('div');
                         obs.className = 'item-obs';
-                        obs.textContent = item.obs;
+                        obs.textContent = obsText;
                         nameWrapper.appendChild(obs);
                     }
                     
