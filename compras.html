@@ -456,17 +456,34 @@
         let currentView = 'proxima';
         let editingItem = null;
         
+        const DATA_VERSION = '2026-02-07-v2'; // Increment to force data refresh
+        
         // Load data
         Promise.all([
-            fetch('data/compras.json').then(r => r.json()),
-            fetch('data/compras-proxima.json').then(r => r.json()).catch(() => [])
+            fetch('data/compras.json?v=' + DATA_VERSION).then(r => r.json()),
+            fetch('data/compras-proxima.json?v=' + DATA_VERSION).then(r => r.json()).catch(() => [])
         ]).then(([master, initial]) => {
             masterData = master;
+            
+            // Check version and clear old data if needed
+            const savedVersion = localStorage.getItem('compras-data-version');
+            if (savedVersion !== DATA_VERSION) {
+                localStorage.removeItem('compras-shopping-list');
+                localStorage.setItem('compras-data-version', DATA_VERSION);
+            }
             
             // Check if we have saved state, otherwise use initial data
             const saved = localStorage.getItem('compras-shopping-list');
             if (saved) {
                 shoppingList = JSON.parse(saved);
+                // Update shopping list items with latest obs from master
+                shoppingList.forEach(item => {
+                    const masterItem = masterData.find(m => m.Item === item.Item);
+                    if (masterItem) {
+                        item.obs = masterItem["Observações"] || "";
+                    }
+                });
+                saveState();
             } else if (initial.length > 0) {
                 shoppingList = initial;
                 saveState();
