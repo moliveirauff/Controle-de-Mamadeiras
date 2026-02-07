@@ -1,666 +1,666 @@
 [
   {
-    "Item": "A\u00e7\u00facar",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Bebidas",
-    "Quantidade T\u00edpica": "2",
+    "Item": "Açúcar",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "6",
-    "Observa\u00e7\u00f5es": "Bendita Uva 5 L Suco De Uva Tinto Integral Sem Adi\u00e7\u00e3o De A\u00e7\u00facar Bendita Uva Garrafa 1,5 L | Zona Sul || Lipton 5 L Ch\u00e1 Zero A\u00e7\u00facar Lipton Ice Tea P\u00eassego Pet 1,5 L | Zona Sul || Coca Cola 350ml Refrigerante Coca Cola Sem A\u00e7\u00facar Lata 350ml | Zona Sul || Uni\u00e3o 1kg A\u00e7\u00facar Refinado Uni\u00e3o Pacote 1kg | Zona Sul || Coca Cola 350ml Refrigerante Coca Cola Sem A\u00e7\u00facar Lata Gelado 350ml | Adicionado automaticamente"
+    "Observações": "União 1kg"
   },
   {
-    "Item": "\u00c1gua mineral",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Água mineral",
+    "Marca/Descrição": "",
     "Categoria": "Bebidas",
-    "Quantidade T\u00edpica": "12",
+    "Quantidade Típica": "12",
     "Valor Esperado (Un)": "13,39",
-    "Observa\u00e7\u00f5es": "Minalba 5L \u00c1gua Mineral Sem G\u00e1s Minalba Pet 1,5L | Zona Sul || Minalba 5L \u00c1gua Mineral sem G\u00e1s Minalba 5L | Adicionado automaticamente"
+    "Observações": "Minalba 5L Água Mineral Sem Gás Minalba Pet 1,5L | Zona Sul || Minalba 5L Água Mineral sem Gás Minalba 5L | Adicionado automaticamente"
   },
   {
-    "Item": "H2oh!",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Refrigerante H2OH!",
+    "Marca/Descrição": "",
     "Categoria": "Bebidas",
-    "Quantidade T\u00edpica": "2",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "3,99",
-    "Observa\u00e7\u00f5es": "H2Oh! 5L Refrigerante H2Oh! Limoneto Garrafa 1,5L Refrigerante De Baixa Caloria H2Oh! Limoneto Pet 1,5 L | Zona Sul || H2Oh! 500ml Refrigerante H2Oh! Limoneto Garrafa 500ml Refrigerante De Baixa Caloria H2Oh! Limoneto Pet 500ml | Adicionado automaticamente"
+    "Observações": "Limoneto 1,5L"
   },
   {
-    "Item": "Natural pet",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Chá mate",
+    "Marca/Descrição": "",
     "Categoria": "Bebidas",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "3,99",
-    "Observa\u00e7\u00f5es": "Matte Le\u00e3o 300ml Matte Le\u00e3o Natural Pet 300ml | Zona Sul"
+    "Observações": "Matte Leão 300ml"
   },
   {
     "Item": "Refrigerante cola",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Bebidas",
-    "Quantidade T\u00edpica": "6",
+    "Quantidade Típica": "6",
     "Valor Esperado (Un)": "3,99",
-    "Observa\u00e7\u00f5es": "Coca Cola 350ml Refrigerante Coca Cola Original Lata 350ml | Zona Sul"
+    "Observações": "Coca Cola 350ml Refrigerante Coca Cola Original Lata 350ml | Zona Sul"
   },
   {
-    "Item": "Carne mo\u00edda",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Carne moída",
+    "Marca/Descrição": "",
     "Categoria": "Carnes e Frios",
-    "Quantidade T\u00edpica": "2",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "22,99",
-    "Observa\u00e7\u00f5es": "600g Carne Mo\u00edda Desengordurada Especial Corte D'Oro 600g | Zona Sul || 400g Carne Mo\u00edda de Frango Korin 400g | Adicionado automaticamente"
+    "Observações": "600g Carne Moída Desengordurada Especial Corte D'Oro 600g | Zona Sul || 400g Carne Moída de Frango Korin 400g | Adicionado automaticamente"
   },
   {
     "Item": "Ovos",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Carnes e Frios",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "9,99",
-    "Observa\u00e7\u00f5es": "Happy Eggs 20 Un Ovos Vermelhos Caipira Happy Eggs Com 20 Unidades | Zona Sul || Label Rouge 20 Un Ovos Caipira Label Rouge Bandeja com 20 Unidades | Adicionado automaticamente || S\u00edtio Cocoric\u00f3 10 Un Ovos Vermelhos Caipira S\u00edtio Cocoric\u00f3 Com 10 Unidades | Adicionado automaticamente"
+    "Observações": "Happy Eggs 20 Un Ovos Vermelhos Caipira Happy Eggs Com 20 Unidades | Zona Sul || Label Rouge 20 Un Ovos Caipira Label Rouge Bandeja com 20 Unidades | Adicionado automaticamente || Sítio Cocoricó 10 Un Ovos Vermelhos Caipira Sítio Cocoricó Com 10 Unidades | Adicionado automaticamente"
   },
   {
     "Item": "Peito de frango",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Carnes e Frios",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "23,99",
-    "Observa\u00e7\u00f5es": "Sadia 400g Peito de Frango Cozido Desfiado Congelado Sadia na Receita 400g Peito de Frango Cozido Desfiado Sadia 400g | Adicionado automaticamente"
+    "Observações": "Sadia 400g Peito de Frango Cozido Desfiado Congelado Sadia na Receita 400g Peito de Frango Cozido Desfiado Sadia 400g | Adicionado automaticamente"
   },
   {
-    "Item": "Peito de peru defumado sem casca em fatias fininhas",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Peito de peru",
+    "Marca/Descrição": "",
     "Categoria": "Carnes e Frios",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "7,99",
-    "Observa\u00e7\u00f5es": "Sadia 100g Peito de Peru Defumado sem Casca em Fatias Fininhas Sadia 100g | Adicionado automaticamente"
+    "Observações": "Sadia 100g fatiado"
   },
   {
     "Item": "Picanha",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Carnes e Frios",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "112,48",
-    "Observa\u00e7\u00f5es": "Friboi 5g Picanha Pe\u00e7a Friboi 1,5g | Adicionado automaticamente"
+    "Observações": "Friboi 5g Picanha Peça Friboi 1,5g | Adicionado automaticamente"
   },
   {
     "Item": "Sobrecoxa de frango",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Carnes e Frios",
-    "Quantidade T\u00edpica": "2",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "21,99",
-    "Observa\u00e7\u00f5es": "600g Sobrecoxa sem Pele Congelada Korin 600g | Zona Sul || 800g Sobrecoxa sem Pele Corte D Oro ATM 800g | Adicionado automaticamente"
+    "Observações": "600g Sobrecoxa sem Pele Congelada Korin 600g | Zona Sul || 800g Sobrecoxa sem Pele Corte D Oro ATM 800g | Adicionado automaticamente"
   },
   {
     "Item": "Desodorante",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Higiene Pessoal",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "29,99",
-    "Observa\u00e7\u00f5es": "Dove 250 ml Desodorante Antitranspirante Aerosol Dove Original 250 ml | Zona Sul"
+    "Observações": "Dove 250 ml Desodorante Antitranspirante Aerosol Dove Original 250 ml | Zona Sul"
   },
   {
-    "Item": "Escova dental  slim soft black com idades",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Escova dental",
+    "Marca/Descrição": "",
     "Categoria": "Higiene Pessoal",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "34,9",
-    "Observa\u00e7\u00f5es": "Colgate 4 Un Escova Dental Colgate Slim Soft Black com 4 Unidades | Zona Sul"
+    "Observações": "Colgate Slim Soft Black 4un"
   },
   {
-    "Item": "Mascara  hidrata\u00e7\u00e3o",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Máscara capilar",
+    "Marca/Descrição": "",
     "Categoria": "Higiene Pessoal",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "29,99",
-    "Observa\u00e7\u00f5es": "Pantene 270ml Mascara Pantene Hidrata\u00e7\u00e3o 270ml | Zona Sul"
+    "Observações": "Pantene Hidratação 270ml"
   },
   {
     "Item": "Pasta de dente",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Higiene Pessoal",
-    "Quantidade T\u00edpica": "3",
+    "Quantidade Típica": "3",
     "Valor Esperado (Un)": "5,99",
-    "Observa\u00e7\u00f5es": "Colgate 90g Creme Dental Colgate Tripla A\u00e7\u00e3o Menta Original 90g | Zona Sul"
+    "Observações": "Colgate 90g Creme Dental Colgate Tripla Ação Menta Original 90g | Zona Sul"
   },
   {
     "Item": "Shampoo",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Higiene Pessoal",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "47,99",
-    "Observa\u00e7\u00f5es": "Pantene 510ml Shampoo Pantene Biotinamina B3 Antiqueda 510ml | Zona Sul"
+    "Observações": "Pantene 510ml Shampoo Pantene Biotinamina B3 Antiqueda 510ml | Zona Sul"
   },
   {
-    "Item": "Abacaxi unidade",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Abacaxi",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "9,99",
-    "Observa\u00e7\u00f5es": "Abacaxi Unidade | Adicionado automaticamente"
+    "Observações": "Unidade"
   },
   {
-    "Item": "Ab\u00f3bora em cubos quasi pronto a v\u00e1cuo",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Abóbora",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "8,49",
-    "Observa\u00e7\u00f5es": "500g Ab\u00f3bora Em Cubos Quasi Pronto A V\u00e1cuo 500g | Adicionado automaticamente"
+    "Observações": "Quasi Pronto 500g cubos a vácuo"
   },
   {
-    "Item": "Abobrinha italiana unidade",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Abobrinha",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "1,4",
-    "Observa\u00e7\u00f5es": "Abobrinha Italiana Unidade | Adicionado automaticamente"
+    "Observações": "Italiana unidade"
   },
   {
     "Item": "Alface",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "3,79",
-    "Observa\u00e7\u00f5es": "Alface Crespa Unidade | Adicionado automaticamente"
+    "Observações": "Alface Crespa Unidade | Adicionado automaticamente"
   },
   {
-    "Item": "Alho descascado quasi pronto",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Alho descascado",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "7,49",
-    "Observa\u00e7\u00f5es": "150g Alho Descascado Quasi Pronto 150g | Adicionado automaticamente"
+    "Observações": "Quasi Pronto 150g"
   },
   {
-    "Item": "Alho roxo pacote",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Alho",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "23,99",
-    "Observa\u00e7\u00f5es": "500g Alho Roxo Pacote 500g | Adicionado automaticamente"
+    "Observações": "Roxo 500g"
   },
   {
     "Item": "Batata",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "3,59",
-    "Observa\u00e7\u00f5es": "Lays 115g Batata Frita Lays Cl\u00e1ssica 115g | Adicionado automaticamente || 600g Batata Inglesa 600g | Adicionado automaticamente"
+    "Observações": "Lays 115g Batata Frita Lays Clássica 115g | Adicionado automaticamente || 600g Batata Inglesa 600g | Adicionado automaticamente"
   },
   {
     "Item": "Cebola",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "1",
-    "Observa\u00e7\u00f5es": "Cebola Unidade | Adicionado automaticamente"
+    "Observações": "Cebola Unidade | Adicionado automaticamente"
   },
   {
-    "Item": "Desengordurante  cozinha lim\u00e3o  oferta desengordurante veja cozinha gr\u00e1tis 20% squeeze",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Desengordurante",
+    "Marca/Descrição": "",
+    "Categoria": "Limpeza",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "12,99",
-    "Observa\u00e7\u00f5es": "Veja 500ml Desengordurante Veja Cozinha Lim\u00e3o 500ml Oferta Desengordurante Veja Cozinha Gr\u00e1tis 20% Squeeze 500ml | Adicionado automaticamente"
+    "Observações": "Veja 500ml"
   },
   {
-    "Item": "Desengordurante spray  cozinha lim\u00e3o  oferta desengordurante gatilho veja gold cozinha lim\u00e3o 30% desconto 500",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Desengordurante spray",
+    "Marca/Descrição": "",
+    "Categoria": "Limpeza",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "21,99",
-    "Observa\u00e7\u00f5es": "Veja 500ml Desengordurante Spray Veja Cozinha Lim\u00e3o 500ml Oferta Desengordurante Gatilho Veja Gold Cozinha Lim\u00e3o 30% Desconto 500 | Adicionado automaticamente"
+    "Observações": "Veja Gold 500ml"
   },
   {
-    "Item": "Laranja lima pacote",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Laranja",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "19,99",
-    "Observa\u00e7\u00f5es": "2kg Laranja Lima Pacote 2kg | Adicionado automaticamente"
+    "Observações": "Lima 2kg"
   },
   {
-    "Item": "Ma\u00e7\u00e3 fuji unidade",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Maçã",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "4,25",
-    "Observa\u00e7\u00f5es": "Ma\u00e7\u00e3 Fuji Unidade | Adicionado automaticamente"
+    "Observações": "Fuji unidade"
   },
   {
-    "Item": "Mam\u00e3o papaia unidade",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Mamão",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "6,49",
-    "Observa\u00e7\u00f5es": "Mam\u00e3o Papaia Unidade | Adicionado automaticamente"
+    "Observações": "Papaia unidade"
   },
   {
-    "Item": "Manjeric\u00e3o unidade",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Manjericão",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "3,79",
-    "Observa\u00e7\u00f5es": "Manjeric\u00e3o Unidade | Adicionado automaticamente"
+    "Observações": "Unidade"
   },
   {
-    "Item": "Maracuj\u00e1",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Maracujá",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "11,24",
-    "Observa\u00e7\u00f5es": "750g Maracuj\u00e1 750g | Adicionado automaticamente"
+    "Observações": "750g Maracujá 750g | Adicionado automaticamente"
   },
   {
-    "Item": "Mel\u00e3o amarelo metade 1,",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Melão",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "10,38",
-    "Observa\u00e7\u00f5es": "3kg Mel\u00e3o Amarelo Metade 1,3kg | Adicionado automaticamente"
+    "Observações": "Amarelo metade 1,3kg"
   },
   {
     "Item": "Tomate",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Hortifruti",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "8,38",
-    "Observa\u00e7\u00f5es": "Tomate Carmen Unidade Tomate Carmem Unidade | Adicionado automaticamente || 2Kg Tomate Italiano Cariorta 1,2Kg | Adicionado automaticamente"
+    "Observações": "Tomate Carmen Unidade Tomate Carmem Unidade | Adicionado automaticamente || 2Kg Tomate Italiano Cariorta 1,2Kg | Adicionado automaticamente"
   },
   {
-    "Item": "Iogurte  morango",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "2",
+    "Item": "Iogurte morango",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "3,99",
-    "Observa\u00e7\u00f5es": "Molico 170g Iogurte Molico Morango 170g | Zona Sul"
+    "Observações": "Molico 170g"
   },
   {
     "Item": "Iogurte grego",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "1",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "11,9",
-    "Observa\u00e7\u00f5es": "Iogurte Grego F | Zona Sul || Nestl\u00e9 360g Iogurte Grego Nestl\u00e9 Light Morango 360g | Adicionado automaticamente || Nestl\u00e9 4 Un Iogurte Grego Frutas Vermelhas Nestl\u00e9 com 4 Unidades 360g Iogurte Grego Frutas Vermelhas Nestl\u00e9 Bandeja 360g 4 Unidades | Adicionado automaticamente"
+    "Observações": "Iogurte Grego F | Zona Sul || Nestlé 360g Iogurte Grego Nestlé Light Morango 360g | Adicionado automaticamente || Nestlé 4 Un Iogurte Grego Frutas Vermelhas Nestlé com 4 Unidades 360g Iogurte Grego Frutas Vermelhas Nestlé Bandeja 360g 4 Unidades | Adicionado automaticamente"
   },
   {
-    "Item": "Iogurte natural  com mel",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "2",
+    "Item": "Iogurte natural",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "3,79",
-    "Observa\u00e7\u00f5es": "Nestl\u00e9 170g Iogurte Natural Nestl\u00e9 Com Mel 170g | Zona Sul"
+    "Observações": "Nestlé com mel 170g"
   },
   {
-    "Item": "Iogurte pense zero  morango 1,",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Iogurte zero",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "16,99",
-    "Observa\u00e7\u00f5es": "Batavo 15g Iogurte Pense Zero Batavo Morango 1,15g | Adicionado automaticamente"
+    "Observações": "Batavo Pense Zero morango 1,15g"
   },
   {
     "Item": "Iogurte proteico",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "3",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "3",
     "Valor Esperado (Un)": "7,99",
-    "Observa\u00e7\u00f5es": "Iogurte Proteic | Zona Sul || Verde Campo 11g Iogurte Proteico Maracuj\u00e1 Verde Campo Natural Whey 11g 140g | Zona Sul || Verde Campo 14g Iogurte Proteico Tradicional Verde Campo Natural Whey 14g 140g | Adicionado automaticamente || Verde Campo 11g Iogurte Proteico Frutas Vermelhas Verde Campo Natural Whey 11g 140g Iogurte Proteico Verde Campo 11g Natural Whey Frutas Vermelhas Pote 140g | Adicionado automaticamente"
+    "Observações": "Iogurte Proteic | Zona Sul || Verde Campo 11g Iogurte Proteico Maracujá Verde Campo Natural Whey 11g 140g | Zona Sul || Verde Campo 14g Iogurte Proteico Tradicional Verde Campo Natural Whey 14g 140g | Adicionado automaticamente || Verde Campo 11g Iogurte Proteico Frutas Vermelhas Verde Campo Natural Whey 11g 140g Iogurte Proteico Verde Campo 11g Natural Whey Frutas Vermelhas Pote 140g | Adicionado automaticamente"
   },
   {
     "Item": "Leite",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "2",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "5,29",
-    "Observa\u00e7\u00f5es": "Piracanjuba 1L Leite Uht Piracanjuba SemiDesnatado 1L | Zona Sul"
+    "Observações": "Piracanjuba 1L Leite Uht Piracanjuba SemiDesnatado 1L | Zona Sul"
   },
   {
-    "Item": "Leite longa vid",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "4",
+    "Item": "Leite longa vida",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "4",
     "Valor Esperado (Un)": "7,79",
-    "Observa\u00e7\u00f5es": "Leite Longa Vid | Zona Sul"
+    "Observações": "Leite Longa Vid | Zona Sul"
   },
   {
     "Item": "Manteiga",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "1",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "14,9",
-    "Observa\u00e7\u00f5es": "Yoki 100g Pipoca para Microondas Yoki Cinema Manteiga 100g | Adicionado automaticamente || 200g Manteiga B\u00e1sel Com Sal Pote 200g | Adicionado automaticamente"
+    "Observações": "Yoki 100g Pipoca para Microondas Yoki Cinema Manteiga 100g | Adicionado automaticamente || 200g Manteiga Básel Com Sal Pote 200g | Adicionado automaticamente"
   },
   {
     "Item": "Queijo minas",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "1",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "51,45",
-    "Observa\u00e7\u00f5es": "Verde Campo 500g Queijo Minas Padr\u00e3o Fracionado Verde Campo Lacfree 500g | Zona Sul"
+    "Observações": "Verde Campo 500g Queijo Minas Padrão Fracionado Verde Campo Lacfree 500g | Zona Sul"
   },
   {
-    "Item": "Queijo parmes\u00e3o",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "2",
+    "Item": "Queijo parmesão",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "29,99",
-    "Observa\u00e7\u00f5es": "180g Queijo Parmes\u00e3o Cilindro Pr\u00e9sident 180g | Zona Sul"
+    "Observações": "180g Queijo Parmesão Cilindro Président 180g | Zona Sul"
   },
   {
-    "Item": "Requeij\u00e3o",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "2",
+    "Item": "Requeijão",
+    "Marca/Descrição": "",
+    "Categoria": "Laticínios",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "17,99",
-    "Observa\u00e7\u00f5es": "Verde Campo 180g Requeij\u00e3o Cremoso Verde Campo Lacfree 180g | Zona Sul || Catupiry 400g Requeij\u00e3o Cremoso Catupiry Light 400g | Adicionado automaticamente"
+    "Observações": "Verde Campo 180g Requeijão Cremoso Verde Campo Lacfree 180g | Zona Sul || Catupiry 400g Requeijão Cremoso Catupiry Light 400g | Adicionado automaticamente"
   },
   {
     "Item": "Sabonete",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Latic\u00ednios",
-    "Quantidade T\u00edpica": "1",
+    "Marca/Descrição": "",
+    "Categoria": "Higiene Pessoal",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "3,29",
-    "Observa\u00e7\u00f5es": "NIVEA 85g NIVEA Sabonete em Barra Leite 85g Sabonete Hidratante Nivea Leite 85g | Adicionado automaticamente || NIVEA 85g NIVEA Sabonete em Barra Erva Doce & \u00d3leos 85g Sabonete Hidratante Nivea Erva Doce E \u00d3leos 85g | Adicionado automaticamente || NIVEA 85g NIVEA Sabonete em Barra Lavanda & \u00d3leos 85g Sabonete Hidratante Nivea Lavanda & \u00d3leos 85 | Adicionado automaticamente || NIVEA 85g NIVEA Sabonete em Barra Aveia 85g Sabonete Hidratante Nivea Aveia 85g | Adicionado automaticamente || NIVEA 85g NIVEA Sabonete em Barra Toque de Baunilha 85g Sabonete Hidratante Nivea Toque De Baunilha 85g | Adicionado automaticamente"
+    "Observações": "NIVEA 85g (diversos aromas)"
   },
   {
     "Item": "Amaciante",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "22,99",
-    "Observa\u00e7\u00f5es": "Downy 1 L Amaciante Para Roupas Concentrado Downy Brisa De Ver\u00e3o 1 L | Adicionado automaticamente || Downy 1 L Amaciante Para Roupas Concentrado Downy L\u00edrios Do Campo 1 L | Adicionado automaticamente || Downy 1L Amaciante para Roupas Downy Brisa Suave 1L | Adicionado automaticamente"
+    "Observações": "Downy 1 L Amaciante Para Roupas Concentrado Downy Brisa De Verão 1 L | Adicionado automaticamente || Downy 1 L Amaciante Para Roupas Concentrado Downy Lírios Do Campo 1 L | Adicionado automaticamente || Downy 1L Amaciante para Roupas Downy Brisa Suave 1L | Adicionado automaticamente"
   },
   {
-    "Item": "Esponja de lou\u00e7a",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Esponja de louça",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "7,99",
-    "Observa\u00e7\u00f5es": "Limppano 3 Un Esponja para Lou\u00e7a Antiaderente Limppano N\u00e3o Risca 3 Unidades Esponja Para Lou\u00e7a Antiaderente Limppano N\u00e3o Risca 3 Unidades | Adicionado automaticamente"
+    "Observações": "Limppano 3 Un Esponja para Louça Antiaderente Limppano Não Risca 3 Unidades Esponja Para Louça Antiaderente Limppano Não Risca 3 Unidades | Adicionado automaticamente"
   },
   {
-    "Item": "Facilitador de passar roupas l\u00edquido passe bem sach\u00ea  refil embalagem econ\u00f4mica",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Passa fácil",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "2",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "14,99",
-    "Observa\u00e7\u00f5es": "400ml Facilitador de Passar Roupas L\u00edquido Passe Bem Sach\u00ea 400ml Refil Embalagem Econ\u00f4mica | Zona Sul"
+    "Observações": "Passe Bem 400ml refil"
   },
   {
-    "Item": "Papel higi\u00eanico",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Papel higiênico",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "29,9",
-    "Observa\u00e7\u00f5es": "Neve 12 Un Papel Higi\u00eanico Neve Folha Dupla Toque de Seda com 12 Unidades | Zona Sul || Neve 18 Un Papel Higi\u00eanico Folha Dupla Neutro Neve Toque da Seda Pacote 18 Unidades Papel Higi\u00eanico Folha Dupla Neutro Neve Toque da Seda 20m Pacote 18 Unidades | Adicionado automaticamente"
+    "Observações": "Neve 12 Un Papel Higiênico Neve Folha Dupla Toque de Seda com 12 Unidades | Zona Sul || Neve 18 Un Papel Higiênico Folha Dupla Neutro Neve Toque da Seda Pacote 18 Unidades Papel Higiênico Folha Dupla Neutro Neve Toque da Seda 20m Pacote 18 Unidades | Adicionado automaticamente"
   },
   {
     "Item": "Papel toalha",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "7,99",
-    "Observa\u00e7\u00f5es": "Papel Toalha Snob 19cm X 20cm com 2 Rolos com 60 Folhas Cada | Zona Sul"
+    "Observações": "Papel Toalha Snob 19cm X 20cm com 2 Rolos com 60 Folhas Cada | Zona Sul"
   },
   {
-    "Item": "Pato gel adesivo sanit\u00e1rio lavanda refil idades",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Gel sanitário",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "2",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "14,99",
-    "Observa\u00e7\u00f5es": "6 Un Pato Gel Adesivo Sanit\u00e1rio Lavanda Refil 6 Unidades | Zona Sul"
+    "Observações": "Pato Lavanda 6un refil"
   },
   {
-    "Item": "Sab\u00e3o l\u00edquido",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Sabão líquido",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "36,9",
-    "Observa\u00e7\u00f5es": "1 L Lava Roupas L\u00edquido Ola Beb\u00ea 1 L | Zona Sul || Omo 3 L Lava Roupas L\u00edquido Omo Lavagem Perfeita 3 L Lava Roupas L\u00edquido Omo Lavagem Perfeita 3 L | Adicionado automaticamente"
+    "Observações": "1 L Lava Roupas Líquido Ola Bebê 1 L | Zona Sul || Omo 3 L Lava Roupas Líquido Omo Lavagem Perfeita 3 L Lava Roupas Líquido Omo Lavagem Perfeita 3 L | Adicionado automaticamente"
   },
   {
     "Item": "Saco de lixo",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "2",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "21,85",
-    "Observa\u00e7\u00f5es": "Dove Dover Saco para Lixo Dover Roll Odor Defense Banheiro e Pia 50 Saco Para Lixo Dover Roll Odor Defense Banheiro E Pia 50 | Zona Sul || Dove 30L Saco para Lixo Refor\u00e7ado 30L Dover Roll Super Forte 20 Unidades | Zona Sul"
+    "Observações": "Dove Dover Saco para Lixo Dover Roll Odor Defense Banheiro e Pia 50 Saco Para Lixo Dover Roll Odor Defense Banheiro E Pia 50 | Zona Sul || Dove 30L Saco para Lixo Reforçado 30L Dover Roll Super Forte 20 Unidades | Zona Sul"
   },
   {
-    "Item": "Sapon\u00e1ceo cremoso multiuso cl\u00e1ssico sap\u00f3lio radium  20% gr\u00e1tis",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Saponáceo",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "9,98",
-    "Observa\u00e7\u00f5es": "450ml Sapon\u00e1ceo Cremoso Multiuso Cl\u00e1ssico Sap\u00f3lio Radium 450ml 20% Gr\u00e1tis | Adicionado automaticamente"
+    "Observações": "Sapólio Radium 450ml"
   },
   {
     "Item": "Tira manchas",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "20,99",
-    "Observa\u00e7\u00f5es": "500ml Tira Manchas L\u00edquido Vanish Multiuso 500ml Refil Econ\u00f4mico para roupas coloridas Tira Manchas em Gel Vanish Multiuso 500ml Refil Econ\u00f4mico para roupas coloridas | Zona Sul || Crystal 400g Tira Manchas Vanish em P\u00f3 Crystal White Oxi Action para Roupas Brancas Refil 400g Tira Manchas Em P\u00f3 Refil Vanish Oxi Action Crystal White 400g | Zona Sul"
+    "Observações": "500ml Tira Manchas Líquido Vanish Multiuso 500ml Refil Econômico para roupas coloridas Tira Manchas em Gel Vanish Multiuso 500ml Refil Econômico para roupas coloridas | Zona Sul || Crystal 400g Tira Manchas Vanish em Pó Crystal White Oxi Action para Roupas Brancas Refil 400g Tira Manchas Em Pó Refil Vanish Oxi Action Crystal White 400g | Zona Sul"
   },
   {
-    "Item": "Amendoim santa helena",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Amendoim",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "15,99",
-    "Observa\u00e7\u00f5es": "Mendorato 400g Amendoim Santa Helena Mendorato 400g | Adicionado automaticamente"
+    "Observações": "Santa Helena Mendorato 400g"
   },
   {
     "Item": "Arroz",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "2",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "5,85",
-    "Observa\u00e7\u00f5es": "Tio Jo\u00e3o 1kg Arroz Branco Tio Jo\u00e3o 1kg | Zona Sul"
+    "Observações": "Tio João 1kg Arroz Branco Tio João 1kg | Zona Sul"
   },
   {
     "Item": "Atum em lata",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "10,69",
-    "Observa\u00e7\u00f5es": "Gomes Da Costa 170g Atum Ralado Em \u00d3leo Gomes Da Costa Lata 170g | Adicionado automaticamente"
+    "Observações": "Gomes Da Costa 170g Atum Ralado Em Óleo Gomes Da Costa Lata 170g | Adicionado automaticamente"
   },
   {
     "Item": "Azeite",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "35,98",
-    "Observa\u00e7\u00f5es": "Andorinha 500ml Azeite Extravirgem Portugu\u00eas Andorinha 500ml | Zona Sul"
+    "Observações": "Andorinha 500ml Azeite Extravirgem Português Andorinha 500ml | Zona Sul"
   },
   {
-    "Item": "Azeitona preta com caro\u00e7o raiola vidro",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Azeitona",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "16,38",
-    "Observa\u00e7\u00f5es": "200g Azeitona Preta Com Caro\u00e7o Raiola Vidro 200g | Adicionado automaticamente"
+    "Observações": "Raiola preta com caroço 200g"
   },
   {
-    "Item": "Biscoito  queijinho pacote",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Biscoito queijinho",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "3,99",
-    "Observa\u00e7\u00f5es": "Piraqu\u00ea 100g Biscoito Piraqu\u00ea Queijinho Pacote 100g | Zona Sul"
+    "Observações": "Piraquê 100g"
   },
   {
-    "Item": "Biscoito  roladinho recheado de goiabinha",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Biscoito recheado",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "2,99",
-    "Observa\u00e7\u00f5es": "Piraqu\u00ea 75g Biscoito Piraqu\u00ea Roladinho Recheado de Goiabinha 75g | Adicionado automaticamente"
+    "Observações": "Piraquê goiabinha 75g"
   },
   {
-    "Item": "Biscoito cream cracker  pacote",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Biscoito cream cracker",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "3,99",
-    "Observa\u00e7\u00f5es": "Piraqu\u00ea 184g Biscoito Cream Cracker Piraqu\u00ea Pacote 184g | Zona Sul"
+    "Observações": "Piraquê 184g"
   },
   {
     "Item": "Biscoito look chocolate",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "2",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "2",
     "Valor Esperado (Un)": "2,99",
-    "Observa\u00e7\u00f5es": "55g Biscoito Look Chocolate 55g | Zona Sul"
+    "Observações": "55g Biscoito Look Chocolate 55g | Zona Sul"
   },
   {
     "Item": "Biscoito maizena  pacote",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "2,95",
-    "Observa\u00e7\u00f5es": "Piraqu\u00ea 175g Biscoito Maizena Piraqu\u00ea Pacote 175g | Adicionado automaticamente"
+    "Observações": "Piraquê 175g Biscoito Maizena Piraquê Pacote 175g | Adicionado automaticamente"
   },
   {
     "Item": "Biscoito wafer recheio chocolate",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "3,39",
-    "Observa\u00e7\u00f5es": "Bauducco 92g Biscoito Wafer Recheio Chocolate Bauducco 92g | Zona Sul"
+    "Observações": "Bauducco 92g Biscoito Wafer Recheio Chocolate Bauducco 92g | Zona Sul"
   },
   {
-    "Item": "Chia em gr\u00e3os  pacote",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Chia",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "20,29",
-    "Observa\u00e7\u00f5es": "Gran Sant\u00e9 200g Chia Em Gr\u00e3os Gran Sant\u00e9 Pacote 200g | Zona Sul"
+    "Observações": "Gran Santé 200g"
   },
   {
-    "Item": "Feij\u00e3o",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Feijão",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "5,59",
-    "Observa\u00e7\u00f5es": "Combrasil 1kg Feij\u00e3o Preto Combrasil 1kg Feijao Preto Combrasil T1 1kg | Zona Sul"
+    "Observações": "Combrasil 1kg Feijão Preto Combrasil 1kg Feijao Preto Combrasil T1 1kg | Zona Sul"
   },
   {
-    "Item": "Granola integral jasmine mel e frutas pacote",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Granola",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "16,99",
-    "Observa\u00e7\u00f5es": "250g Granola Integral Jasmine Mel E Frutas Pacote 250g | Zona Sul"
+    "Observações": "Jasmine mel e frutas 250g"
   },
   {
     "Item": "Ovinhos de amendoim",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "9,99",
-    "Observa\u00e7\u00f5es": "Elma Chips 145g Ovinhos de Amendoim Elma Chips 145g | Adicionado automaticamente"
+    "Observações": "Elma Chips 145g Ovinhos de Amendoim Elma Chips 145g | Adicionado automaticamente"
   },
   {
-    "Item": "Sal grosso iodado ita",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Sal grosso",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "3,65",
-    "Observa\u00e7\u00f5es": "1kg Sal Grosso Iodado Ita 1kg | Adicionado automaticamente"
+    "Observações": "Ita 1kg"
   },
   {
-    "Item": "Sal rosa do himalaia fino bombay herbs & spices pouch",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Mercearia / Gr\u00e3os",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Sal rosa",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "18,49",
-    "Observa\u00e7\u00f5es": "500g Sal Rosa do Himalaia Fino Bombay Herbs & Spices Pouch 500g | Zona Sul"
+    "Observações": "Bombay Himalaia 500g"
   },
   {
-    "Item": "Achocolatado p\u00f3 original  pote",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Outros",
-    "Quantidade T\u00edpica": "1",
+    "Item": "Achocolatado",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "10,99",
-    "Observa\u00e7\u00f5es": "Toddy 370g Achocolatado P\u00f3 Original Toddy Pote 370g | Zona Sul"
+    "Observações": "Toddy 370g"
   },
   {
-    "Item": "Desinfetante / multiuso",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Outros",
-    "Quantidade T\u00edpica": "1",
-    "Valor Esperado (Un)": "13,99",
-    "Observa\u00e7\u00f5es": "Limpador para L | Zona Sul || Veja 500ml Spray Tira Limo Veja Banheiro X14 500ml Oferta Limpador de Banheiro Gatilho Veja Tira Limo 500ml com 30% Desconto | Zona Sul || 1L Limpador Casa E Perfume Sensualidade 1L | Adicionado automaticamente || 500ml Limpador UAU Cloro Ativo 500ml | Adicionado automaticamente || Veja 1L Limpador para Limpeza Pesada Original Embalagem Econ\u00f4mica Veja 1L Limpador para Limpeza Pesada Original Embalagem Econ\u00f4mica, Veja, 1L | Adicionado automaticamente || Veja 1L Limpador para Limpeza Pesada Cloro Ativo Embalagem Econ\u00f4mica Veja 1L Limpador Multiuso Veja Cloro Ativo 1 | Adicionado automaticamente || Veja 500ml Limpador Limpeza Pesada com Bicarbonato e \u00c1lcool Lim\u00e3o Veja Power Fusion Frasco 500ml | Adicionado automaticamente"
-  },
-  {
-    "Item": "Guardanapo folha dupla  grand hotel 23,8cm\u00d721,8cm idades",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Outros",
-    "Quantidade T\u00edpica": "4",
-    "Valor Esperado (Un)": "6,19",
-    "Observa\u00e7\u00f5es": "Scott 50 Un Guardanapo Folha Dupla Scott Grand Hotel 23,8cm\u00d721,8cm 50 Unidades | Zona Sul"
-  },
-  {
-    "Item": "Macarr\u00e3o",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Padaria",
-    "Quantidade T\u00edpica": "1",
-    "Valor Esperado (Un)": "17,91",
-    "Observa\u00e7\u00f5es": "Perdig\u00e3o 300g Fettuccine ao Molho Bolonhesa com Queijo Parmes\u00e3o Ralado Perdig\u00e3o Meu Menu Pacote 300g | Zona Sul || Perdig\u00e3o 300g Fettuccine com Peru e Br\u00f3colis Perdig\u00e3o Meu Menu Pacote 300g | Zona Sul || Penne Piccole R | Zona Sul"
-  },
-  {
-    "Item": "Mistura para bolo regina cenoura  mistura para bolo de cenoura regina",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Padaria",
-    "Quantidade T\u00edpica": "1",
-    "Valor Esperado (Un)": "4,99",
-    "Observa\u00e7\u00f5es": "400g Mistura para Bolo Regina Cenoura 400g Mistura para Bolo de Cenoura Regina 400g | Adicionado automaticamente"
-  },
-  {
-    "Item": "P\u00e3o baguete italiano fil\u00e3o panetto unidade",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Padaria",
-    "Quantidade T\u00edpica": "1",
-    "Valor Esperado (Un)": "30,29",
-    "Observa\u00e7\u00f5es": "410g P\u00e3o Baguete Italiano Fil\u00e3o Panetto Unidade 410g | Adicionado automaticamente"
-  },
-  {
-    "Item": "P\u00e3o de forma",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Padaria",
-    "Quantidade T\u00edpica": "1",
-    "Valor Esperado (Un)": "17,89",
-    "Observa\u00e7\u00f5es": "Nutrella 450g P\u00e3o De F\u00f4rma Nutrella 100% Natural Pacote 450g | Zona Sul"
-  },
-  {
-    "Item": "P\u00e3o de forma artesano",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Padaria",
-    "Quantidade T\u00edpica": "1",
-    "Valor Esperado (Un)": "13,99",
-    "Observa\u00e7\u00f5es": "Wickbold 500g P\u00e3o do Forno 100% Nutri\u00e7\u00e3o Wickbold 500g | Adicionado automaticamente"
-  },
-  {
-    "Item": "P\u00e3o egg sponge  com idades",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Padaria",
-    "Quantidade T\u00edpica": "1",
-    "Valor Esperado (Un)": "17,49",
-    "Observa\u00e7\u00f5es": "Panco 10 Un P\u00e3o Egg Sponge Panco Com 10 Unidades 250g | Zona Sul"
-  },
-  {
-    "Item": "P\u00e3o franc\u00eas",
-    "Marca/Descri\u00e7\u00e3o": "",
-    "Categoria": "Padaria",
-    "Quantidade T\u00edpica": "1",
-    "Valor Esperado (Un)": "1,43",
-    "Observa\u00e7\u00f5es": "60g P\u00e3o Franc\u00eas Panetto 60g | Adicionado automaticamente"
-  },
-  {
-    "Item": "Sab\u00e3o em P\u00f3 Lava Lou\u00e7as",
-    "Marca/Descri\u00e7\u00e3o": "",
+    "Item": "Desinfetante",
+    "Marca/Descrição": "",
     "Categoria": "Limpeza",
-    "Quantidade T\u00edpica": "1",
+    "Quantidade Típica": "1",
+    "Valor Esperado (Un)": "13,99",
+    "Observações": "Veja 1L"
+  },
+  {
+    "Item": "Guardanapo",
+    "Marca/Descrição": "",
+    "Categoria": "Limpeza",
+    "Quantidade Típica": "4",
+    "Valor Esperado (Un)": "6,19",
+    "Observações": "Scott 50un Grand Hotel"
+  },
+  {
+    "Item": "Macarrão",
+    "Marca/Descrição": "",
+    "Categoria": "Mercearia / Grãos",
+    "Quantidade Típica": "1",
+    "Valor Esperado (Un)": "17,91",
+    "Observações": "Perdigão/Penne"
+  },
+  {
+    "Item": "Mistura para bolo",
+    "Marca/Descrição": "",
+    "Categoria": "Padaria",
+    "Quantidade Típica": "1",
+    "Valor Esperado (Un)": "4,99",
+    "Observações": "Regina cenoura 400g"
+  },
+  {
+    "Item": "Pão baguete",
+    "Marca/Descrição": "",
+    "Categoria": "Padaria",
+    "Quantidade Típica": "1",
+    "Valor Esperado (Un)": "30,29",
+    "Observações": "Panetto filão 410g"
+  },
+  {
+    "Item": "Pão de forma",
+    "Marca/Descrição": "",
+    "Categoria": "Padaria",
+    "Quantidade Típica": "1",
+    "Valor Esperado (Un)": "17,89",
+    "Observações": "Nutrella 450g Pão De Fôrma Nutrella 100% Natural Pacote 450g | Zona Sul"
+  },
+  {
+    "Item": "Pão de forma artesano",
+    "Marca/Descrição": "",
+    "Categoria": "Padaria",
+    "Quantidade Típica": "1",
+    "Valor Esperado (Un)": "13,99",
+    "Observações": "Wickbold 500g Pão do Forno 100% Nutrição Wickbold 500g | Adicionado automaticamente"
+  },
+  {
+    "Item": "Pão egg sponge",
+    "Marca/Descrição": "",
+    "Categoria": "Padaria",
+    "Quantidade Típica": "1",
+    "Valor Esperado (Un)": "17,49",
+    "Observações": "Panco 10un 250g"
+  },
+  {
+    "Item": "Pão francês",
+    "Marca/Descrição": "",
+    "Categoria": "Padaria",
+    "Quantidade Típica": "1",
+    "Valor Esperado (Un)": "1,43",
+    "Observações": "60g Pão Francês Panetto 60g | Adicionado automaticamente"
+  },
+  {
+    "Item": "Sabão em Pó Lava Louças",
+    "Marca/Descrição": "",
+    "Categoria": "Limpeza",
+    "Quantidade Típica": "1",
     "Valor Esperado (Un)": "55",
-    "Observa\u00e7\u00f5es": "Adicionado via chat"
+    "Observações": "Adicionado via chat"
   }
 ]

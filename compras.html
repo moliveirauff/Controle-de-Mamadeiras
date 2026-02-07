@@ -184,8 +184,14 @@
             cursor: pointer; 
         }
         
+        .item-name-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
         .item-name { 
-            flex: 1; 
             font-weight: 600; 
             font-size: 14px;
             transition: all 0.2s;
@@ -193,6 +199,15 @@
         .item-name.checked { 
             text-decoration: line-through; 
             opacity: 0.5; 
+        }
+        
+        .item-obs {
+            font-size: 11px;
+            color: #9ca3af;
+            font-weight: 400;
+        }
+        body.dark-mode .item-obs {
+            color: #6b7280;
         }
         
         .item-info { 
@@ -499,6 +514,7 @@
                 Categoria: masterItem.Categoria,
                 qty: masterItem["Quantidade Típica"],
                 price: masterItem["Valor Esperado (Un)"],
+                obs: masterItem["Observações"] || "",
                 checked: false
             });
             
@@ -607,10 +623,22 @@
                     checkbox.checked = item.checked || false;
                     checkbox.onchange = () => toggleCheck(item);
                     
+                    const nameWrapper = document.createElement('div');
+                    nameWrapper.className = 'item-name-wrapper';
+                    
                     const name = document.createElement('div');
                     name.className = 'item-name';
                     if (item.checked) name.classList.add('checked');
                     name.textContent = item.Item;
+                    nameWrapper.appendChild(name);
+                    
+                    // Add observations if available
+                    if (item.obs) {
+                        const obs = document.createElement('div');
+                        obs.className = 'item-obs';
+                        obs.textContent = item.obs;
+                        nameWrapper.appendChild(obs);
+                    }
                     
                     const info = document.createElement('div');
                     info.className = 'item-info';
@@ -639,7 +667,7 @@
                     info.appendChild(removeBtn);
                     
                     row.appendChild(checkbox);
-                    row.appendChild(name);
+                    row.appendChild(nameWrapper);
                     row.appendChild(info);
                     
                     card.appendChild(row);
@@ -679,9 +707,21 @@
                     const row = document.createElement('div');
                     row.className = 'item-row';
                     
+                    const nameWrapper = document.createElement('div');
+                    nameWrapper.className = 'item-name-wrapper';
+                    
                     const name = document.createElement('div');
                     name.className = 'item-name';
                     name.textContent = item.Item;
+                    nameWrapper.appendChild(name);
+                    
+                    // Add observations if available
+                    if (item["Observações"]) {
+                        const obs = document.createElement('div');
+                        obs.className = 'item-obs';
+                        obs.textContent = item["Observações"];
+                        nameWrapper.appendChild(obs);
+                    }
                     
                     const info = document.createElement('div');
                     info.className = 'item-info';
@@ -702,7 +742,7 @@
                     
                     info.appendChild(price);
                     
-                    row.appendChild(name);
+                    row.appendChild(nameWrapper);
                     row.appendChild(info);
                     
                     card.appendChild(row);
