@@ -209,6 +209,22 @@
         body.dark-mode .item-obs {
             color: #6b7280;
         }
+
+        .recipe-tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4338ca;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            font-weight: 700;
+            vertical-align: middle;
+        }
+        body.dark-mode .recipe-tag {
+            background: #312e81;
+            color: #c7d2fe;
+        }
         
         .item-info { 
             display: flex; 
@@ -653,6 +669,15 @@
                     name.className = 'item-name';
                     if (item.checked) name.classList.add('checked');
                     name.textContent = item.Item;
+
+                    // Add recipe tag if exists
+                    if (item.from_recipe) {
+                        const tag = document.createElement('span');
+                        tag.className = 'recipe-tag';
+                        tag.textContent = item.from_recipe;
+                        name.appendChild(tag);
+                    }
+                    
                     nameWrapper.appendChild(name);
                     
                     // Add observations - fetch from master if not in item
