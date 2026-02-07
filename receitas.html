@@ -41,12 +41,16 @@
         .nav-link { text-decoration: none; color: var(--accent); font-size: 0.9rem; margin-bottom: 10px; display: inline-block; }
         
         .search-bar {
-            width: 100%; max-width: 600px; margin-bottom: 20px;
-            display: flex; gap: 10px;
+            width: 100%; max-width: 600px; margin: 0 auto 20px auto;
+            display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
         }
         .search-bar input {
-            flex-grow: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;
+            flex-grow: 1; min-width: 200px; padding: 12px; border-radius: 8px; border: 1px solid #ddd;
             background: var(--card-bg); color: var(--text);
+        }
+        .search-bar select {
+            padding: 12px; border-radius: 8px; border: 1px solid #ddd;
+            background: var(--card-bg); color: var(--text); cursor: pointer;
         }
         
         .controls {
@@ -119,6 +123,15 @@
         </div>
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="Buscar por nome ou ingrediente..." oninput="filterRecipes()">
+            <select id="categoryFilter" onchange="filterRecipes()">
+                <option value="Todas">Todas as Categorias</option>
+                <option>Café da Manhã & Brunch</option>
+                <option>Pratos Principais</option>
+                <option>Lanches & Petiscos</option>
+                <option>Bebidas & Cafés</option>
+                <option>Sobremesas</option>
+                <option>Menu do Matheus</option>
+            </select>
         </div>
     </div>
 
@@ -199,10 +212,14 @@
 
         function filterRecipes() {
             const term = document.getElementById('searchInput').value.toLowerCase();
-            filteredRecipes = recipes.filter(r => 
-                r.nome.toLowerCase().includes(term) || 
-                r.ingredientes.some(i => i.nome.toLowerCase().includes(term))
-            );
+            const cat = document.getElementById('categoryFilter').value;
+            
+            filteredRecipes = recipes.filter(r => {
+                const matchesTerm = r.nome.toLowerCase().includes(term) || 
+                                   r.ingredientes.some(i => i.nome.toLowerCase().includes(term));
+                const matchesCat = (cat === "Todas" || r.categoria === cat);
+                return matchesTerm && matchesCat;
+            });
             renderRecipes();
         }
 
