@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livro de Receitas - Família Donato Suarez</title>
+    <style>
+        :root {
+            --bg: #f4f7f6;
+            --text: #333;
+            --card-bg: #ffffff;
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --gray: #95a5a6;
+        }
+        body.dark-mode {
+            --bg: #1a1a1a;
+            --text: #e0e0e0;
+            --card-bg: #2d2d2d;
+            --primary: #ecf0f1;
+            --accent: #3498db;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        #theme-toggle {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
+            padding: 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            z-index: 10;
+        }
+        body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+        .header { width: 100%; max-width: 800px; text-align: center; margin-bottom: 20px; padding-top: 40px; }
+        .header h1 { font-size: 1.8rem; margin: 15px 0; }
+        .nav-link { text-decoration: none; color: var(--accent); font-size: 0.9rem; margin-bottom: 5px; display: inline-block; }
+        
+        .search-bar {
+            width: 100%; max-width: 600px; margin: 0 auto 20px auto;
+            display: flex; gap: 10px; flex-direction: row; justify-content: center;
+        }
+        @media (max-width: 480px) {
+            .search-bar { flex-direction: column; padding: 0 15px; box-sizing: border-box; }
+            .header h1 { font-size: 1.5rem; }
+        }
+        .search-bar input {
+            flex-grow: 1; padding: 12px; border-radius: 10px; border: 1px solid #ddd;
+            background: var(--card-bg); color: var(--text); font-size: 16px; 
+        }
+        .search-bar select {
+            padding: 12px; border-radius: 10px; border: 1px solid #ddd;
+            background: var(--card-bg); color: var(--text); cursor: pointer; font-size: 16px;
+        }
+        
+        .controls {
+            display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;
+        }
+        button {
+            padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer;
+            font-weight: bold; transition: opacity 0.2s;
+        }
+        .btn-add { background: var(--success); color: white; }
+        .btn-sync { background: var(--accent); color: white; }
+        
+        .recipes-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px; width: 100%; max-width: 1000px;
+        }
+        .recipe-card {
+            background: var(--card-bg); border-radius: 15px; padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s; position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .recipe-card:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(0,0,0,0.12); }
+        .recipe-card:active { transform: scale(0.98); }
+        
+        .recipe-cat-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        /* Category Colors */
+        .cat-cafe { background: #fff3e0; color: #e65100; }
+        .cat-pratos { background: #e8f5e9; color: #1b5e20; }
+        .cat-lanches { background: #f3e5f5; color: #4a148c; }
+        .cat-bebidas { background: #e1f5fe; color: #01579b; }
+        .cat-sobremesas { background: #fce4ec; color: #880e4f; }
+        .cat-matheus { background: #efebe9; color: #3e2723; }
+        
+        body.dark-mode .cat-cafe { background: #432818; color: #ffb74d; }
+        body.dark-mode .cat-pratos { background: #1b3022; color: #81c784; }
+        body.dark-mode .cat-lanches { background: #2d1b33; color: #ba68c8; }
+        body.dark-mode .cat-bebidas { background: #152938; color: #4fc3f7; }
+        body.dark-mode .cat-sobremesas { background: #331b23; color: #f06292; }
+        body.dark-mode .cat-matheus { background: #2d2624; color: #a1887f; }
+
+        .recipe-name { font-size: 1.2rem; margin: 5px 0 12px 0; line-height: 1.3; font-weight: 700; }
+        .recipe-meta { font-size: 0.8rem; color: var(--gray); display: flex; gap: 12px; }
+
+        /* Modal / Recipe Details */
+        .modal {
+            display: none; position: fixed; z-index: 100; left: 0; top: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.8);
+            align-items: center; justify-content: center; padding: 0;
+        }
+        .modal-content {
+            background: var(--card-bg); padding: 25px; border-radius: 20px;
+            width: 95%; max-width: 550px; max-height: 90vh; overflow-y: auto;
+            position: relative; box-sizing: border-box;
+        }
+        @media (max-width: 480px) {
+            .modal-content { width: 100%; height: 100%; max-height: 100%; border-radius: 0; padding: 60px 20px 30px 20px; }
+            .recipe-actions { flex-direction: column; }
+            .recipe-actions button { width: 100%; }
+        }
+        .close-modal { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; cursor: pointer; padding: 10px; }
+        
+        .ing-list { margin: 20px 0; padding: 0; list-style: none; }
+        .ing-list li { padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; gap: 10px; }
+        .ing-list li::before { content: '•'; color: var(--accent); font-weight: bold; }
+        .preparo-text { white-space: pre-wrap; line-height: 1.6; background: rgba(0,0,0,0.02); padding: 15px; border-radius: 10px; border-left: 4px solid var(--accent); }
+        body.dark-mode .preparo-text { background: rgba(255,255,255,0.03); }
+
+        .recipe-actions { display: flex; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
+        .btn-shop { background: #f39c12; color: white; flex-grow: 1; padding: 15px; }
+        .btn-edit { background: var(--gray); color: white; padding: 15px; }
+
+        /* Form Styles */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd;
+            background: var(--bg); color: var(--text); box-sizing: border-box; font-size: 16px;
+        }
+        .ing-row { display: flex; gap: 5px; margin-bottom: 8px; }
+        .ing-row input { flex: 1; }
+        .ing-row .btn-remove { background: var(--danger); padding: 5px 10px; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <div class="header">
+        <a href="index.html" class="nav-link">← Voltar para Início</a>
+        <h1>👨‍🍳 Livro de Receitas</h1>
+        <div class="controls">
+            <button class="btn-add" onclick="openForm()">+ Nova Receita</button>
+            <button class="btn-sync" onclick="syncWithBot()" id="syncBtn">☁️ Sincronizar Base</button>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar por nome ou ingrediente..." oninput="filterRecipes()">
+            <select id="categoryFilter" onchange="filterRecipes()">
+                <option value="Todas">Todas as Categorias</option>
+                <option>Café da Manhã & Brunch</option>
+                <option>Pratos Principais</option>
+                <option>Lanches & Petiscos</option>
+                <option>Bebidas & Cafés</option>
+                <option>Sobremesas</option>
+                <option>Menu do Matheus</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="recipes-grid" id="recipesGrid"></div>
+
+    <!-- Modal Detalhes -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+
+    <!-- Modal Form (Add/Edit) -->
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeForm()">×</span>
+            <h2 id="formTitle">Nova Receita</h2>
+            <div id="recipeForm">
+                <input type="hidden" id="recipeIdx">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" id="fName">
+                </div>
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select id="fCat">
+                        <option>Café da Manhã & Brunch</option>
+                        <option>Pratos Principais</option>
+                        <option>Lanches & Petiscos</option>
+                        <option>Bebidas & Cafés</option>
+                        <option>Sobremesas</option>
+                        <option>Menu do Matheus</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Ingredientes</label>
+                    <div id="ingredientsList"></div>
+                    <button type="button" onclick="addIngRow()" style="margin-top:5px; background:var(--accent); color:white; width:100%">+ Ingrediente</button>
+                </div>
+                <div class="form-group">
+                    <label>Modo de Preparo</label>
+                    <textarea id="fPreparo" rows="6"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-add" onclick="saveRecipe()" style="width:100%; margin-top:10px; padding:15px">Salvar Receita</button>
+                    <button class="btn-reset" id="deleteBtn" onclick="deleteRecipe()" style="width:100%; margin-top:10px; background:var(--danger); color:white; display:none; padding:15px">Excluir Receita</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let recipes = [];
+        let filteredRecipes = [];
+
+        async function loadData() {
+            try {
+                const response = await fetch('data/receitas.json?v=' + Date.now());
+                recipes = await response.json();
+                filteredRecipes = [...recipes];
+                renderRecipes();
+            } catch (e) { console.error(e); }
+        }
+
+        function getCatClass(cat) {
+            if (cat.includes('Café')) return 'cat-cafe';
+            if (cat.includes('Pratos')) return 'cat-pratos';
+            if (cat.includes('Lanches')) return 'cat-lanches';
+            if (cat.includes('Bebidas')) return 'cat-bebidas';
+            if (cat.includes('Sobre')) return 'cat-sobremesas';
+            if (cat.includes('Matheus')) return 'cat-matheus';
+            return '';
+        }
+
+        function renderRecipes() {
+            const grid = document.getElementById('recipesGrid');
+            grid.innerHTML = '';
+            filteredRecipes.forEach((r, idx) => {
+                const originalIdx = recipes.findIndex(x => x.nome === r.nome);
+                const card = document.createElement('div');
+                card.className = 'recipe-card';
+                card.onclick = () => showDetails(originalIdx);
+                card.innerHTML = `
+                    <div class="recipe-cat-badge ${getCatClass(r.categoria)}">${r.categoria}</div>
+                    <h2 class="recipe-name">${r.nome}</h2>
+                    <div class="recipe-meta">
+                        <span>⏱️ ${r.tempo || '--'}</span>
+                        <span>📊 ${r.dificuldade || '--'}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterRecipes() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const cat = document.getElementById('categoryFilter').value;
+            
+            filteredRecipes = recipes.filter(r => {
+                const matchesTerm = r.nome.toLowerCase().includes(term) || 
+                                   r.ingredientes.some(i => i.nome.toLowerCase().includes(term));
+                const matchesCat = (cat === "Todas" || r.categoria === cat);
+                return matchesTerm && matchesCat;
+            });
+            renderRecipes();
+        }
+
+        function showDetails(idx) {
+            const r = recipes[idx];
+            const modal = document.getElementById('recipeModal');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = `
+                <span class="close-modal" onclick="closeModal()">×</span>
+                <div class="recipe-cat-badge ${getCatClass(r.categoria)}">${r.categoria}</div>
+                <h1 style="margin: 10px 0 20px 0">${r.nome}</h1>
+                <h3 style="border-bottom: 2px solid var(--accent); padding-bottom:5px">Ingredientes</h3>
+                <ul class="ing-list">
+                    ${r.ingredientes.map(i => `<li><b>${i.qtd}${i.unidade}</b> de ${i.nome}</li>`).join('')}
+                </ul>
+                <h3 style="border-bottom: 2px solid var(--accent); padding-bottom:5px">Modo de Preparo</h3>
+                <div class="preparo-text">${r.preparo}</div>
+                <div class="recipe-actions">
+                    <button class="btn-shop" onclick="sendToShop(${idx})">🛒 Mandar para Compras</button>
+                    <button class="btn-edit" onclick="openForm(${idx})">✏️ Editar</button>
+                </div>
+            `;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('recipeModal').style.display = 'none'; }
+
+        // Form Functions
+        function openForm(idx = null) {
+            closeModal();
+            const modal = document.getElementById('formModal');
+            document.getElementById('ingredientsList').innerHTML = '';
+            
+            if (idx !== null) {
+                const r = recipes[idx];
+                document.getElementById('formTitle').innerText = "Editar Receita";
+                document.getElementById('recipeIdx').value = idx;
+                document.getElementById('fName').value = r.nome;
+                document.getElementById('fCat').value = r.categoria;
+                document.getElementById('fPreparo').value = r.preparo;
+                r.ingredientes.forEach(i => addIngRow(i.nome, i.qtd, i.unidade));
+                document.getElementById('deleteBtn').style.display = 'block';
+            } else {
+                document.getElementById('formTitle').innerText = "Nova Receita";
+                document.getElementById('recipeIdx').value = '';
+                document.getElementById('fName').value = '';
+                document.getElementById('fPreparo').value = '';
+                addIngRow();
+                document.getElementById('deleteBtn').style.display = 'none';
+            }
+            modal.style.display = 'flex';
+        }
+
+        function closeForm() { document.getElementById('formModal').style.display = 'none'; }
+
+        function addIngRow(nome='', qtd='', unidade='') {
+            const list = document.getElementById('ingredientsList');
+            const div = document.createElement('div');
+            div.className = 'ing-row';
+            div.innerHTML = `
+                <input type="text" placeholder="Nome" value="${nome}" class="i-nome">
+                <input type="text" placeholder="Qtd" value="${qtd}" style="width:50px" class="i-qtd">
+                <input type="text" placeholder="Unid" value="${unidade}" style="width:60px" class="i-unid">
+                <button type="button" class="btn-remove" onclick="this.parentElement.remove()">×</button>
+            `;
+            list.appendChild(div);
+        }
+
+        function saveRecipe() {
+            const idx = document.getElementById('recipeIdx').value;
+            const newRecipe = {
+                nome: document.getElementById('fName').value,
+                categoria: document.getElementById('fCat').value,
+                preparo: document.getElementById('fPreparo').value,
+                ingredientes: []
+            };
+            
+            document.querySelectorAll('.ing-row').forEach(row => {
+                newRecipe.ingredientes.push({
+                    nome: row.querySelector('.i-nome').value,
+                    qtd: row.querySelector('.i-qtd').value,
+                    unidade: row.querySelector('.i-unid').value
+                });
+            });
+
+            if(idx !== "") recipes[idx] = newRecipe;
+            else recipes.push(newRecipe);
+
+            renderRecipes();
+            closeForm();
+        }
+
+        function deleteRecipe() {
+            const idx = document.getElementById('recipeIdx').value;
+            if(confirm("Excluir receita permanentemente?")) {
+                recipes.splice(idx, 1);
+                renderRecipes();
+                closeForm();
+            }
+        }
+
+        // Sync and Bot Comms
+        async function syncWithBot() {
+            const syncBtn = document.getElementById('syncBtn');
+            const originalText = syncBtn.innerText;
+            syncBtn.innerText = "⏳ Sincronizando...";
+            syncBtn.disabled = true;
+
+            const message = `BOT_SYNC_RECEITAS:${JSON.stringify(recipes)}`;
+            await sendToBot(message);
+            
+            syncBtn.innerText = "✅ Sincronizado!";
+            setTimeout(() => { syncBtn.innerText = originalText; syncBtn.disabled = false; }, 3000);
+        }
+
+        function sendToShop(idx) {
+            const r = recipes[idx];
+            if(confirm(`Adicionar ingredientes de "${r.nome}" à lista de compras?`)) {
+                const message = `BOT_RECEITA_PARA_COMPRAS:${JSON.stringify(r)}`;
+                sendToBot(message);
+                alert("🛒 Pedido enviado ao Bot!");
+            }
+        }
+
+        async function sendToBot(text) {
+            const botToken = "8032731802:AAH9E3Y_T04n5k9jUuE6f6U3g5L7h9B6E4M"; 
+            const chatId = "8306629331"; 
+            try {
+                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: chatId, text: text })
+                });
+            } catch (e) { console.error(e); }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-toggle').textContent = '☀️';
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
