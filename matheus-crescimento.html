@@ -43,29 +43,56 @@
     }
 
     /* === NAVBAR === */
+    .nav-link {
+      text-decoration: none;
+      color: var(--primary);
+      font-size: 0.9rem;
+      margin: 10px 0 15px 10px;
+      display: inline-block;
+    }
+
     h1 { 
       text-align: center; 
-      font-size: 20px; 
-      margin: 15px 0 5px 0; 
+      font-size: 1.5rem; 
+      margin: 10px 0 5px 0; 
       font-weight: 800; 
       color: var(--text); 
     }
     
     .subtitle { 
       text-align: center; 
-      font-size: 12px; 
+      font-size: 0.75rem; 
       color: var(--text-muted); 
       margin-bottom: 20px; 
     }
     
     #theme-toggle { 
       position: absolute; 
-      top: 10px; 
-      right: 10px; 
-      background: none; 
+      top: 15px; 
+      right: 15px; 
+      background: rgba(0,0,0,0.05);
       border: none; 
-      font-size: 20px; 
-      cursor: pointer; 
+      font-size: 1.2rem; 
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+
+    body.dark-mode #theme-toggle {
+      background: rgba(255,255,255,0.1);
+    }
+
+    #theme-toggle:hover {
+      background: rgba(0,0,0,0.1);
+    }
+
+    body.dark-mode #theme-toggle:hover {
+      background: rgba(255,255,255,0.15);
     }
 
     /* === CARDS === */
@@ -110,8 +137,9 @@
     }
 
     .chart-subtitle {
-      font-size: 0.875rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     /* === TIME FILTERS === */
@@ -227,7 +255,7 @@
 </head>
 <body>
   <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
-  <a href="index.html" style="text-decoration: none; color: #3498db; font-size: 0.9rem; margin-left: 10px; display: inline-block;">← Voltar para Início</a>
+  <a href="index.html" class="nav-link">← Voltar para Início</a>
   <h1>📊 Crescimento do Matheus</h1>
   <div class="subtitle" id="last-update">Carregando dados...</div>
 
@@ -273,7 +301,6 @@
         <div class="chart-header">
           <div class="chart-subtitle">Peso por Idade (kg) - Curvas OMS</div>
           <div class="time-filters">
-            <button class="time-filter-btn" data-chart="peso" data-period="1">1m</button>
             <button class="time-filter-btn" data-chart="peso" data-period="3">3m</button>
             <button class="time-filter-btn" data-chart="peso" data-period="6">6m</button>
             <button class="time-filter-btn active" data-chart="peso" data-period="all">Total</button>
@@ -286,7 +313,6 @@
         <div class="chart-header">
           <div class="chart-subtitle">Ganho de Peso Semanal (g/semana) - Real vs OMS Esperado</div>
           <div class="time-filters">
-            <button class="time-filter-btn" data-chart="ganhoPeso" data-period="1">1m</button>
             <button class="time-filter-btn" data-chart="ganhoPeso" data-period="3">3m</button>
             <button class="time-filter-btn" data-chart="ganhoPeso" data-period="6">6m</button>
             <button class="time-filter-btn active" data-chart="ganhoPeso" data-period="all">Total</button>
@@ -307,7 +333,6 @@
         <div class="chart-header">
           <div class="chart-subtitle">Altura por Idade (cm) - Curvas OMS</div>
           <div class="time-filters">
-            <button class="time-filter-btn" data-chart="altura" data-period="1">1m</button>
             <button class="time-filter-btn" data-chart="altura" data-period="3">3m</button>
             <button class="time-filter-btn" data-chart="altura" data-period="6">6m</button>
             <button class="time-filter-btn active" data-chart="altura" data-period="all">Total</button>
@@ -320,7 +345,6 @@
         <div class="chart-header">
           <div class="chart-subtitle">Ganho de Altura Semanal (cm/semana) - Real vs OMS Esperado</div>
           <div class="time-filters">
-            <button class="time-filter-btn" data-chart="ganhoAltura" data-period="1">1m</button>
             <button class="time-filter-btn" data-chart="ganhoAltura" data-period="3">3m</button>
             <button class="time-filter-btn" data-chart="ganhoAltura" data-period="6">6m</button>
             <button class="time-filter-btn active" data-chart="ganhoAltura" data-period="all">Total</button>
@@ -537,11 +561,11 @@
       return ganhoOMS;
     }
 
-    // === CORES DOS PERCENTIS ===
+    // === CORES DOS PERCENTIS (melhoradas para melhor visibilidade) ===
     const percentisCores = {
-      p10: { color: '#ed8936', width: 2, dash: [] },      // Laranja - Limite inferior zona normal
-      p50: { color: '#667eea', width: 3, dash: [] },      // Roxo - Mediana (referência principal)
-      p90: { color: '#ed8936', width: 2, dash: [] }       // Laranja - Limite superior zona normal
+      p10: { color: '#f59e0b', width: 2.5, dash: [] },      // Laranja vibrante - Limite inferior zona normal
+      p50: { color: '#667eea', width: 3.5, dash: [] },      // Roxo - Mediana (referência principal)
+      p90: { color: '#f59e0b', width: 2.5, dash: [] }       // Laranja vibrante - Limite superior zona normal
     };
 
     // === DATASETS PERCENTIS ===
@@ -557,7 +581,7 @@
         label: 'Faixa Normal (P10-P90)',
         data: dadosP90.map(d => ({ x: d.idade_meses, y: d.valor })),
         borderColor: 'transparent',
-        backgroundColor: 'rgba(237, 137, 54, 0.15)',
+        backgroundColor: 'rgba(245, 158, 11, 0.12)',
         fill: '+1',
         pointRadius: 0,
         tension: 0.4,
@@ -568,7 +592,7 @@
         label: 'P10',
         data: dadosP10.map(d => ({ x: d.idade_meses, y: d.valor })),
         borderColor: 'transparent',
-        backgroundColor: 'rgba(237, 137, 54, 0.15)',
+        backgroundColor: 'rgba(245, 158, 11, 0.12)',
         fill: false,
         pointRadius: 0,
         tension: 0.4,
@@ -629,10 +653,11 @@
         borderColor: '#48bb78',
         backgroundColor: '#48bb78',
         borderWidth: 3,
-        pointRadius: 5,
+        pointRadius: 6,
         pointBackgroundColor: '#48bb78',
         pointBorderColor: '#fff',
         pointBorderWidth: 2,
+        pointHoverRadius: 8,
         tension: 0.3,
         fill: false,
         order: 1
@@ -680,24 +705,24 @@
       const datasets = [
         {
           label: 'P10', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP10 })),
-          borderColor: '#ed8936', borderWidth: 1.5, borderDash: [4, 4],
+          borderColor: '#f59e0b', borderWidth: 2.5, borderDash: [4, 4],
           backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
           label: 'P50 (mediana)', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP50 })),
-          borderColor: '#667eea', borderWidth: 2,
+          borderColor: '#667eea', borderWidth: 3.5,
           backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
           label: 'P90', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP90 })),
-          borderColor: '#ed8936', borderWidth: 1.5, borderDash: [4, 4],
+          borderColor: '#f59e0b', borderWidth: 2.5, borderDash: [4, 4],
           backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
           label: 'Matheus', data: ganhos.map(g => ({ x: g.idadeMeses, y: g.ganho })),
           borderColor: '#48bb78', backgroundColor: 'rgba(72, 187, 120, 0.7)',
-          borderWidth: 2, pointRadius: 5, pointBackgroundColor: '#48bb78',
-          pointBorderColor: '#fff', pointBorderWidth: 2, type: 'bar', barPercentage: 0.6, order: 1
+          borderWidth: 2, pointRadius: 6, pointBackgroundColor: '#48bb78',
+          pointBorderColor: '#fff', pointBorderWidth: 2, type: 'bar', barPercentage: 0.7, order: 1
         }
       ];
 
@@ -763,24 +788,24 @@
       const datasets = [
         {
           label: 'P10', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP10 })),
-          borderColor: '#ed8936', borderWidth: 1.5, borderDash: [4, 4],
+          borderColor: '#f59e0b', borderWidth: 2.5, borderDash: [4, 4],
           backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
           label: 'P50 (mediana)', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP50 })),
-          borderColor: '#667eea', borderWidth: 2,
+          borderColor: '#667eea', borderWidth: 3.5,
           backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
           label: 'P90', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP90 })),
-          borderColor: '#ed8936', borderWidth: 1.5, borderDash: [4, 4],
+          borderColor: '#f59e0b', borderWidth: 2.5, borderDash: [4, 4],
           backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
           label: 'Matheus', data: ganhos.map(g => ({ x: g.idadeMeses, y: g.ganho })),
           borderColor: '#48bb78', backgroundColor: 'rgba(72, 187, 120, 0.7)',
-          borderWidth: 2, pointRadius: 5, pointBackgroundColor: '#48bb78',
-          pointBorderColor: '#fff', pointBorderWidth: 2, type: 'bar', barPercentage: 0.6, order: 1
+          borderWidth: 2, pointRadius: 6, pointBackgroundColor: '#48bb78',
+          pointBorderColor: '#fff', pointBorderWidth: 2, type: 'bar', barPercentage: 0.7, order: 1
         }
       ];
 
