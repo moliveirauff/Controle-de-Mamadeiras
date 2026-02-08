@@ -156,7 +156,7 @@
 
     @media (min-width: 768px) {
       .stats-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -247,10 +247,6 @@
         <h2 class="section-title">Última Medição</h2>
       </div>
       <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">Data</div>
-          <div class="stat-value" id="statData">-</div>
-        </div>
         <div class="stat-card">
           <div class="stat-label">Peso</div>
           <div class="stat-value" id="statPeso">-</div>
@@ -458,57 +454,84 @@
     }
 
     // === CÁLCULO DE GANHOS SEMANAIS ===
-    function calcularGanhosSemais(medicoes, tipo) {
-      const ganhosSemais = [];
-      
-      for (let i = 0; i < medicoes.length - 1; i++) {
-        const m1 = medicoes[i];
-        const m2 = medicoes[i + 1];
-        
-        const valor1 = tipo === 'peso' ? m1.peso_kg : m1.altura_cm;
-        const valor2 = tipo === 'peso' ? m2.peso_kg : m2.altura_cm;
-        
-        if (valor1 === null || valor2 === null) continue;
-        
-        const diasIntervalo = Math.round((m2.idade_meses - m1.idade_meses) * 30.44);
-        const ganhoTotal = valor2 - valor1;
-        const ganhoDiario = ganhoTotal / diasIntervalo;
-        const ganhoSemanal = ganhoDiario * 7;
-        
-        // Converter para g/semana (peso) ou manter cm/semana (altura)
-        const ganhoConvertido = tipo === 'peso' ? ganhoSemanal * 1000 : ganhoSemanal;
-        
-        // Ponto central do período (idade média)
-        const idadeMedio = (m1.idade_meses + m2.idade_meses) / 2;
-        
-        ganhosSemais.push({
-          idadeMeses: idadeMedio,
-          ganho: ganhoConvertido,
-          dataInicio: new Date(m1.data).toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'}),
-          dataFim: new Date(m2.data).toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'})
-        });
+    // === GANHO SEMANAL REAL (agrupado em semanas de 7 dias) ===
+    function calcularGanhosSemais(medicoes, tipo, dataNascimento) {
+      const validas = medicoes.filter(m => (tipo === 'peso' ? m.peso_kg : m.altura_cm) !== null);
+      if (validas.length < 2) return [];
+
+      const nascimento = new Date(dataNascimento).getTime();
+      const msDay = 86400000;
+
+      // Construir intervalos com ganho diário
+      const intervalos = [];
+      for (let i = 0; i < validas.length - 1; i++) {
+        const d1 = Math.round((new Date(validas[i].data).getTime() - nascimento) / msDay);
+        const d2 = Math.round((new Date(validas[i + 1].data).getTime() - nascimento) / msDay);
+        const v1 = tipo === 'peso' ? validas[i].peso_kg : validas[i].altura_cm;
+        const v2 = tipo === 'peso' ? validas[i + 1].peso_kg : validas[i + 1].altura_cm;
+        if (d2 > d1) {
+          intervalos.push({ diaInicio: d1, diaFim: d2, ganhoDiario: (v2 - v1) / (d2 - d1) });
+        }
       }
-      
-      return ganhosSemais;
+      if (intervalos.length === 0) return [];
+
+      // Agrupar em semanas de 7 dias
+      const primeiroDia = intervalos[0].diaInicio;
+      const ultimoDia = intervalos[intervalos.length - 1].diaFim;
+      const semanaOffset = Math.floor(primeiroDia / 7);
+      const semanas = [];
+
+      for (let semInicio = semanaOffset * 7; semInicio < ultimoDia; semInicio += 7) {
+        const semFim = semInicio + 7;
+        let ganho = 0;
+        let diasCobertos = 0;
+
+        for (const iv of intervalos) {
+          const overInicio = Math.max(semInicio, iv.diaInicio);
+          const overFim = Math.min(semFim, iv.diaFim);
+          if (overInicio < overFim) {
+            const dias = overFim - overInicio;
+            ganho += dias * iv.ganhoDiario;
+            diasCobertos += dias;
+          }
+        }
+
+        if (diasCobertos === 0) continue;
+
+        // Preencher dias sem dados proporcionalmente
+        if (diasCobertos < 7) {
+          ganho = ganho * (7 / diasCobertos);
+        }
+
+        const ganhoConvertido = tipo === 'peso' ? ganho * 1000 : ganho;
+        const idadeMeses = (semInicio + 3.5) / 30.44;
+        const numSemana = Math.floor(semInicio / 7) + 1;
+
+        semanas.push({ semana: numSemana, idadeMeses, ganho: ganhoConvertido });
+      }
+
+      return semanas;
     }
 
-    // === CALCULAR GANHO SEMANAL ESPERADO OMS ===
+    // === GANHO SEMANAL ESPERADO OMS (P10, P50, P90) ===
     function calcularGanhoSemanalOMS(refData, sexo, minIdade, maxIdade, tipo) {
       const ganhoOMS = [];
-      const step = 0.5;
+      const stepMeses = 7 / 30.44;
 
-      const curvaP30 = refData[sexo].p30;
+      const curvaP10 = refData[sexo].p10;
       const curvaP50 = refData[sexo].p50;
-      const curvaP70 = refData[sexo].p70;
+      const curvaP90 = refData[sexo].p90;
 
-      for (let idade = minIdade; idade <= maxIdade; idade += step) {
-        const idadeFutura = idade + (7 / 30.44);
+      for (let idade = Math.max(0, minIdade); idade <= maxIdade; idade += stepMeses / 2) {
+        const idadeFutura = idade + stepMeses;
+        const mult = tipo === 'peso' ? 1000 : 1;
 
-        const ganhoP30 = (interpolar(idadeFutura, curvaP30) - interpolar(idade, curvaP30)) * (tipo === 'peso' ? 1000 : 1);
-        const ganhoP50 = (interpolar(idadeFutura, curvaP50) - interpolar(idade, curvaP50)) * (tipo === 'peso' ? 1000 : 1);
-        const ganhoP70 = (interpolar(idadeFutura, curvaP70) - interpolar(idade, curvaP70)) * (tipo === 'peso' ? 1000 : 1);
-
-        ganhoOMS.push({ idade, ganhoP30, ganhoP50, ganhoP70 });
+        ganhoOMS.push({
+          idade,
+          ganhoP10: (interpolar(idadeFutura, curvaP10) - interpolar(idade, curvaP10)) * mult,
+          ganhoP50: (interpolar(idadeFutura, curvaP50) - interpolar(idade, curvaP50)) * mult,
+          ganhoP90: (interpolar(idadeFutura, curvaP90) - interpolar(idade, curvaP90)) * mult
+        });
       }
 
       return ganhoOMS;
@@ -642,8 +665,8 @@
     function renderChartGanhoPeso(data, period) {
       const { pesoRef, crianca } = data;
       const sexo = crianca.metadata.sexo;
-      const medicoes = crianca.medicoes.filter(m => m.peso_kg !== null);
-      const ganhos = calcularGanhosSemais(filterByPeriod(medicoes, period), 'peso');
+      const dataNascimento = crianca.metadata.data_nascimento;
+      const ganhos = calcularGanhosSemais(filterByPeriod(crianca.medicoes, period), 'peso', dataNascimento);
 
       if (ganhos.length === 0) {
         if (chartInstances.ganhoPeso) chartInstances.ganhoPeso.destroy();
@@ -656,54 +679,29 @@
 
       const datasets = [
         {
-          label: 'Faixa esperada (P30-P70)',
-          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP70 })),
-          borderColor: 'transparent',
-          backgroundColor: 'rgba(102, 126, 234, 0.15)',
-          fill: '+1',
-          pointRadius: 0,
-          tension: 0.4,
-          order: 10
+          label: 'P10', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP10 })),
+          borderColor: '#ed8936', borderWidth: 1.5, borderDash: [4, 4],
+          backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
-          label: '_p30_fill',
-          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP30 })),
-          borderColor: 'transparent',
-          backgroundColor: 'transparent',
-          fill: false,
-          pointRadius: 0,
-          tension: 0.4,
-          order: 10
+          label: 'P50 (mediana)', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP50 })),
+          borderColor: '#667eea', borderWidth: 2,
+          backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
-          label: 'Esperado OMS (P50)',
-          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP50 })),
-          borderColor: '#667eea',
-          borderWidth: 2,
-          borderDash: [6, 3],
-          backgroundColor: 'transparent',
-          pointRadius: 0,
-          tension: 0.4,
-          fill: false,
-          order: 5
+          label: 'P90', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP90 })),
+          borderColor: '#ed8936', borderWidth: 1.5, borderDash: [4, 4],
+          backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
-          label: 'Matheus (real)',
-          data: ganhos.map(g => ({ x: g.idadeMeses, y: g.ganho })),
-          borderColor: '#48bb78',
-          backgroundColor: 'rgba(72, 187, 120, 0.7)',
-          borderWidth: 2,
-          pointRadius: 5,
-          pointBackgroundColor: '#48bb78',
-          pointBorderColor: '#fff',
-          pointBorderWidth: 2,
-          type: 'bar',
-          barPercentage: 0.6,
-          order: 1
+          label: 'Matheus', data: ganhos.map(g => ({ x: g.idadeMeses, y: g.ganho })),
+          borderColor: '#48bb78', backgroundColor: 'rgba(72, 187, 120, 0.7)',
+          borderWidth: 2, pointRadius: 5, pointBackgroundColor: '#48bb78',
+          pointBorderColor: '#fff', pointBorderWidth: 2, type: 'bar', barPercentage: 0.6, order: 1
         }
       ];
 
-      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP50), ...ganhoOMS.map(g => g.ganhoP70)];
+      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP10), ...ganhoOMS.map(g => g.ganhoP90)];
 
       if (chartInstances.ganhoPeso) chartInstances.ganhoPeso.destroy();
       chartInstances.ganhoPeso = new Chart(document.getElementById('chartGanhoPeso'), {
@@ -712,18 +710,8 @@
         options: {
           ...chartOptions('Idade (meses)', 'Ganho (g/semana)', calculateYRange(allY, 0.15), Math.max(0, minIdade), maxIdade),
           plugins: {
-            legend: {
-              display: true, position: 'bottom',
-              labels: { usePointStyle: true, padding: 12, font: { size: 11 }, filter: item => !item.text.startsWith('_') }
-            },
-            tooltip: {
-              callbacks: {
-                label: ctx => {
-                  if (ctx.dataset.label.startsWith('_')) return null;
-                  return `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(0)} g/sem`;
-                }
-              }
-            }
+            legend: { display: true, position: 'bottom', labels: { usePointStyle: true, padding: 12, font: { size: 11 } } },
+            tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(0)} g/sem` } }
           }
         }
       });
@@ -760,8 +748,8 @@
     function renderChartGanhoAltura(data, period) {
       const { alturaRef, crianca } = data;
       const sexo = crianca.metadata.sexo;
-      const medicoes = crianca.medicoes.filter(m => m.altura_cm !== null);
-      const ganhos = calcularGanhosSemais(filterByPeriod(medicoes, period), 'altura');
+      const dataNascimento = crianca.metadata.data_nascimento;
+      const ganhos = calcularGanhosSemais(filterByPeriod(crianca.medicoes, period), 'altura', dataNascimento);
 
       if (ganhos.length === 0) {
         if (chartInstances.ganhoAltura) chartInstances.ganhoAltura.destroy();
@@ -774,54 +762,29 @@
 
       const datasets = [
         {
-          label: 'Faixa esperada (P30-P70)',
-          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP70 })),
-          borderColor: 'transparent',
-          backgroundColor: 'rgba(102, 126, 234, 0.15)',
-          fill: '+1',
-          pointRadius: 0,
-          tension: 0.4,
-          order: 10
+          label: 'P10', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP10 })),
+          borderColor: '#ed8936', borderWidth: 1.5, borderDash: [4, 4],
+          backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
-          label: '_p30_fill',
-          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP30 })),
-          borderColor: 'transparent',
-          backgroundColor: 'transparent',
-          fill: false,
-          pointRadius: 0,
-          tension: 0.4,
-          order: 10
+          label: 'P50 (mediana)', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP50 })),
+          borderColor: '#667eea', borderWidth: 2,
+          backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
-          label: 'Esperado OMS (P50)',
-          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP50 })),
-          borderColor: '#667eea',
-          borderWidth: 2,
-          borderDash: [6, 3],
-          backgroundColor: 'transparent',
-          pointRadius: 0,
-          tension: 0.4,
-          fill: false,
-          order: 5
+          label: 'P90', data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP90 })),
+          borderColor: '#ed8936', borderWidth: 1.5, borderDash: [4, 4],
+          backgroundColor: 'transparent', pointRadius: 0, tension: 0.4, fill: false, order: 5
         },
         {
-          label: 'Matheus (real)',
-          data: ganhos.map(g => ({ x: g.idadeMeses, y: g.ganho })),
-          borderColor: '#48bb78',
-          backgroundColor: 'rgba(72, 187, 120, 0.7)',
-          borderWidth: 2,
-          pointRadius: 5,
-          pointBackgroundColor: '#48bb78',
-          pointBorderColor: '#fff',
-          pointBorderWidth: 2,
-          type: 'bar',
-          barPercentage: 0.6,
-          order: 1
+          label: 'Matheus', data: ganhos.map(g => ({ x: g.idadeMeses, y: g.ganho })),
+          borderColor: '#48bb78', backgroundColor: 'rgba(72, 187, 120, 0.7)',
+          borderWidth: 2, pointRadius: 5, pointBackgroundColor: '#48bb78',
+          pointBorderColor: '#fff', pointBorderWidth: 2, type: 'bar', barPercentage: 0.6, order: 1
         }
       ];
 
-      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP50), ...ganhoOMS.map(g => g.ganhoP70)];
+      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP10), ...ganhoOMS.map(g => g.ganhoP90)];
 
       if (chartInstances.ganhoAltura) chartInstances.ganhoAltura.destroy();
       chartInstances.ganhoAltura = new Chart(document.getElementById('chartGanhoAltura'), {
@@ -830,18 +793,8 @@
         options: {
           ...chartOptions('Idade (meses)', 'Ganho (cm/semana)', calculateYRange(allY, 0.15), Math.max(0, minIdade), maxIdade),
           plugins: {
-            legend: {
-              display: true, position: 'bottom',
-              labels: { usePointStyle: true, padding: 12, font: { size: 11 }, filter: item => !item.text.startsWith('_') }
-            },
-            tooltip: {
-              callbacks: {
-                label: ctx => {
-                  if (ctx.dataset.label.startsWith('_')) return null;
-                  return `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)} cm/sem`;
-                }
-              }
-            }
+            legend: { display: true, position: 'bottom', labels: { usePointStyle: true, padding: 12, font: { size: 11 } } },
+            tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)} cm/sem` } }
           }
         }
       });
@@ -853,10 +806,6 @@
       const sexo = crianca.metadata.sexo;
       const medicoes = crianca.medicoes;
 
-      const ultimaMedicao = medicoes[medicoes.length - 1];
-      document.getElementById('statData').textContent = new Date(ultimaMedicao.data).toLocaleDateString('pt-BR');
-
-      // Peso: pegar última medição com peso
       const ultimoPeso = [...medicoes].reverse().find(m => m.peso_kg !== null);
       if (ultimoPeso) {
         document.getElementById('statPeso').textContent = `${ultimoPeso.peso_kg} kg`;
@@ -865,7 +814,6 @@
         document.getElementById('statPesoPercentil').textContent = percPeso;
       }
 
-      // Altura: pegar última medição com altura
       const ultimaAltura = [...medicoes].reverse().find(m => m.altura_cm !== null);
       if (ultimaAltura) {
         document.getElementById('statAltura').textContent = `${ultimaAltura.altura_cm} cm`;
