@@ -495,36 +495,22 @@
     // === CALCULAR GANHO SEMANAL ESPERADO OMS ===
     function calcularGanhoSemanalOMS(refData, sexo, minIdade, maxIdade, tipo) {
       const ganhoOMS = [];
-      const step = 0.5; // Intervalos de meio mês para suavidade
-      
-      // Usar P50 (mediana) para referência
-      const curvaP25 = refData[sexo].p25;
+      const step = 0.5;
+
+      const curvaP30 = refData[sexo].p30;
       const curvaP50 = refData[sexo].p50;
-      const curvaP75 = refData[sexo].p75;
-      
+      const curvaP70 = refData[sexo].p70;
+
       for (let idade = minIdade; idade <= maxIdade; idade += step) {
-        const idadeFutura = idade + (7 / 30.44); // 7 dias em meses
-        
-        const valorAtualP25 = interpolar(idade, curvaP25);
-        const valorFuturoP25 = interpolar(idadeFutura, curvaP25);
-        const ganhoP25 = (valorFuturoP25 - valorAtualP25) * (tipo === 'peso' ? 1000 : 1);
-        
-        const valorAtualP50 = interpolar(idade, curvaP50);
-        const valorFuturoP50 = interpolar(idadeFutura, curvaP50);
-        const ganhoP50 = (valorFuturoP50 - valorAtualP50) * (tipo === 'peso' ? 1000 : 1);
-        
-        const valorAtualP75 = interpolar(idade, curvaP75);
-        const valorFuturoP75 = interpolar(idadeFutura, curvaP75);
-        const ganhoP75 = (valorFuturoP75 - valorAtualP75) * (tipo === 'peso' ? 1000 : 1);
-        
-        ganhoOMS.push({
-          idade: idade,
-          ganhoP25: ganhoP25,
-          ganhoP50: ganhoP50,
-          ganhoP75: ganhoP75
-        });
+        const idadeFutura = idade + (7 / 30.44);
+
+        const ganhoP30 = (interpolar(idadeFutura, curvaP30) - interpolar(idade, curvaP30)) * (tipo === 'peso' ? 1000 : 1);
+        const ganhoP50 = (interpolar(idadeFutura, curvaP50) - interpolar(idade, curvaP50)) * (tipo === 'peso' ? 1000 : 1);
+        const ganhoP70 = (interpolar(idadeFutura, curvaP70) - interpolar(idade, curvaP70)) * (tipo === 'peso' ? 1000 : 1);
+
+        ganhoOMS.push({ idade, ganhoP30, ganhoP50, ganhoP70 });
       }
-      
+
       return ganhoOMS;
     }
 
@@ -569,10 +555,377 @@
       percentis.forEach(p => {
         const config = percentisCores[p];
         const dadosFiltrados = refData[sexo][p].filter(d => d.idade_meses >= minIdade && d.idade_meses <= maxIdade);
-        
+
         datasets.push({
           label: p === 'p50' ? 'P50 (mediana)' : p.toUpperCase(),
           data: dadosFiltrados.map(d => ({ x: d.idade_meses, y: d.valor })),
           borderColor: config.color,
           borderWidth: config.width,
           borderDash: config.dash,
+          backgroundColor: 'transparent',
+          pointRadius: 0,
+          tension: 0.4,
+          fill: false,
+          order: 5
+        });
+      });
+
+      return datasets;
+    }
+
+    // === OPCOES COMUNS DOS GRAFICOS ===
+    function chartOptions(xLabel, yLabel, yRange, minX, maxX) {
+      return {
+        responsive: true,
+        maintainAspectRatio: true,
+        interaction: { mode: 'nearest', intersect: false },
+        scales: {
+          x: {
+            type: 'linear',
+            title: { display: true, text: xLabel },
+            min: minX,
+            max: maxX
+          },
+          y: {
+            title: { display: true, text: yLabel },
+            min: yRange.min,
+            max: yRange.max
+          }
+        },
+        plugins: {
+          legend: { display: true, position: 'bottom', labels: { usePointStyle: true, padding: 12, font: { size: 11 } } }
+        }
+      };
+    }
+
+    // === DATASET DO MATHEUS (linha) ===
+    function datasetMatheus(medicoes, campo, label) {
+      return {
+        label: label || 'Matheus',
+        data: medicoes.map(m => ({ x: m.idade_meses, y: m[campo] })),
+        borderColor: '#48bb78',
+        backgroundColor: '#48bb78',
+        borderWidth: 3,
+        pointRadius: 5,
+        pointBackgroundColor: '#48bb78',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        tension: 0.3,
+        fill: false,
+        order: 1
+      };
+    }
+
+    // === RENDER: PESO POR IDADE ===
+    function renderChartPeso(data, period) {
+      const { pesoRef, crianca } = data;
+      const sexo = crianca.metadata.sexo;
+      const medicoes = crianca.medicoes.filter(m => m.peso_kg !== null);
+      const filtered = filterByPeriod(medicoes, period);
+
+      const minIdade = period === 'all' ? 0 : Math.max(0, Math.max(...medicoes.map(m => m.idade_meses)) - period);
+      const maxIdade = Math.max(...medicoes.map(m => m.idade_meses)) + 1;
+
+      const dsPercentis = criarDatasetsPercentis(pesoRef, sexo, minIdade, maxIdade);
+      const dsMatheus = datasetMatheus(filtered, 'peso_kg');
+      const allY = [...filtered.map(m => m.peso_kg), ...dsPercentis.flatMap(ds => ds.data.map(d => d.y))];
+
+      if (chartInstances.peso) chartInstances.peso.destroy();
+      chartInstances.peso = new Chart(document.getElementById('chartPeso'), {
+        type: 'line',
+        data: { datasets: [...dsPercentis, dsMatheus] },
+        options: chartOptions('Idade (meses)', 'Peso (kg)', calculateYRange(allY), minIdade, maxIdade)
+      });
+    }
+
+    // === RENDER: GANHO DE PESO SEMANAL ===
+    function renderChartGanhoPeso(data, period) {
+      const { pesoRef, crianca } = data;
+      const sexo = crianca.metadata.sexo;
+      const medicoes = crianca.medicoes.filter(m => m.peso_kg !== null);
+      const ganhos = calcularGanhosSemais(filterByPeriod(medicoes, period), 'peso');
+
+      if (ganhos.length === 0) {
+        if (chartInstances.ganhoPeso) chartInstances.ganhoPeso.destroy();
+        return;
+      }
+
+      const minIdade = Math.min(...ganhos.map(g => g.idadeMeses)) - 0.5;
+      const maxIdade = Math.max(...ganhos.map(g => g.idadeMeses)) + 0.5;
+      const ganhoOMS = calcularGanhoSemanalOMS(pesoRef, sexo, Math.max(0, minIdade), maxIdade, 'peso');
+
+      const datasets = [
+        {
+          label: 'Faixa esperada (P30-P70)',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP70 })),
+          borderColor: 'transparent',
+          backgroundColor: 'rgba(102, 126, 234, 0.15)',
+          fill: '+1',
+          pointRadius: 0,
+          tension: 0.4,
+          order: 10
+        },
+        {
+          label: '_p30_fill',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP30 })),
+          borderColor: 'transparent',
+          backgroundColor: 'transparent',
+          fill: false,
+          pointRadius: 0,
+          tension: 0.4,
+          order: 10
+        },
+        {
+          label: 'Esperado OMS (P50)',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP50 })),
+          borderColor: '#667eea',
+          borderWidth: 2,
+          borderDash: [6, 3],
+          backgroundColor: 'transparent',
+          pointRadius: 0,
+          tension: 0.4,
+          fill: false,
+          order: 5
+        },
+        {
+          label: 'Matheus (real)',
+          data: ganhos.map(g => ({ x: g.idadeMeses, y: g.ganho })),
+          borderColor: '#48bb78',
+          backgroundColor: 'rgba(72, 187, 120, 0.7)',
+          borderWidth: 2,
+          pointRadius: 5,
+          pointBackgroundColor: '#48bb78',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          type: 'bar',
+          barPercentage: 0.6,
+          order: 1
+        }
+      ];
+
+      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP50), ...ganhoOMS.map(g => g.ganhoP70)];
+
+      if (chartInstances.ganhoPeso) chartInstances.ganhoPeso.destroy();
+      chartInstances.ganhoPeso = new Chart(document.getElementById('chartGanhoPeso'), {
+        type: 'line',
+        data: { datasets },
+        options: {
+          ...chartOptions('Idade (meses)', 'Ganho (g/semana)', calculateYRange(allY, 0.15), Math.max(0, minIdade), maxIdade),
+          plugins: {
+            legend: {
+              display: true, position: 'bottom',
+              labels: { usePointStyle: true, padding: 12, font: { size: 11 }, filter: item => !item.text.startsWith('_') }
+            },
+            tooltip: {
+              callbacks: {
+                label: ctx => {
+                  if (ctx.dataset.label.startsWith('_')) return null;
+                  return `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(0)} g/sem`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // === RENDER: ALTURA POR IDADE ===
+    function renderChartAltura(data, period) {
+      const { alturaRef, crianca } = data;
+      const sexo = crianca.metadata.sexo;
+      const medicoes = crianca.medicoes.filter(m => m.altura_cm !== null);
+      const filtered = filterByPeriod(medicoes, period);
+
+      if (filtered.length === 0) {
+        if (chartInstances.altura) chartInstances.altura.destroy();
+        return;
+      }
+
+      const minIdade = period === 'all' ? 0 : Math.max(0, Math.max(...medicoes.map(m => m.idade_meses)) - period);
+      const maxIdade = Math.max(...medicoes.map(m => m.idade_meses)) + 1;
+
+      const dsPercentis = criarDatasetsPercentis(alturaRef, sexo, minIdade, maxIdade);
+      const dsMatheus = datasetMatheus(filtered, 'altura_cm');
+      const allY = [...filtered.map(m => m.altura_cm), ...dsPercentis.flatMap(ds => ds.data.map(d => d.y))];
+
+      if (chartInstances.altura) chartInstances.altura.destroy();
+      chartInstances.altura = new Chart(document.getElementById('chartAltura'), {
+        type: 'line',
+        data: { datasets: [...dsPercentis, dsMatheus] },
+        options: chartOptions('Idade (meses)', 'Altura (cm)', calculateYRange(allY), minIdade, maxIdade)
+      });
+    }
+
+    // === RENDER: GANHO DE ALTURA SEMANAL ===
+    function renderChartGanhoAltura(data, period) {
+      const { alturaRef, crianca } = data;
+      const sexo = crianca.metadata.sexo;
+      const medicoes = crianca.medicoes.filter(m => m.altura_cm !== null);
+      const ganhos = calcularGanhosSemais(filterByPeriod(medicoes, period), 'altura');
+
+      if (ganhos.length === 0) {
+        if (chartInstances.ganhoAltura) chartInstances.ganhoAltura.destroy();
+        return;
+      }
+
+      const minIdade = Math.min(...ganhos.map(g => g.idadeMeses)) - 0.5;
+      const maxIdade = Math.max(...ganhos.map(g => g.idadeMeses)) + 0.5;
+      const ganhoOMS = calcularGanhoSemanalOMS(alturaRef, sexo, Math.max(0, minIdade), maxIdade, 'altura');
+
+      const datasets = [
+        {
+          label: 'Faixa esperada (P30-P70)',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP70 })),
+          borderColor: 'transparent',
+          backgroundColor: 'rgba(102, 126, 234, 0.15)',
+          fill: '+1',
+          pointRadius: 0,
+          tension: 0.4,
+          order: 10
+        },
+        {
+          label: '_p30_fill',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP30 })),
+          borderColor: 'transparent',
+          backgroundColor: 'transparent',
+          fill: false,
+          pointRadius: 0,
+          tension: 0.4,
+          order: 10
+        },
+        {
+          label: 'Esperado OMS (P50)',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP50 })),
+          borderColor: '#667eea',
+          borderWidth: 2,
+          borderDash: [6, 3],
+          backgroundColor: 'transparent',
+          pointRadius: 0,
+          tension: 0.4,
+          fill: false,
+          order: 5
+        },
+        {
+          label: 'Matheus (real)',
+          data: ganhos.map(g => ({ x: g.idadeMeses, y: g.ganho })),
+          borderColor: '#48bb78',
+          backgroundColor: 'rgba(72, 187, 120, 0.7)',
+          borderWidth: 2,
+          pointRadius: 5,
+          pointBackgroundColor: '#48bb78',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          type: 'bar',
+          barPercentage: 0.6,
+          order: 1
+        }
+      ];
+
+      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP50), ...ganhoOMS.map(g => g.ganhoP70)];
+
+      if (chartInstances.ganhoAltura) chartInstances.ganhoAltura.destroy();
+      chartInstances.ganhoAltura = new Chart(document.getElementById('chartGanhoAltura'), {
+        type: 'line',
+        data: { datasets },
+        options: {
+          ...chartOptions('Idade (meses)', 'Ganho (cm/semana)', calculateYRange(allY, 0.15), Math.max(0, minIdade), maxIdade),
+          plugins: {
+            legend: {
+              display: true, position: 'bottom',
+              labels: { usePointStyle: true, padding: 12, font: { size: 11 }, filter: item => !item.text.startsWith('_') }
+            },
+            tooltip: {
+              callbacks: {
+                label: ctx => {
+                  if (ctx.dataset.label.startsWith('_')) return null;
+                  return `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)} cm/sem`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // === ATUALIZAR STATS CARDS ===
+    function updateStats(data) {
+      const { pesoRef, alturaRef, crianca } = data;
+      const sexo = crianca.metadata.sexo;
+      const medicoes = crianca.medicoes;
+
+      const ultimaMedicao = medicoes[medicoes.length - 1];
+      document.getElementById('statData').textContent = new Date(ultimaMedicao.data).toLocaleDateString('pt-BR');
+
+      // Peso: pegar última medição com peso
+      const ultimoPeso = [...medicoes].reverse().find(m => m.peso_kg !== null);
+      if (ultimoPeso) {
+        document.getElementById('statPeso').textContent = `${ultimoPeso.peso_kg} kg`;
+        document.getElementById('statPesoData').textContent = new Date(ultimoPeso.data).toLocaleDateString('pt-BR');
+        const percPeso = calcularPercentil(ultimoPeso.idade_meses, ultimoPeso.peso_kg, pesoRef, sexo);
+        document.getElementById('statPesoPercentil').textContent = percPeso;
+      }
+
+      // Altura: pegar última medição com altura
+      const ultimaAltura = [...medicoes].reverse().find(m => m.altura_cm !== null);
+      if (ultimaAltura) {
+        document.getElementById('statAltura').textContent = `${ultimaAltura.altura_cm} cm`;
+        document.getElementById('statAlturaData').textContent = new Date(ultimaAltura.data).toLocaleDateString('pt-BR');
+        const percAltura = calcularPercentil(ultimaAltura.idade_meses, ultimaAltura.altura_cm, alturaRef, sexo);
+        document.getElementById('statAlturaPercentil').textContent = percAltura;
+      } else {
+        document.getElementById('statAltura').textContent = '—';
+      }
+    }
+
+    // === RENDER ALL ===
+    function renderAll(data) {
+      renderChartPeso(data, currentFilters.peso);
+      renderChartGanhoPeso(data, currentFilters.ganhoPeso);
+      renderChartAltura(data, currentFilters.altura);
+      renderChartGanhoAltura(data, currentFilters.ganhoAltura);
+      updateStats(data);
+    }
+
+    // === EVENT LISTENERS: FILTROS DE TEMPO ===
+    document.querySelectorAll('.time-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const chart = btn.dataset.chart;
+        const period = btn.dataset.period === 'all' ? 'all' : parseInt(btn.dataset.period);
+
+        // Atualizar botão ativo
+        btn.parentElement.querySelectorAll('.time-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        currentFilters[chart] = period;
+
+        if (!globalData) return;
+
+        switch (chart) {
+          case 'peso': renderChartPeso(globalData, period); break;
+          case 'ganhoPeso': renderChartGanhoPeso(globalData, period); break;
+          case 'altura': renderChartAltura(globalData, period); break;
+          case 'ganhoAltura': renderChartGanhoAltura(globalData, period); break;
+        }
+      });
+    });
+
+    // === INIT ===
+    (async function init() {
+      try {
+        globalData = await loadData();
+
+        const meta = globalData.crianca.metadata;
+        const lastUpdate = new Date(meta.ultima_atualizacao).toLocaleDateString('pt-BR');
+        document.getElementById('last-update').textContent = `Última atualização: ${lastUpdate}`;
+
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+
+        renderAll(globalData);
+      } catch (e) {
+        console.error('Falha na inicialização:', e);
+      }
+    })();
+  </script>
+</body>
+</html>
