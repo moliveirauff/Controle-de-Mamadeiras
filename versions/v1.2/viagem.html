@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist de Viagem - Família Donato Suarez</title>
+    <style>
+        :root {
+            --bg: #f4f7f6;
+            --text: #333;
+            --card-bg: #ffffff;
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --gray: #95a5a6;
+            --border: #e0e0e0;
+        }
+        body.dark-mode {
+            --bg: #1a1a1a;
+            --text: #e0e0e0;
+            --card-bg: #2d2d2d;
+            --primary: #ecf0f1;
+            --accent: #3498db;
+            --border: #3d3d3d;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 10px;
+            padding-bottom: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        #theme-toggle {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
+            padding: 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            z-index: 10;
+        }
+        body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+        .nav-link { text-decoration: none; color: var(--accent); font-size: 0.9rem; margin: 10px 0 0 10px; align-self: flex-start; }
+        
+        .header {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-top: 10px;
+        }
+        h1 { font-size: 1.8rem; font-weight: 800; margin: 15px 0 20px 0; }
+
+        .progress-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .progress-container {
+            width: 100%;
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin: 10px 0;
+            height: 12px;
+            overflow: hidden;
+        }
+        body.dark-mode .progress-container { background: rgba(255,255,255,0.1); }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        #progressText { font-weight: 700; font-size: 0.9rem; color: var(--accent); }
+        
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+            width: 100%;
+            max-width: 600px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-add { background: var(--success); color: white; }
+        .btn-sync { background: var(--accent); color: white; }
+        .btn-filter { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+        .btn-reset { background: rgba(231, 76, 60, 0.1); color: var(--danger); border: 1px solid rgba(231, 76, 60, 0.2); }
+        button:active { transform: scale(0.96); }
+        
+        .category-section {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 15px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+        }
+        .category-header {
+            padding: 15px 20px;
+            background: rgba(52, 152, 219, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .category-title {
+            font-weight: 800;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+        }
+        .category-stats { font-size: 0.75rem; font-weight: 700; color: var(--gray); text-transform: uppercase; }
+        
+        .items-list { padding: 5px 0; }
+        .item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+        .item:last-child { border-bottom: none; }
+        .item:active { background: rgba(0,0,0,0.02); }
+        .item.checked { opacity: 0.5; }
+        .item.checked span { text-decoration: line-through; }
+        .item input { width: 20px; height: 20px; margin-right: 15px; flex-shrink: 0; cursor: pointer; }
+        .item-text { flex-grow: 1; font-weight: 500; }
+        
+        .btn-edit-icon {
+            background: none; border: none; padding: 10px; font-size: 1.1rem; cursor: pointer; color: var(--gray);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; position: fixed; z-index: 100; left: 0; top: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.7);
+            align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: var(--card-bg); padding: 30px; border-radius: 20px;
+            width: 90%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .modal-header { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 700; opacity: 0.8; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border);
+            background: var(--bg); color: var(--text); font-size: 16px;
+        }
+        .modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
+        .modal-actions button { width: 100%; justify-content: center; padding: 14px; }
+
+        .hidden { display: none !important; }
+        .collapsed .items-list { display: none; }
+        .arrow { transition: transform 0.2s; font-size: 0.7rem; }
+        .collapsed .arrow { transform: rotate(-90deg); }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            .kpi-val { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <a href="index.html" class="nav-link">← Voltar para Início</a>
+    
+    <div class="header">
+        <h1>✈️ Checklist de Viagem</h1>
+    </div>
+
+    <div class="progress-card">
+        <div id="progressText">0% concluído</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="btn-add" onclick="openModal()">+ Novo Item</button>
+        <button class="btn-sync" onclick="saveData()" id="syncBtn">☁️ Sincronizar</button>
+        <button class="btn-filter" onclick="toggleFilter()" id="filterBtn">Ocultar Riscados</button>
+        <button class="btn-reset" onclick="resetList()">🗑️ Zerar</button>
+    </div>
+
+    <div id="listContainer" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
+
+    <!-- Modal Adicionar/Editar -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modalTitle">Novo Item</div>
+            <input type="hidden" id="editIndex">
+            <div class="form-group">
+                <label>Nome do Item</label>
+                <input type="text" id="itemName" placeholder="Ex: Passaporte">
+            </div>
+            <div class="form-group">
+                <label>Categoria</label>
+                <select id="itemCategory">
+                    <option value="Tecnologia & EDC">Tecnologia & EDC</option>
+                    <option value="Higiene">Higiene</option>
+                    <option value="Saúde">Saúde</option>
+                    <option value="Traje Social">Traje Social</option>
+                    <option value="Casual & Lazer">Casual & Lazer</option>
+                    <option value="Underwear & Dormir">Underwear & Dormir</option>
+                    <option value="Esporte">Esporte</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-add" onclick="saveItem()">Salvar Alterações</button>
+                <button class="btn-reset" id="deleteBtn" onclick="deleteItem()" style="display:none">Excluir Item</button>
+                <button onclick="closeModal()" style="background:#e5e7eb; color:#4b5563">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let listData = [];
+        let hideChecked = false;
+        let collapsedCategories = {};
+
+        async function loadData() {
+            try {
+                const response = await fetch('data/viagem.json?t=' + Date.now());
+                listData = await response.json();
+                renderList();
+            } catch (e) { console.error(e); }
+        }
+
+        function renderList() {
+            const container = document.getElementById('listContainer');
+            container.innerHTML = '';
+            const categories = [...new Set(listData.map(i => i.categoria))];
+            
+            categories.forEach(cat => {
+                const items = listData.filter(i => i.categoria === cat);
+                const total = items.length;
+                const done = items.filter(i => i.checked).length;
+                const pending = total - done;
+
+                const section = document.createElement('div');
+                section.className = `category-section ${collapsedCategories[cat] ? 'collapsed' : ''}`;
+                section.innerHTML = `
+                    <div class="category-header" onclick="toggleCategory('${cat}')">
+                        <div class="category-title"><span class="arrow">▼</span> ${cat}</div>
+                        <div class="category-stats">${pending} falta(m) / ${total}</div>
+                    </div>
+                    <div class="items-list"></div>
+                `;
+                
+                const itemsList = section.querySelector('.items-list');
+                items.forEach((item) => {
+                    const originalIndex = listData.findIndex(i => i === item);
+                    if (hideChecked && item.checked) return;
+
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = `item ${item.checked ? 'checked' : ''}`;
+                    itemDiv.onclick = () => toggleItem(originalIndex);
+                    itemDiv.innerHTML = `
+                        <input type="checkbox" ${item.checked ? 'checked' : ''} onclick="event.stopPropagation(); toggleItem(${originalIndex})">
+                        <div class="item-text"><span>${item.item}</span></div>
+                        <button class="btn-edit-icon" onclick="event.stopPropagation(); openModal(${originalIndex})">✏️</button>
+                    `;
+                    itemsList.appendChild(itemDiv);
+                });
+
+                if (itemsList.children.length > 0 || !hideChecked) {
+                    container.appendChild(section);
+                }
+            });
+            updateProgress();
+        }
+
+        function toggleCategory(cat) { collapsedCategories[cat] = !collapsedCategories[cat]; renderList(); }
+
+        function toggleItem(index) {
+            listData[index].checked = !listData[index].checked;
+            renderList();
+        }
+
+        function updateProgress() {
+            const total = listData.length;
+            const checked = listData.filter(i => i.checked).length;
+            const percent = total === 0 ? 0 : Math.round((checked / total) * 100);
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('progressText').innerText = `${percent}% Concluído (${checked}/${total} itens)`;
+        }
+
+        function toggleFilter() {
+            hideChecked = !hideChecked;
+            document.getElementById('filterBtn').innerText = hideChecked ? 'Mostrar Todos' : 'Ocultar Riscados';
+            renderList();
+        }
+
+        function resetList() {
+            if (confirm("Zerar toda a lista para uma nova viagem?")) {
+                listData.forEach(i => i.checked = false);
+                renderList();
+            }
+        }
+
+        function openModal(index = null) {
+            const modal = document.getElementById('itemModal');
+            const deleteBtn = document.getElementById('deleteBtn');
+            if (index !== null) {
+                document.getElementById('modalTitle').innerText = "Editar Item";
+                document.getElementById('itemName').value = listData[index].item;
+                document.getElementById('itemCategory').value = listData[index].categoria;
+                document.getElementById('editIndex').value = index;
+                deleteBtn.style.display = "block";
+            } else {
+                document.getElementById('modalTitle').innerText = "Novo Item";
+                document.getElementById('itemName').value = "";
+                document.getElementById('editIndex').value = "";
+                deleteBtn.style.display = "none";
+            }
+            modal.style.display = "flex";
+        }
+
+        function closeModal() { document.getElementById('itemModal').style.display = "none"; }
+
+        function saveItem() {
+            const name = document.getElementById('itemName').value;
+            const cat = document.getElementById('itemCategory').value;
+            const index = document.getElementById('editIndex').value;
+            if (!name) return;
+            if (index !== "") {
+                listData[index].item = name;
+                listData[index].categoria = cat;
+            } else {
+                listData.push({ item: name, categoria: cat, checked: false });
+            }
+            closeModal();
+            renderList();
+        }
+
+        function deleteItem() {
+            const index = document.getElementById('editIndex').value;
+            if (confirm("Excluir item?")) {
+                listData.splice(index, 1);
+                closeModal();
+                renderList();
+            }
+        }
+
+        async function saveData() {
+            const syncBtn = document.getElementById('syncBtn');
+            const originalText = syncBtn.innerText;
+            syncBtn.innerText = "⏳..."; syncBtn.disabled = true;
+            const message = `BOT_SYNC_VIAGEM:${JSON.stringify(listData)}`;
+            const botToken = "8032731802:AAH9E3Y_T04n5k9jUuE6f6U3g5L7h9B6E4M"; 
+            const chatId = "8306629331"; 
+            try {
+                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: chatId, text: message })
+                });
+                syncBtn.innerText = "✅";
+                setTimeout(() => { syncBtn.innerText = originalText; syncBtn.disabled = false; }, 2000);
+            } catch (e) { alert("Erro!"); syncBtn.innerText = originalText; syncBtn.disabled = false; }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('theme-toggle').textContent = '☀️'; }
+
+        loadData();
+    </script>
+</body>
+</html>

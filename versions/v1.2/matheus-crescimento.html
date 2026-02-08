@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matheus: Crescimento - Hub Família</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    /* === DESIGN SYSTEM === */
+    :root {
+      --primary: #667eea;
+      --primary-dark: #5568d3;
+      --success: #48bb78;
+      --warning: #ed8936;
+      --danger: #f56565;
+      --bg: #f7fafc;
+      --surface: #ffffff;
+      --text: #2d3748;
+      --text-muted: #718096;
+      --border: #e2e8f0;
+    }
+
+    body.dark-mode {
+      --bg: #1a202c;
+      --surface: #2d3748;
+      --text: #f7fafc;
+      --text-muted: #cbd5e0;
+      --border: #4a5568;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 1rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* === NAVBAR === */
+    h1 { 
+      text-align: center; 
+      font-size: 20px; 
+      margin: 15px 0 5px 0; 
+      font-weight: 800; 
+      color: var(--text); 
+    }
+    
+    .subtitle { 
+      text-align: center; 
+      font-size: 12px; 
+      color: var(--text-muted); 
+      margin-bottom: 20px; 
+    }
+    
+    #theme-toggle { 
+      position: absolute; 
+      top: 10px; 
+      right: 10px; 
+      background: none; 
+      border: none; 
+      font-size: 20px; 
+      cursor: pointer; 
+    }
+
+    /* === CARDS === */
+    .section {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-icon {
+      font-size: 1.75rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .chart-container {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .chart-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* === TIME FILTERS === */
+    .time-filters {
+      display: flex;
+      gap: 0.5rem;
+      background: var(--bg);
+      padding: 0.25rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .time-filter-btn {
+      padding: 0.4rem 0.8rem;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .time-filter-btn:hover {
+      background: rgba(102, 126, 234, 0.1);
+      color: var(--primary);
+    }
+
+    .time-filter-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* === ÚLTIMA MEDIÇÃO === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      opacity: 0.9;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .stat-date {
+      font-size: 0.75rem;
+      opacity: 0.8;
+      margin-top: 0.25rem;
+    }
+
+    .percentil-badge {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* === LOADING === */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Mobile optimizations for touch */
+    @media (max-width: 768px) {
+      .time-filter-btn {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+  <a href="index.html" style="text-decoration: none; color: #3498db; font-size: 0.9rem; margin-left: 10px; display: inline-block;">← Voltar para Início</a>
+  <h1>📊 Crescimento do Matheus</h1>
+  <div class="subtitle" id="last-update">Carregando dados...</div>
+
+  <!-- Loading -->
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <p style="margin-top: 1rem;">Carregando dados...</p>
+  </div>
+
+  <!-- Content (hidden initially) -->
+  <div id="content" style="display: none;">
+    
+    <!-- Última Medição -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-icon">📊</span>
+        <h2 class="section-title">Última Medição</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Data</div>
+          <div class="stat-value" id="statData">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Peso</div>
+          <div class="stat-value" id="statPeso">-</div>
+          <div class="stat-date" id="statPesoData"></div>
+          <div class="percentil-badge" id="statPesoPercentil"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Altura</div>
+          <div class="stat-value" id="statAltura">-</div>
+          <div class="stat-date" id="statAlturaData"></div>
+          <div class="percentil-badge" id="statAlturaPercentil"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção Peso -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-icon">⚖️</span>
+        <h2 class="section-title">Peso</h2>
+      </div>
+      
+      <div class="chart-container">
+        <div class="chart-header">
+          <div class="chart-subtitle">Peso por Idade (kg) - Curvas OMS</div>
+          <div class="time-filters">
+            <button class="time-filter-btn" data-chart="peso" data-period="1">1m</button>
+            <button class="time-filter-btn" data-chart="peso" data-period="3">3m</button>
+            <button class="time-filter-btn" data-chart="peso" data-period="6">6m</button>
+            <button class="time-filter-btn active" data-chart="peso" data-period="all">Total</button>
+          </div>
+        </div>
+        <canvas id="chartPeso"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-header">
+          <div class="chart-subtitle">Ganho de Peso Semanal (g/semana) - Real vs OMS Esperado</div>
+          <div class="time-filters">
+            <button class="time-filter-btn" data-chart="ganhoPeso" data-period="1">1m</button>
+            <button class="time-filter-btn" data-chart="ganhoPeso" data-period="3">3m</button>
+            <button class="time-filter-btn" data-chart="ganhoPeso" data-period="6">6m</button>
+            <button class="time-filter-btn active" data-chart="ganhoPeso" data-period="all">Total</button>
+          </div>
+        </div>
+        <canvas id="chartGanhoPeso"></canvas>
+      </div>
+    </section>
+
+    <!-- Seção Altura -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-icon">📏</span>
+        <h2 class="section-title">Altura</h2>
+      </div>
+      
+      <div class="chart-container">
+        <div class="chart-header">
+          <div class="chart-subtitle">Altura por Idade (cm) - Curvas OMS</div>
+          <div class="time-filters">
+            <button class="time-filter-btn" data-chart="altura" data-period="1">1m</button>
+            <button class="time-filter-btn" data-chart="altura" data-period="3">3m</button>
+            <button class="time-filter-btn" data-chart="altura" data-period="6">6m</button>
+            <button class="time-filter-btn active" data-chart="altura" data-period="all">Total</button>
+          </div>
+        </div>
+        <canvas id="chartAltura"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-header">
+          <div class="chart-subtitle">Ganho de Altura Semanal (cm/semana) - Real vs OMS Esperado</div>
+          <div class="time-filters">
+            <button class="time-filter-btn" data-chart="ganhoAltura" data-period="1">1m</button>
+            <button class="time-filter-btn" data-chart="ganhoAltura" data-period="3">3m</button>
+            <button class="time-filter-btn" data-chart="ganhoAltura" data-period="6">6m</button>
+            <button class="time-filter-btn active" data-chart="ganhoAltura" data-period="all">Total</button>
+          </div>
+        </div>
+        <canvas id="chartGanhoAltura"></canvas>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // === EMBEDDED DATA: PESO REFERÊNCIA OMS ===
+    const PESO_REF_EMBEDDED = {"metadata":{"fonte":"OMS/Minist\u00e9rio da Sa\u00fade Brasil","unidade":"kg","ultima_atualizacao":"2026-02-07","descricao":"Curvas de refer\u00eancia de peso por idade (0-36 meses)"},"masculino":{"p10":[{"idade_meses":0,"valor":2.66},{"idade_meses":1,"valor":3.53},{"idade_meses":2,"valor":4.24},{"idade_meses":3,"valor":4.95},{"idade_meses":4,"valor":5.66},{"idade_meses":5,"valor":6.37},{"idade_meses":6,"valor":7.08},{"idade_meses":7,"valor":7.34},{"idade_meses":8,"valor":7.59},{"idade_meses":9,"valor":7.85},{"idade_meses":10,"valor":8.1},{"idade_meses":11,"valor":8.35},{"idade_meses":12,"valor":8.61},{"idade_meses":13,"valor":8.79},{"idade_meses":14,"valor":8.98},{"idade_meses":15,"valor":9.17},{"idade_meses":16,"valor":9.36},{"idade_meses":17,"valor":9.54},{"idade_meses":18,"valor":9.73},{"idade_meses":19,"valor":9.92},{"idade_meses":20,"valor":10.1},{"idade_meses":21,"valor":10.29},{"idade_meses":22,"valor":10.48},{"idade_meses":23,"valor":10.67},{"idade_meses":24,"valor":10.85},{"idade_meses":25,"valor":11.01},{"idade_meses":26,"valor":11.16},{"idade_meses":27,"valor":11.32},{"idade_meses":28,"valor":11.47},{"idade_meses":29,"valor":11.62},{"idade_meses":30,"valor":11.78},{"idade_meses":31,"valor":11.93},{"idade_meses":32,"valor":12.08},{"idade_meses":33,"valor":12.24},{"idade_meses":34,"valor":12.39},{"idade_meses":35,"valor":12.55},{"idade_meses":36,"valor":12.7}],"p50":[{"idade_meses":0,"valor":3.3},{"idade_meses":1,"valor":4.2},{"idade_meses":2,"valor":4.94},{"idade_meses":3,"valor":5.68},{"idade_meses":4,"valor":6.42},{"idade_meses":5,"valor":7.16},{"idade_meses":6,"valor":7.9},{"idade_meses":7,"valor":8.18},{"idade_meses":8,"valor":8.47},{"idade_meses":9,"valor":8.75},{"idade_meses":10,"valor":9.03},{"idade_meses":11,"valor":9.32},{"idade_meses":12,"valor":9.6},{"idade_meses":13,"valor":9.82},{"idade_meses":14,"valor":10.03},{"idade_meses":15,"valor":10.25},{"idade_meses":16,"valor":10.47},{"idade_meses":17,"valor":10.68},{"idade_meses":18,"valor":10.9},{"idade_meses":19,"valor":11.12},{"idade_meses":20,"valor":11.33},{"idade_meses":21,"valor":11.55},{"idade_meses":22,"valor":11.77},{"idade_meses":23,"valor":11.98},{"idade_meses":24,"valor":12.2},{"idade_meses":25,"valor":12.38},{"idade_meses":26,"valor":12.57},{"idade_meses":27,"valor":12.75},{"idade_meses":28,"valor":12.93},{"idade_meses":29,"valor":13.12},{"idade_meses":30,"valor":13.3},{"idade_meses":31,"valor":13.48},{"idade_meses":32,"valor":13.67},{"idade_meses":33,"valor":13.85},{"idade_meses":34,"valor":14.03},{"idade_meses":35,"valor":14.22},{"idade_meses":36,"valor":14.4}],"p90":[{"idade_meses":0,"valor":3.94},{"idade_meses":1,"valor":4.87},{"idade_meses":2,"valor":5.64},{"idade_meses":3,"valor":6.41},{"idade_meses":4,"valor":7.18},{"idade_meses":5,"valor":7.95},{"idade_meses":6,"valor":8.72},{"idade_meses":7,"valor":9.03},{"idade_meses":8,"valor":9.34},{"idade_meses":9,"valor":9.65},{"idade_meses":10,"valor":9.97},{"idade_meses":11,"valor":10.28},{"idade_meses":12,"valor":10.59},{"idade_meses":13,"valor":10.84},{"idade_meses":14,"valor":11.09},{"idade_meses":15,"valor":11.33},{"idade_meses":16,"valor":11.58},{"idade_meses":17,"valor":11.82},{"idade_meses":18,"valor":12.07},{"idade_meses":19,"valor":12.32},{"idade_meses":20,"valor":12.56},{"idade_meses":21,"valor":12.81},{"idade_meses":22,"valor":13.05},{"idade_meses":23,"valor":13.3},{"idade_meses":24,"valor":13.55},{"idade_meses":25,"valor":13.76},{"idade_meses":26,"valor":13.97},{"idade_meses":27,"valor":14.18},{"idade_meses":28,"valor":14.4},{"idade_meses":29,"valor":14.61},{"idade_meses":30,"valor":14.82},{"idade_meses":31,"valor":15.04},{"idade_meses":32,"valor":15.25},{"idade_meses":33,"valor":15.46},{"idade_meses":34,"valor":15.67},{"idade_meses":35,"valor":15.89},{"idade_meses":36,"valor":16.1}]},"feminino":{"p10":[{"idade_meses":0,"valor":2.56},{"idade_meses":1,"valor":3.33},{"idade_meses":2,"valor":3.96},{"idade_meses":3,"valor":4.59},{"idade_meses":4,"valor":5.22},{"idade_meses":5,"valor":5.85},{"idade_meses":6,"valor":6.48},{"idade_meses":7,"valor":6.72},{"idade_meses":8,"valor":6.96},{"idade_meses":9,"valor":7.2},{"idade_meses":10,"valor":7.43},{"idade_meses":11,"valor":7.67},{"idade_meses":12,"valor":7.91},{"idade_meses":13,"valor":8.09},{"idade_meses":14,"valor":8.28},{"idade_meses":15,"valor":8.47},{"idade_meses":16,"valor":8.66},{"idade_meses":17,"valor":8.84},{"idade_meses":18,"valor":9.03},{"idade_meses":19,"valor":9.22},{"idade_meses":20,"valor":9.4},{"idade_meses":21,"valor":9.59},{"idade_meses":22,"valor":9.78},{"idade_meses":23,"valor":9.97},{"idade_meses":24,"valor":10.15},{"idade_meses":25,"valor":10.32},{"idade_meses":26,"valor":10.49},{"idade_meses":27,"valor":10.67},{"idade_meses":28,"valor":10.84},{"idade_meses":29,"valor":11.01},{"idade_meses":30,"valor":11.18},{"idade_meses":31,"valor":11.35},{"idade_meses":32,"valor":11.52},{"idade_meses":33,"valor":11.69},{"idade_meses":34,"valor":11.86},{"idade_meses":35,"valor":12.03},{"idade_meses":36,"valor":12.2}],"p50":[{"idade_meses":0,"valor":3.2},{"idade_meses":1,"valor":4.0},{"idade_meses":2,"valor":4.66},{"idade_meses":3,"valor":5.32},{"idade_meses":4,"valor":5.98},{"idade_meses":5,"valor":6.64},{"idade_meses":6,"valor":7.3},{"idade_meses":7,"valor":7.57},{"idade_meses":8,"valor":7.83},{"idade_meses":9,"valor":8.1},{"idade_meses":10,"valor":8.37},{"idade_meses":11,"valor":8.63},{"idade_meses":12,"valor":8.9},{"idade_meses":13,"valor":9.12},{"idade_meses":14,"valor":9.33},{"idade_meses":15,"valor":9.55},{"idade_meses":16,"valor":9.77},{"idade_meses":17,"valor":9.98},{"idade_meses":18,"valor":10.2},{"idade_meses":19,"valor":10.42},{"idade_meses":20,"valor":10.63},{"idade_meses":21,"valor":10.85},{"idade_meses":22,"valor":11.07},{"idade_meses":23,"valor":11.28},{"idade_meses":24,"valor":11.5},{"idade_meses":25,"valor":11.7},{"idade_meses":26,"valor":11.9},{"idade_meses":27,"valor":12.1},{"idade_meses":28,"valor":12.3},{"idade_meses":29,"valor":12.5},{"idade_meses":30,"valor":12.7},{"idade_meses":31,"valor":12.9},{"idade_meses":32,"valor":13.1},{"idade_meses":33,"valor":13.3},{"idade_meses":34,"valor":13.5},{"idade_meses":35,"valor":13.7},{"idade_meses":36,"valor":13.9}],"p90":[{"idade_meses":0,"valor":3.84},{"idade_meses":1,"valor":4.67},{"idade_meses":2,"valor":5.36},{"idade_meses":3,"valor":6.05},{"idade_meses":4,"valor":6.74},{"idade_meses":5,"valor":7.43},{"idade_meses":6,"valor":8.12},{"idade_meses":7,"valor":8.41},{"idade_meses":8,"valor":8.71},{"idade_meses":9,"valor":9.0},{"idade_meses":10,"valor":9.3},{"idade_meses":11,"valor":9.6},{"idade_meses":12,"valor":9.89},{"idade_meses":13,"valor":10.14},{"idade_meses":14,"valor":10.39},{"idade_meses":15,"valor":10.63},{"idade_meses":16,"valor":10.88},{"idade_meses":17,"valor":11.12},{"idade_meses":18,"valor":11.37},{"idade_meses":19,"valor":11.62},{"idade_meses":20,"valor":11.86},{"idade_meses":21,"valor":12.11},{"idade_meses":22,"valor":12.35},{"idade_meses":23,"valor":12.6},{"idade_meses":24,"valor":12.85},{"idade_meses":25,"valor":13.08},{"idade_meses":26,"valor":13.31},{"idade_meses":27,"valor":13.53},{"idade_meses":28,"valor":13.76},{"idade_meses":29,"valor":13.99},{"idade_meses":30,"valor":14.22},{"idade_meses":31,"valor":14.45},{"idade_meses":32,"valor":14.68},{"idade_meses":33,"valor":14.91},{"idade_meses":34,"valor":15.14},{"idade_meses":35,"valor":15.37},{"idade_meses":36,"valor":15.6}]}};
+
+    // === EMBEDDED DATA: ALTURA REFERÊNCIA OMS ===
+    const ALTURA_REF_EMBEDDED = {"metadata":{"fonte":"OMS/Minist\u00e9rio da Sa\u00fade Brasil","unidade":"cm","ultima_atualizacao":"2026-02-07","descricao":"Curvas de refer\u00eancia de altura por idade (0-36 meses)"},"masculino":{"p10":[{"idade_meses":0,"valor":48.0},{"idade_meses":1,"valor":52.6},{"idade_meses":2,"valor":55.1},{"idade_meses":3,"valor":57.6},{"idade_meses":4,"valor":60.2},{"idade_meses":5,"valor":62.7},{"idade_meses":6,"valor":65.2},{"idade_meses":7,"valor":66.6},{"idade_meses":8,"valor":68.0},{"idade_meses":9,"valor":69.4},{"idade_meses":10,"valor":70.8},{"idade_meses":11,"valor":72.3},{"idade_meses":12,"valor":73.7},{"idade_meses":13,"valor":74.6},{"idade_meses":14,"valor":75.4},{"idade_meses":15,"valor":76.3},{"idade_meses":16,"valor":77.2},{"idade_meses":17,"valor":78.1},{"idade_meses":18,"valor":79.0},{"idade_meses":19,"valor":79.9},{"idade_meses":20,"valor":80.8},{"idade_meses":21,"valor":81.7},{"idade_meses":22,"valor":82.6},{"idade_meses":23,"valor":83.5},{"idade_meses":24,"valor":84.4},{"idade_meses":25,"valor":84.9},{"idade_meses":26,"valor":85.5},{"idade_meses":27,"valor":86.0},{"idade_meses":28,"valor":86.6},{"idade_meses":29,"valor":87.1},{"idade_meses":30,"valor":87.7},{"idade_meses":31,"valor":88.2},{"idade_meses":32,"valor":88.8},{"idade_meses":33,"valor":89.3},{"idade_meses":34,"valor":89.9},{"idade_meses":35,"valor":90.4},{"idade_meses":36,"valor":91.0}],"p50":[{"idade_meses":0,"valor":50.0},{"idade_meses":1,"valor":54.7},{"idade_meses":2,"valor":57.3},{"idade_meses":3,"valor":59.9},{"idade_meses":4,"valor":62.4},{"idade_meses":5,"valor":65.0},{"idade_meses":6,"valor":67.6},{"idade_meses":7,"valor":69.1},{"idade_meses":8,"valor":70.5},{"idade_meses":9,"valor":72.0},{"idade_meses":10,"valor":73.5},{"idade_meses":11,"valor":74.9},{"idade_meses":12,"valor":76.4},{"idade_meses":13,"valor":77.4},{"idade_meses":14,"valor":78.3},{"idade_meses":15,"valor":79.2},{"idade_meses":16,"valor":80.2},{"idade_meses":17,"valor":81.2},{"idade_meses":18,"valor":82.1},{"idade_meses":19,"valor":83.0},{"idade_meses":20,"valor":84.0},{"idade_meses":21,"valor":85.0},{"idade_meses":22,"valor":85.9},{"idade_meses":23,"valor":86.8},{"idade_meses":24,"valor":87.8},{"idade_meses":25,"valor":88.4},{"idade_meses":26,"valor":89.0},{"idade_meses":27,"valor":89.6},{"idade_meses":28,"valor":90.2},{"idade_meses":29,"valor":90.8},{"idade_meses":30,"valor":91.4},{"idade_meses":31,"valor":92.1},{"idade_meses":32,"valor":92.7},{"idade_meses":33,"valor":93.3},{"idade_meses":34,"valor":93.9},{"idade_meses":35,"valor":94.5},{"idade_meses":36,"valor":95.1}],"p90":[{"idade_meses":0,"valor":52.0},{"idade_meses":1,"valor":56.8},{"idade_meses":2,"valor":59.4},{"idade_meses":3,"valor":62.1},{"idade_meses":4,"valor":64.7},{"idade_meses":5,"valor":67.4},{"idade_meses":6,"valor":70.0},{"idade_meses":7,"valor":71.5},{"idade_meses":8,"valor":73.0},{"idade_meses":9,"valor":74.6},{"idade_meses":10,"valor":76.1},{"idade_meses":11,"valor":77.6},{"idade_meses":12,"valor":79.1},{"idade_meses":13,"valor":80.1},{"idade_meses":14,"valor":81.2},{"idade_meses":15,"valor":82.2},{"idade_meses":16,"valor":83.2},{"idade_meses":17,"valor":84.2},{"idade_meses":18,"valor":85.2},{"idade_meses":19,"valor":86.2},{"idade_meses":20,"valor":87.2},{"idade_meses":21,"valor":88.2},{"idade_meses":22,"valor":89.2},{"idade_meses":23,"valor":90.2},{"idade_meses":24,"valor":91.2},{"idade_meses":25,"valor":91.9},{"idade_meses":26,"valor":92.6},{"idade_meses":27,"valor":93.2},{"idade_meses":28,"valor":93.9},{"idade_meses":29,"valor":94.6},{"idade_meses":30,"valor":95.2},{"idade_meses":31,"valor":95.9},{"idade_meses":32,"valor":96.6},{"idade_meses":33,"valor":97.2},{"idade_meses":34,"valor":97.9},{"idade_meses":35,"valor":98.6},{"idade_meses":36,"valor":99.2}]},"feminino":{"p10":[{"idade_meses":0,"valor":47.1},{"idade_meses":1,"valor":51.6},{"idade_meses":2,"valor":53.9},{"idade_meses":3,"valor":56.3},{"idade_meses":4,"valor":58.6},{"idade_meses":5,"valor":61.0},{"idade_meses":6,"valor":63.3},{"idade_meses":7,"valor":64.6},{"idade_meses":8,"valor":66.0},{"idade_meses":9,"valor":67.3},{"idade_meses":10,"valor":68.6},{"idade_meses":11,"valor":69.9},{"idade_meses":12,"valor":71.3},{"idade_meses":13,"valor":72.2},{"idade_meses":14,"valor":73.2},{"idade_meses":15,"valor":74.2},{"idade_meses":16,"valor":75.2},{"idade_meses":17,"valor":76.1},{"idade_meses":18,"valor":77.1},{"idade_meses":19,"valor":78.1},{"idade_meses":20,"valor":79.1},{"idade_meses":21,"valor":80.0},{"idade_meses":22,"valor":81.0},{"idade_meses":23,"valor":82.0},{"idade_meses":24,"valor":83.0},{"idade_meses":25,"valor":83.5},{"idade_meses":26,"valor":84.1},{"idade_meses":27,"valor":84.7},{"idade_meses":28,"valor":85.3},{"idade_meses":29,"valor":85.8},{"idade_meses":30,"valor":86.4},{"idade_meses":31,"valor":87.0},{"idade_meses":32,"valor":87.6},{"idade_meses":33,"valor":88.2},{"idade_meses":34,"valor":88.7},{"idade_meses":35,"valor":89.3},{"idade_meses":36,"valor":89.9}],"p50":[{"idade_meses":0,"valor":49.1},{"idade_meses":1,"valor":53.7},{"idade_meses":2,"valor":56.1},{"idade_meses":3,"valor":58.5},{"idade_meses":4,"valor":60.9},{"idade_meses":5,"valor":63.3},{"idade_meses":6,"valor":65.7},{"idade_meses":7,"valor":67.1},{"idade_meses":8,"valor":68.5},{"idade_meses":9,"valor":69.8},{"idade_meses":10,"valor":71.2},{"idade_meses":11,"valor":72.6},{"idade_meses":12,"valor":74.0},{"idade_meses":13,"valor":75.0},{"idade_meses":14,"valor":76.1},{"idade_meses":15,"valor":77.1},{"idade_meses":16,"valor":78.1},{"idade_meses":17,"valor":79.2},{"idade_meses":18,"valor":80.2},{"idade_meses":19,"valor":81.2},{"idade_meses":20,"valor":82.3},{"idade_meses":21,"valor":83.3},{"idade_meses":22,"valor":84.3},{"idade_meses":23,"valor":85.4},{"idade_meses":24,"valor":86.4},{"idade_meses":25,"valor":87.0},{"idade_meses":26,"valor":87.7},{"idade_meses":27,"valor":88.3},{"idade_meses":28,"valor":88.9},{"idade_meses":29,"valor":89.6},{"idade_meses":30,"valor":90.2},{"idade_meses":31,"valor":90.8},{"idade_meses":32,"valor":91.5},{"idade_meses":33,"valor":92.1},{"idade_meses":34,"valor":92.7},{"idade_meses":35,"valor":93.4},{"idade_meses":36,"valor":94.0}],"p90":[{"idade_meses":0,"valor":51.1},{"idade_meses":1,"valor":55.8},{"idade_meses":2,"valor":58.3},{"idade_meses":3,"valor":60.7},{"idade_meses":4,"valor":63.2},{"idade_meses":5,"valor":65.6},{"idade_meses":6,"valor":68.1},{"idade_meses":7,"valor":69.5},{"idade_meses":8,"valor":71.0},{"idade_meses":9,"valor":72.4},{"idade_meses":10,"valor":73.9},{"idade_meses":11,"valor":75.3},{"idade_meses":12,"valor":76.7},{"idade_meses":13,"valor":77.8},{"idade_meses":14,"valor":78.9},{"idade_meses":15,"valor":80.0},{"idade_meses":16,"valor":81.1},{"idade_meses":17,"valor":82.2},{"idade_meses":18,"valor":83.3},{"idade_meses":19,"valor":84.4},{"idade_meses":20,"valor":85.5},{"idade_meses":21,"valor":86.6},{"idade_meses":22,"valor":87.6},{"idade_meses":23,"valor":88.7},{"idade_meses":24,"valor":89.8},{"idade_meses":25,"valor":90.5},{"idade_meses":26,"valor":91.2},{"idade_meses":27,"valor":91.9},{"idade_meses":28,"valor":92.6},{"idade_meses":29,"valor":93.3},{"idade_meses":30,"valor":94.0},{"idade_meses":31,"valor":94.7},{"idade_meses":32,"valor":95.4},{"idade_meses":33,"valor":96.0},{"idade_meses":34,"valor":96.7},{"idade_meses":35,"valor":97.4},{"idade_meses":36,"valor":98.1}]}};
+
+    // === THEME TOGGLE ===
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const btn = document.getElementById('theme-toggle');
+      if (document.body.classList.contains('dark-mode')) {
+        btn.innerHTML = '☀️';
+        Chart.defaults.color = '#e5e7eb';
+        Chart.defaults.borderColor = '#374151';
+      } else {
+        btn.innerHTML = '🌙';
+        Chart.defaults.color = '#666';
+        Chart.defaults.borderColor = '#e5e7eb';
+      }
+      if(chartInstances.peso) chartInstances.peso.update();
+      if(chartInstances.ganhoPeso) chartInstances.ganhoPeso.update();
+      if(chartInstances.altura) chartInstances.altura.update();
+      if(chartInstances.ganhoAltura) chartInstances.ganhoAltura.update();
+    }
+
+    // === GLOBAL STATE ===
+    let globalData = null;
+    let chartInstances = {};
+    let currentFilters = {
+      peso: 'all',
+      ganhoPeso: 'all',
+      altura: 'all',
+      ganhoAltura: 'all'
+    };
+
+    // === DATA LOADING ===
+    const BASE_URL = 'https://moliveirauff.github.io/familia-donato-suarez/data';
+    
+    async function loadData() {
+      try {
+        // Apenas 1 fetch: matheus-crescimento.json (dinâmico)
+        const crianca = await fetch(`${BASE_URL}/matheus-crescimento.json?v=${Date.now()}`).then(r => r.json());
+
+        // Usar dados embutidos para peso e altura
+        return {
+          pesoRef: PESO_REF_EMBEDDED,
+          alturaRef: ALTURA_REF_EMBEDDED,
+          crianca
+        };
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        document.getElementById('loading').innerHTML = '<p style="color: var(--danger);">❌ Erro ao carregar dados. Tente novamente.</p>';
+        throw error;
+      }
+    }
+
+    // === INTERPOLAÇÃO LINEAR ===
+    function interpolar(idade, curva) {
+      for (let i = 0; i < curva.length - 1; i++) {
+        if (idade >= curva[i].idade_meses && idade <= curva[i + 1].idade_meses) {
+          const p1 = curva[i];
+          const p2 = curva[i + 1];
+          const t = (idade - p1.idade_meses) / (p2.idade_meses - p1.idade_meses);
+          return p1.valor + t * (p2.valor - p1.valor);
+        }
+      }
+      return curva[curva.length - 1].valor;
+    }
+
+    // === CÁLCULO DE PERCENTIL EXATO ===
+    function calcularPercentil(idade, valor, refData, sexo) {
+      const percentis = [3, 10, 20, 30, 40, 50, 60, 70, 80, 90, 97];
+      const percentisCurvas = ['p3', 'p10', 'p20', 'p30', 'p40', 'p50', 'p60', 'p70', 'p80', 'p90', 'p97'];
+      
+      const valores = percentis.map((p, i) => ({
+        percentil: p,
+        valor: interpolar(idade, refData[sexo][percentisCurvas[i]])
+      }));
+
+      if (valor <= valores[0].valor) return `≤P${percentis[0]}`;
+      if (valor >= valores[valores.length - 1].valor) return `≥P${percentis[valores.length - 1]}`;
+
+      for (let i = 0; i < valores.length - 1; i++) {
+        if (valor >= valores[i].valor && valor <= valores[i + 1].valor) {
+          const p1 = valores[i];
+          const p2 = valores[i + 1];
+          const t = (valor - p1.valor) / (p2.valor - p1.valor);
+          const percentilExato = p1.percentil + t * (p2.percentil - p1.percentil);
+          return `P${Math.round(percentilExato)}`;
+        }
+      }
+
+      return 'P??';
+    }
+
+    // === FILTER DATA BY TIME PERIOD ===
+    function filterByPeriod(medicoes, periodMonths) {
+      if (periodMonths === 'all') return medicoes;
+      
+      const maxIdade = Math.max(...medicoes.map(m => m.idade_meses));
+      const minIdade = Math.max(0, maxIdade - periodMonths);
+      
+      return medicoes.filter(m => m.idade_meses >= minIdade);
+    }
+
+    // === CALCULATE DYNAMIC Y-AXIS RANGE ===
+    function calculateYRange(data, padding = 0.1) {
+      const values = data.filter(v => v !== null && v !== undefined);
+      if (values.length === 0) return { min: 0, max: 10 };
+      
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const range = max - min;
+      
+      return {
+        min: Math.max(0, min - range * padding),
+        max: max + range * padding
+      };
+    }
+
+    // === CÁLCULO DE GANHOS SEMANAIS ===
+    function calcularGanhosSemais(medicoes, tipo) {
+      const ganhosSemais = [];
+      
+      for (let i = 0; i < medicoes.length - 1; i++) {
+        const m1 = medicoes[i];
+        const m2 = medicoes[i + 1];
+        
+        const valor1 = tipo === 'peso' ? m1.peso_kg : m1.altura_cm;
+        const valor2 = tipo === 'peso' ? m2.peso_kg : m2.altura_cm;
+        
+        if (valor1 === null || valor2 === null) continue;
+        
+        const diasIntervalo = Math.round((m2.idade_meses - m1.idade_meses) * 30.44);
+        const ganhoTotal = valor2 - valor1;
+        const ganhoDiario = ganhoTotal / diasIntervalo;
+        const ganhoSemanal = ganhoDiario * 7;
+        
+        // Converter para g/semana (peso) ou manter cm/semana (altura)
+        const ganhoConvertido = tipo === 'peso' ? ganhoSemanal * 1000 : ganhoSemanal;
+        
+        // Ponto central do período (idade média)
+        const idadeMedio = (m1.idade_meses + m2.idade_meses) / 2;
+        
+        ganhosSemais.push({
+          idadeMeses: idadeMedio,
+          ganho: ganhoConvertido,
+          dataInicio: new Date(m1.data).toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'}),
+          dataFim: new Date(m2.data).toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'})
+        });
+      }
+      
+      return ganhosSemais;
+    }
+
+    // === CALCULAR GANHO SEMANAL ESPERADO OMS ===
+    function calcularGanhoSemanalOMS(refData, sexo, minIdade, maxIdade, tipo) {
+      const ganhoOMS = [];
+      const step = 0.5;
+
+      const curvaP10 = refData[sexo].p10;
+      const curvaP50 = refData[sexo].p50;
+      const curvaP90 = refData[sexo].p90;
+
+      for (let idade = minIdade; idade <= maxIdade; idade += step) {
+        const idadeFutura = idade + (7 / 30.44);
+
+        const ganhoP10 = (interpolar(idadeFutura, curvaP10) - interpolar(idade, curvaP10)) * (tipo === 'peso' ? 1000 : 1);
+        const ganhoP50 = (interpolar(idadeFutura, curvaP50) - interpolar(idade, curvaP50)) * (tipo === 'peso' ? 1000 : 1);
+        const ganhoP90 = (interpolar(idadeFutura, curvaP90) - interpolar(idade, curvaP90)) * (tipo === 'peso' ? 1000 : 1);
+
+        ganhoOMS.push({ idade, ganhoP10, ganhoP50, ganhoP90 });
+      }
+
+      return ganhoOMS;
+    }
+
+    // === CORES DOS PERCENTIS ===
+    const percentisCores = {
+      p10: { color: '#ed8936', width: 2, dash: [] },      // Laranja - Limite inferior zona normal
+      p50: { color: '#667eea', width: 3, dash: [] },      // Roxo - Mediana (referência principal)
+      p90: { color: '#ed8936', width: 2, dash: [] }       // Laranja - Limite superior zona normal
+    };
+
+    // === DATASETS PERCENTIS ===
+    function criarDatasetsPercentis(refData, sexo, minIdade, maxIdade) {
+      const datasets = [];
+      const percentis = ['p10', 'p50', 'p90']; // Apenas curvas essenciais
+      
+      // === FAIXA SOMBREADA P10-P90 (Zona Normal) ===
+      const dadosP10 = refData[sexo].p10.filter(d => d.idade_meses >= minIdade && d.idade_meses <= maxIdade);
+      const dadosP90 = refData[sexo].p90.filter(d => d.idade_meses >= minIdade && d.idade_meses <= maxIdade);
+      
+      datasets.push({
+        label: 'Faixa Normal (P10-P90)',
+        data: dadosP90.map(d => ({ x: d.idade_meses, y: d.valor })),
+        borderColor: 'transparent',
+        backgroundColor: 'rgba(237, 137, 54, 0.15)',
+        fill: '+1',
+        pointRadius: 0,
+        tension: 0.4,
+        order: 10
+      });
+      
+      datasets.push({
+        label: 'P10',
+        data: dadosP10.map(d => ({ x: d.idade_meses, y: d.valor })),
+        borderColor: 'transparent',
+        backgroundColor: 'rgba(237, 137, 54, 0.15)',
+        fill: false,
+        pointRadius: 0,
+        tension: 0.4,
+        order: 10
+      });
+      
+      percentis.forEach(p => {
+        const config = percentisCores[p];
+        const dadosFiltrados = refData[sexo][p].filter(d => d.idade_meses >= minIdade && d.idade_meses <= maxIdade);
+
+        datasets.push({
+          label: p === 'p50' ? 'P50 (mediana)' : p.toUpperCase(),
+          data: dadosFiltrados.map(d => ({ x: d.idade_meses, y: d.valor })),
+          borderColor: config.color,
+          borderWidth: config.width,
+          borderDash: config.dash,
+          backgroundColor: 'transparent',
+          pointRadius: 0,
+          tension: 0.4,
+          fill: false,
+          order: 5
+        });
+      });
+
+      return datasets;
+    }
+
+    // === OPCOES COMUNS DOS GRAFICOS ===
+    function chartOptions(xLabel, yLabel, yRange, minX, maxX) {
+      return {
+        responsive: true,
+        maintainAspectRatio: true,
+        interaction: { mode: 'nearest', intersect: false },
+        scales: {
+          x: {
+            type: 'linear',
+            title: { display: true, text: xLabel },
+            min: minX,
+            max: maxX
+          },
+          y: {
+            title: { display: true, text: yLabel },
+            min: yRange.min,
+            max: yRange.max
+          }
+        },
+        plugins: {
+          legend: { display: true, position: 'bottom', labels: { usePointStyle: true, padding: 12, font: { size: 11 } } }
+        }
+      };
+    }
+
+    // === DATASET DO MATHEUS (linha) ===
+    function datasetMatheus(medicoes, campo, label) {
+      return {
+        label: label || 'Matheus',
+        data: medicoes.map(m => ({ x: m.idade_meses, y: m[campo] })),
+        borderColor: '#48bb78',
+        backgroundColor: '#48bb78',
+        borderWidth: 3,
+        pointRadius: 5,
+        pointBackgroundColor: '#48bb78',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        tension: 0.3,
+        fill: false,
+        order: 1
+      };
+    }
+
+    // === RENDER: PESO POR IDADE ===
+    function renderChartPeso(data, period) {
+      const { pesoRef, crianca } = data;
+      const sexo = crianca.metadata.sexo;
+      const medicoes = crianca.medicoes.filter(m => m.peso_kg !== null);
+      const filtered = filterByPeriod(medicoes, period);
+
+      const minIdade = period === 'all' ? 0 : Math.max(0, Math.max(...medicoes.map(m => m.idade_meses)) - period);
+      const maxIdade = Math.max(...medicoes.map(m => m.idade_meses)) + 1;
+
+      const dsPercentis = criarDatasetsPercentis(pesoRef, sexo, minIdade, maxIdade);
+      const dsMatheus = datasetMatheus(filtered, 'peso_kg');
+      const allY = [...filtered.map(m => m.peso_kg), ...dsPercentis.flatMap(ds => ds.data.map(d => d.y))];
+
+      if (chartInstances.peso) chartInstances.peso.destroy();
+      chartInstances.peso = new Chart(document.getElementById('chartPeso'), {
+        type: 'line',
+        data: { datasets: [...dsPercentis, dsMatheus] },
+        options: chartOptions('Idade (meses)', 'Peso (kg)', calculateYRange(allY), minIdade, maxIdade)
+      });
+    }
+
+    // === RENDER: GANHO DE PESO SEMANAL ===
+    function renderChartGanhoPeso(data, period) {
+      const { pesoRef, crianca } = data;
+      const sexo = crianca.metadata.sexo;
+      const medicoes = crianca.medicoes.filter(m => m.peso_kg !== null);
+      const ganhos = calcularGanhosSemais(filterByPeriod(medicoes, period), 'peso');
+
+      if (ganhos.length === 0) {
+        if (chartInstances.ganhoPeso) chartInstances.ganhoPeso.destroy();
+        return;
+      }
+
+      const minIdade = Math.min(...ganhos.map(g => g.idadeMeses)) - 0.5;
+      const maxIdade = Math.max(...ganhos.map(g => g.idadeMeses)) + 0.5;
+      const ganhoOMS = calcularGanhoSemanalOMS(pesoRef, sexo, Math.max(0, minIdade), maxIdade, 'peso');
+
+      const datasets = [
+        {
+          label: 'Faixa esperada (P10-P90)',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP90 })),
+          borderColor: 'transparent',
+          backgroundColor: 'rgba(102, 126, 234, 0.15)',
+          fill: '+1',
+          pointRadius: 0,
+          tension: 0.4,
+          order: 10
+        },
+        {
+          label: '_p10_fill',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP10 })),
+          borderColor: 'transparent',
+          backgroundColor: 'transparent',
+          fill: false,
+          pointRadius: 0,
+          tension: 0.4,
+          order: 10
+        },
+        {
+          label: 'Esperado OMS (P50)',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP50 })),
+          borderColor: '#667eea',
+          borderWidth: 2,
+          borderDash: [6, 3],
+          backgroundColor: 'transparent',
+          pointRadius: 0,
+          tension: 0.4,
+          fill: false,
+          order: 5
+        },
+        {
+          label: 'Matheus (real)',
+          data: ganhos.map(g => ({ x: g.idadeMeses, y: g.ganho })),
+          borderColor: '#48bb78',
+          backgroundColor: 'rgba(72, 187, 120, 0.7)',
+          borderWidth: 2,
+          pointRadius: 5,
+          pointBackgroundColor: '#48bb78',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          type: 'bar',
+          barPercentage: 0.6,
+          order: 1
+        }
+      ];
+
+      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP50), ...ganhoOMS.map(g => g.ganhoP90)];
+
+      if (chartInstances.ganhoPeso) chartInstances.ganhoPeso.destroy();
+      chartInstances.ganhoPeso = new Chart(document.getElementById('chartGanhoPeso'), {
+        type: 'line',
+        data: { datasets },
+        options: {
+          ...chartOptions('Idade (meses)', 'Ganho (g/semana)', calculateYRange(allY, 0.15), Math.max(0, minIdade), maxIdade),
+          plugins: {
+            legend: {
+              display: true, position: 'bottom',
+              labels: { usePointStyle: true, padding: 12, font: { size: 11 }, filter: item => !item.text.startsWith('_') }
+            },
+            tooltip: {
+              callbacks: {
+                label: ctx => {
+                  if (ctx.dataset.label.startsWith('_')) return null;
+                  return `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(0)} g/sem`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // === RENDER: ALTURA POR IDADE ===
+    function renderChartAltura(data, period) {
+      const { alturaRef, crianca } = data;
+      const sexo = crianca.metadata.sexo;
+      const medicoes = crianca.medicoes.filter(m => m.altura_cm !== null);
+      const filtered = filterByPeriod(medicoes, period);
+
+      if (filtered.length === 0) {
+        if (chartInstances.altura) chartInstances.altura.destroy();
+        return;
+      }
+
+      const minIdade = period === 'all' ? 0 : Math.max(0, Math.max(...medicoes.map(m => m.idade_meses)) - period);
+      const maxIdade = Math.max(...medicoes.map(m => m.idade_meses)) + 1;
+
+      const dsPercentis = criarDatasetsPercentis(alturaRef, sexo, minIdade, maxIdade);
+      const dsMatheus = datasetMatheus(filtered, 'altura_cm');
+      const allY = [...filtered.map(m => m.altura_cm), ...dsPercentis.flatMap(ds => ds.data.map(d => d.y))];
+
+      if (chartInstances.altura) chartInstances.altura.destroy();
+      chartInstances.altura = new Chart(document.getElementById('chartAltura'), {
+        type: 'line',
+        data: { datasets: [...dsPercentis, dsMatheus] },
+        options: chartOptions('Idade (meses)', 'Altura (cm)', calculateYRange(allY), minIdade, maxIdade)
+      });
+    }
+
+    // === RENDER: GANHO DE ALTURA SEMANAL ===
+    function renderChartGanhoAltura(data, period) {
+      const { alturaRef, crianca } = data;
+      const sexo = crianca.metadata.sexo;
+      const medicoes = crianca.medicoes.filter(m => m.altura_cm !== null);
+      const ganhos = calcularGanhosSemais(filterByPeriod(medicoes, period), 'altura');
+
+      if (ganhos.length === 0) {
+        if (chartInstances.ganhoAltura) chartInstances.ganhoAltura.destroy();
+        return;
+      }
+
+      const minIdade = Math.min(...ganhos.map(g => g.idadeMeses)) - 0.5;
+      const maxIdade = Math.max(...ganhos.map(g => g.idadeMeses)) + 0.5;
+      const ganhoOMS = calcularGanhoSemanalOMS(alturaRef, sexo, Math.max(0, minIdade), maxIdade, 'altura');
+
+      const datasets = [
+        {
+          label: 'Faixa esperada (P10-P90)',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP90 })),
+          borderColor: 'transparent',
+          backgroundColor: 'rgba(102, 126, 234, 0.15)',
+          fill: '+1',
+          pointRadius: 0,
+          tension: 0.4,
+          order: 10
+        },
+        {
+          label: '_p10_fill',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP10 })),
+          borderColor: 'transparent',
+          backgroundColor: 'transparent',
+          fill: false,
+          pointRadius: 0,
+          tension: 0.4,
+          order: 10
+        },
+        {
+          label: 'Esperado OMS (P50)',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP50 })),
+          borderColor: '#667eea',
+          borderWidth: 2,
+          borderDash: [6, 3],
+          backgroundColor: 'transparent',
+          pointRadius: 0,
+          tension: 0.4,
+          fill: false,
+          order: 5
+        },
+        {
+          label: 'Matheus (real)',
+          data: ganhos.map(g => ({ x: g.idadeMeses, y: g.ganho })),
+          borderColor: '#48bb78',
+          backgroundColor: 'rgba(72, 187, 120, 0.7)',
+          borderWidth: 2,
+          pointRadius: 5,
+          pointBackgroundColor: '#48bb78',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          type: 'bar',
+          barPercentage: 0.6,
+          order: 1
+        }
+      ];
+
+      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP50), ...ganhoOMS.map(g => g.ganhoP90)];
+
+      if (chartInstances.ganhoAltura) chartInstances.ganhoAltura.destroy();
+      chartInstances.ganhoAltura = new Chart(document.getElementById('chartGanhoAltura'), {
+        type: 'line',
+        data: { datasets },
+        options: {
+          ...chartOptions('Idade (meses)', 'Ganho (cm/semana)', calculateYRange(allY, 0.15), Math.max(0, minIdade), maxIdade),
+          plugins: {
+            legend: {
+              display: true, position: 'bottom',
+              labels: { usePointStyle: true, padding: 12, font: { size: 11 }, filter: item => !item.text.startsWith('_') }
+            },
+            tooltip: {
+              callbacks: {
+                label: ctx => {
+                  if (ctx.dataset.label.startsWith('_')) return null;
+                  return `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)} cm/sem`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // === ATUALIZAR STATS CARDS ===
+    function updateStats(data) {
+      const { pesoRef, alturaRef, crianca } = data;
+      const sexo = crianca.metadata.sexo;
+      const medicoes = crianca.medicoes;
+
+      const ultimaMedicao = medicoes[medicoes.length - 1];
+      document.getElementById('statData').textContent = new Date(ultimaMedicao.data).toLocaleDateString('pt-BR');
+
+      // Peso: pegar última medição com peso
+      const ultimoPeso = [...medicoes].reverse().find(m => m.peso_kg !== null);
+      if (ultimoPeso) {
+        document.getElementById('statPeso').textContent = `${ultimoPeso.peso_kg} kg`;
+        document.getElementById('statPesoData').textContent = new Date(ultimoPeso.data).toLocaleDateString('pt-BR');
+        const percPeso = calcularPercentil(ultimoPeso.idade_meses, ultimoPeso.peso_kg, pesoRef, sexo);
+        document.getElementById('statPesoPercentil').textContent = percPeso;
+      }
+
+      // Altura: pegar última medição com altura
+      const ultimaAltura = [...medicoes].reverse().find(m => m.altura_cm !== null);
+      if (ultimaAltura) {
+        document.getElementById('statAltura').textContent = `${ultimaAltura.altura_cm} cm`;
+        document.getElementById('statAlturaData').textContent = new Date(ultimaAltura.data).toLocaleDateString('pt-BR');
+        const percAltura = calcularPercentil(ultimaAltura.idade_meses, ultimaAltura.altura_cm, alturaRef, sexo);
+        document.getElementById('statAlturaPercentil').textContent = percAltura;
+      } else {
+        document.getElementById('statAltura').textContent = '—';
+      }
+    }
+
+    // === RENDER ALL ===
+    function renderAll(data) {
+      renderChartPeso(data, currentFilters.peso);
+      renderChartGanhoPeso(data, currentFilters.ganhoPeso);
+      renderChartAltura(data, currentFilters.altura);
+      renderChartGanhoAltura(data, currentFilters.ganhoAltura);
+      updateStats(data);
+    }
+
+    // === EVENT LISTENERS: FILTROS DE TEMPO ===
+    document.querySelectorAll('.time-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const chart = btn.dataset.chart;
+        const period = btn.dataset.period === 'all' ? 'all' : parseInt(btn.dataset.period);
+
+        // Atualizar botão ativo
+        btn.parentElement.querySelectorAll('.time-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        currentFilters[chart] = period;
+
+        if (!globalData) return;
+
+        switch (chart) {
+          case 'peso': renderChartPeso(globalData, period); break;
+          case 'ganhoPeso': renderChartGanhoPeso(globalData, period); break;
+          case 'altura': renderChartAltura(globalData, period); break;
+          case 'ganhoAltura': renderChartGanhoAltura(globalData, period); break;
+        }
+      });
+    });
+
+    // === INIT ===
+    (async function init() {
+      try {
+        globalData = await loadData();
+
+        const meta = globalData.crianca.metadata;
+        const lastUpdate = new Date(meta.ultima_atualizacao).toLocaleDateString('pt-BR');
+        document.getElementById('last-update').textContent = `Última atualização: ${lastUpdate}`;
+
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+
+        renderAll(globalData);
+      } catch (e) {
+        console.error('Falha na inicialização:', e);
+      }
+    })();
+  </script>
+</body>
+</html>
