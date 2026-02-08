@@ -497,18 +497,18 @@
       const ganhoOMS = [];
       const step = 0.5;
 
-      const curvaP30 = refData[sexo].p30;
+      const curvaP10 = refData[sexo].p10;
       const curvaP50 = refData[sexo].p50;
-      const curvaP70 = refData[sexo].p70;
+      const curvaP90 = refData[sexo].p90;
 
       for (let idade = minIdade; idade <= maxIdade; idade += step) {
         const idadeFutura = idade + (7 / 30.44);
 
-        const ganhoP30 = (interpolar(idadeFutura, curvaP30) - interpolar(idade, curvaP30)) * (tipo === 'peso' ? 1000 : 1);
+        const ganhoP10 = (interpolar(idadeFutura, curvaP10) - interpolar(idade, curvaP10)) * (tipo === 'peso' ? 1000 : 1);
         const ganhoP50 = (interpolar(idadeFutura, curvaP50) - interpolar(idade, curvaP50)) * (tipo === 'peso' ? 1000 : 1);
-        const ganhoP70 = (interpolar(idadeFutura, curvaP70) - interpolar(idade, curvaP70)) * (tipo === 'peso' ? 1000 : 1);
+        const ganhoP90 = (interpolar(idadeFutura, curvaP90) - interpolar(idade, curvaP90)) * (tipo === 'peso' ? 1000 : 1);
 
-        ganhoOMS.push({ idade, ganhoP30, ganhoP50, ganhoP70 });
+        ganhoOMS.push({ idade, ganhoP10, ganhoP50, ganhoP90 });
       }
 
       return ganhoOMS;
@@ -656,8 +656,8 @@
 
       const datasets = [
         {
-          label: 'Faixa esperada (P30-P70)',
-          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP70 })),
+          label: 'Faixa esperada (P10-P90)',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP90 })),
           borderColor: 'transparent',
           backgroundColor: 'rgba(102, 126, 234, 0.15)',
           fill: '+1',
@@ -666,8 +666,8 @@
           order: 10
         },
         {
-          label: '_p30_fill',
-          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP30 })),
+          label: '_p10_fill',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP10 })),
           borderColor: 'transparent',
           backgroundColor: 'transparent',
           fill: false,
@@ -703,7 +703,7 @@
         }
       ];
 
-      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP50), ...ganhoOMS.map(g => g.ganhoP70)];
+      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP50), ...ganhoOMS.map(g => g.ganhoP90)];
 
       if (chartInstances.ganhoPeso) chartInstances.ganhoPeso.destroy();
       chartInstances.ganhoPeso = new Chart(document.getElementById('chartGanhoPeso'), {
@@ -774,8 +774,8 @@
 
       const datasets = [
         {
-          label: 'Faixa esperada (P30-P70)',
-          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP70 })),
+          label: 'Faixa esperada (P10-P90)',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP90 })),
           borderColor: 'transparent',
           backgroundColor: 'rgba(102, 126, 234, 0.15)',
           fill: '+1',
@@ -784,8 +784,8 @@
           order: 10
         },
         {
-          label: '_p30_fill',
-          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP30 })),
+          label: '_p10_fill',
+          data: ganhoOMS.map(g => ({ x: g.idade, y: g.ganhoP10 })),
           borderColor: 'transparent',
           backgroundColor: 'transparent',
           fill: false,
@@ -821,7 +821,7 @@
         }
       ];
 
-      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP50), ...ganhoOMS.map(g => g.ganhoP70)];
+      const allY = [...ganhos.map(g => g.ganho), ...ganhoOMS.map(g => g.ganhoP50), ...ganhoOMS.map(g => g.ganhoP90)];
 
       if (chartInstances.ganhoAltura) chartInstances.ganhoAltura.destroy();
       chartInstances.ganhoAltura = new Chart(document.getElementById('chartGanhoAltura'), {
