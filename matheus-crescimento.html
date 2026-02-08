@@ -20,7 +20,7 @@
       --border: #e2e8f0;
     }
 
-    [data-theme="dark"] {
+    body.dark-mode {
       --bg: #1a202c;
       --surface: #2d3748;
       --text: #f7fafc;
@@ -43,52 +43,29 @@
     }
 
     /* === NAVBAR === */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      padding: 1rem;
-      background: var(--surface);
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    h1 { 
+      text-align: center; 
+      font-size: 20px; 
+      margin: 15px 0 5px 0; 
+      font-weight: 800; 
+      color: var(--text); 
     }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    
+    .subtitle { 
+      text-align: center; 
+      font-size: 12px; 
+      color: var(--text-muted); 
+      margin-bottom: 20px; 
     }
-
-    .back-btn {
-      font-size: 1.5rem;
-      cursor: pointer;
-      text-decoration: none;
-      color: var(--text);
-    }
-
-    .nav-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-
-    .theme-toggle {
-      background: none;
-      border: 2px solid var(--border);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.1);
-      border-color: var(--primary);
+    
+    #theme-toggle { 
+      position: absolute; 
+      top: 10px; 
+      right: 10px; 
+      background: none; 
+      border: none; 
+      font-size: 20px; 
+      cursor: pointer; 
     }
 
     /* === CARDS === */
@@ -249,14 +226,10 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav>
-    <div class="nav-left">
-      <a href="index.html" class="back-btn">🏠</a>
-      <h1 class="nav-title">📊 Crescimento do Matheus</h1>
-    </div>
-    <button class="theme-toggle" id="themeToggle" title="Alternar tema">🌙</button>
-  </nav>
+  <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+  <a href="index.html" style="text-decoration: none; color: #3498db; font-size: 0.9rem; margin-left: 10px; display: inline-block;">← Voltar para Início</a>
+  <h1>📊 Crescimento do Matheus</h1>
+  <div class="subtitle" id="last-update">Carregando dados...</div>
 
   <!-- Loading -->
   <div id="loading" class="loading">
@@ -365,18 +338,23 @@
 
   <script>
     // === THEME TOGGLE ===
-    const themeToggle = document.getElementById('themeToggle');
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
-
-    themeToggle.addEventListener('click', () => {
-      const theme = document.documentElement.getAttribute('data-theme');
-      const newTheme = theme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-    });
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const btn = document.getElementById('theme-toggle');
+      if (document.body.classList.contains('dark-mode')) {
+        btn.innerHTML = '☀️';
+        Chart.defaults.color = '#e5e7eb';
+        Chart.defaults.borderColor = '#374151';
+      } else {
+        btn.innerHTML = '🌙';
+        Chart.defaults.color = '#666';
+        Chart.defaults.borderColor = '#e5e7eb';
+      }
+      if(chartInstances.peso) chartInstances.peso.update();
+      if(chartInstances.ganhoPeso) chartInstances.ganhoPeso.update();
+      if(chartInstances.altura) chartInstances.altura.update();
+      if(chartInstances.ganhoAltura) chartInstances.ganhoAltura.update();
+    }
 
     // === GLOBAL STATE ===
     let globalData = null;
@@ -1051,6 +1029,11 @@
     // === INIT ===
     async function init() {
       globalData = await loadData();
+      
+      // Atualizar subtítulo com última data
+      const ultimaMedicao = globalData.crianca.medicoes[globalData.crianca.medicoes.length - 1];
+      document.getElementById('last-update').innerText = "Dados até: " + new Date(ultimaMedicao.data).toLocaleDateString('pt-BR');
+      
       renderStats();
       renderAllCharts();
       
