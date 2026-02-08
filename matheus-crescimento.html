@@ -253,7 +253,7 @@
   <nav>
     <div class="nav-left">
       <a href="index.html" class="back-btn">🏠</a>
-      <h1 class="nav-title">Matheus: Crescimento</h1>
+      <h1 class="nav-title">📊 Crescimento do Matheus</h1>
     </div>
     <button class="theme-toggle" id="themeToggle" title="Alternar tema">🌙</button>
   </nav>
@@ -315,7 +315,7 @@
 
       <div class="chart-container">
         <div class="chart-header">
-          <div class="chart-subtitle">Ganho de Peso Diário (g/dia) - Pontos Diários + Média Móvel 7 Dias</div>
+          <div class="chart-subtitle">Ganho de Peso Semanal (g/semana) - Real vs OMS Esperado</div>
           <div class="time-filters">
             <button class="time-filter-btn" data-chart="ganhoPeso" data-period="1">1m</button>
             <button class="time-filter-btn" data-chart="ganhoPeso" data-period="3">3m</button>
@@ -349,7 +349,7 @@
 
       <div class="chart-container">
         <div class="chart-header">
-          <div class="chart-subtitle">Ganho de Altura Diário (cm/dia) - Pontos Diários + Média Móvel 7 Dias</div>
+          <div class="chart-subtitle">Ganho de Altura Semanal (cm/semana) - Real vs OMS Esperado</div>
           <div class="time-filters">
             <button class="time-filter-btn" data-chart="ganhoAltura" data-period="1">1m</button>
             <button class="time-filter-btn" data-chart="ganhoAltura" data-period="3">3m</button>
@@ -471,9 +471,9 @@
       };
     }
 
-    // === CÁLCULO DE GANHOS DIÁRIOS INTERPOLADOS ===
-    function calcularGanhosDiariosInterpolados(medicoes, tipo) {
-      const pontosDiarios = [];
+    // === CÁLCULO DE GANHOS SEMANAIS ===
+    function calcularGanhosSemais(medicoes, tipo) {
+      const ganhosSemais = [];
       
       for (let i = 0; i < medicoes.length - 1; i++) {
         const m1 = medicoes[i];
@@ -487,48 +487,59 @@
         const diasIntervalo = Math.round((m2.idade_meses - m1.idade_meses) * 30.44);
         const ganhoTotal = valor2 - valor1;
         const ganhoDiario = ganhoTotal / diasIntervalo;
+        const ganhoSemanal = ganhoDiario * 7;
         
-        // Converter para g/dia (peso) ou manter cm/dia (altura)
-        const ganhoConvertido = tipo === 'peso' ? ganhoDiario * 1000 : ganhoDiario;
+        // Converter para g/semana (peso) ou manter cm/semana (altura)
+        const ganhoConvertido = tipo === 'peso' ? ganhoSemanal * 1000 : ganhoSemanal;
         
-        // Criar pontos para cada dia no intervalo
-        const dataInicio = new Date(m1.data);
-        for (let dia = 0; dia < diasIntervalo; dia++) {
-          const dataAtual = new Date(dataInicio);
-          dataAtual.setDate(dataAtual.getDate() + dia);
-          
-          pontosDiarios.push({
-            data: dataAtual,
-            dataStr: dataAtual.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'}),
-            ganho: ganhoConvertido,
-            idadeMeses: m1.idade_meses + (dia / 30.44)
-          });
-        }
-      }
-      
-      return pontosDiarios;
-    }
-
-    // === CALCULAR MÉDIA MÓVEL DE 7 DIAS ===
-    function calcularMediaMovel(pontosDiarios, janela = 7) {
-      const mediaMovel = [];
-      
-      for (let i = 0; i < pontosDiarios.length; i++) {
-        const inicio = Math.max(0, i - Math.floor(janela / 2));
-        const fim = Math.min(pontosDiarios.length, i + Math.ceil(janela / 2));
+        // Ponto central do período (idade média)
+        const idadeMedio = (m1.idade_meses + m2.idade_meses) / 2;
         
-        const pontosJanela = pontosDiarios.slice(inicio, fim);
-        const media = pontosJanela.reduce((sum, p) => sum + p.ganho, 0) / pontosJanela.length;
-        
-        mediaMovel.push({
-          data: pontosDiarios[i].data,
-          dataStr: pontosDiarios[i].dataStr,
-          idadeMeses: pontosDiarios[i].idadeMeses,
-          ganho: media
+        ganhosSemais.push({
+          idadeMeses: idadeMedio,
+          ganho: ganhoConvertido,
+          dataInicio: new Date(m1.data).toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'}),
+          dataFim: new Date(m2.data).toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'})
         });
       }
       
-      return mediaMovel;
+      return ganhosSemais;
+    }
+
+    // === CALCULAR GANHO SEMANAL ESPERADO OMS ===
+    function calcularGanhoSemanalOMS(refData, sexo, minIdade, maxIdade, tipo) {
+      const ganhoOMS = [];
+      const step = 0.5; // Intervalos de meio mês para suavidade
+      
+      // Usar P50 (mediana) para referência
+      const curvaP25 = refData[sexo].p25;
+      const curvaP50 = refData[sexo].p50;
+      const curvaP75 = refData[sexo].p75;
+      
+      for (let idade = minIdade; idade <= maxIdade; idade += step) {
+        const idadeFutura = idade + (7 / 30.44); // 7 dias em meses
+        
+        const valorAtualP25 = interpolar(idade, curvaP25);
+        const valorFuturoP25 = interpolar(idadeFutura, curvaP25);
+        const ganhoP25 = (valorFuturoP25 - valorAtualP25) * (tipo === 'peso' ? 1000 : 1);
+        
+        const valorAtualP50 = interpolar(idade, curvaP50);
+        const valorFuturoP50 = interpolar(idadeFutura, curvaP50);
+        const ganhoP50 = (valorFuturoP50 - valorAtualP50) * (tipo === 'peso' ? 1000 : 1);
+        
+        const valorAtualP75 = interpolar(idade, curvaP75);
+        const valorFuturoP75 = interpolar(idadeFutura, curvaP75);
+        const ganhoP75 = (valorFuturoP75 - valorAtualP75) * (tipo === 'peso' ? 1000 : 1);
+        
+        ganhoOMS.push({
+          idade: idade,
+          ganhoP25: ganhoP25,
+          ganhoP50: ganhoP50,
+          ganhoP75: ganhoP75
+        });
+      }
+      
+      return ganhoOMS;
     }
 
     // === CORES DOS PERCENTIS ===
@@ -655,15 +666,22 @@
       });
     }
 
-    // === RENDER CHART: GANHO PESO ===
+    // === RENDER CHART: GANHO PESO SEMANAL ===
     function renderChartGanhoPeso(period = 'all') {
-      const { crianca } = globalData;
+      const { pesoRef, crianca } = globalData;
+      const sexo = crianca.metadata.sexo;
       
       const medicoesComPeso = crianca.medicoes.filter(m => m.peso_kg !== null);
       const dadosFiltrados = filterByPeriod(medicoesComPeso, period);
       
-      const pontosDiarios = calcularGanhosDiariosInterpolados(dadosFiltrados, 'peso');
-      const mediaMovel = calcularMediaMovel(pontosDiarios, 7);
+      if (dadosFiltrados.length < 2) return;
+      
+      const ganhosSemais = calcularGanhosSemais(dadosFiltrados, 'peso');
+      
+      const minIdade = Math.min(...dadosFiltrados.map(m => m.idade_meses));
+      const maxIdade = Math.max(...dadosFiltrados.map(m => m.idade_meses));
+      
+      const ganhoOMS = calcularGanhoSemanalOMS(pesoRef, sexo, minIdade, maxIdade, 'peso');
       
       if (chartInstances.ganhoPeso) chartInstances.ganhoPeso.destroy();
       
@@ -673,23 +691,47 @@
         data: {
           datasets: [
             {
-              label: 'Pontos Diários',
-              data: pontosDiarios.map(p => ({ x: p.idadeMeses, y: p.ganho })),
-              backgroundColor: '#cbd5e0',
-              borderColor: '#cbd5e0',
-              pointRadius: 3,
-              pointHoverRadius: 5,
-              showLine: false,
-              pointHitRadius: 10
+              label: 'Faixa OMS (P25-P75)',
+              data: ganhoOMS.map(p => ({ x: p.idade, y: p.ganhoP75 })),
+              borderColor: 'transparent',
+              backgroundColor: 'rgba(237, 137, 54, 0.15)',
+              fill: '+1',
+              pointRadius: 0,
+              tension: 0.4,
+              order: 3
             },
             {
-              label: 'Média Móvel 7 Dias',
-              data: mediaMovel.map(p => ({ x: p.idadeMeses, y: p.ganho })),
-              borderColor: '#667eea',
-              backgroundColor: 'transparent',
-              borderWidth: 3,
+              label: 'P25',
+              data: ganhoOMS.map(p => ({ x: p.idade, y: p.ganhoP25 })),
+              borderColor: 'transparent',
+              backgroundColor: 'rgba(237, 137, 54, 0.15)',
+              fill: false,
               pointRadius: 0,
-              tension: 0.4
+              tension: 0.4,
+              order: 3
+            },
+            {
+              label: 'OMS P50 (esperado)',
+              data: ganhoOMS.map(p => ({ x: p.idade, y: p.ganhoP50 })),
+              borderColor: '#ed8936',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              fill: false,
+              pointRadius: 0,
+              tension: 0.4,
+              order: 2
+            },
+            {
+              label: 'Matheus (real)',
+              data: ganhosSemais.map(g => ({ x: g.idadeMeses, y: g.ganho })),
+              borderColor: '#667eea',
+              backgroundColor: '#667eea',
+              borderWidth: 3,
+              pointRadius: 8,
+              pointHoverRadius: 10,
+              showLine: true,
+              tension: 0.3,
+              order: 1
             }
           ]
         },
@@ -702,23 +744,29 @@
             intersect: false
           },
           plugins: {
-            legend: { display: true },
+            legend: { 
+              display: true,
+              labels: {
+                filter: function(item) {
+                  return !['P25', 'Faixa OMS (P25-P75)'].includes(item.text);
+                }
+              }
+            },
             tooltip: {
               callbacks: {
                 label: function(context) {
-                  if (context.datasetIndex === 0) {
+                  const label = context.dataset.label;
+                  if (label === 'Matheus (real)') {
                     const idx = context.dataIndex;
+                    const ponto = ganhosSemais[idx];
                     return [
-                      `Data: ${pontosDiarios[idx].dataStr}`,
-                      `Ganho: ${context.parsed.y.toFixed(1)} g/dia`
+                      `Período: ${ponto.dataInicio} - ${ponto.dataFim}`,
+                      `Ganho: ${context.parsed.y.toFixed(0)} g/semana`
                     ];
-                  } else {
-                    const idx = context.dataIndex;
-                    return [
-                      `Data: ${mediaMovel[idx].dataStr}`,
-                      `Média 7d: ${context.parsed.y.toFixed(1)} g/dia`
-                    ];
+                  } else if (label === 'OMS P50 (esperado)') {
+                    return `OMS P50: ${context.parsed.y.toFixed(0)} g/semana`;
                   }
+                  return null;
                 }
               }
             }
@@ -729,7 +777,7 @@
               title: { display: true, text: 'Idade (meses)' }
             },
             y: {
-              title: { display: true, text: 'Ganho (g/dia)' }
+              title: { display: true, text: 'Ganho (g/semana)' }
             }
           }
         }
@@ -821,15 +869,22 @@
       });
     }
 
-    // === RENDER CHART: GANHO ALTURA ===
+    // === RENDER CHART: GANHO ALTURA SEMANAL ===
     function renderChartGanhoAltura(period = 'all') {
-      const { crianca } = globalData;
+      const { alturaRef, crianca } = globalData;
+      const sexo = crianca.metadata.sexo;
       
       const medicoesComAltura = crianca.medicoes.filter(m => m.altura_cm !== null);
       const dadosFiltrados = filterByPeriod(medicoesComAltura, period);
       
-      const pontosDiarios = calcularGanhosDiariosInterpolados(dadosFiltrados, 'altura');
-      const mediaMovel = calcularMediaMovel(pontosDiarios, 7);
+      if (dadosFiltrados.length < 2) return;
+      
+      const ganhosSemais = calcularGanhosSemais(dadosFiltrados, 'altura');
+      
+      const minIdade = Math.min(...dadosFiltrados.map(m => m.idade_meses));
+      const maxIdade = Math.max(...dadosFiltrados.map(m => m.idade_meses));
+      
+      const ganhoOMS = calcularGanhoSemanalOMS(alturaRef, sexo, minIdade, maxIdade, 'altura');
       
       if (chartInstances.ganhoAltura) chartInstances.ganhoAltura.destroy();
       
@@ -839,23 +894,47 @@
         data: {
           datasets: [
             {
-              label: 'Pontos Diários',
-              data: pontosDiarios.map(p => ({ x: p.idadeMeses, y: p.ganho })),
-              backgroundColor: '#cbd5e0',
-              borderColor: '#cbd5e0',
-              pointRadius: 3,
-              pointHoverRadius: 5,
-              showLine: false,
-              pointHitRadius: 10
+              label: 'Faixa OMS (P25-P75)',
+              data: ganhoOMS.map(p => ({ x: p.idade, y: p.ganhoP75 })),
+              borderColor: 'transparent',
+              backgroundColor: 'rgba(237, 137, 54, 0.15)',
+              fill: '+1',
+              pointRadius: 0,
+              tension: 0.4,
+              order: 3
             },
             {
-              label: 'Média Móvel 7 Dias',
-              data: mediaMovel.map(p => ({ x: p.idadeMeses, y: p.ganho })),
-              borderColor: '#667eea',
-              backgroundColor: 'transparent',
-              borderWidth: 3,
+              label: 'P25',
+              data: ganhoOMS.map(p => ({ x: p.idade, y: p.ganhoP25 })),
+              borderColor: 'transparent',
+              backgroundColor: 'rgba(237, 137, 54, 0.15)',
+              fill: false,
               pointRadius: 0,
-              tension: 0.4
+              tension: 0.4,
+              order: 3
+            },
+            {
+              label: 'OMS P50 (esperado)',
+              data: ganhoOMS.map(p => ({ x: p.idade, y: p.ganhoP50 })),
+              borderColor: '#ed8936',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              fill: false,
+              pointRadius: 0,
+              tension: 0.4,
+              order: 2
+            },
+            {
+              label: 'Matheus (real)',
+              data: ganhosSemais.map(g => ({ x: g.idadeMeses, y: g.ganho })),
+              borderColor: '#667eea',
+              backgroundColor: '#667eea',
+              borderWidth: 3,
+              pointRadius: 8,
+              pointHoverRadius: 10,
+              showLine: true,
+              tension: 0.3,
+              order: 1
             }
           ]
         },
@@ -868,23 +947,29 @@
             intersect: false
           },
           plugins: {
-            legend: { display: true },
+            legend: { 
+              display: true,
+              labels: {
+                filter: function(item) {
+                  return !['P25', 'Faixa OMS (P25-P75)'].includes(item.text);
+                }
+              }
+            },
             tooltip: {
               callbacks: {
                 label: function(context) {
-                  if (context.datasetIndex === 0) {
+                  const label = context.dataset.label;
+                  if (label === 'Matheus (real)') {
                     const idx = context.dataIndex;
+                    const ponto = ganhosSemais[idx];
                     return [
-                      `Data: ${pontosDiarios[idx].dataStr}`,
-                      `Ganho: ${context.parsed.y.toFixed(2)} cm/dia`
+                      `Período: ${ponto.dataInicio} - ${ponto.dataFim}`,
+                      `Ganho: ${context.parsed.y.toFixed(2)} cm/semana`
                     ];
-                  } else {
-                    const idx = context.dataIndex;
-                    return [
-                      `Data: ${mediaMovel[idx].dataStr}`,
-                      `Média 7d: ${context.parsed.y.toFixed(2)} cm/dia`
-                    ];
+                  } else if (label === 'OMS P50 (esperado)') {
+                    return `OMS P50: ${context.parsed.y.toFixed(2)} cm/semana`;
                   }
+                  return null;
                 }
               }
             }
@@ -895,7 +980,7 @@
               title: { display: true, text: 'Idade (meses)' }
             },
             y: {
-              title: { display: true, text: 'Ganho (cm/dia)' }
+              title: { display: true, text: 'Ganho (cm/semana)' }
             }
           }
         }
