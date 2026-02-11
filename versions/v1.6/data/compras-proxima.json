@@ -1,0 +1,74 @@
+[
+  {
+    "Item": "Queijo minas",
+    "Categoria": "Laticínios",
+    "qty": "1",
+    "price": "51.45",
+    "checked": false,
+    "obs": ""
+  },
+  {
+    "Item": "Requeijão",
+    "Categoria": "Laticínios",
+    "qty": "1",
+    "price": "17.99",
+    "checked": false,
+    "obs": ""
+  },
+  {
+    "Item": "Sabão em Pó Lava Louças",
+    "Categoria": "Limpeza",
+    "qty": "1",
+    "price": "55",
+    "checked": false,
+    "obs": ""
+  },
+  {
+    "Item": "Farinha de trigo",
+    "Categoria": "Outros",
+    "qty": "1",
+    "price": "0.00",
+    "checked": false,
+    "obs": "Para: Panqueca Doce"
+  },
+  {
+    "Item": "Fermento em pó",
+    "Categoria": "Outros",
+    "qty": "1",
+    "price": "0.00",
+    "checked": false,
+    "obs": "Para: Panqueca Doce"
+  },
+  {
+    "Item": "Leite",
+    "Categoria": "Laticínios",
+    "qty": "2",
+    "price": "5.29",
+    "checked": false,
+    "obs": "Para: Panqueca Doce"
+  },
+  {
+    "Item": "Açúcar",
+    "Categoria": "Mercearia / Grãos",
+    "qty": "2",
+    "price": "6",
+    "checked": false,
+    "obs": "Para: Panqueca Doce"
+  },
+  {
+    "Item": "Ovo",
+    "Categoria": "Outros",
+    "qty": "1",
+    "price": "0.00",
+    "checked": false,
+    "obs": "Para: Panqueca Doce"
+  },
+  {
+    "Item": "Manteiga",
+    "Categoria": "Laticínios",
+    "qty": "1",
+    "price": "14.9",
+    "checked": false,
+    "obs": "Para: Panqueca Doce"
+  }
+]
