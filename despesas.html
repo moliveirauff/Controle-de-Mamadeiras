@@ -245,6 +245,17 @@
             <div class="chart-container"><canvas id="cT2C"></canvas></div>
         </div>
 
+        <!-- D: Subcategorias do mês -->
+        <div class="card">
+            <div class="card-header">
+                <span id="kpi-subcat-title">📊 Detalhe por Subcategoria</span>
+                <div class="card-controls">
+                    <select id="selT2D" class="cat-select" onchange="renderTab2()"></select>
+                </div>
+            </div>
+            <div class="chart-container"><canvas id="cT2D"></canvas></div>
+        </div>
+
     </div>
 
     <div id="dashboard" style="display:none;">
@@ -869,45 +880,6 @@
         document.getElementById('kpi-bar-title').textContent = `📊 Gastos por Categoria — ${monthName.charAt(0).toUpperCase() + monthName.slice(1)}`;
         document.getElementById('kpi-acc-title').textContent = `📈 Gasto Acumulado Dia a Dia — ${monthName.charAt(0).toUpperCase() + monthName.slice(1)}`;
 
-        const dayPct = ((currentDay / daysInMonth) * 100).toFixed(0);
-        const spendPct = avg12 > 0 ? ((curTotal / avg12) * 100).toFixed(0) : '—';
-
-        const vsLastYear = sameYearTotal > 0 ? ((curTotal - sameYearTotal) / sameYearTotal * 100) : null;
-        const vsAvg12 = avg12 > 0 ? ((curTotal - avg12) / avg12 * 100) : null;
-
-        function diffSpan(pct) {
-            if (pct === null) return '<span style="color:var(--subtext)">Sem dados</span>';
-            const cls = pct > 0 ? 'pos' : 'neg';
-            const sign = pct > 0 ? '+' : '';
-            return `<span class="${cls}">${sign}${pct.toFixed(1)}%</span>`;
-        }
-
-        document.getElementById('kpi-grid').innerHTML = `
-        <div class="kpi-card">
-            <div class="kpi-emoji">💸</div>
-            <div class="kpi-label">Total do Mês</div>
-            <div class="kpi-value">${brl(curTotal)}</div>
-            <div class="kpi-sub">${monthName.charAt(0).toUpperCase() + monthName.slice(1)}</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-emoji">⏱️</div>
-            <div class="kpi-label">Ritmo</div>
-            <div class="kpi-value">${dayPct}% do mês</div>
-            <div class="kpi-sub">Dia ${currentDay} de ${daysInMonth} · Gastou ${spendPct}% da média</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-emoji">📅</div>
-            <div class="kpi-label">vs Mesmo Mês ${year - 1}</div>
-            <div class="kpi-value">${sameYearTotal > 0 ? brl(sameYearTotal) : '—'}</div>
-            <div class="kpi-sub">${diffSpan(vsLastYear)}</div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-emoji">📈</div>
-            <div class="kpi-label">vs Média 12M</div>
-            <div class="kpi-value">${brl(avg12)}</div>
-            <div class="kpi-sub">${diffSpan(vsAvg12)}</div>
-        </div>`;
-
         // ── Bloco B — Barras por categoria ────────────────────────────────
         const catTotals = {};
         curMonthData.forEach(r => {
@@ -1002,6 +974,40 @@
                 }
             }
         });
+
+        // ── Bloco D — Subcategorias ───────────────────────────────────────
+        const selT2D = document.getElementById('selT2D');
+        const selCat = selT2D.value || 'alimentacao';
+        
+        const subTotals = {};
+        curMonthData.filter(r => r.categoria === selCat).forEach(r => {
+            const sub = r.subcategoria || 'Não definida';
+            subTotals[sub] = (subTotals[sub] || 0) + Math.abs(r.valor);
+        });
+        const subSorted = Object.entries(subTotals).sort((a,b) => b[1] - a[1]);
+        const subLabels = subSorted.map(([k]) => k);
+        const subValues = subSorted.map(([,v]) => v);
+
+        if (charts['cT2D']) charts['cT2D'].destroy();
+        charts['cT2D'] = new Chart(document.getElementById('cT2D'), {
+            type: 'bar',
+            data: {
+                labels: subLabels,
+                datasets: [{ label: 'Total (R$)', data: subValues, backgroundColor: '#7c3aed', borderRadius: 6 }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: ctx => ' ' + brl(ctx.parsed.x) } }
+                },
+                scales: {
+                    x: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
+                    y: { ticks: { font: { size: 11 } } }
+                }
+            }
+        });
     }
 
     // ─── Init ─────────────────────────────────────────────────────────────────
@@ -1077,6 +1083,16 @@
                 opt.textContent = c.nome;
                 if (c.id === 'alimentacao') opt.selected = true;
                 selE.appendChild(opt);
+            });
+
+            // selT2D — category filter for Tab 2 subcategories
+            const selT2D = document.getElementById('selT2D');
+            despesaCats.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = c.nome;
+                if (c.id === 'alimentacao') opt.selected = true;
+                selT2D.appendChild(opt);
             });
 
             applyFilter(currentPeriod);
