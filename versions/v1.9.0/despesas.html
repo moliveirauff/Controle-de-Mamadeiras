@@ -938,14 +938,15 @@
                 datasets: [{ label: 'Total (R$)', data: barValues, backgroundColor: barColors, borderRadius: 6 }]
             },
             options: {
+                indexAxis: 'y',
                 responsive: true, maintainAspectRatio: false,
                 plugins: {
                     legend: { display: false },
-                    tooltip: { callbacks: { label: ctx => ' ' + brl(ctx.parsed.y) } }
+                    tooltip: { callbacks: { label: ctx => ' ' + brl(ctx.parsed.x) } }
                 },
                 scales: {
-                    y: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
-                    x: { ticks: { font: { size: 11 } } }
+                    x: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
+                    y: { ticks: { font: { size: 11 } } }
                 }
             }
         });
@@ -971,14 +972,15 @@
                 datasets: [{ label: 'Total (R$)', data: subValues, backgroundColor: '#7c3aed', borderRadius: 6 }]
             },
             options: {
+                indexAxis: 'y',
                 responsive: true, maintainAspectRatio: false,
                 plugins: {
                     legend: { display: false },
-                    tooltip: { callbacks: { label: ctx => ' ' + brl(ctx.parsed.y) } }
+                    tooltip: { callbacks: { label: ctx => ' ' + brl(ctx.parsed.x) } }
                 },
                 scales: {
-                    y: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
-                    x: { ticks: { font: { size: 11 } } }
+                    x: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
+                    y: { ticks: { font: { size: 11 } } }
                 }
             }
         });
@@ -1015,10 +1017,9 @@
             dailyMap[day] = (dailyMap[day] || 0) + Math.abs(r.valor);
         });
 
-        // Cálculo da curva histórica (média dos últimos 6 meses)
+        // Cálculo da curva histórica (média dos últimos 3 meses)
         const histCurves = [];
-        const monthsToLookBack = 6;
-        for (let i = 1; i <= monthsToLookBack; i++) {
+        for (let i = 1; i <= 3; i++) {
             const d = new Date(year, month - 1, 1);
             d.setMonth(d.getMonth() - i);
             const k = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
@@ -1052,7 +1053,7 @@
                 realAcc.push(null);
             }
             
-            // Média do acumulado dos meses para o dia D
+            // Média do acumulado dos 3 meses para o dia D
             let sumHist = 0;
             histCurves.forEach(c => { sumHist += c[d-1]; });
             historicalAcc.push(sumHist / histCurves.length);
@@ -1075,7 +1076,7 @@
                         spanGaps: false
                     },
                     {
-                        label: `Curva de Referência (Média ${monthsToLookBack} meses)`,
+                        label: 'Curva de Referência (Média 3 meses)',
                         data: historicalAcc,
                         borderColor: '#ca8a04',
                         borderDash: [6, 4],
