@@ -1236,7 +1236,7 @@
     "data": "2023-02-14",
     "categoria": "compras",
     "subcategoria": "Outras Compras",
-    "valor": -485.78,
+    "valor": 485.78,
     "origem": "conta_corrente_itau"
   },
   {
@@ -1244,7 +1244,7 @@
     "data": "2023-02-14",
     "categoria": "compras",
     "subcategoria": "Outras Compras",
-    "valor": -184.36,
+    "valor": 184.36,
     "origem": "conta_corrente_itau"
   },
   {
@@ -7244,7 +7244,7 @@
     "data": "2023-08-14",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -513.0,
+    "valor": 513.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -7276,7 +7276,7 @@
     "data": "2023-08-16",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -7300,7 +7300,7 @@
     "data": "2023-08-21",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -800.0,
+    "valor": 800.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -7316,7 +7316,7 @@
     "data": "2023-08-23",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -7332,7 +7332,7 @@
     "data": "2023-08-24",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -500.0,
+    "valor": 500.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -8564,7 +8564,7 @@
     "data": "2023-09-04",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -2000.0,
+    "valor": 2000.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -8604,7 +8604,7 @@
     "data": "2023-09-05",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -315.0,
+    "valor": 315.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -8748,7 +8748,7 @@
     "data": "2023-09-18",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -5519.09,
+    "valor": 5519.09,
     "origem": "conta_corrente_itau"
   },
   {
@@ -8756,7 +8756,7 @@
     "data": "2023-09-18",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -1000.0,
+    "valor": 1000.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -8764,7 +8764,7 @@
     "data": "2023-09-18",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -400.0,
+    "valor": 400.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -9892,7 +9892,7 @@
     "data": "2023-10-10",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -9916,7 +9916,7 @@
     "data": "2023-10-11",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -1200.0,
+    "valor": 1200.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -9948,7 +9948,7 @@
     "data": "2023-10-17",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -350.0,
+    "valor": 350.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -10292,7 +10292,7 @@
     "data": "2023-10-24",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -700.0,
+    "valor": 700.0,
     "origem": "dinheiro"
   },
   {
@@ -10964,7 +10964,7 @@
     "data": "2023-11-21",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -150.0,
+    "valor": 150.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -11884,7 +11884,7 @@
     "data": "2023-12-07",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -1500.0,
+    "valor": 1500.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -13788,7 +13788,7 @@
     "data": "2024-02-14",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -300.0,
+    "valor": 300.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -14660,7 +14660,7 @@
     "data": "2024-03-14",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -300.0,
+    "valor": 300.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -17324,7 +17324,7 @@
     "data": "2024-06-07",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -17956,7 +17956,7 @@
     "data": "2024-06-01",
     "categoria": "lazer",
     "subcategoria": "Viagem",
-    "valor": -488.0,
+    "valor": 488.0,
     "origem": "cartao_itau"
   },
   {
@@ -18036,7 +18036,7 @@
     "data": "2024-06-14",
     "categoria": "lazer",
     "subcategoria": "Viagem",
-    "valor": -256.99,
+    "valor": 256.99,
     "origem": "conta_corrente_itau"
   },
   {
@@ -18044,7 +18044,7 @@
     "data": "2024-07-02",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -18132,7 +18132,7 @@
     "data": "2024-07-17",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -72.53,
+    "valor": 72.53,
     "origem": "conta_corrente_itau"
   },
   {
@@ -18892,7 +18892,7 @@
     "data": "2024-08-05",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -19708,7 +19708,7 @@
     "data": "2024-09-05",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -20540,7 +20540,7 @@
     "data": "2024-10-07",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -21420,7 +21420,7 @@
     "data": "2024-11-05",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -22324,7 +22324,7 @@
     "data": "2024-12-04",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -23100,7 +23100,7 @@
     "data": "2025-01-03",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -23820,7 +23820,7 @@
     "data": "2025-02-06",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -24836,7 +24836,7 @@
     "data": "2025-03-28",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -28076,7 +28076,7 @@
     "data": "2025-07-16",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -29236,7 +29236,7 @@
     "data": "2025-08-21",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -250.0,
+    "valor": 250.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -30308,7 +30308,7 @@
     "data": "2025-09-25",
     "categoria": "compras",
     "subcategoria": "Móveis e Utensilios Domésticos",
-    "valor": -145.0,
+    "valor": 145.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -32428,7 +32428,7 @@
     "data": "2025-11-24",
     "categoria": "alimentacao",
     "subcategoria": "Delivery",
-    "valor": -110.0,
+    "valor": 110.0,
     "origem": "conta_corrente_itau"
   },
   {
@@ -32876,7 +32876,7 @@
     "data": "2025-11-16",
     "categoria": "saude",
     "subcategoria": "Farmácia",
-    "valor": -164.89,
+    "valor": 164.89,
     "origem": "cartao_itau"
   },
   {
@@ -33612,7 +33612,7 @@
     "data": "2025-12-08",
     "categoria": "alimentacao",
     "subcategoria": "Restaurante",
-    "valor": -8.4,
+    "valor": 8.4,
     "origem": "conta_corrente_itau"
   },
   {
