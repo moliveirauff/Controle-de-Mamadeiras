@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "ultima_atualizacao": "2026-02-14",
+    "moeda": "BRL",
+    "versao": "1.0"
+  },
+  "categorias": [
+    { "id": "moradia", "nome": "Moradia", "icone": "🏠", "cor": "#667eea", "orcamento_mensal": 3000 },
+    { "id": "alimentacao", "nome": "Alimentação", "icone": "🛒", "cor": "#48bb78", "orcamento_mensal": 2000 },
+    { "id": "saude", "nome": "Saúde", "icone": "🏥", "cor": "#f56565", "orcamento_mensal": 500 },
+    { "id": "transporte", "nome": "Transporte", "icone": "🚗", "cor": "#ed8936", "orcamento_mensal": 800 },
+    { "id": "bebe", "nome": "Bebê (Matheus)", "icone": "🍼", "cor": "#9f7aea", "orcamento_mensal": 600 },
+    { "id": "lazer", "nome": "Lazer", "icone": "🎮", "cor": "#38b2ac", "orcamento_mensal": 400 },
+    { "id": "educacao", "nome": "Educação", "icone": "📚", "cor": "#4299e1", "orcamento_mensal": 300 },
+    { "id": "outros", "nome": "Outros", "icone": "📦", "cor": "#a0aec0", "orcamento_mensal": 500 }
+  ],
+  "despesas": []
+}
