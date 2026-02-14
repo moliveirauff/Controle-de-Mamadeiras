@@ -1373,8 +1373,8 @@
         const search = (document.getElementById('ed-search').value || '').toLowerCase().trim();
 
         return allData.map((r, i) => ({ ...r, __idx: i })).filter(r => {
-            // Exclude receitas always
-            if (r.categoria === 'receitas' || r.valor > 0) return false;
+            // Exclude receitas always (but keep positive values — reembolsos/ajustes)
+            if (r.categoria === 'receitas') return false;
             // Month filter
             if (monthVal !== '__all__' && !r.data.startsWith(monthVal)) return false;
             // Category filter
