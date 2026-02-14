@@ -39,38 +39,7 @@
             padding: 10px;
             padding-bottom: 60px;
         }
-        /* Header */
-        .page-header {
-            background: linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%);
-            color: white;
-            padding: 1.2rem 1.2rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin: -10px -10px 16px;
-        }
-        .page-header-left { display: flex; flex-direction: column; gap: 2px; }
-        .back-link {
-            text-decoration: none;
-            color: rgba(255,255,255,0.75);
-            font-size: 0.78rem;
-            font-weight: 600;
-        }
-        .back-link:hover { color: #fff; }
-        .page-header h1 { font-size: 1.25rem; font-weight: 800; color: white; margin: 0; }
-        #theme-toggle {
-            background: rgba(255,255,255,0.15);
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 7px 10px;
-            border-radius: 8px;
-            color: white;
-            transition: background 0.2s;
-        }
-        #theme-toggle:hover { background: rgba(255,255,255,0.25); }
+        #theme-toggle { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer; }
         /* Period filters */
         .period-bar {
             background: var(--card-bg);
@@ -195,14 +164,9 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="page-header">
-        <div class="page-header-left">
-            <a href="index.html" class="back-link">← Voltar ao Início</a>
-            <h1>💸 Dashboard de Despesas</h1>
-        </div>
-        <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
-    </div>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <a href="index.html" style="text-decoration: none; color: #3498db; font-size: 0.9rem; margin-left: 10px; display: inline-block;">← Voltar para Início</a>
+    <h1>💸 Dashboard de Despesas</h1>
 
     <!-- Tab Navigation -->
     <div class="tab-nav">
