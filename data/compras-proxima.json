@@ -80,6 +80,14 @@
     "obs": "Adicionado por CasaBot"
   },
   {
+    "Item": "Refrigerante H2O",
+    "Categoria": "Bebidas",
+    "qty": "1",
+    "price": "3.99",
+    "checked": false,
+    "obs": "Adicionado por CasaBot"
+  },
+  {
     "Item": "Teste Item Novo",
     "Categoria": "Limpeza",
     "qty": "3",
