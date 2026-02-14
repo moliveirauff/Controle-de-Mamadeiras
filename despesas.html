@@ -7,28 +7,39 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         :root {
-            --bg: #f3f4f6;
-            --text: #1f2937;
-            --card-bg: #ffffff;
-            --border: #e5e7eb;
-            --subtext: #6b7280;
-            --accent: #2563eb;
-            --accent-light: #eff6ff;
-            --green: #16a34a;
-            --yellow: #ca8a04;
-            --red: #dc2626;
+            --bg: #f7fafc;
+            --text: #2d3748;
+            --surface: #ffffff;
+            --card-bg: var(--surface);
+            --border: #e2e8f0;
+            --text-muted: #718096;
+            --subtext: var(--text-muted);
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --accent: var(--primary);
+            --accent-light: #ebf4ff;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
+            --green: #48bb78;
+            --yellow: #ed8936;
+            --red: #f56565;
+            --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
         }
         body.dark-mode {
-            --bg: #111827;
-            --text: #f3f4f6;
-            --card-bg: #1f2937;
-            --border: #374151;
-            --subtext: #9ca3af;
-            --accent: #3b82f6;
-            --accent-light: #1e3a5f;
-            --green: #4ade80;
-            --yellow: #fbbf24;
-            --red: #f87171;
+            --bg: #1a202c;
+            --text: #f7fafc;
+            --surface: #2d3748;
+            --card-bg: var(--surface);
+            --border: #4a5568;
+            --text-muted: #cbd5e0;
+            --subtext: var(--text-muted);
+            --primary: #7f9cf5;
+            --accent: var(--primary);
+            --accent-light: #2a3a6e;
+            --green: #68d391;
+            --yellow: #f6ad55;
+            --red: #fc8181;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -36,10 +47,37 @@
             background-color: var(--bg);
             color: var(--text);
             transition: background-color 0.3s, color 0.3s;
-            padding: 10px;
-            padding-bottom: 60px;
+            padding: 10px 10px 60px 10px;
         }
-        #theme-toggle { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer; }
+        /* ── Cabeçalho ── */
+        #theme-toggle {
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
+            padding: 8px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10; transition: background 0.2s;
+        }
+        body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin: 10px 0 0 4px;
+            display: inline-block;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 10px 44px 4px 44px; /* lateral margin compensa o toggle absoluto */
+            color: var(--text);
+        }
+        .page-subtitle {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
         /* Period filters */
         .period-bar {
             background: var(--card-bg);
@@ -68,9 +106,9 @@
         .btn-period.active { background: var(--accent); color: white; }
         /* Cards */
         .card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07);
+            background: var(--surface);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
             padding: 15px;
             margin-bottom: 20px;
             border: 1px solid var(--border);
@@ -112,9 +150,15 @@
         .budget-fill.red { background: var(--red); }
         .loading-msg { text-align: center; padding: 40px; color: var(--subtext); font-size: 1rem; }
         @media (min-width: 768px) {
-            body { max-width: 960px; margin: 0 auto; }
+            body { max-width: 960px; margin: 0 auto; padding: 16px 16px 60px 16px; }
             .chart-container { height: 380px; }
             .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            h1 { font-size: 1.75rem; }
+        }
+        /* Mobile: tab nav não overflow em telas muito pequenas */
+        @media (max-width: 400px) {
+            .tab-btn { font-size: 0.75rem; padding: 8px 4px; }
+            h1 { font-size: 1.2rem; }
         }
         /* ─── Tab Nav ─────────────────────────────────────────────────────── */
         .tab-nav {
@@ -146,6 +190,13 @@
             margin-bottom: 20px;
         }
         @media (min-width: 600px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
+        /* Editor filter bar: empilha em mobile */
+        @media (max-width: 599px) {
+            .editor-filters { flex-direction: column !important; }
+            .editor-filters > div { width: 100%; }
+            .editor-filters select,
+            .editor-filters input { width: 100% !important; min-width: unset !important; box-sizing: border-box; }
+        }
         .kpi-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -165,8 +216,9 @@
 </head>
 <body>
     <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
-    <a href="index.html" style="text-decoration: none; color: #3498db; font-size: 0.9rem; margin-left: 10px; display: inline-block;">← Voltar para Início</a>
+    <a href="index.html" class="nav-link">← Voltar para Início</a>
     <h1>💸 Dashboard de Despesas</h1>
+    <p class="page-subtitle">Análise de gastos da família · Hub Donato Suárez</p>
 
     <!-- Tab Navigation -->
     <div class="tab-nav">
@@ -238,7 +290,7 @@
 
         <!-- Filter Bar -->
         <div class="card" style="margin-bottom:14px;">
-            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+            <div class="editor-filters" style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
                 <div>
                     <label style="font-size:0.72rem; font-weight:700; color:var(--subtext); display:block; margin-bottom:3px;">📅 MÊS</label>
                     <select id="ed-month" class="cat-select" onchange="onEdCatChange()" style="min-width:130px;">
@@ -304,11 +356,11 @@
         <!-- Action Bar -->
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
             <button onclick="openAddModal()"
-                style="background:var(--accent); color:white; border:none; padding:9px 18px; border-radius:10px; font-size:0.85rem; font-weight:700; cursor:pointer;">
+                style="background:var(--primary); color:white; border:none; padding:9px 18px; border-radius:8px; font-size:0.85rem; font-weight:700; cursor:pointer; min-height:44px; transition:opacity 0.2s;">
                 ➕ Novo Lançamento
             </button>
             <button onclick="downloadJSON()"
-                style="background:var(--card-bg); border:1px solid var(--border); color:var(--text); padding:9px 18px; border-radius:10px; font-size:0.85rem; font-weight:700; cursor:pointer;">
+                style="background:var(--surface); border:1px solid var(--border); color:var(--text); padding:9px 18px; border-radius:8px; font-size:0.85rem; font-weight:700; cursor:pointer; min-height:44px; transition:opacity 0.2s;">
                 💾 Baixar lancamentos.json
             </button>
         </div>
@@ -354,8 +406,8 @@
             </div>
             <div id="modal-error" style="color:#f87171; font-size:0.8rem; margin-top:8px; display:none;"></div>
             <div style="display:flex; gap:10px; margin-top:18px; justify-content:flex-end;">
-                <button onclick="closeModal()" style="background:var(--border); border:none; padding:8px 18px; border-radius:8px; font-size:0.85rem; font-weight:600; color:var(--text); cursor:pointer;">Cancelar</button>
-                <button onclick="saveModal()" style="background:var(--accent); color:white; border:none; padding:8px 18px; border-radius:8px; font-size:0.85rem; font-weight:700; cursor:pointer;">Salvar</button>
+                <button onclick="closeModal()" style="background:var(--border); border:none; padding:8px 18px; border-radius:8px; font-size:0.85rem; font-weight:600; color:var(--text); cursor:pointer; min-height:44px;">Cancelar</button>
+                <button onclick="saveModal()" style="background:var(--primary); color:white; border:none; padding:8px 18px; border-radius:8px; font-size:0.85rem; font-weight:700; cursor:pointer; min-height:44px;">Salvar</button>
             </div>
         </div>
     </div>
@@ -454,8 +506,8 @@
         const isDark = document.body.classList.contains('dark-mode');
         document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        Chart.defaults.color = isDark ? '#9ca3af' : '#6b7280';
-        Chart.defaults.borderColor = isDark ? '#374151' : '#e5e7eb';
+        Chart.defaults.color = isDark ? '#cbd5e0' : '#718096';
+        Chart.defaults.borderColor = isDark ? '#4a5568' : '#e2e8f0';
         Object.values(charts).forEach(c => c && c.update());
     }
 
@@ -1563,8 +1615,8 @@
         if (saved === 'dark') {
             document.body.classList.add('dark-mode');
             document.getElementById('theme-toggle').textContent = '☀️';
-            Chart.defaults.color = '#9ca3af';
-            Chart.defaults.borderColor = '#374151';
+            Chart.defaults.color = '#cbd5e0';
+            Chart.defaults.borderColor = '#4a5568';
         }
 
         try {
