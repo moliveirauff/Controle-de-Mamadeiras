@@ -146,6 +146,49 @@
             .chart-container { height: 380px; }
             .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         }
+        /* ─── Tab Nav ─────────────────────────────────────────────────────── */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 14px;
+        }
+        .tab-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 8px 18px;
+            border-radius: 10px 10px 0 0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--subtext);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover:not(:disabled) { color: var(--text); border-color: var(--accent); }
+        .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .tab-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        /* ─── Aba 2 KPI Cards ─────────────────────────────────────────────── */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        @media (min-width: 600px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
+        .kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .kpi-emoji { font-size: 1.4rem; }
+        .kpi-label { font-size: 0.7rem; font-weight: 700; color: var(--subtext); text-transform: uppercase; letter-spacing: 0.03em; }
+        .kpi-value { font-size: 1.1rem; font-weight: 800; color: var(--text); }
+        .kpi-sub { font-size: 0.72rem; color: var(--subtext); margin-top: 2px; }
+        .kpi-sub .pos { color: var(--red); }
+        .kpi-sub .neg { color: var(--green); }
     </style>
 </head>
 <body>
@@ -158,8 +201,15 @@
         <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
     </div>
 
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(1)">📊 Consolidado</button>
+        <button class="tab-btn" onclick="switchTab(2)">📅 Mês Atual</button>
+        <button class="tab-btn" disabled>✏️ Editor <small style="font-weight:400;font-size:0.7em">— Em breve</small></button>
+    </div>
+
     <!-- Period Filter -->
-    <div class="period-bar">
+    <div class="period-bar" id="period-bar">
         <span class="period-label">Período:</span>
         <button class="btn-period" onclick="setPeriod('ano_atual', this)">Ano Atual</button>
         <button class="btn-period active" onclick="setPeriod('12m', this)">12M</button>
@@ -169,6 +219,26 @@
     </div>
 
     <div id="loading" class="loading-msg">⏳ Carregando dados...</div>
+
+    <!-- ═══ ABA 2 — Mês Atual ═══════════════════════════════════════════════ -->
+    <div id="tab2" style="display:none;">
+
+        <!-- A: KPI Cards -->
+        <div class="kpi-grid" id="kpi-grid"></div>
+
+        <!-- B: Barras por categoria -->
+        <div class="card">
+            <div class="card-header"><span id="kpi-bar-title">📊 Gastos por Categoria — Mês Atual</span></div>
+            <div class="chart-container"><canvas id="cT2B"></canvas></div>
+        </div>
+
+        <!-- C: Acumulado dia a dia -->
+        <div class="card">
+            <div class="card-header"><span id="kpi-acc-title">📈 Gasto Acumulado Dia a Dia</span></div>
+            <div class="chart-container"><canvas id="cT2C"></canvas></div>
+        </div>
+
+    </div>
 
     <div id="dashboard" style="display:none;">
 
@@ -686,6 +756,216 @@
         renderF();
         renderG();
         renderH();
+    }
+
+    // ─── Tab Navigation ───────────────────────────────────────────────────────
+    let currentTab = 1;
+
+    function switchTab(tab) {
+        currentTab = tab;
+        // Update button states
+        document.querySelectorAll('.tab-btn').forEach((b, i) => {
+            if (!b.disabled) b.classList.toggle('active', i + 1 === tab);
+        });
+        // Show/hide period-bar (only for tab 1)
+        document.getElementById('period-bar').style.display = tab === 1 ? '' : 'none';
+        // Show/hide content
+        document.getElementById('tab2').style.display = tab === 2 ? 'block' : 'none';
+        document.getElementById('dashboard').style.display = tab === 1 ? 'block' : 'none';
+        // Render tab 2 when activated
+        if (tab === 2 && allData.length > 0) renderTab2();
+    }
+
+    // ─── Aba 2 helpers ────────────────────────────────────────────────────────
+    function getRefMonth() {
+        // Use current month/year; fallback to most recent in data if no data for current month
+        const today = new Date();
+        const curKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+        const despesas = allData.filter(r => r.valor < 0 && r.categoria !== 'receitas');
+        const hasCur = despesas.some(r => r.data.startsWith(curKey));
+        if (hasCur) return { year: today.getFullYear(), month: today.getMonth() + 1, key: curKey };
+        // Fallback: most recent month in data
+        const keys = [...new Set(despesas.map(r => r.data.substring(0, 7)))].sort();
+        const last = keys[keys.length - 1];
+        if (!last) return { year: today.getFullYear(), month: today.getMonth() + 1, key: curKey };
+        const [y, m] = last.split('-').map(Number);
+        return { year: y, month: m, key: last };
+    }
+
+    function getDaysInMonth(year, month) {
+        return new Date(year, month, 0).getDate();
+    }
+
+    function renderTab2() {
+        const { year, month, key } = getRefMonth();
+        const daysInMonth = getDaysInMonth(year, month);
+        const today = new Date();
+        const currentDay = (today.getFullYear() === year && today.getMonth() + 1 === month)
+            ? today.getDate()
+            : daysInMonth; // if past month, use full month
+
+        const despesas = allData.filter(r => r.valor < 0 && r.categoria !== 'receitas');
+
+        // Month total
+        const curMonthData = despesas.filter(r => r.data.startsWith(key));
+        const curTotal = curMonthData.reduce((s, r) => s + Math.abs(r.valor), 0);
+
+        // Last 12 months (excluding current ref month for avg)
+        const refDate = new Date(year, month - 1, 1);
+        const last12Keys = [];
+        for (let i = 1; i <= 12; i++) {
+            const d = new Date(refDate);
+            d.setMonth(d.getMonth() - i);
+            last12Keys.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`);
+        }
+        const last12Totals = last12Keys.map(k => {
+            return despesas.filter(r => r.data.startsWith(k)).reduce((s, r) => s + Math.abs(r.valor), 0);
+        });
+        const avg12 = last12Totals.reduce((a, b) => a + b, 0) / 12;
+
+        // Same month last year
+        const sameMonthLastYear = `${year - 1}-${String(month).padStart(2, '0')}`;
+        const sameYearTotal = despesas.filter(r => r.data.startsWith(sameMonthLastYear)).reduce((s, r) => s + Math.abs(r.valor), 0);
+
+        // ── KPI Cards ──────────────────────────────────────────────────────
+        const monthName = new Date(year, month - 1, 1).toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
+        document.getElementById('kpi-bar-title').textContent = `📊 Gastos por Categoria — ${monthName.charAt(0).toUpperCase() + monthName.slice(1)}`;
+        document.getElementById('kpi-acc-title').textContent = `📈 Gasto Acumulado Dia a Dia — ${monthName.charAt(0).toUpperCase() + monthName.slice(1)}`;
+
+        const dayPct = ((currentDay / daysInMonth) * 100).toFixed(0);
+        const spendPct = avg12 > 0 ? ((curTotal / avg12) * 100).toFixed(0) : '—';
+
+        const vsLastYear = sameYearTotal > 0 ? ((curTotal - sameYearTotal) / sameYearTotal * 100) : null;
+        const vsAvg12 = avg12 > 0 ? ((curTotal - avg12) / avg12 * 100) : null;
+
+        function diffSpan(pct) {
+            if (pct === null) return '<span style="color:var(--subtext)">Sem dados</span>';
+            const cls = pct > 0 ? 'pos' : 'neg';
+            const sign = pct > 0 ? '+' : '';
+            return `<span class="${cls}">${sign}${pct.toFixed(1)}%</span>`;
+        }
+
+        document.getElementById('kpi-grid').innerHTML = `
+        <div class="kpi-card">
+            <div class="kpi-emoji">💸</div>
+            <div class="kpi-label">Total do Mês</div>
+            <div class="kpi-value">${brl(curTotal)}</div>
+            <div class="kpi-sub">${monthName.charAt(0).toUpperCase() + monthName.slice(1)}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-emoji">⏱️</div>
+            <div class="kpi-label">Ritmo</div>
+            <div class="kpi-value">${dayPct}% do mês</div>
+            <div class="kpi-sub">Dia ${currentDay} de ${daysInMonth} · Gastou ${spendPct}% da média</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-emoji">📅</div>
+            <div class="kpi-label">vs Mesmo Mês ${year - 1}</div>
+            <div class="kpi-value">${sameYearTotal > 0 ? brl(sameYearTotal) : '—'}</div>
+            <div class="kpi-sub">${diffSpan(vsLastYear)}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-emoji">📈</div>
+            <div class="kpi-label">vs Média 12M</div>
+            <div class="kpi-value">${brl(avg12)}</div>
+            <div class="kpi-sub">${diffSpan(vsAvg12)}</div>
+        </div>`;
+
+        // ── Bloco B — Barras por categoria ────────────────────────────────
+        const catTotals = {};
+        curMonthData.forEach(r => {
+            catTotals[r.categoria] = (catTotals[r.categoria] || 0) + Math.abs(r.valor);
+        });
+        const catSorted = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
+        const barLabels = catSorted.map(([k]) => categorias[k] || k);
+        const barValues = catSorted.map(([, v]) => v);
+        const barColors = catSorted.map((_, i) => CAT_COLORS[i % CAT_COLORS.length]);
+
+        if (charts['cT2B']) charts['cT2B'].destroy();
+        charts['cT2B'] = new Chart(document.getElementById('cT2B'), {
+            type: 'bar',
+            data: {
+                labels: barLabels,
+                datasets: [{ label: 'Total (R$)', data: barValues, backgroundColor: barColors, borderRadius: 6 }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: ctx => ' ' + brl(ctx.parsed.x) } }
+                },
+                scales: {
+                    x: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
+                    y: { ticks: { font: { size: 11 } } }
+                }
+            }
+        });
+
+        // ── Bloco C — Acumulado dia a dia ─────────────────────────────────
+        // Build day-by-day accumulation
+        const dailyMap = {};
+        curMonthData.forEach(r => {
+            const day = parseInt(r.data.split('-')[2]);
+            dailyMap[day] = (dailyMap[day] || 0) + Math.abs(r.valor);
+        });
+
+        const dayLabels = [];
+        const realAcc = [];
+        const expectedAcc = [];
+        const dailyExpected = avg12 > 0 ? avg12 / daysInMonth : 0;
+        let runningReal = 0;
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            dayLabels.push(`Dia ${d}`);
+            if (d <= currentDay) {
+                runningReal += (dailyMap[d] || 0);
+                realAcc.push(runningReal);
+            } else {
+                realAcc.push(null); // no data yet
+            }
+            expectedAcc.push(dailyExpected * d);
+        }
+
+        if (charts['cT2C']) charts['cT2C'].destroy();
+        charts['cT2C'] = new Chart(document.getElementById('cT2C'), {
+            type: 'line',
+            data: {
+                labels: dayLabels,
+                datasets: [
+                    {
+                        label: 'Gasto Real Acumulado',
+                        data: realAcc,
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37,99,235,0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 2,
+                        spanGaps: false
+                    },
+                    {
+                        label: 'Ritmo Esperado (média 12M)',
+                        data: expectedAcc,
+                        borderColor: '#ca8a04',
+                        borderDash: [6, 4],
+                        fill: false,
+                        tension: 0,
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } },
+                    tooltip: { callbacks: { label: ctx => ' ' + brl(ctx.parsed.y) } }
+                },
+                scales: {
+                    y: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
+                    x: { ticks: { maxRotation: 45, font: { size: 9 }, maxTicksLimit: 15 } }
+                }
+            }
+        });
     }
 
     // ─── Init ─────────────────────────────────────────────────────────────────
