@@ -70,5 +70,13 @@
     "price": "14.9",
     "checked": false,
     "obs": "Para: Panqueca Doce"
+  },
+  {
+    "Item": "Coca-Cola",
+    "Categoria": "Bebidas",
+    "qty": "6",
+    "price": "3.99",
+    "checked": false,
+    "obs": ""
   }
 ]
