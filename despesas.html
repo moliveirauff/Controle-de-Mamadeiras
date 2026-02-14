@@ -230,22 +230,16 @@
     <!-- ═══ ABA 2 — Mês Atual ═══════════════════════════════════════════════ -->
     <div id="tab2" style="display:none;">
 
-        <!-- A: KPI Cards -->
+        <!-- 1: KPI Cards -->
         <div class="kpi-grid" id="kpi-grid"></div>
 
-        <!-- B: Barras por categoria -->
+        <!-- 2: Barras por categoria -->
         <div class="card">
             <div class="card-header"><span id="kpi-bar-title">📊 Gastos por Categoria — Mês Atual</span></div>
             <div class="chart-container"><canvas id="cT2B"></canvas></div>
         </div>
 
-        <!-- C: Acumulado dia a dia -->
-        <div class="card">
-            <div class="card-header"><span id="kpi-acc-title">📈 Gasto Acumulado Dia a Dia</span></div>
-            <div class="chart-container"><canvas id="cT2C"></canvas></div>
-        </div>
-
-        <!-- D: Subcategorias do mês -->
+        <!-- 3: Subcategorias do mês -->
         <div class="card">
             <div class="card-header">
                 <span id="kpi-subcat-title">📊 Detalhe por Subcategoria</span>
@@ -254,6 +248,20 @@
                 </div>
             </div>
             <div class="chart-container"><canvas id="cT2D"></canvas></div>
+        </div>
+
+        <!-- 4: Comparação com Orçamento -->
+        <div class="card">
+            <div class="card-header">
+                <span>🎯 Comparação com Orçamento Mensal</span>
+            </div>
+            <div id="tab2BudgetChart"></div>
+        </div>
+
+        <!-- 5: Acumulado dia a dia -->
+        <div class="card">
+            <div class="card-header"><span id="kpi-acc-title">📈 Gasto Acumulado Dia a Dia</span></div>
+            <div class="chart-container"><canvas id="cT2C"></canvas></div>
         </div>
 
     </div>
@@ -310,14 +318,6 @@
                 </div>
                 <div class="chart-container"><canvas id="cE"></canvas></div>
             </div>
-        </div>
-
-        <!-- F: Categoria vs Orçamento -->
-        <div class="card">
-            <div class="card-header">
-                <span>🎯 Categoria vs Orçamento Mensal</span>
-            </div>
-            <div id="budgetChart"></div>
         </div>
 
         <!-- G: Evolução Mensal -->
@@ -836,9 +836,6 @@
         const today = new Date();
         
         // Determinar "dia atual" para o ritmo:
-        // Se for o mês atual real, usa o dia de hoje.
-        // Se for um mês passado, usa o último dia do mês.
-        // Se for um mês futuro, usa 0 (ou 1).
         let currentDay;
         const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
         if (key === todayKey) {
@@ -872,15 +869,11 @@
         });
         const avg12 = last12Totals.reduce((a, b) => a + b, 0) / 12;
 
-        // Same month last year
-        const sameMonthLastYear = `${year - 1}-${String(month).padStart(2, '0')}`;
-        const sameYearTotal = despesas.filter(r => r.data.startsWith(sameMonthLastYear)).reduce((s, r) => s + Math.abs(r.valor), 0);
-
         // ── Titles ────────────────────────────────────────────────────────
         document.getElementById('kpi-bar-title').textContent = `📊 Gastos por Categoria — ${monthName.charAt(0).toUpperCase() + monthName.slice(1)}`;
         document.getElementById('kpi-acc-title').textContent = `📈 Gasto Acumulado Dia a Dia — ${monthName.charAt(0).toUpperCase() + monthName.slice(1)}`;
 
-        // ── Bloco B — Barras por categoria ────────────────────────────────
+        // ── Bloco 2 — Barras por categoria ────────────────────────────────
         const catTotals = {};
         curMonthData.forEach(r => {
             catTotals[r.categoria] = (catTotals[r.categoria] || 0) + Math.abs(r.valor);
@@ -911,7 +904,66 @@
             }
         });
 
-        // ── Bloco C — Acumulado dia a dia ─────────────────────────────────
+        // ── Bloco 3 — Subcategorias ───────────────────────────────────────
+        const selT2D = document.getElementById('selT2D');
+        const selCat = selT2D.value || 'alimentacao';
+        
+        const subTotals = {};
+        curMonthData.filter(r => r.categoria === selCat).forEach(r => {
+            const sub = r.subcategoria || 'Não definida';
+            subTotals[sub] = (subTotals[sub] || 0) + Math.abs(r.valor);
+        });
+        const subSorted = Object.entries(subTotals).sort((a,b) => b[1] - a[1]);
+        const subLabels = subSorted.map(([k]) => k);
+        const subValues = subSorted.map(([,v]) => v);
+
+        if (charts['cT2D']) charts['cT2D'].destroy();
+        charts['cT2D'] = new Chart(document.getElementById('cT2D'), {
+            type: 'bar',
+            data: {
+                labels: subLabels,
+                datasets: [{ label: 'Total (R$)', data: subValues, backgroundColor: '#7c3aed', borderRadius: 6 }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: ctx => ' ' + brl(ctx.parsed.x) } }
+                },
+                scales: {
+                    x: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
+                    y: { ticks: { font: { size: 11 } } }
+                }
+            }
+        });
+
+        // ── Bloco 4 — Comparação com Orçamento ────────────────────────────
+        const budgetContainer = document.getElementById('tab2BudgetChart');
+        budgetContainer.innerHTML = '';
+
+        const orcCats = Object.keys(orcamento);
+        orcCats.forEach(catId => {
+            const orcValue = orcamento[catId];
+            const realValue = catTotals[catId] || 0;
+            const pct = orcValue > 0 ? (realValue / orcValue * 100) : 0;
+            const clampedPct = Math.min(pct, 100);
+            const cls = pct < 80 ? 'green' : pct <= 100 ? 'yellow' : 'red';
+            const catName = categorias[catId] || catId;
+
+            budgetContainer.innerHTML += `
+            <div class="budget-item">
+                <div class="budget-row">
+                    <span class="budget-cat">${catName}</span>
+                    <span class="budget-vals">${brl(realValue)} / Orçamento: ${brl(orcValue)} · <strong style="color:var(--${cls})">${pct.toFixed(0)}%</strong></span>
+                </div>
+                <div class="budget-track">
+                    <div class="budget-fill ${cls}" style="width:${clampedPct}%"></div>
+                </div>
+            </div>`;
+        });
+
+        // ── Bloco 5 — Acumulado dia a dia ─────────────────────────────────
         const dailyMap = {};
         curMonthData.forEach(r => {
             const day = parseInt(r.data.split('-')[2]);
@@ -971,40 +1023,6 @@
                 scales: {
                     y: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
                     x: { ticks: { maxRotation: 45, font: { size: 9 }, maxTicksLimit: 15 } }
-                }
-            }
-        });
-
-        // ── Bloco D — Subcategorias ───────────────────────────────────────
-        const selT2D = document.getElementById('selT2D');
-        const selCat = selT2D.value || 'alimentacao';
-        
-        const subTotals = {};
-        curMonthData.filter(r => r.categoria === selCat).forEach(r => {
-            const sub = r.subcategoria || 'Não definida';
-            subTotals[sub] = (subTotals[sub] || 0) + Math.abs(r.valor);
-        });
-        const subSorted = Object.entries(subTotals).sort((a,b) => b[1] - a[1]);
-        const subLabels = subSorted.map(([k]) => k);
-        const subValues = subSorted.map(([,v]) => v);
-
-        if (charts['cT2D']) charts['cT2D'].destroy();
-        charts['cT2D'] = new Chart(document.getElementById('cT2D'), {
-            type: 'bar',
-            data: {
-                labels: subLabels,
-                datasets: [{ label: 'Total (R$)', data: subValues, backgroundColor: '#7c3aed', borderRadius: 6 }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true, maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { callbacks: { label: ctx => ' ' + brl(ctx.parsed.x) } }
-                },
-                scales: {
-                    x: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
-                    y: { ticks: { font: { size: 11 } } }
                 }
             }
         });
