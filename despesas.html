@@ -1002,7 +1002,7 @@
             <div class="budget-item">
                 <div class="budget-row">
                     <span class="budget-cat">${catName}</span>
-                    <span class="budget-vals">${brl(realValue)} / Orçamento: ${brl(orcValue)} · <strong style="color:var(--${cls})">${pct.toFixed(0)}%</strong></span>
+                    <span class="budget-vals">${brl(realValue)} / ${brl(orcValue)} · <strong style="color:var(--${cls})">${pct.toFixed(0)}%</strong></span>
                 </div>
                 <div class="budget-track">
                     <div class="budget-fill ${cls}" style="width:${clampedPct}%"></div>
@@ -1017,10 +1017,31 @@
             dailyMap[day] = (dailyMap[day] || 0) + Math.abs(r.valor);
         });
 
+        // Cálculo da curva histórica (média dos últimos 3 meses)
+        const histCurves = [];
+        for (let i = 1; i <= 3; i++) {
+            const d = new Date(year, month - 1, 1);
+            d.setMonth(d.getMonth() - i);
+            const k = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+            const mDays = getDaysInMonth(d.getFullYear(), d.getMonth() + 1);
+            const mData = despesas.filter(r => r.data.startsWith(k));
+            const mDaily = new Array(32).fill(0); // usar 1-31
+            mData.forEach(r => {
+                const day = parseInt(r.data.split('-')[2]);
+                mDaily[day] += Math.abs(r.valor);
+            });
+            const mAcc = [];
+            let mRunning = 0;
+            for (let day = 1; day <= 31; day++) {
+                mRunning += mDaily[day] || 0;
+                mAcc.push(mRunning);
+            }
+            histCurves.push(mAcc);
+        }
+
         const dayLabels = [];
         const realAcc = [];
-        const expectedAcc = [];
-        const dailyExpected = avg12 > 0 ? avg12 / daysInMonth : 0;
+        const historicalAcc = [];
         let runningReal = 0;
 
         for (let d = 1; d <= daysInMonth; d++) {
@@ -1031,7 +1052,11 @@
             } else {
                 realAcc.push(null);
             }
-            expectedAcc.push(dailyExpected * d);
+            
+            // Média do acumulado dos 3 meses para o dia D
+            let sumHist = 0;
+            histCurves.forEach(c => { sumHist += c[d-1]; });
+            historicalAcc.push(sumHist / histCurves.length);
         }
 
         if (charts['cT2C']) charts['cT2C'].destroy();
@@ -1051,12 +1076,12 @@
                         spanGaps: false
                     },
                     {
-                        label: 'Ritmo Esperado (média 12M)',
-                        data: expectedAcc,
+                        label: 'Curva de Referência (Média 3 meses)',
+                        data: historicalAcc,
                         borderColor: '#ca8a04',
                         borderDash: [6, 4],
                         fill: false,
-                        tension: 0,
+                        tension: 0.2,
                         pointRadius: 0
                     }
                 ]
