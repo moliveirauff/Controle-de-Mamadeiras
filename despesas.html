@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💸 Dashboard de Despesas</title>
+    <!-- v1.1.0 — regra mês incompleto nos KPIs de média (Aba1+Aba2) -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         :root {
@@ -507,9 +508,12 @@
         today.setHours(0,0,0,0);
         if (period === 'todos') return new Date('2000-01-01');
         if (period === 'ano_atual') return new Date(today.getFullYear(), 0, 1);
-        const monthsMap = { '12m': 12, '24m': 24, '36m': 36 };
-        const m = monthsMap[period] || 12;
-        // Mês atual + M meses anteriores completos (total M+1 meses)
+        const monthsMap = { '12m': 11, '24m': 23, '36m': 35 };
+        const m = monthsMap[period] || 11;
+        // Mês atual + M meses anteriores (total M+1 meses)
+        // Se m=11 (filtro 12M), retrocede 11 meses a partir do 1º dia do mês atual.
+        // Ex: Hoje é 15/02/2026. GetMonth()=1. 1-11 = -10. 01/-10/2026 = 01/03/2025.
+        // De 01/03/2025 a 15/02/2026 = 12 meses de dados.
         return new Date(today.getFullYear(), today.getMonth() - m, 1);
     }
 
@@ -560,8 +564,34 @@
 
         // 2. Média Mensal
         const monthKeys = getMonthKeys();
-        const numMonths = monthKeys.length || 1;
-        const mediaMensal = totalPeriodo / numMonths;
+        
+        let numMonths;
+        if (currentPeriod === '12m') numMonths = 12;
+        else if (currentPeriod === '24m') numMonths = 24;
+        else if (currentPeriod === '36m') numMonths = 36;
+        else if (currentPeriod === 'ano_atual') {
+            numMonths = new Date().getMonth() + 1;
+        } else {
+            numMonths = monthKeys.length || 1;
+        }
+        
+        // Regra mês incompleto: se dia < 25, excluir mês corrente da média
+        const _today1 = new Date();
+        const _todayDay1 = _today1.getDate();
+        const _curMonthKey1 = `${_today1.getFullYear()}-${String(_today1.getMonth()+1).padStart(2,'0')}`;
+        let adjustedTotal = totalPeriodo;
+        let adjustedMonths = numMonths;
+        if (_todayDay1 < 25) {
+            const curMonthSum = filteredData
+                .filter(r => r.data.startsWith(_curMonthKey1))
+                .reduce((s, r) => s + Math.abs(r.valor), 0);
+            adjustedTotal -= curMonthSum;
+            adjustedMonths = Math.max(1, numMonths - 1);
+        }
+        const mediaMensal = adjustedTotal / adjustedMonths;
+        const mediaMensalBase = _todayDay1 < 25
+            ? `Base: ${adjustedMonths} meses (mês atual excluído)`
+            : `Base: ${numMonths} meses`;
 
         // 3. Maior Categoria
         const catTotals = {};
@@ -594,7 +624,7 @@
                 <span class="kpi-emoji">📅</span>
                 <span class="kpi-label">Média Mensal</span>
                 <span class="kpi-value">${brl(mediaMensal)}</span>
-                <span class="kpi-sub">Base: ${numMonths} meses</span>
+                <span class="kpi-sub">${mediaMensalBase}</span>
             </div>
             <div class="kpi-card">
                 <span class="kpi-emoji">🏆</span>
@@ -979,8 +1009,18 @@
         const curTotal = curMonthData.reduce((s, r) => s + Math.abs(r.valor), 0);
 
         const refDate = new Date(year, month - 1, 1);
+        // Regra mês incompleto: se mês selecionado = mês corrente e dia < 25,
+        // usar i=2..12 (11 meses completos) em vez de i=1..12
+        const _todayAba2 = new Date();
+        const _todayDayAba2 = _todayAba2.getDate();
+        const _todayKeyAba2 = `${_todayAba2.getFullYear()}-${String(_todayAba2.getMonth()+1).padStart(2,'0')}`;
+        const _skipCurrentAba2 = (key === _todayKeyAba2) && (_todayDayAba2 < 25);
+        const _startIAba2 = _skipCurrentAba2 ? 2 : 1;
+        const _endIAba2 = _skipCurrentAba2 ? 12 : 12;
+        const _numAvgMonths = _endIAba2 - _startIAba2 + 1; // 11 ou 12
+
         const last12Keys = [];
-        for (let i = 1; i <= 12; i++) {
+        for (let i = _startIAba2; i <= _endIAba2; i++) {
             const d = new Date(refDate);
             d.setMonth(d.getMonth() - i);
             last12Keys.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`);
@@ -989,7 +1029,7 @@
             return despesas.filter(r => r.data.startsWith(k)).reduce((s, r) => s + Math.abs(r.valor), 0);
         });
         const total12 = last12Totals.reduce((a, b) => a + b, 0);
-        const avg12 = total12 / 12;
+        const avg12 = total12 / _numAvgMonths;
 
         const kpiGrid = document.getElementById('kpi-grid');
         const lastMonthTotal = last12Totals[0] || 0;
