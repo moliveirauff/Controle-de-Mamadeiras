@@ -219,6 +219,52 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script>
 // ══════════════════════════════════════════
+//  API CONFIG
+// ══════════════════════════════════════════
+const API_BASE = 'http://127.0.0.1:4747';
+
+async function saveToServer(dataset, data, commitMsg) {
+  try {
+    const payload = JSON.parse(JSON.stringify(data));
+    if (commitMsg) payload._commitMsg = commitMsg;
+    const res = await fetch(`${API_BASE}/save/${dataset}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+    if (json.synced) {
+      showToast('💾 Salvo e publicado!', 'success');
+    } else if (json.saved) {
+      showToast('💾 Salvo localmente (sync pendente)', 'warn');
+    } else {
+      showToast('⚠️ Erro ao salvar: ' + (json.error || '?'), 'error');
+    }
+    return json;
+  } catch (e) {
+    showToast('📱 Offline — dados em localStorage', 'warn');
+    return { saved: false, error: e.message };
+  }
+}
+
+function showToast(msg, type = 'success') {
+  let toast = document.getElementById('_toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = '_toast';
+    toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:10px;font-size:.85rem;font-weight:600;z-index:9999;transition:opacity .4s;pointer-events:none;white-space:nowrap';
+    document.body.appendChild(toast);
+  }
+  const colors = { success: '#22c55e', warn: '#f59e0b', error: '#ef4444' };
+  toast.style.background = colors[type] || '#22c55e';
+  toast.style.color = '#fff';
+  toast.style.opacity = '1';
+  toast.textContent = msg;
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+}
+
+// ══════════════════════════════════════════
 //  DATA LAYER
 // ══════════════════════════════════════════
 const AVATAR_COLORS = ['#6366f1','#ec4899','#f59e0b','#10b981','#3b82f6','#ef4444','#8b5cf6','#14b8a6'];
@@ -234,24 +280,24 @@ let acoes   = [];
 let editingId = null; // null = new
 
 async function loadData(){
-  const lsPessoas  = localStorage.getItem('argos_pessoas');
-  const lsImoveis  = localStorage.getItem('argos_imoveis');
-  const lsAcoes    = localStorage.getItem('argos_acoes');
-
-  if(lsPessoas)  pessoas  = JSON.parse(lsPessoas);
-  else try{ pessoas  = await fetch('data/acoes_pessoas.json').then(r=>r.json()); } catch(e){ pessoas=[] }
-
-  if(lsImoveis)  imoveis  = JSON.parse(lsImoveis);
-  else try{ imoveis  = await fetch('data/acoes_imoveis.json').then(r=>r.json()); } catch(e){ imoveis=[] }
-
-  if(lsAcoes)    acoes    = JSON.parse(lsAcoes);
-  else try{ acoes    = await fetch('data/acoes.json').then(r=>r.json()); } catch(e){ acoes=[] }
+  // Always load fresh from server JSON (source of truth), fallback to localStorage
+  try{ acoes   = await fetch('data/acoes.json?v='+Date.now()).then(r=>r.json());   localStorage.setItem('argos_acoes',   JSON.stringify(acoes));   } catch(e){ const s=localStorage.getItem('argos_acoes');   acoes=s?JSON.parse(s):[]; }
+  try{ pessoas = await fetch('data/acoes_pessoas.json?v='+Date.now()).then(r=>r.json()); localStorage.setItem('argos_pessoas', JSON.stringify(pessoas)); } catch(e){ const s=localStorage.getItem('argos_pessoas'); pessoas=s?JSON.parse(s):[]; }
+  try{ imoveis = await fetch('data/acoes_imoveis.json?v='+Date.now()).then(r=>r.json()); localStorage.setItem('argos_imoveis', JSON.stringify(imoveis)); } catch(e){ const s=localStorage.getItem('argos_imoveis'); imoveis=s?JSON.parse(s):[]; }
 }
 
 function persist(){
   localStorage.setItem('argos_pessoas', JSON.stringify(pessoas));
   localStorage.setItem('argos_imoveis', JSON.stringify(imoveis));
   localStorage.setItem('argos_acoes',   JSON.stringify(acoes));
+}
+
+async function persistAndSync(commitMsg){
+  persist(); // always save to localStorage
+  // send each dataset to server for persistence + GitHub sync
+  await saveToServer('acoes',         acoes,   commitMsg || 'update: acoes');
+  await saveToServer('acoes_pessoas', pessoas, 'update: acoes_pessoas');
+  await saveToServer('acoes_imoveis', imoveis, 'update: acoes_imoveis');
 }
 
 function nextId(arr){ return arr.length ? Math.max(...arr.map(x=>x.id))+1 : 1; }
@@ -338,13 +384,13 @@ function toggleSection(sec){
   header.classList.toggle('collapsed', !collapsed);
 }
 
-function cycleStatus(e, id){
+async function cycleStatus(e, id){
   e.stopPropagation();
   const a = acoes.find(x=>x.id===id);
   if(!a) return;
   a.status = STATUS_CYCLE[a.status]||'Não Iniciado';
-  persist();
   render();
+  await persistAndSync(`update: status "${a.titulo}" → ${a.status}`);
 }
 
 // ══════════════════════════════════════════
@@ -504,27 +550,31 @@ window.buildDetailModal = function(a){
   origBuildDetail(a);
 };
 
-function saveAcao(){
+async function saveAcao(){
   const data = getEditingAcao();
   if(!data) return;
   if(!data.titulo){ alert('Informe um título.'); return; }
+  let commitMsg;
   if(editingId){
     const idx = acoes.findIndex(a=>a.id===editingId);
     if(idx>=0) acoes[idx] = {...acoes[idx], ...data};
+    commitMsg = `update: ação "${data.titulo}"`;
   } else {
     acoes.push({id:nextId(acoes), ...data});
+    commitMsg = `feat: nova ação "${data.titulo}"`;
   }
-  persist();
   closeModal('modal-acao');
   render();
+  await persistAndSync(commitMsg);
 }
 
-function deleteAcao(){
+async function deleteAcao(){
   if(!confirm('Excluir esta ação?')) return;
+  const titulo = acoes.find(a=>a.id===editingId)?.titulo || 'ação';
   acoes = acoes.filter(a=>a.id!==editingId);
-  persist();
   closeModal('modal-acao');
   render();
+  await persistAndSync(`delete: ação "${titulo}"`);
 }
 
 // ══════════════════════════════════════════
@@ -616,10 +666,10 @@ async function fetchCEP(idx, cep){
   }catch(e){}
 }
 
-function saveSettings(){
-  persist();
+async function saveSettings(){
   closeModal('modal-settings');
   render();
+  await persistAndSync('update: pessoas e imóveis');
 }
 
 // ══════════════════════════════════════════
