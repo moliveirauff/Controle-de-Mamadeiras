@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💸 Dashboard de Despesas</title>
-    <meta name="version" content="v1.12">
+    <meta name="version" content="v1.12.1">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         :root {
@@ -154,6 +154,7 @@
             body { max-width: 960px; margin: 0 auto; padding: 16px 16px 60px 16px; }
             .chart-container { height: 380px; }
             .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
             h1 { font-size: 1.75rem; }
         }
         /* Mobile: tab nav não overflow em telas muito pequenas */
@@ -282,6 +283,36 @@
         <div class="card">
             <div class="card-header"><span id="kpi-acc-title">📈 Gasto Acumulado Dia a Dia</span></div>
             <div class="chart-container"><canvas id="cT2C"></canvas></div>
+        </div>
+
+        <!-- 6 + 7: Pizzas Categoria e Subcategoria -->
+        <div class="two-col-grid">
+            <!-- 6: Pizza por Categoria -->
+            <div class="card">
+                <div class="card-header">
+                    <span>🥧 % por Categoria</span>
+                </div>
+                <div class="chart-container"><canvas id="cT2P1"></canvas></div>
+            </div>
+
+            <!-- 7: Pizza por Subcategoria -->
+            <div class="card">
+                <div class="card-header">
+                    <span>🥧 % por Subcategoria</span>
+                    <div class="card-controls">
+                        <select id="selT2P2" class="cat-select" onchange="renderT2P2()"></select>
+                    </div>
+                </div>
+                <div class="chart-container"><canvas id="cT2P2"></canvas></div>
+            </div>
+        </div>
+
+        <!-- 8: Pizza por Origem -->
+        <div class="card">
+            <div class="card-header">
+                <span>🏦 Gastos por Origem</span>
+            </div>
+            <div class="chart-container"><canvas id="cT2P3"></canvas></div>
         </div>
 
     </div>
@@ -1130,6 +1161,95 @@
                 }
             }
         });
+
+        // ─── Pizzas mensais ───────────────────────────────────────────────────
+        window._curMonthDataForPizzas = curMonthData;
+        renderT2P1(curMonthData);
+        renderT2P2(curMonthData);
+        renderT2P3(curMonthData);
+    }
+
+    // ─── Chart T2P1 — Pizza por Categoria (Mensal) ───────────────────────────
+    function renderT2P1(monthData) {
+        const totals = {};
+        monthData.forEach(r => {
+            totals[r.categoria] = (totals[r.categoria] || 0) + Math.abs(r.valor);
+        });
+        const sorted = Object.entries(totals).sort((a,b) => b[1]-a[1]);
+        const labels = sorted.map(([k]) => categorias[k] || k);
+        const values = sorted.map(([,v]) => v);
+        const total = values.reduce((a,b)=>a+b,0);
+        const colors = sorted.map(([,],i) => CAT_COLORS[i % CAT_COLORS.length]);
+
+        if (charts['cT2P1']) charts['cT2P1'].destroy();
+        charts['cT2P1'] = new Chart(document.getElementById('cT2P1'), {
+            type: 'pie',
+            data: { labels, datasets: [{ data: values, backgroundColor: colors, borderWidth: 2 }] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } },
+                    tooltip: { callbacks: { label: ctx => { const pct = ((ctx.parsed / total)*100).toFixed(1); return ` ${brl(ctx.parsed)} (${pct}%)`; } } }
+                }
+            }
+        });
+    }
+
+    // ─── Chart T2P2 — Pizza por Subcategoria (Mensal) ────────────────────────
+    function renderT2P2(monthData) {
+        const sel = document.getElementById('selT2P2');
+        if (!sel) return;
+        const cat = sel.value;
+        const data = monthData || window._curMonthDataForPizzas || [];
+
+        const totals = {};
+        data.filter(r => r.categoria === cat).forEach(r => {
+            const sub = r.subcategoria || 'Não definida';
+            totals[sub] = (totals[sub] || 0) + Math.abs(r.valor);
+        });
+        const sorted = Object.entries(totals).sort((a,b) => b[1]-a[1]);
+        const labels = sorted.map(([k]) => k);
+        const values = sorted.map(([,v]) => v);
+        const total = values.reduce((a,b)=>a+b,0);
+
+        if (charts['cT2P2']) charts['cT2P2'].destroy();
+        charts['cT2P2'] = new Chart(document.getElementById('cT2P2'), {
+            type: 'pie',
+            data: { labels, datasets: [{ data: values, backgroundColor: CAT_COLORS, borderWidth: 2 }] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } },
+                    tooltip: { callbacks: { label: ctx => { const pct = ((ctx.parsed / total)*100).toFixed(1); return ` ${brl(ctx.parsed)} (${pct}%)`; } } }
+                }
+            }
+        });
+    }
+
+    // ─── Chart T2P3 — Pizza por Origem (Mensal) ──────────────────────────────
+    function renderT2P3(monthData) {
+        const totals = {};
+        monthData.forEach(r => {
+            const name = origens[r.origem] || r.origem;
+            totals[name] = (totals[name] || 0) + Math.abs(r.valor);
+        });
+        const sorted = Object.entries(totals).sort((a,b) => b[1]-a[1]);
+        const labels = sorted.map(([k]) => k);
+        const values = sorted.map(([,v]) => v);
+        const total = values.reduce((a,b)=>a+b,0);
+
+        if (charts['cT2P3']) charts['cT2P3'].destroy();
+        charts['cT2P3'] = new Chart(document.getElementById('cT2P3'), {
+            type: 'doughnut',
+            data: { labels, datasets: [{ data: values, backgroundColor: CAT_COLORS, borderWidth: 2 }] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } },
+                    tooltip: { callbacks: { label: ctx => { const pct = ((ctx.parsed / total)*100).toFixed(1); return ` ${brl(ctx.parsed)} (${pct}%)`; } } }
+                }
+            }
+        });
     }
 
     // ─── Tab 3: Editor ────────────────────────────────────────────────────────
@@ -1423,6 +1543,14 @@
                 opt.value = c.id; opt.textContent = c.nome;
                 if (c.id === 'alimentacao') opt.selected = true;
                 selT2D.appendChild(opt);
+            });
+
+            const selT2P2 = document.getElementById('selT2P2');
+            despesaCats.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id; opt.textContent = c.nome;
+                if (c.id === 'alimentacao') opt.selected = true;
+                selT2P2.appendChild(opt);
             });
 
             selectedMonth = getInitialMonth();
