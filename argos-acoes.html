@@ -1336,10 +1336,13 @@ async function savePessoaPanel(){
   await persistAndSync(_epIdx !== null ? `update: pessoa "${nome}"` : `feat: nova pessoa "${nome}"`);
 }
 
-function removePessoa(idx){
-  if(!confirm(`Excluir "${pessoas[idx].nome}"?`)) return;
+async function removePessoa(idx){
+  const nome = pessoas[idx].nome || 'pessoa';
+  if(!confirm(`Excluir "${nome}"?`)) return;
   pessoas.splice(idx,1);
   renderPessoasList();
+  render();
+  await persistAndSync(`delete: pessoa "${nome}"`);
 }
 
 // ── Imóveis list ──
@@ -1410,10 +1413,12 @@ async function saveImovelPanel(){
   await persistAndSync(_eiIdx !== null ? `update: imóvel "${nome}"` : `feat: novo imóvel "${nome}"`);
 }
 
-function removeImovel(idx){
-  if(!confirm(`Excluir "${imoveis[idx].nome}"?`)) return;
+async function removeImovel(idx){
+  const nome = imoveis[idx].nome || 'imóvel';
+  if(!confirm(`Excluir "${nome}"?`)) return;
   imoveis.splice(idx,1);
   renderImoveisList();
+  await persistAndSync(`delete: imóvel "${nome}"`);
 }
 
 async function saveSettings(){
