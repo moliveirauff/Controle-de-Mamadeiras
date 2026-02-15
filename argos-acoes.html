@@ -133,7 +133,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <h1>⚡ Argos — Ações</h1>
   <div class="topbar-actions">
     <button class="btn-new" onclick="openNewAcao()">+ Nova Ação</button>
-    <button class="btn-new" id="syncBtn" onclick="syncTelegram()" style="background:#0ea5e9">📤 Sincronizar</button>
     <button class="btn-gear" onclick="openSettings()" title="Configurações">⚙️</button>
   </div>
 </div>
@@ -222,25 +221,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 // ══════════════════════════════════════════
 //  TELEGRAM SYNC
 // ══════════════════════════════════════════
-async function syncTelegram() {
-  const btn = document.getElementById('syncBtn');
-  const orig = btn.textContent;
-  btn.textContent = '⏳...'; btn.disabled = true;
+async function syncToBot() {
+  const data = {
+    acoes:   JSON.parse(localStorage.getItem('argos_acoes')   || '[]'),
+    pessoas: JSON.parse(localStorage.getItem('argos_pessoas') || '[]'),
+    imoveis: JSON.parse(localStorage.getItem('argos_imoveis') || '[]')
+  };
   const botToken = '8032731802:AAH9E3Y_T04n5k9jUuE6f6U3g5L7h9B6E4M';
-  const chatId = '8306629331';
-  const message = `BOT_SYNC_ACOES:${JSON.stringify({acoes, pessoas, imoveis})}`;
-  try {
-    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text: message })
-    });
-    btn.textContent = '✅ Enviado!';
-    setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2000);
-  } catch (e) {
-    showToast('⚠️ Erro ao sincronizar: ' + e.message, 'error');
-    btn.textContent = orig; btn.disabled = false;
-  }
+  const chatId   = '8306629331';
+  await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, text: `BOT_SYNC_ACOES:${JSON.stringify(data)}` })
+  });
+}
+
+// Visual feedback helper: temporariamente muda texto do btn para ✅
+function flashBtn(btn, delay = 1500) {
+  if (!btn) return;
+  const orig = btn.textContent;
+  btn.textContent = '✅';
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, delay);
 }
 
 function showToast(msg, type = 'success') {
@@ -294,9 +296,15 @@ function persist(){
   localStorage.setItem('argos_acoes',   JSON.stringify(acoes));
 }
 
-function persistAndSync(commitMsg){
+async function persistAndSync(commitMsg, btn) {
   persist();
-  showToast('💾 Salvo localmente', 'success');
+  try {
+    await syncToBot();
+    if (btn) flashBtn(btn);
+    showToast('✅ Salvo e sincronizado', 'success');
+  } catch(e) {
+    showToast('⚠️ Salvo, mas sync falhou: ' + e.message, 'warn');
+  }
 }
 
 function nextId(arr){ return arr.length ? Math.max(...arr.map(x=>x.id))+1 : 1; }
@@ -390,6 +398,7 @@ async function cycleStatus(e, id){
   a.status = STATUS_CYCLE[a.status]||'Não Iniciado';
   render();
   await persistAndSync(`update: status "${a.titulo}" → ${a.status}`);
+  // dot re-rendered, toast is feedback enough
 }
 
 // ══════════════════════════════════════════
@@ -553,6 +562,7 @@ async function saveAcao(){
   const data = getEditingAcao();
   if(!data) return;
   if(!data.titulo){ alert('Informe um título.'); return; }
+  const btn = document.querySelector('#modal-acao .btn-save');
   let commitMsg;
   if(editingId){
     const idx = acoes.findIndex(a=>a.id===editingId);
@@ -564,7 +574,7 @@ async function saveAcao(){
   }
   closeModal('modal-acao');
   render();
-  await persistAndSync(commitMsg);
+  await persistAndSync(commitMsg, btn);
 }
 
 async function deleteAcao(){
@@ -574,6 +584,7 @@ async function deleteAcao(){
   closeModal('modal-acao');
   render();
   await persistAndSync(`delete: ação "${titulo}"`);
+  // btn already closed, no visual feedback needed
 }
 
 // ══════════════════════════════════════════
@@ -666,9 +677,10 @@ async function fetchCEP(idx, cep){
 }
 
 async function saveSettings(){
+  const btn = document.querySelector('#modal-settings .btn-save');
   closeModal('modal-settings');
   render();
-  await persistAndSync('update: pessoas e imóveis');
+  await persistAndSync('update: pessoas e imóveis', btn);
 }
 
 // ══════════════════════════════════════════
