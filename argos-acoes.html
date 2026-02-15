@@ -3,146 +3,646 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Argos — Ações</title>
+<title>⚡ Argos — Ações</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0f2f5;color:#1a1a2e;min-height:100vh}
-
-/* ─── TOP BAR ─── */
-.topbar{background:#1a1a2e;color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.topbar h1{font-size:1rem;font-weight:700;letter-spacing:.5px}
-.topbar-actions{display:flex;gap:8px;align-items:center}
-.btn-new{background:#4f8ef7;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:.8rem;font-weight:600;cursor:pointer;white-space:nowrap}
-.btn-gear{background:none;border:none;color:#aab;font-size:1.3rem;cursor:pointer;padding:4px 6px;line-height:1}
-.btn-gear:hover{color:#fff}
-
-/* ─── KPI BAR ─── */
-.kpi-bar{display:flex;gap:8px;padding:10px 12px;overflow-x:auto;scrollbar-width:none}
-.kpi-bar::-webkit-scrollbar{display:none}
-.kpi{background:#fff;border-radius:10px;padding:8px 12px;flex:1;min-width:70px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.kpi .val{font-size:1.4rem;font-weight:700;line-height:1.1}
-.kpi .lbl{font-size:.62rem;color:#888;margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
-.kpi.kpi-total .val{color:#1a1a2e}
-.kpi.kpi-andamento .val{color:#4f8ef7}
-.kpi.kpi-concluido .val{color:#22c55e}
-.kpi.kpi-atrasado .val{color:#ef4444}
-
-/* ─── SECTIONS ─── */
-.sections{padding:0 12px 80px}
-.section{margin-bottom:8px;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07)}
-.sec-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;user-select:none;font-weight:600;font-size:.85rem}
-.sec-header .sec-left{display:flex;align-items:center;gap:8px}
-.sec-header .sec-count{background:rgba(0,0,0,.12);border-radius:20px;padding:1px 8px;font-size:.72rem;font-weight:700}
-.sec-header .chevron{font-size:.75rem;transition:transform .2s}
-.sec-header.collapsed .chevron{transform:rotate(-90deg)}
-.sec-body{background:#fff}
-
-.section-concluido .sec-header{background:#dcfce7;color:#166534}
-.section-andamento .sec-header{background:#dbeafe;color:#1e40af}
-.section-nao-iniciado .sec-header{background:#f3f4f6;color:#374151}
-
-/* ─── ACTION ROWS ─── */
-.action-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f0f2f5;cursor:pointer;transition:background .15s}
-.action-row:last-child{border-bottom:none}
-.action-row:hover{background:#f8faff}
-.status-dot{width:18px;height:18px;border-radius:50%;flex-shrink:0;cursor:pointer;border:2px solid rgba(0,0,0,.1);transition:transform .1s}
-.status-dot:active{transform:scale(.85)}
-.dot-concluido{background:#22c55e}
-.dot-andamento{background:#4f8ef7}
-.dot-nao-iniciado{background:#d1d5db}
-.action-title{flex:1;font-size:.85rem;font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.action-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:#fff;flex-shrink:0}
-.action-prazo{font-size:.72rem;color:#888;flex-shrink:0;white-space:nowrap}
-.action-prazo.vencido{color:#ef4444;font-weight:600}
-
-/* ─── MODAL BASE ─── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:16px;width:100%;max-width:560px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden}
-@media(max-width:600px){
-  .modal{border-radius:16px 16px 0 0;max-height:95vh;position:fixed;bottom:0;left:0;right:0;max-width:none}
-  .modal-overlay{align-items:flex-end}
+/* ══════════════════════════════════════════
+   DESIGN SYSTEM — Family Hub
+   ══════════════════════════════════════════ */
+:root {
+  --bg: #f7fafc;
+  --text: #2d3748;
+  --surface: #ffffff;
+  --card-bg: var(--surface);
+  --border: #e2e8f0;
+  --text-muted: #718096;
+  --primary: #667eea;
+  --primary-dark: #5568d3;
+  --success: #48bb78;
+  --warning: #ed8936;
+  --danger: #f56565;
+  --green: #48bb78;
+  --yellow: #ed8936;
+  --red: #f56565;
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
 }
-.modal-header{padding:14px 16px;border-bottom:1px solid #f0f2f5;display:flex;align-items:center;justify-content:space-between}
-.modal-header h2{font-size:1rem;font-weight:700}
-.btn-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#888;line-height:1;padding:2px 6px}
-.modal-body{padding:16px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:14px}
-.modal-footer{padding:12px 16px;border-top:1px solid #f0f2f5;display:flex;gap:8px;justify-content:flex-end}
+body.dark-mode {
+  --bg: #1a202c;
+  --text: #f7fafc;
+  --surface: #2d3748;
+  --card-bg: var(--surface);
+  --border: #4a5568;
+  --text-muted: #cbd5e0;
+  --primary: #7f9cf5;
+  --primary-dark: #667eea;
+  --green: #68d391;
+  --yellow: #f6ad55;
+  --red: #fc8181;
+}
 
-/* ─── FORM ELEMENTS ─── */
-.field{display:flex;flex-direction:column;gap:4px}
-.field label{font-size:.75rem;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
-.field input,.field select,.field textarea{border:1px solid #e2e8f0;border-radius:8px;padding:8px 10px;font-size:.9rem;width:100%;font-family:inherit;background:#fff;color:#1a1a2e}
-.field textarea{resize:vertical;min-height:80px}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:#4f8ef7;box-shadow:0 0 0 3px rgba(79,142,247,.15)}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-.toggle-group{display:flex;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden}
-.toggle-group button{flex:1;border:none;background:#fff;padding:7px;font-size:.82rem;cursor:pointer;font-weight:500;transition:all .15s}
-.toggle-group button.active{background:#4f8ef7;color:#fff;font-weight:700}
-.toggle-group.priority button:nth-child(1).active{background:#ef4444}
-.toggle-group.priority button:nth-child(2).active{background:#f59e0b}
-.toggle-group.priority button:nth-child(3).active{background:#22c55e}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s, color 0.3s;
+  padding: 10px 10px 60px 10px;
+  min-height: 100vh;
+}
 
-/* ─── CHECKLIST ─── */
-.checklist-list{display:flex;flex-direction:column;gap:6px}
-.checklist-item{display:flex;align-items:center;gap:6px;background:#f8faff;border-radius:8px;padding:6px 8px}
-.checklist-item input[type=checkbox]{width:16px;height:16px;flex-shrink:0;cursor:pointer;accent-color:#22c55e}
-.checklist-item input[type=text]{flex:1;border:none;background:transparent;font-size:.83rem;padding:0;min-width:0}
-.checklist-item input[type=text]:focus{outline:none}
-.checklist-item select{font-size:.75rem;border:1px solid #e2e8f0;border-radius:6px;padding:2px 4px;background:#fff;max-width:80px}
-.checklist-item input[type=date]{font-size:.72rem;border:1px solid #e2e8f0;border-radius:6px;padding:2px 4px;background:#fff;max-width:110px}
-.checklist-item .btn-del{background:none;border:none;color:#ef4444;cursor:pointer;font-size:.85rem;padding:2px 4px;flex-shrink:0}
-.btn-add-sub{background:none;border:2px dashed #c7d2fe;color:#4f8ef7;border-radius:8px;padding:6px;font-size:.8rem;cursor:pointer;width:100%;font-weight:600;transition:all .15s}
-.btn-add-sub:hover{background:#eff6ff}
+/* ── Theme Toggle ── */
+#theme-toggle {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
+  padding: 8px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10; transition: background 0.2s;
+}
+body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+#theme-toggle:hover { background: rgba(0,0,0,0.1); }
+body.dark-mode #theme-toggle:hover { background: rgba(255,255,255,0.15); }
 
-/* ─── BTN STYLES ─── */
-.btn-save{background:#22c55e;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:700;cursor:pointer}
-.btn-delete{background:#ef4444;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:700;cursor:pointer}
-.btn-cancel{background:#f3f4f6;color:#374151;border:none;border-radius:8px;padding:8px 16px;font-size:.85rem;cursor:pointer}
+/* ── Nav Link ── */
+.nav-link {
+  text-decoration: none;
+  color: var(--primary);
+  font-size: 0.9rem;
+  margin: 10px 0 0 4px;
+  display: inline-block;
+}
 
-/* ─── SETTINGS MODAL ─── */
-.tabs{display:flex;border-bottom:2px solid #f0f2f5;padding:0 16px}
-.tab-btn{background:none;border:none;padding:10px 16px;font-size:.85rem;cursor:pointer;color:#888;font-weight:600;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
-.tab-btn.active{color:#4f8ef7;border-bottom-color:#4f8ef7}
-.tab-pane{display:none;padding:14px 16px;flex-direction:column;gap:10px}
-.tab-pane.active{display:flex}
+/* ── Page Header ── */
+h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 10px 44px 4px 44px;
+  color: var(--text);
+}
+.page-subtitle {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
 
-.settings-table{width:100%;border-collapse:collapse;font-size:.8rem}
-.settings-table th{text-align:left;padding:6px 8px;background:#f8faff;color:#666;font-size:.72rem;text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid #e2e8f0}
-.settings-table td{padding:4px 4px;vertical-align:middle;border-bottom:1px solid #f0f2f5}
-.settings-table td input{border:1px solid #e2e8f0;border-radius:6px;padding:4px 6px;font-size:.8rem;width:100%}
-.sigla-badge{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;color:#fff;font-size:.65rem;font-weight:700}
+/* ── Header Action Bar ── */
+.header-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
 
-.imovel-card{border:1px solid #e2e8f0;border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px}
-.imovel-card .imovel-header{display:flex;justify-content:space-between;align-items:center}
-.imovel-card .imovel-title{font-weight:700;font-size:.85rem}
-.imovel-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.imovel-grid .full{grid-column:1/-1}
-.imovel-grid input{border:1px solid #e2e8f0;border-radius:6px;padding:5px 8px;font-size:.8rem;width:100%}
-.btn-add{background:#4f8ef7;color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:.8rem;font-weight:600;cursor:pointer}
-.btn-del-sm{background:none;border:none;color:#ef4444;cursor:pointer;font-size:.9rem;padding:2px 6px}
+/* ── Buttons ── */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--primary-dark); }
 
-/* ─── EMPTY STATE ─── */
-.empty{padding:24px;text-align:center;color:#aaa;font-size:.85rem}
+.btn-secondary {
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-secondary:hover { background: var(--border); }
+
+.btn-save {
+  background: var(--success);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-delete {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-cancel {
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.btn-add {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-del-sm {
+  background: none;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 2px 6px;
+}
+
+/* ── KPI Grid ── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+@media (min-width: 600px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.kpi-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 12px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+.kpi-emoji { font-size: 1.4rem; }
+.kpi-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.kpi-value { font-size: 1.4rem; font-weight: 800; color: var(--text); line-height: 1.1; }
+.kpi-value.val-andamento { color: var(--primary); }
+.kpi-value.val-concluido { color: var(--success); }
+.kpi-value.val-atrasado  { color: var(--danger); }
+
+/* ── Sections ── */
+.sections { padding: 0 0 80px; }
+.section {
+  margin-bottom: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: background-color 0.3s, border-color 0.3s;
+}
+.sec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+.sec-header .sec-left { display: flex; align-items: center; gap: 8px; }
+.sec-header .sec-count {
+  background: rgba(0,0,0,0.1);
+  border-radius: 20px;
+  padding: 1px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.sec-header .chevron { font-size: 0.75rem; transition: transform 0.2s; }
+.sec-header.collapsed .chevron { transform: rotate(-90deg); }
+
+.section-concluido .sec-header  { background: rgba(72,187,120,0.12); color: #276749; }
+.section-andamento .sec-header  { background: rgba(102,126,234,0.12); color: #3730a3; }
+.section-nao-iniciado .sec-header { background: var(--bg); color: var(--text-muted); }
+
+body.dark-mode .section-concluido .sec-header  { background: rgba(72,187,120,0.15); color: #68d391; }
+body.dark-mode .section-andamento .sec-header  { background: rgba(127,156,245,0.15); color: #a5b4fc; }
+body.dark-mode .section-nao-iniciado .sec-header { background: rgba(255,255,255,0.04); color: var(--text-muted); }
+
+.sec-body { background: var(--surface); }
+
+/* ── Action Rows ── */
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.action-row:last-child { border-bottom: none; }
+.action-row:hover { background: rgba(102,126,234,0.05); }
+
+.status-dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  cursor: pointer;
+  border: 2px solid rgba(0,0,0,0.1);
+  transition: transform 0.1s;
+}
+.status-dot:active { transform: scale(0.85); }
+.dot-concluido    { background: var(--success); }
+.dot-andamento    { background: var(--primary); }
+.dot-nao-iniciado { background: var(--border); }
+
+.action-title {
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.action-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.action-prazo {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.action-prazo.vencido { color: var(--danger); font-weight: 600; }
+
+/* ── Empty State ── */
+.empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ── Modal Base ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--surface);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+@media (max-width: 600px) {
+  .modal {
+    border-radius: 16px 16px 0 0;
+    max-height: 95vh;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    max-width: none;
+  }
+  .modal-overlay { align-items: flex-end; }
+}
+
+.modal-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-header h2 { font-size: 1rem; font-weight: 700; color: var(--text); }
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  line-height: 1;
+  padding: 2px 6px;
+  transition: color 0.2s;
+}
+.btn-close:hover { color: var(--text); }
+
+.modal-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.modal-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ── Form Elements ── */
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.field input,
+.field select,
+.field textarea {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  width: 100%;
+  font-family: inherit;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 0.2s, background-color 0.3s;
+}
+.field textarea { resize: vertical; min-height: 80px; }
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
+}
+
+.toggle-group {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.toggle-group button {
+  flex: 1;
+  border: none;
+  background: var(--surface);
+  color: var(--text);
+  padding: 7px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.toggle-group button.active {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+}
+.toggle-group.priority button:nth-child(1).active { background: var(--danger); }
+.toggle-group.priority button:nth-child(2).active { background: var(--warning); }
+.toggle-group.priority button:nth-child(3).active { background: var(--success); }
+
+/* ── Checklist ── */
+.checklist-list { display: flex; flex-direction: column; gap: 6px; }
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+.checklist-item input[type=checkbox] {
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--success);
+}
+.checklist-item input[type=text] {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 0.83rem;
+  padding: 0;
+  min-width: 0;
+  color: var(--text);
+}
+.checklist-item input[type=text]:focus { outline: none; }
+.checklist-item select {
+  font-size: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 4px;
+  background: var(--surface);
+  color: var(--text);
+  max-width: 80px;
+}
+.checklist-item input[type=date] {
+  font-size: 0.72rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 4px;
+  background: var(--surface);
+  color: var(--text);
+  max-width: 110px;
+}
+.checklist-item .btn-del {
+  background: none;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 2px 4px;
+  flex-shrink: 0;
+}
+.btn-add-sub {
+  background: none;
+  border: 2px dashed var(--border);
+  color: var(--primary);
+  border-radius: 8px;
+  padding: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+.btn-add-sub:hover { background: rgba(102,126,234,0.06); }
+
+/* ── Settings Modal ── */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border);
+  padding: 0 16px;
+  background: var(--surface);
+}
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.15s;
+}
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+.tab-pane { display: none; padding: 14px 16px; flex-direction: column; gap: 10px; }
+.tab-pane.active { display: flex; }
+
+.settings-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.settings-table th {
+  text-align: left;
+  padding: 6px 8px;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid var(--border);
+}
+.settings-table td {
+  padding: 4px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border);
+}
+.settings-table td input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 6px;
+  font-size: 0.8rem;
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+}
+.sigla-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.imovel-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--surface);
+}
+.imovel-card .imovel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.imovel-card .imovel-title { font-weight: 700; font-size: 0.85rem; }
+.imovel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.imovel-grid .full { grid-column: 1 / -1; }
+.imovel-grid input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 0.8rem;
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ── Responsive ── */
+@media (min-width: 768px) {
+  body { max-width: 720px; margin: 0 auto; padding: 16px 16px 60px 16px; }
+  h1 { font-size: 1.75rem; }
+}
+@media (max-width: 400px) {
+  h1 { font-size: 1.2rem; }
+}
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <h1>⚡ Argos — Ações</h1>
-  <div class="topbar-actions">
-    <button class="btn-new" onclick="openNewAcao()">+ Nova Ação</button>
-    <button class="btn-gear" onclick="openSettings()" title="Configurações">⚙️</button>
-  </div>
+<!-- THEME TOGGLE -->
+<button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+<!-- NAV LINK -->
+<a href="index.html" class="nav-link">← Voltar para Início</a>
+
+<!-- PAGE TITLE -->
+<h1>⚡ Argos — Ações</h1>
+<p class="page-subtitle">Gestão de ações e tarefas</p>
+
+<!-- HEADER ACTIONS -->
+<div class="header-actions">
+  <button class="btn-primary" onclick="openNewAcao()">+ Nova Ação</button>
+  <button class="btn-secondary" onclick="openSettings()">⚙️ Config</button>
 </div>
 
-<!-- KPI BAR -->
-<div class="kpi-bar">
-  <div class="kpi kpi-total"><div class="val" id="kpi-total">0</div><div class="lbl">Total</div></div>
-  <div class="kpi kpi-andamento"><div class="val" id="kpi-andamento">0</div><div class="lbl">Andamento</div></div>
-  <div class="kpi kpi-concluido"><div class="val" id="kpi-concluido">0</div><div class="lbl">Concluídas</div></div>
-  <div class="kpi kpi-atrasado"><div class="val" id="kpi-atrasado">0</div><div class="lbl">Atrasadas</div></div>
+<!-- KPI GRID -->
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-emoji">📋</div>
+    <div class="kpi-label">Total</div>
+    <div class="kpi-value" id="kpi-total">0</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-emoji">🔵</div>
+    <div class="kpi-label">Andamento</div>
+    <div class="kpi-value val-andamento" id="kpi-andamento">0</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-emoji">✅</div>
+    <div class="kpi-label">Concluídas</div>
+    <div class="kpi-value val-concluido" id="kpi-concluido">0</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-emoji">⚠️</div>
+    <div class="kpi-label">Atrasadas</div>
+    <div class="kpi-value val-atrasado" id="kpi-atrasado">0</div>
+  </div>
 </div>
 
 <!-- SECTIONS -->
@@ -219,6 +719,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script>
 // ══════════════════════════════════════════
+//  THEME
+// ══════════════════════════════════════════
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('argos_theme', isDark ? 'dark' : 'light');
+}
+(function initTheme() {
+  const saved = localStorage.getItem('argos_theme');
+  if (saved === 'dark') {
+    document.body.classList.add('dark-mode');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = '☀️';
+  }
+})();
+
+// ══════════════════════════════════════════
 //  TELEGRAM SYNC
 // ══════════════════════════════════════════
 async function syncToBot() {
@@ -253,8 +770,8 @@ function showToast(msg, type = 'success') {
     toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:10px 20px;border-radius:10px;font-size:.85rem;font-weight:600;z-index:9999;transition:opacity .4s;pointer-events:none;white-space:nowrap';
     document.body.appendChild(toast);
   }
-  const colors = { success: '#22c55e', warn: '#f59e0b', error: '#ef4444' };
-  toast.style.background = colors[type] || '#22c55e';
+  const colors = { success: '#48bb78', warn: '#ed8936', error: '#f56565' };
+  toast.style.background = colors[type] || '#48bb78';
   toast.style.color = '#fff';
   toast.style.opacity = '1';
   toast.textContent = msg;
@@ -398,7 +915,6 @@ async function cycleStatus(e, id){
   a.status = STATUS_CYCLE[a.status]||'Não Iniciado';
   render();
   await persistAndSync(`update: status "${a.titulo}" → ${a.status}`);
-  // dot re-rendered, toast is feedback enough
 }
 
 // ══════════════════════════════════════════
@@ -505,7 +1021,6 @@ let _editEscopo = 'geral';
 let _editPrio = 'media';
 
 function getEditingAcao(){
-  // build from current modal fields
   const titleEl = document.getElementById('d-titulo');
   if(!titleEl) return null;
   const imovel_id = _editEscopo==='imovel' ? (parseInt(document.getElementById('d-imovel')?.value)||null) : null;
@@ -548,8 +1063,6 @@ function reRenderChecklist(){
 }
 
 // Override buildDetailModal to init temp state
-const _origBuild = buildDetailModal;
-// patch: call after build
 const origBuildDetail = buildDetailModal;
 window.buildDetailModal = function(a){
   _editChecklist = JSON.parse(JSON.stringify(a.checklist||[]));
@@ -584,7 +1097,6 @@ async function deleteAcao(){
   closeModal('modal-acao');
   render();
   await persistAndSync(`delete: ação "${titulo}"`);
-  // btn already closed, no visual feedback needed
 }
 
 // ══════════════════════════════════════════
@@ -617,7 +1129,6 @@ function renderPessoasTable(){
 
 function updatePessoa(idx, field, val){
   pessoas[idx][field] = val;
-  // re-render sigla cell
   const row = document.querySelector(`#tbody-pessoas tr[data-pidx="${idx}"]`);
   if(row) row.querySelector('.sigla-badge').textContent = sigla(pessoas[idx]);
 }
@@ -638,14 +1149,14 @@ function renderImoveisCards(){
         <button class="btn-del-sm" onclick="removeImovel(${i})">🗑️</button>
       </div>
       <div class="imovel-grid">
-        <div class="full"><label style="font-size:.72rem;color:#888">Nome</label><input type="text" value="${esc(im.nome||'')}" placeholder="Nome do imóvel" onchange="updateImovel(${i},'nome',this.value)"/></div>
-        <div><label style="font-size:.72rem;color:#888">CEP</label><input type="text" value="${esc(im.cep||'')}" placeholder="00000-000" onblur="fetchCEP(${i},this.value)" onchange="updateImovel(${i},'cep',this.value)"/></div>
-        <div><label style="font-size:.72rem;color:#888">Número</label><input type="text" value="${esc(im.numero||'')}" placeholder="Nº" onchange="updateImovel(${i},'numero',this.value)"/></div>
-        <div class="full"><label style="font-size:.72rem;color:#888">Logradouro</label><input type="text" id="im-logr-${i}" value="${esc(im.logradouro||'')}" onchange="updateImovel(${i},'logradouro',this.value)"/></div>
-        <div><label style="font-size:.72rem;color:#888">Complemento</label><input type="text" value="${esc(im.complemento||'')}" onchange="updateImovel(${i},'complemento',this.value)"/></div>
-        <div><label style="font-size:.72rem;color:#888">Bairro</label><input type="text" id="im-bairro-${i}" value="${esc(im.bairro||'')}" onchange="updateImovel(${i},'bairro',this.value)"/></div>
-        <div><label style="font-size:.72rem;color:#888">Cidade</label><input type="text" id="im-cidade-${i}" value="${esc(im.cidade||'')}" onchange="updateImovel(${i},'cidade',this.value)"/></div>
-        <div><label style="font-size:.72rem;color:#888">Estado</label><input type="text" id="im-estado-${i}" value="${esc(im.estado||'')}" onchange="updateImovel(${i},'estado',this.value)"/></div>
+        <div class="full"><label style="font-size:.72rem;color:var(--text-muted)">Nome</label><input type="text" value="${esc(im.nome||'')}" placeholder="Nome do imóvel" onchange="updateImovel(${i},'nome',this.value)"/></div>
+        <div><label style="font-size:.72rem;color:var(--text-muted)">CEP</label><input type="text" value="${esc(im.cep||'')}" placeholder="00000-000" onblur="fetchCEP(${i},this.value)" onchange="updateImovel(${i},'cep',this.value)"/></div>
+        <div><label style="font-size:.72rem;color:var(--text-muted)">Número</label><input type="text" value="${esc(im.numero||'')}" placeholder="Nº" onchange="updateImovel(${i},'numero',this.value)"/></div>
+        <div class="full"><label style="font-size:.72rem;color:var(--text-muted)">Logradouro</label><input type="text" id="im-logr-${i}" value="${esc(im.logradouro||'')}" onchange="updateImovel(${i},'logradouro',this.value)"/></div>
+        <div><label style="font-size:.72rem;color:var(--text-muted)">Complemento</label><input type="text" value="${esc(im.complemento||'')}" onchange="updateImovel(${i},'complemento',this.value)"/></div>
+        <div><label style="font-size:.72rem;color:var(--text-muted)">Bairro</label><input type="text" id="im-bairro-${i}" value="${esc(im.bairro||'')}" onchange="updateImovel(${i},'bairro',this.value)"/></div>
+        <div><label style="font-size:.72rem;color:var(--text-muted)">Cidade</label><input type="text" id="im-cidade-${i}" value="${esc(im.cidade||'')}" onchange="updateImovel(${i},'cidade',this.value)"/></div>
+        <div><label style="font-size:.72rem;color:var(--text-muted)">Estado</label><input type="text" id="im-estado-${i}" value="${esc(im.estado||'')}" onchange="updateImovel(${i},'estado',this.value)"/></div>
       </div>
     </div>
   `).join('');
