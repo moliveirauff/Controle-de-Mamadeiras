@@ -2,20 +2,19 @@
   {
     "id": 1,
     "titulo": "Exemplo de Ação",
-    "imovel": "Copacabana",
-    "responsavel": "Mauricio",
+    "imovel_id": 1,
+    "responsavel_id": 1,
     "prazo": "2026-02-28",
-    "status": "Pendente",
+    "status": "Em Andamento",
     "prioridade": "alta",
-    "origem": "Manual",
-    "notas": "",
+    "observacoes": "Ação de exemplo criada automaticamente.",
     "checklist": [
       {
         "id": 1,
         "descricao": "Sub-tarefa exemplo",
-        "responsavel": "Mauricio",
+        "responsavel_id": 1,
         "prazo": "2026-02-25",
-        "status": "Pendente"
+        "concluido": false
       }
     ]
   }
