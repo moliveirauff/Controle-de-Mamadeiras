@@ -152,21 +152,21 @@
         .card-links a:hover {
             opacity: 0.85;
         }
-        .card.placeholder {
-            border: 2px dashed var(--badge-text);
-            background: transparent;
-            box-shadow: none;
-            justify-content: center;
+        .tbc-container {
+            flex: 1;
+            display: flex;
             align-items: center;
-            min-height: 200px;
+            justify-content: center;
+            border: 2px dashed var(--badge-text);
+            border-radius: 15px;
+            margin-top: 10px;
+            min-height: 50px;
         }
-        .card.placeholder:hover {
-            transform: none;
-        }
-        .card.placeholder .tbc {
+        .tbc-text {
             font-weight: bold;
             color: var(--badge-text);
             letter-spacing: 2px;
+            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -244,7 +244,9 @@
             <div class="card-icon">🏠</div>
             <h2>Argos</h2>
             <p>Gestão Operacional e Estratégica.</p>
-            <div class="tbc" style="text-align: center; margin-top: auto;">TBC</div>
+            <div class="tbc-container">
+                <div class="tbc-text">TBC</div>
+            </div>
         </div>
     </main>
 
