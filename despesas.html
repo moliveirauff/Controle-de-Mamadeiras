@@ -218,8 +218,7 @@
     <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
     <a href="index.html" class="nav-link">← Voltar para Início</a>
     <h1>💸 Dashboard de Despesas</h1>
-    <p class="page-subtitle">Análise de gastos da família · Hub Donato Suárez</p>
-    <p id="last-update" class="page-subtitle" style="display:none; font-size: 0.72rem; margin-top: -12px; opacity: 0.8;"></p>
+    <p id="last-update" class="page-subtitle" style="display:none; font-size: 0.72rem; margin-top: 4px; opacity: 0.8;"></p>
 
     <!-- Tab Navigation -->
     <div class="tab-nav">
@@ -424,21 +423,10 @@
             <div class="chart-container"><canvas id="cA"></canvas></div>
         </div>
 
-        <!-- B: Total por Mês com filtro de Categoria -->
-        <div class="card">
-            <div class="card-header">
-                <span>📊 Gastos por Mês — por Categoria</span>
-                <div class="card-controls">
-                    <select id="selB" class="cat-select" onchange="renderB()"></select>
-                </div>
-            </div>
-            <div class="chart-container"><canvas id="cB"></canvas></div>
-        </div>
-
         <!-- C: Total por Mês com filtros de Categoria e Subcategoria -->
         <div class="card">
             <div class="card-header">
-                <span>📊 Gastos por Mês — por Subcategoria</span>
+                <span>📅 Gastos por Mês</span>
                 <div class="card-controls">
                     <select id="selC" class="cat-select" onchange="onSelCChange()"></select>
                     <select id="selCSub" class="cat-select" onchange="renderC()"></select>
@@ -466,14 +454,6 @@
                 </div>
                 <div class="chart-container"><canvas id="cE"></canvas></div>
             </div>
-        </div>
-
-        <!-- G: Evolução Mensal -->
-        <div class="card">
-            <div class="card-header">
-                <span>📈 Evolução Mensal de Despesas</span>
-            </div>
-            <div class="chart-container"><canvas id="cG"></canvas></div>
         </div>
 
         <!-- H: Por Origem -->
@@ -979,12 +959,10 @@
     function renderAll() {
         renderKPIsAba1();
         renderA();
-        renderB();
         renderC();
         renderD();
         renderE();
         renderF();
-        renderG();
         renderH();
     }
 
@@ -1648,16 +1626,6 @@
 
             // Populate category selects
             const despesaCats = catData.categorias.filter(c => c.tipo === 'despesa');
-
-            // selB — category filter for block B
-            const selB = document.getElementById('selB');
-            despesaCats.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c.id;
-                opt.textContent = c.nome;
-                if (c.id === 'alimentacao') opt.selected = true;
-                selB.appendChild(opt);
-            });
 
             // selC — category filter for block C
             const selC = document.getElementById('selC');
