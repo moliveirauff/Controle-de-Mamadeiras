@@ -539,8 +539,8 @@
         if (period === 'ano_atual') return new Date(refDate.getFullYear(), 0, 1);
         const monthsMap = { '12m': 12, '24m': 24, '36m': 36 };
         const m = monthsMap[period] || 12;
-        // Mês de referência + M meses anteriores completos (total M+1 meses)
-        return new Date(refDate.getFullYear(), refDate.getMonth() - m, 1);
+        // Mês de referência + (M-1) meses anteriores completos (total M meses)
+        return new Date(refDate.getFullYear(), refDate.getMonth() - (m - 1), 1);
     }
 
     function applyFilter(period) {
