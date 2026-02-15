@@ -558,10 +558,21 @@
         // 1. Total no Período
         const totalPeriodo = filteredData.reduce((s, r) => s + Math.abs(r.valor), 0);
 
-        // 2. Média Mensal
+        // 2. Média Mensal (exclui mês corrente se ainda incompleto, i.e. dia < 25)
         const monthKeys = getMonthKeys();
-        const numMonths = monthKeys.length || 1;
-        const mediaMensal = totalPeriodo / numMonths;
+        const today = new Date();
+        const todayKey = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+        const mesIncompleto = today.getDate() < 25 && monthKeys.includes(todayKey);
+        let totalParaMedia = totalPeriodo;
+        let numMonths = monthKeys.length || 1;
+        if (mesIncompleto) {
+            filteredData.forEach(r => {
+                const [y, m] = r.data.split('-');
+                if (`${y}-${m}` === todayKey) totalParaMedia -= Math.abs(r.valor);
+            });
+            numMonths = Math.max(numMonths - 1, 1);
+        }
+        const mediaMensal = totalParaMedia / numMonths;
 
         // 3. Maior Categoria
         const catTotals = {};
