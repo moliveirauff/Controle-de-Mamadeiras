@@ -597,13 +597,17 @@
         const container = document.getElementById('kpi-grid-aba1');
         if (!container) return;
 
-        // 1. Total no Período
+        // 1. Total no Período (todos os dados filtrados)
         const totalPeriodo = filteredData.reduce((s, r) => s + Math.abs(r.valor), 0);
 
-        // 2. Média Mensal — divisor = monthKeys.length (meses com dados reais no período)
+        // 2. Média Mensal — apenas meses completos (regra dia 25 exclui mês incompleto)
         const monthKeys = getMonthKeys();
         const numMonths = monthKeys.length || 1;
-        const mediaMensal = totalPeriodo / numMonths;
+        const monthKeySet = new Set(monthKeys);
+        const totalParaMedia = filteredData
+            .filter(r => { const [y, m] = r.data.split('-'); return monthKeySet.has(`${y}-${m}`); })
+            .reduce((s, r) => s + Math.abs(r.valor), 0);
+        const mediaMensal = totalParaMedia / numMonths;
 
         // 3. Maior Categoria
         const catTotals = {};
@@ -981,20 +985,35 @@
         const curTotal = curMonthData.reduce((s, r) => s + Math.abs(r.valor), 0);
 
         const monthRef = new Date(year, month - 1, 1);
-        const last12Keys = [];
-        for (let i = 1; i <= 12; i++) {
+
+        // Janela de 12 meses incluindo o mês selecionado (i=0..11)
+        const avg12Keys = [];
+        for (let i = 0; i < 12; i++) {
             const d = new Date(monthRef);
             d.setMonth(d.getMonth() - i);
-            last12Keys.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`);
+            avg12Keys.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`);
         }
-        const last12Totals = last12Keys.map(k => {
+
+        // Regra dia 25: excluir mês corrente incompleto (consistente com Aba 1)
+        const realToday = new Date();
+        const realTodayKey2 = `${realToday.getFullYear()}-${String(realToday.getMonth() + 1).padStart(2, '0')}`;
+        const refDate2 = getRefDate();
+        const refKey2 = `${refDate2.getFullYear()}-${String(refDate2.getMonth() + 1).padStart(2, '0')}`;
+        const effectiveAvgKeys = (refKey2 === realTodayKey2 && realToday.getDate() < 25)
+            ? avg12Keys.filter(k => k !== realTodayKey2)
+            : avg12Keys;
+
+        const avg12Totals = effectiveAvgKeys.map(k => {
             return despesas.filter(r => r.data.startsWith(k)).reduce((s, r) => s + Math.abs(r.valor), 0);
         });
-        const total12 = last12Totals.reduce((a, b) => a + b, 0);
-        const avg12 = total12 / 12;
+        const total12 = avg12Totals.reduce((a, b) => a + b, 0);
+        const numMonths12 = effectiveAvgKeys.filter((k, idx) => avg12Totals[idx] > 0).length || 1;
+        const avg12 = total12 / numMonths12;
 
+        // Mês anterior para comparação "vs mês ant." (segundo item = i=1)
+        const prevMonthKey = avg12Keys[1];
         const kpiGrid = document.getElementById('kpi-grid');
-        const lastMonthTotal = last12Totals[0] || 0;
+        const lastMonthTotal = despesas.filter(r => r.data.startsWith(prevMonthKey)).reduce((s, r) => s + Math.abs(r.valor), 0);
         const vsLastMonth = lastMonthTotal > 0 ? ((curTotal / lastMonthTotal - 1) * 100) : 0;
         const vsLastCls = vsLastMonth > 0 ? 'pos' : 'neg';
 
