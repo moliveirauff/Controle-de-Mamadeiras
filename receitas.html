@@ -379,18 +379,40 @@
             }
         }
 
-        // Sync and Bot Comms
+        const API_CONFIG = {
+            baseUrl: 'https://traveller-temperature-journalism-resident.trycloudflare.com',
+            apiKey: 'argos-secret-2026'
+        };
+
+        async function syncToApi(module, data) {
+            const res = await fetch(`${API_CONFIG.baseUrl}/sync/${module}`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'X-API-Key': API_CONFIG.apiKey
+                },
+                body: JSON.stringify(data)
+            });
+            if (!res.ok) throw new Error('Falha na resposta da API');
+            return res.json();
+        }
+
         async function syncWithBot() {
             const syncBtn = document.getElementById('syncBtn');
             const originalText = syncBtn.innerText;
             syncBtn.innerText = "⏳ Sincronizando...";
             syncBtn.disabled = true;
 
-            const message = `BOT_SYNC_RECEITAS:${JSON.stringify(recipes)}`;
-            await sendToBot(message);
-            
-            syncBtn.innerText = "✅ Sincronizado!";
-            setTimeout(() => { syncBtn.innerText = originalText; syncBtn.disabled = false; }, 3000);
+            try {
+                await syncToApi('receitas', recipes);
+                syncBtn.innerText = "✅ Sincronizado!";
+                setTimeout(() => { syncBtn.innerText = originalText; syncBtn.disabled = false; }, 3000);
+            } catch (e) {
+                console.error(e);
+                alert("Erro na sincronização!");
+                syncBtn.innerText = originalText;
+                syncBtn.disabled = false;
+            }
         }
 
         function sendToShop(idx) {

@@ -436,22 +436,37 @@
             }
         }
 
+        const API_CONFIG = {
+            baseUrl: 'https://traveller-temperature-journalism-resident.trycloudflare.com',
+            apiKey: 'argos-secret-2026'
+        };
+
+        async function syncToApi(module, data) {
+            const res = await fetch(`${API_CONFIG.baseUrl}/sync/${module}`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'X-API-Key': API_CONFIG.apiKey
+                },
+                body: JSON.stringify(data)
+            });
+            if (!res.ok) throw new Error('Falha na resposta da API');
+            return res.json();
+        }
+
         async function saveData() {
             const syncBtn = document.getElementById('syncBtn');
             const originalText = syncBtn.innerText;
             syncBtn.innerText = "⏳..."; syncBtn.disabled = true;
-            const message = `BOT_SYNC_VIAGEM:${JSON.stringify(listData)}`;
-            const botToken = "8371050816:AAGVbdihVJIRWX6ITAFHTjGf2ZzGhveqUhI"; 
-            const chatId = "8306629331"; 
             try {
-                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: chatId, text: message })
-                });
+                await syncToApi('viagem', listData);
                 syncBtn.innerText = "✅";
                 setTimeout(() => { syncBtn.innerText = originalText; syncBtn.disabled = false; }, 2000);
-            } catch (e) { alert("Erro!"); syncBtn.innerText = originalText; syncBtn.disabled = false; }
+            } catch (e) { 
+                console.error(e);
+                alert("Erro na sincronização!"); 
+                syncBtn.innerText = originalText; syncBtn.disabled = false; 
+            }
         }
 
         function toggleTheme() {
