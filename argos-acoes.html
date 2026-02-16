@@ -901,17 +901,23 @@ async function syncToBot(type, id, data) {
   const prefix = prefixMap[type] || 'BOT_SYNC_ARGOS_PATCH';
   const message = `${prefix}:${JSON.stringify({ type, id, data })}`;
 
-  const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
-  });
-  
-  if (!res.ok) {
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+    });
+    
     const json = await res.json();
-    throw new Error(json.description || 'Telegram API error');
+    if (!res.ok) {
+      throw new Error(json.description || `HTTP error! status: ${res.status}`);
+    }
+    return json;
+  } catch (error) {
+    console.error('Sync failed:', error);
+    throw error;
   }
-  return await res.json();
 }
 
 // Visual feedback helper: temporariamente muda texto do btn para ✅
@@ -957,11 +963,12 @@ let editingId = null; // null = new
 
 async function loadData(){
   // Server is source of truth — always fetch JSON, localStorage is offline fallback only
-  try { acoes   = await fetch('data/acoes.json?v='+Date.now()).then(r=>r.json()); localStorage.setItem('argos_acoes', JSON.stringify(acoes)); }
+  const v = Date.now();
+  try { acoes   = await fetch(`data/acoes.json?v=${v}`).then(r=>r.json()); localStorage.setItem('argos_acoes', JSON.stringify(acoes)); }
   catch(e){ const s = localStorage.getItem('argos_acoes'); acoes = s ? JSON.parse(s) : []; }
-  try { pessoas = await fetch('data/acoes_pessoas.json?v='+Date.now()).then(r=>r.json()); localStorage.setItem('argos_pessoas', JSON.stringify(pessoas)); }
+  try { pessoas = await fetch(`data/acoes_pessoas.json?v=${v}`).then(r=>r.json()); localStorage.setItem('argos_pessoas', JSON.stringify(pessoas)); }
   catch(e){ const s = localStorage.getItem('argos_pessoas'); pessoas = s ? JSON.parse(s) : []; }
-  try { imoveis = await fetch('data/acoes_imoveis.json?v='+Date.now()).then(r=>r.json()); localStorage.setItem('argos_imoveis', JSON.stringify(imoveis)); }
+  try { imoveis = await fetch(`data/acoes_imoveis.json?v=${v}`).then(r=>r.json()); localStorage.setItem('argos_imoveis', JSON.stringify(imoveis)); }
   catch(e){ const s = localStorage.getItem('argos_imoveis'); imoveis = s ? JSON.parse(s) : []; }
 }
 
