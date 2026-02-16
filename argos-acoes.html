@@ -901,23 +901,12 @@ async function syncToBot(type, id, data) {
   const prefix = prefixMap[type] || 'BOT_SYNC_ARGOS_PATCH';
   const message = `${prefix}:${JSON.stringify({ type, id, data })}`;
 
-  try {
-    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: CHAT_ID, text: message })
-    });
-    
-    const json = await res.json();
-    if (!res.ok) {
-      throw new Error(json.description || `HTTP error! status: ${res.status}`);
-    }
-    return json;
-  } catch (error) {
-    console.error('Sync failed:', error);
-    throw error;
-  }
+  // Simples e direto, igual ao viagem.html
+  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+  });
 }
 
 // Visual feedback helper: temporariamente muda texto do btn para ✅
