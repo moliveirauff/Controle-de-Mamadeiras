@@ -908,6 +908,64 @@ function toggleTheme() {
 })();
 
 // ══════════════════════════════════════════
+//  DATA & SYNC
+// ══════════════════════════════════════════
+let acoes = [];
+let pessoas = [];
+let imoveis = [];
+
+async function loadData() {
+  try {
+    const v = Date.now();
+    const [resA, resP, resI] = await Promise.all([
+      fetch(`data/acoes.json?v=${v}`).then(r => r.json()),
+      fetch(`data/pessoas.json?v=${v}`).then(r => r.json()),
+      fetch(`data/imoveis.json?v=${v}`).then(r => r.json())
+    ]);
+    acoes = resA || [];
+    pessoas = resP || [];
+    imoveis = resI || [];
+    persist();
+  } catch (e) {
+    console.warn('Fetch failed, loading from local:', e);
+    const sA = localStorage.getItem('argos_acoes');
+    const sP = localStorage.getItem('argos_pessoas');
+    const sI = localStorage.getItem('argos_imoveis');
+    if (sA) acoes = JSON.parse(sA);
+    if (sP) pessoas = JSON.parse(sP);
+    if (sI) imoveis = JSON.parse(sI);
+  }
+}
+
+function persist() {
+  localStorage.setItem('argos_acoes', JSON.stringify(acoes));
+  localStorage.setItem('argos_pessoas', JSON.stringify(pessoas));
+  localStorage.setItem('argos_imoveis', JSON.stringify(imoveis));
+}
+
+function sigla(p) {
+  if (!p) return '?';
+  const n = (p.nome || '').charAt(0);
+  const s = (p.sobrenome || '').substring(0, 2);
+  return (n + s).toUpperCase();
+}
+
+function avatarColor(id) {
+  const colors = ['#667eea', '#48bb78', '#ed8936', '#f56565', '#9f7aea', '#ed64a6'];
+  return colors[id % colors.length];
+}
+
+function flashBtn(btn) {
+  const oldText = btn.textContent;
+  btn.textContent = '✅';
+  setTimeout(() => btn.textContent = oldText, 2000);
+}
+
+function showToast(msg, type) {
+  console.log(`TOAST [${type}]: ${msg}`);
+}
+
+// ══════════════════════════════════════════
 //  SYNC LAYER (API HUB v2.0)
 // ══════════════════════════════════════════
 const API_CONFIG = {
