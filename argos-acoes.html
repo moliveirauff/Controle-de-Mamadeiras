@@ -888,22 +888,30 @@ function toggleTheme() {
 //  SYNC LAYER
 // ══════════════════════════════════════════
 async function syncToBot(type, id, data) {
-  // Sync to local API server (Family Hub Gateway)
-  const SERVER_URL = 'http://127.0.0.1:4747/sync-granular';
-  const ARGOS_KEY  = 'argos-secret-2026';
+  const BOT_TOKEN = "8032731802:AAH9E3Y_T04n5k9jUuE6f6U3g5L7h9B6E4M";
+  const CHAT_ID   = "8306629331";
+  
+  // Prefixo granular para evitar conflitos e manter padrão do bot
+  const prefixMap = {
+    'acoes': 'BOT_SYNC_ACAO_PATCH',
+    'acoes_pessoas': 'BOT_SYNC_PESSOA_PATCH',
+    'acoes_imoveis': 'BOT_SYNC_IMOVEL_PATCH'
+  };
+  
+  const prefix = prefixMap[type] || 'BOT_SYNC_ARGOS_PATCH';
+  const message = `${prefix}:${JSON.stringify({ type, id, data })}`;
 
-  const res = await fetch(SERVER_URL, {
+  const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
     method: 'POST',
-    headers: { 
-      'Content-Type': 'application/json',
-      'X-Argos-Key': ARGOS_KEY
-    },
-    body: JSON.stringify({ type, id, data })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
   });
   
-  const json = await res.json();
-  if (!res.ok) throw new Error(json.error || 'Gateway error');
-  return json;
+  if (!res.ok) {
+    const json = await res.json();
+    throw new Error(json.description || 'Telegram API error');
+  }
+  return await res.json();
 }
 
 // Visual feedback helper: temporariamente muda texto do btn para ✅
