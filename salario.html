@@ -252,6 +252,23 @@
         </div>
 
         <div class="card">
+            <span class="chart-header-center">Evolução Mensal Detalhada</span>
+            <div class="nav-header-center">
+                <select id="evo-metric" onchange="updateEvoChart()" style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px; font-size: 0.85rem; font-weight: 700;">
+                    <option value="bruto">Salário Bruto</option>
+                    <option value="liquido">Salário Líquido</option>
+                </select>
+                <div style="display: flex; gap: 5px;">
+                    <button class="nav-btn" style="width: auto; padding: 0 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 800;" onclick="setEvoPeriod(12)">12M</button>
+                    <button class="nav-btn" style="width: auto; padding: 0 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 800;" onclick="setEvoPeriod(24)">24M</button>
+                    <button class="nav-btn" style="width: auto; padding: 0 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 800;" onclick="setEvoPeriod(36)">36M</button>
+                    <button class="nav-btn" style="width: auto; padding: 0 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 800;" onclick="setEvoPeriod(0)">Tudo</button>
+                </div>
+            </div>
+            <div class="chart-container"><canvas id="cEvolucaoMensal"></canvas></div>
+        </div>
+
+        <div class="card">
             <span class="chart-header-center">Waterfall Mensal Detalhado</span>
             <div class="nav-header-center">
                 <button class="nav-btn" onclick="navWaterfall(-1)">❮</button>
@@ -267,6 +284,7 @@
         let charts = {};
         let wfIndex = 0;
         let pieYearIdx = 0;
+        let evoMonths = 12;
         let slider = null;
         let sortedYears = [];
 
@@ -404,7 +422,28 @@
             ], true);
             renderChart('cLinhaDescontos', 'line', chartYears, [{ label: '% Médio Anual', data: dataDescAnual, borderColor: '#f56565', tension: 0.3, fill: false }]);
             updatePizza();
+            updateEvoChart();
             updateWaterfall();
+        }
+
+        function setEvoPeriod(m) {
+            evoMonths = m;
+            updateEvoChart();
+        }
+
+        function updateEvoChart() {
+            const metric = document.getElementById('evo-metric').value;
+            const dataToUse = evoMonths === 0 ? contraChequeData : contraChequeData.slice(-evoMonths);
+            const labels = dataToUse.map(d => d.mes_referencia);
+            const values = dataToUse.map(d => metric === 'bruto' ? d.salario_bruto : d.salario_liquido);
+            const color = metric === 'bruto' ? '#3498db' : '#2ecc71';
+            
+            renderChart('cEvolucaoMensal', 'bar', labels, [{
+                label: metric === 'bruto' ? 'Salário Bruto' : 'Salário Líquido',
+                data: values,
+                backgroundColor: color,
+                borderRadius: 4
+            }]);
         }
 
         function navPizza(dir) {
