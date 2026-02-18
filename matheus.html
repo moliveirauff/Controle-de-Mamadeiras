@@ -363,10 +363,10 @@
         }
 
         function renderHist(limit) {
-            const data = getFilteredData(limit);
+            const data = getFilteredData(limit).filter(r => r.v >= 10);
             const bins = {};
             data.forEach(r => {
-                const binFloor = Math.floor(r.v / 20) * 20;
+                const binFloor = Math.floor((r.v - 10) / 20) * 20 + 10;
                 const label = `${binFloor}-${binFloor+20}`;
                 bins[label] = (bins[label] || 0) + 1;
             });
