@@ -182,20 +182,22 @@
             <div class="cc-kpi-card">
                 <span class="cc-kpi-label">Base Atual</span>
                 <span class="cc-kpi-value" id="kpi-base-atual">-</span>
+                <div class="cc-kpi-ratio" id="kpi-base-referencia">-</div>
             </div>
             <div class="cc-kpi-card">
                 <span class="cc-kpi-label">Bruto Médio</span>
                 <span class="cc-kpi-value" id="kpi-bruto-avg">-</span>
-                <div class="cc-kpi-ratio" id="kpi-bruto-ratio">-</div>
+                <div class="cc-kpi-ratio" id="kpi-bruto-periodo">Últimos 12 Meses</div>
             </div>
             <div class="cc-kpi-card">
                 <span class="cc-kpi-label">Líquido Médio</span>
                 <span class="cc-kpi-value" id="kpi-liq-avg">-</span>
-                <div class="cc-kpi-ratio" id="kpi-liq-ratio">-</div>
+                <div class="cc-kpi-ratio" id="kpi-liq-periodo">Últimos 12 Meses</div>
             </div>
             <div class="cc-kpi-card">
-                <span class="cc-kpi-label">Bruto Total (12m)</span>
+                <span class="cc-kpi-label">Bruto Total</span>
                 <span class="cc-kpi-value" id="kpi-bruto-total">-</span>
+                <div class="cc-kpi-ratio">Últimos 12 Meses</div>
             </div>
             <div class="cc-kpi-card">
                 <span class="cc-kpi-label">CAGR (5 Anos)</span>
@@ -205,6 +207,7 @@
             <div class="cc-kpi-card">
                 <span class="cc-kpi-label">Desconto Médio</span>
                 <span class="cc-kpi-value" id="kpi-discount-avg">-</span>
+                <div class="cc-kpi-ratio">Últimos 12 Meses</div>
             </div>
         </div>
 
@@ -350,10 +353,9 @@
             const c5y = cagr(contraChequeData[Math.max(0, contraChequeData.length - 61)].salario_base, current.salario_base, 5);
             const cTotal = cagr(contraChequeData[0].salario_base, current.salario_base, contraChequeData.length / 12);
             document.getElementById('kpi-base-atual').innerText = brl(current.salario_base);
+            document.getElementById('kpi-base-referencia').innerText = `Ref: ${current.mes_referencia}`;
             document.getElementById('kpi-bruto-avg').innerText = brl(brutoAvg12);
-            document.getElementById('kpi-bruto-ratio').innerText = `${(brutoAvg12 / baseAvg12).toFixed(2)}x (Bruto/Base)`;
             document.getElementById('kpi-liq-avg').innerText = brl(liqAvg12);
-            document.getElementById('kpi-liq-ratio').innerText = `Ratio: ${(liqAvg12 / baseAvg12).toFixed(2)}x (Líq/Base)`;
             document.getElementById('kpi-bruto-total').innerText = brl(brutoTotal12);
             document.getElementById('kpi-cagr-5y').innerText = c5y.toFixed(1) + '%';
             document.getElementById('kpi-cagr-total').innerText = `Desde 2012: ${cTotal.toFixed(1)}%`;
