@@ -6,6 +6,8 @@
     <title>💰 Dashboard de Salário</title>
     <meta name="version" content="v1.13.2">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.1/dist/nouislider.min.js"></script>
     <style>
         :root {
             --bg: #f7fafc;
@@ -293,6 +295,62 @@
         .placeholder-box .ph-icon { font-size: 3rem; margin-bottom: 12px; }
         .placeholder-box .ph-msg { font-size: 1rem; font-weight: 600; }
         .placeholder-box .ph-sub { font-size: 0.82rem; margin-top: 8px; }
+        /* ─── Contra-cheque v2 ─── */
+        .cc-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) { .cc-kpi-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .cc-kpi-grid { grid-template-columns: 1fr; } }
+        
+        .cc-kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 12px;
+            text-align: center;
+        }
+        .cc-kpi-label { font-size: 0.65rem; font-weight: 800; color: var(--subtext); text-transform: uppercase; margin-bottom: 6px; display: block; }
+        .cc-kpi-value { font-size: 1.15rem; font-weight: 800; color: var(--text); }
+        .cc-kpi-ratio { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; font-weight: 600; }
+        
+        .slider-section {
+            background: var(--card-bg);
+            padding: 30px 25px 20px 25px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        #range-slider { height: 8px; }
+        .noUi-connect { background: var(--accent); }
+        .noUi-handle { width: 18px; height: 18px; border-radius: 50%; right: -9px; top: -6px; background: var(--accent); box-shadow: none; border: 2px solid #fff; }
+        .noUi-handle:before, .noUi-handle:after { display: none; }
+        .slider-labels { display: flex; justify-content: space-between; margin-top: 12px; font-size: 0.75rem; font-weight: 700; color: var(--subtext); }
+
+        .waterfall-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .nav-btn {
+            background: var(--border);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover { background: var(--accent); color: white; }
+        .month-title { font-size: 1.1rem; font-weight: 800; color: var(--text); min-width: 120px; text-align: center; }
     </style>
 </head>
 <body>
@@ -310,67 +368,79 @@
 
     <!-- ═══ ABA 1 — Contra-cheque ═══════════════════════════════════════════ -->
     <div id="tab1" style="display:none;">
-        <div class="kpi-groups" style="margin-top: 10px;">
-            <div class="kpi-group">
-                <div class="kpi-group-title">💰 Renda & Acumulado</div>
-                <div class="kpi-grid">
-                    <div class="kpi-card">
-                        <span class="kpi-emoji">💵</span>
-                        <span class="kpi-label">Líquido Atual</span>
-                        <span class="kpi-value" id="cc-current">-</span>
-                    </div>
-                    <div class="kpi-card">
-                        <span class="kpi-emoji">🏦</span>
-                        <span class="kpi-label">Total Acumulado (2025)</span>
-                        <span class="kpi-value" id="cc-year-total">-</span>
-                    </div>
-                </div>
+        <div class="cc-kpi-grid">
+            <div class="cc-kpi-card">
+                <span class="cc-kpi-label">Salário Base Atual</span>
+                <span class="cc-kpi-value" id="kpi-base-atual">-</span>
             </div>
-            <div class="kpi-group">
-                <div class="kpi-group-title">📈 Performance Histórica</div>
-                <div class="kpi-grid">
-                    <div class="kpi-card">
-                        <span class="kpi-emoji">🚀</span>
-                        <span class="kpi-label">Crescimento (CAGR)</span>
-                        <span class="kpi-value" id="cc-cagr">-</span>
-                        <span class="kpi-sub">Média anual desde 2012</span>
-                    </div>
-                    <div class="kpi-card">
-                        <span class="kpi-emoji">🎯</span>
-                        <span class="kpi-label">Eficiência (L/B)</span>
-                        <span class="kpi-value" id="cc-eff">-</span>
-                    </div>
-                </div>
+            <div class="cc-kpi-card">
+                <span class="cc-kpi-label">Bruto Médio (12m)</span>
+                <span class="cc-kpi-value" id="kpi-bruto-avg">-</span>
+                <div class="cc-kpi-ratio" id="kpi-bruto-ratio">-</div>
+            </div>
+            <div class="cc-kpi-card">
+                <span class="cc-kpi-label">Líquido Médio (12m)</span>
+                <span class="cc-kpi-value" id="kpi-liq-avg">-</span>
+                <div class="cc-kpi-ratio" id="kpi-liq-ratio">-</div>
+            </div>
+            <div class="cc-kpi-card">
+                <span class="cc-kpi-label">Bruto Total (12m)</span>
+                <span class="cc-kpi-value" id="kpi-bruto-total">-</span>
+            </div>
+            <div class="cc-kpi-card">
+                <span class="cc-kpi-label">CAGR (5 Anos)</span>
+                <span class="cc-kpi-value" id="kpi-cagr-5y">-</span>
+                <div class="cc-kpi-ratio" id="kpi-cagr-total">-</div>
+            </div>
+            <div class="cc-kpi-card">
+                <span class="cc-kpi-label">Desconto Médio (12m)</span>
+                <span class="cc-kpi-value" id="kpi-discount-avg">-</span>
+            </div>
+        </div>
+
+        <div class="slider-section">
+            <div id="range-slider"></div>
+            <div class="slider-labels">
+                <span id="slider-min-val">-</span>
+                <span id="slider-max-val">-</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><span>📊 Total Salário Base / Ano (Méd x 13,3)</span></div>
+            <div class="chart-container"><canvas id="cTotalBaseAno"></canvas></div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header"><span>💰 Total Bruto por Ano (Real + Proj)</span></div>
+                <div class="chart-container"><canvas id="cTotalBrutoAno"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-header"><span>💸 Total Líquido por Ano (Real + Proj)</span></div>
+                <div class="chart-container"><canvas id="cTotalLiqAno"></canvas></div>
             </div>
         </div>
 
         <div class="grid-2">
             <div class="card">
-                <div class="card-header"><span>📉 Escada de Evolução (Base vs Bruto vs Líq)</span></div>
-                <div class="chart-container"><canvas id="cSalarioHistorico"></canvas></div>
+                <div class="card-header"><span>📈 Carga de Descontos (% do Bruto)</span></div>
+                <div class="chart-container"><canvas id="cLinhaDescontos"></canvas></div>
             </div>
             <div class="card">
-                <div class="card-header"><span id="donut-title">🍩 Composição de Descontos (Último Mês)</span></div>
-                <div class="chart-container"><canvas id="cDescontosDonut"></canvas></div>
+                <div class="card-header"><span id="pie-desc-title">🥧 Composição de Descontos</span></div>
+                <div class="chart-container"><canvas id="cPizzaDescontos"></canvas></div>
             </div>
         </div>
 
-        <div class="card" style="padding: 0; overflow: hidden;">
-            <div class="card-header" style="padding: 15px 15px 5px 15px;"><span>📋 Histórico Detalhado</span></div>
-            <div class="ed-table-wrap">
-                <table class="ed-table">
-                    <thead>
-                        <tr>
-                            <th>Mês</th>
-                            <th style="text-align:right;">Base</th>
-                            <th style="text-align:right;">Bruto</th>
-                            <th style="text-align:right;">Líquido</th>
-                            <th style="text-align:right;">Retenção</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cc-tbody"></tbody>
-                </table>
+        <div class="card">
+            <div class="card-header"><span>🌊 Waterfall Mensal Detalhado</span></div>
+            <div class="waterfall-header">
+                <button class="nav-btn" onclick="navWaterfall(-1)">❮</button>
+                <div class="month-title" id="wf-month-title">-</div>
+                <button class="nav-btn" onclick="navWaterfall(1)">❯</button>
             </div>
+            <div class="chart-container"><canvas id="cWaterfall"></canvas></div>
         </div>
     </div>
 
@@ -598,129 +668,239 @@
             } catch (e) { console.error(e); }
         }
 
+        let wfIndex = 0;
+        let slider = null;
+
+        async function loadContraCheque() {
+            try {
+                const res = await fetch('./data/contra_cheque.json?v=' + Date.now());
+                contraChequeData = await res.json();
+                initSlider();
+                renderContraCheque();
+            } catch (e) { console.error(e); }
+        }
+
+        function initSlider() {
+            if (slider) return;
+            const sliderEl = document.getElementById('range-slider');
+            const years = [...new Set(contraChequeData.map(d => d.mes_referencia.split('/')[1]))].map(y => parseInt('20'+y));
+            const min = Math.min(...years);
+            const max = Math.max(...years);
+
+            noUiSlider.create(sliderEl, {
+                start: [min, max],
+                connect: true,
+                step: 1,
+                range: { 'min': min, 'max': max },
+                format: { to: v => Math.round(v), from: v => v }
+            });
+
+            slider = sliderEl.noUiSlider;
+            slider.on('update', (values) => {
+                document.getElementById('slider-min-val').innerText = values[0];
+                document.getElementById('slider-max-val').innerText = values[1];
+                renderContraCheque();
+            });
+        }
+
+        function getProjBase(yearData, curBase, isComplete) {
+            if (isComplete) return yearData.reduce((s, d) => s + d.salario_base, 0);
+            
+            // Lógica: Média x 13,3. Se incompleto, projetar.
+            // Ajuste 5% em Outubro se base não variou no ano.
+            const months = yearData.length;
+            const hasVariation = new Set(yearData.map(d => d.salario_base)).size > 1;
+            let projectedTotal = yearData.reduce((s, d) => s + d.salario_base, 0);
+            
+            for (let m = months + 1; m <= 12; m++) {
+                let base = curBase;
+                if (!hasVariation && m >= 10) base = curBase * 1.05;
+                projectedTotal += base;
+            }
+            // Add 13o e férias (aproximadamente 1.3 meses extras)
+            return projectedTotal + (curBase * 1.3);
+        }
+
         function renderContraCheque() {
             if (!contraChequeData.length) return;
+            const range = slider ? slider.get() : null;
+            const startYear = range ? parseInt(range[0]) : 2012;
+            const endYear = range ? parseInt(range[1]) : 2026;
+
+            const filtered = contraChequeData.filter(d => {
+                const y = parseInt('20' + d.mes_referencia.split('/')[1]);
+                return y >= startYear && y <= endYear;
+            });
+
             const current = contraChequeData[contraChequeData.length - 1];
+            const last12 = contraChequeData.slice(-12);
             
-            // KPIs
-            const year2025 = contraChequeData.filter(d => d.mes_referencia.endsWith('/25'));
-            const total2025 = year2025.reduce((acc, curr) => acc + curr.salario_liquido, 0);
-            
-            const firstSal = contraChequeData[0].salario_base;
-            const lastSal = current.salario_base;
-            const years = contraChequeData.length / 12;
-            const cagr = (Math.pow(lastSal / firstSal, 1 / years) - 1) * 100;
-            const efficiency = (current.salario_liquido / current.salario_bruto) * 100;
+            // KPIs (Sempre baseados nos últimos 12 meses reais para Bruto/Liq/Desc)
+            const brutoAvg12 = last12.reduce((s, d) => s + d.salario_bruto, 0) / 12;
+            const liqAvg12 = last12.reduce((s, d) => s + d.salario_liquido, 0) / 12;
+            const baseAvg12 = last12.reduce((s, d) => s + d.salario_base, 0) / 12;
+            const brutoTotal12 = last12.reduce((s, d) => s + d.salario_bruto, 0);
+            const discAvg12 = (1 - (liqAvg12 / brutoAvg12)) * 100;
 
-            document.getElementById('cc-current').innerText = brl(current.salario_liquido);
-            document.getElementById('cc-year-total').innerText = brl(total2025);
-            document.getElementById('cc-cagr').innerText = cagr.toFixed(1) + '%';
-            document.getElementById('cc-eff').innerText = efficiency.toFixed(1) + '%';
+            // CAGR 5y e Total
+            const cagr = (start, end, years) => (Math.pow(end / start, 1 / years) - 1) * 100;
+            const c5y = cagr(contraChequeData[Math.max(0, contraChequeData.length - 61)].salario_base, current.salario_base, 5);
+            const cTotal = cagr(contraChequeData[0].salario_base, current.salario_base, contraChequeData.length / 12);
 
-            // Gráfico Principal (Escada)
-            const ctx = document.getElementById('cSalarioHistorico').getContext('2d');
-            const labels = contraChequeData.map(d => d.mes_referencia);
+            document.getElementById('kpi-base-atual').innerText = brl(current.salario_base);
+            document.getElementById('kpi-bruto-avg').innerText = brl(brutoAvg12);
+            document.getElementById('kpi-bruto-ratio').innerText = `Ratio: ${(brutoAvg12 / baseAvg12).toFixed(2)}x (Bruto/Base)`;
+            document.getElementById('kpi-liq-avg').innerText = brl(liqAvg12);
+            document.getElementById('kpi-liq-ratio').innerText = `Ratio: ${(liqAvg12 / baseAvg12).toFixed(2)}x (Líq/Base)`;
+            document.getElementById('kpi-bruto-total').innerText = brl(brutoTotal12);
+            document.getElementById('kpi-cagr-5y').innerText = c5y.toFixed(1) + '%';
+            document.getElementById('kpi-cagr-total').innerText = `Total: ${cTotal.toFixed(1)}% (desde 2012)`;
+            document.getElementById('kpi-discount-avg').innerText = discAvg12.toFixed(1) + '%';
+
+            // Agrupamento por Ano
+            const yearsMap = {};
+            contraChequeData.forEach(d => {
+                const y = '20' + d.mes_referencia.split('/')[1];
+                if (!yearsMap[y]) yearsMap[y] = [];
+                yearsMap[y].push(d);
+            });
+
+            const ratioBruto = brutoAvg12 / baseAvg12;
+            const ratioLiq = liqAvg12 / baseAvg12;
             
-            if (charts['cSalarioHistorico']) charts['cSalarioHistorico'].destroy();
-            charts['cSalarioHistorico'] = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Líquido',
-                            data: contraChequeData.map(d => d.salario_liquido),
-                            borderColor: '#48bb78',
-                            backgroundColor: 'rgba(72, 187, 120, 0.4)',
-                            fill: true, tension: 0.3
-                        },
-                        {
-                            label: 'Bruto',
-                            data: contraChequeData.map(d => d.salario_bruto),
-                            borderColor: '#667eea',
-                            backgroundColor: 'rgba(102, 126, 234, 0.2)',
-                            fill: true, tension: 0.3
-                        },
-                        {
-                            label: 'Base',
-                            data: contraChequeData.map(d => d.salario_base),
-                            borderColor: '#cbd5e0',
-                            backgroundColor: 'rgba(203, 213, 224, 0.1)',
-                            fill: true, tension: 0.3
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    interaction: { intersect: false, mode: 'index' },
-                    plugins: {
-                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } },
-                        tooltip: { 
-                            callbacks: { label: ctx => ` ${ctx.dataset.label}: ${brl(ctx.parsed.y)}` }
-                        }
-                    },
-                    scales: {
-                        y: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
-                        x: { ticks: { maxRotation: 45, font: { size: 9 } } }
-                    },
-                    onClick: (e, elements) => {
-                        if (elements.length > 0) {
-                            const idx = elements[0].index;
-                            updateDonut(idx);
-                        }
-                    }
+            const chartYears = Object.keys(yearsMap).filter(y => parseInt(y) >= startYear && parseInt(y) <= endYear).sort();
+            
+            const dataBase = [];
+            const dataBrutoReal = [];
+            const dataBrutoProj = [];
+            const dataLiqReal = [];
+            const dataLiqProj = [];
+
+            chartYears.forEach(y => {
+                const yearData = yearsMap[y];
+                const isComplete = yearData.length === 12;
+                const baseProj = getProjBase(yearData, current.salario_base, isComplete);
+                dataBase.push(baseProj);
+
+                const realBruto = yearData.reduce((s, d) => s + d.salario_bruto, 0);
+                const realLiq = yearData.reduce((s, d) => s + d.salario_liquido, 0);
+                
+                if (isComplete) {
+                    dataBrutoReal.push(realBruto);
+                    dataBrutoProj.push(0);
+                    dataLiqReal.push(realLiq);
+                    dataLiqProj.push(0);
+                } else {
+                    const totalProjBruto = baseProj * ratioBruto;
+                    const totalProjLiq = baseProj * ratioLiq;
+                    dataBrutoReal.push(realBruto);
+                    dataBrutoProj.push(totalProjBruto - realBruto);
+                    dataLiqReal.push(realLiq);
+                    dataLiqProj.push(totalProjLiq - realLiq);
                 }
             });
 
-            // Gráfico Donut (Descontos)
-            const updateDonut = (idx) => {
-                const d = contraChequeData[idx];
-                const ctxD = document.getElementById('cDescontosDonut').getContext('2d');
-                document.getElementById('donut-title').innerText = `🍩 Descontos (${d.mes_referencia})`;
+            // 1. Total Base Ano
+            renderChart('cTotalBaseAno', 'bar', chartYears, [{ label: 'Total Base', data: dataBase, backgroundColor: '#667eea' }]);
 
-                const donutData = [
-                    d.descontos.inss,
-                    d.descontos.irrf,
-                    d.descontos.previdencia_privada,
-                    d.descontos.outros
-                ];
+            // 2. Total Bruto Ano (Stack)
+            renderChart('cTotalBrutoAno', 'bar', chartYears, [
+                { label: 'Realizado', data: dataBrutoReal, backgroundColor: '#3498db', stack: 'a' },
+                { label: 'Projetado', data: dataBrutoProj, backgroundColor: 'rgba(52, 152, 219, 0.4)', stack: 'a' }
+            ], true);
 
-                if (charts['cDescontosDonut']) charts['cDescontosDonut'].destroy();
-                charts['cDescontosDonut'] = new Chart(ctxD, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['INSS', 'IRRF', 'Prev. Privada', 'Outros'],
-                        datasets: [{
-                            data: donutData,
-                            backgroundColor: ['#ed8936', '#f56565', '#4299e1', '#a0aec0'],
-                            borderWidth: 2
-                        }]
+            // 3. Total Líquido Ano (Stack)
+            renderChart('cTotalLiqAno', 'bar', chartYears, [
+                { label: 'Realizado', data: dataLiqReal, backgroundColor: '#2ecc71', stack: 'a' },
+                { label: 'Projetado', data: dataLiqProj, backgroundColor: 'rgba(46, 204, 113, 0.4)', stack: 'a' }
+            ], true);
+
+            // 4. Linha Descontos %
+            const lineLabels = filtered.map(d => d.mes_referencia);
+            const lineData = filtered.map(d => (1 - (d.salario_liquido / d.salario_bruto)) * 100);
+            renderChart('cLinhaDescontos', 'line', lineLabels, [{ label: '% Descontos', data: lineData, borderColor: '#f56565', tension: 0.3, fill: false }]);
+
+            // 5. Pizza (Último mês do filtro)
+            const lastD = filtered[filtered.length - 1];
+            document.getElementById('pie-desc-title').innerText = `🥧 Descontos (${lastD.mes_referencia})`;
+            renderChart('cPizzaDescontos', 'pie', ['INSS', 'IRRF', 'Prev. Privada', 'Outros'], [{
+                data: [lastD.descontos.inss, lastD.descontos.irrf, lastD.descontos.previdencia_privada, lastD.descontos.outros],
+                backgroundColor: ['#ed8936', '#f56565', '#4299e1', '#a0aec0']
+            }]);
+
+            // 6. Waterfall
+            if (wfIndex === 0) wfIndex = contraChequeData.length - 1;
+            updateWaterfall();
+        }
+
+        function renderChart(id, type, labels, datasets, stacked = false) {
+            const ctx = document.getElementById(id).getContext('2d');
+            if (charts[id]) charts[id].destroy();
+            charts[id] = new Chart(ctx, {
+                type: type,
+                data: { labels, datasets },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: type !== 'bar', position: 'bottom', labels: { boxWidth: 10, font: { size: 9 } } },
+                        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${type === 'line' ? ctx.parsed.y.toFixed(1)+'%' : brl(ctx.parsed.y)}` } }
                     },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: {
-                            legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } },
-                            tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${brl(ctx.parsed)}` } }
-                        },
-                        cutout: '60%'
+                    scales: type === 'pie' ? {} : {
+                        x: { stacked, ticks: { font: { size: 9 } } },
+                        y: { stacked, ticks: { callback: v => type === 'line' ? v+'%' : 'R$ '+(v/1000).toFixed(0)+'k' } }
                     }
-                });
-            };
+                }
+            });
+        }
 
-            updateDonut(contraChequeData.length - 1);
+        function navWaterfall(dir) {
+            wfIndex = Math.max(0, Math.min(contraChequeData.length - 1, wfIndex + dir));
+            updateWaterfall();
+        }
 
-            // Tabela
-            const tbody = document.getElementById('cc-tbody');
-            tbody.innerHTML = [...contraChequeData].reverse().slice(0, 24).map(d => {
-                const retention = ((1 - (d.salario_liquido / d.salario_bruto)) * 100).toFixed(1);
-                return `<tr>
-                    <td style="padding:9px 10px; color:var(--subtext); font-weight:700;">${d.mes_referencia}</td>
-                    <td style="padding:9px 10px; text-align:right;">${brl(d.salario_base)}</td>
-                    <td style="padding:9px 10px; text-align:right;">${brl(d.salario_bruto)}</td>
-                    <td style="padding:9px 10px; text-align:right; color:var(--green); font-weight:700;">${brl(d.salario_liquido)}</td>
-                    <td style="padding:9px 10px; text-align:right; color:var(--red);">${retention}%</td>
-                </tr>`;
-            }).join('');
+        function updateWaterfall() {
+            const d = contraChequeData[wfIndex];
+            document.getElementById('wf-month-title').innerText = d.mes_referencia;
+            const ctx = document.getElementById('cWaterfall').getContext('2d');
+            
+            const brutoExtra = d.salario_bruto - d.salario_base;
+            const labels = ['Base', 'Adic. Bruto', 'INSS', 'IRRF', 'Prev. Privada', 'Outros', 'Líquido'];
+            
+            // Waterfall logic: [start, end]
+            const data = [
+                [0, d.salario_base], // Base
+                [d.salario_base, d.salario_bruto], // Adicionais
+                [d.salario_bruto - d.descontos.inss, d.salario_bruto], // INSS
+                [d.salario_bruto - d.descontos.inss - d.descontos.irrf, d.salario_bruto - d.descontos.inss], // IRRF
+                [d.salario_bruto - d.descontos.inss - d.descontos.irrf - d.descontos.previdencia_privada, d.salario_bruto - d.descontos.inss - d.descontos.irrf], // Prev
+                [d.salario_liquido, d.salario_liquido + d.descontos.outros], // Outros
+                [0, d.salario_liquido] // Final Líquido
+            ];
+
+            const colors = ['#667eea', '#48bb78', '#f56565', '#f56565', '#f56565', '#f56565', '#48bb78'];
+
+            if (charts['cWaterfall']) charts['cWaterfall'].destroy();
+            charts['cWaterfall'] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        barPercentage: 0.8
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: ctx => ` ${brl(ctx.raw[1] - ctx.raw[0])}` } }
+                    },
+                    scales: {
+                        y: { ticks: { callback: v => 'R$ '+(v/1000).toFixed(0)+'k' } }
+                    }
+                }
+            });
         }
 
         // ─── Consolidado ──────────────────────────────────────────────────────
