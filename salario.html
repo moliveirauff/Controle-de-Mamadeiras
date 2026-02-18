@@ -82,31 +82,6 @@
             color: var(--text-muted);
             margin-bottom: 18px;
         }
-        .period-bar {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 10px 14px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .period-label { font-size: 0.75rem; font-weight: 700; color: var(--subtext); text-transform: uppercase; margin-right: 4px; }
-        .btn-period {
-            background: var(--border);
-            border: none;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-period:hover { opacity: 0.8; }
-        .btn-period.active { background: var(--accent); color: white; }
         .card {
             background: var(--surface);
             border-radius: 12px;
@@ -116,185 +91,13 @@
             border: 1px solid var(--border);
             transition: background-color 0.3s, border-color 0.3s;
         }
-        .card-header {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
         .chart-container { position: relative; height: 300px; width: 100%; }
-        .loading-msg { text-align: center; padding: 40px; color: var(--subtext); font-size: 1rem; }
         @media (min-width: 768px) {
             body { max-width: 960px; margin: 0 auto; padding: 16px 16px 60px 16px; }
             .chart-container { height: 380px; }
             .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
             h1 { font-size: 1.75rem; }
         }
-        @media (max-width: 400px) {
-            .tab-btn { font-size: 0.75rem; padding: 8px 4px; }
-            h1 { font-size: 1.2rem; }
-        }
-        /* ─── Tab Nav ─── */
-        .tab-nav {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 14px;
-        }
-        .tab-btn {
-            flex: 1;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 9px 8px;
-            border-radius: 10px 10px 0 0;
-            font-size: 0.83rem;
-            font-weight: 700;
-            color: var(--subtext);
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-            white-space: nowrap;
-        }
-        .tab-btn:hover { color: var(--text); border-color: var(--accent); }
-        .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-        /* ─── KPI Cards ─── */
-        .kpi-groups {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 20px;
-        }
-        @media (max-width: 599px) { .kpi-groups { grid-template-columns: 1fr; } }
-        .kpi-group {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px 10px 8px;
-        }
-        .kpi-group-title {
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--subtext);
-            margin-bottom: 10px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid var(--border);
-        }
-        .kpi-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .kpi-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 14px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .kpi-emoji { font-size: 1.4rem; }
-        .kpi-label { font-size: 0.7rem; font-weight: 700; color: var(--subtext); text-transform: uppercase; letter-spacing: 0.03em; }
-        .kpi-value { font-size: 1.1rem; font-weight: 800; color: var(--text); }
-        .kpi-sub { font-size: 0.72rem; color: var(--subtext); margin-top: 2px; }
-        /* ─── Editor Filters ─── */
-        .editor-filters {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-            align-items: center;
-        }
-        @media (max-width: 599px) {
-            .editor-filters { flex-direction: column; }
-            .editor-filters > * { width: 100%; }
-        }
-        select.f-select {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--text);
-            cursor: pointer;
-            outline: none;
-        }
-        /* ─── Table ─── */
-        .ed-table-wrap { overflow-x: auto; }
-        table.ed-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.82rem;
-        }
-        table.ed-table th {
-            text-align: left;
-            padding: 8px 10px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: var(--subtext);
-            border-bottom: 2px solid var(--border);
-            white-space: nowrap;
-        }
-        table.ed-table th.sortable { cursor: pointer; }
-        table.ed-table th.sortable:hover { color: var(--text); }
-        .ed-summary {
-            font-size: 0.8rem;
-            color: var(--subtext);
-            margin-bottom: 10px;
-        }
-        /* ─── Modal ─── */
-        .modal-overlay {
-            display: none;
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-        .modal-box {
-            background: var(--surface);
-            border-radius: 16px;
-            padding: 24px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .modal-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; }
-        .modal-field { margin-bottom: 12px; }
-        .modal-field label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--subtext); margin-bottom: 4px; }
-        .modal-field input, .modal-field select {
-            width: 100%;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 10px;
-            font-size: 0.9rem;
-            color: var(--text);
-            outline: none;
-        }
-        .modal-actions { display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end; }
-        .btn-save { background: var(--accent); color: white; border: none; padding: 9px 20px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
-        .btn-cancel { background: var(--border); color: var(--text); border: none; padding: 9px 20px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; }
-        .modal-error { color: var(--red); font-size: 0.8rem; margin-top: 8px; display: none; }
-        /* ─── Placeholder ─── */
-        .placeholder-box {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--subtext);
-        }
-        .placeholder-box .ph-icon { font-size: 3rem; margin-bottom: 12px; }
-        .placeholder-box .ph-msg { font-size: 1rem; font-weight: 600; }
-        .placeholder-box .ph-sub { font-size: 0.82rem; margin-top: 8px; }
         /* ─── Contra-cheque v2 ─── */
         .cc-kpi-grid {
             display: grid;
@@ -379,7 +182,6 @@
     <h1>💰 Dashboard de Salário</h1>
     <p id="last-update" class="page-subtitle" style="display:none;"></p>
 
-    <!-- ABA 1 — Contra-cheque (Única Aba) -->
     <div id="tab1">
         <div class="cc-kpi-grid">
             <div class="cc-kpi-card">
@@ -462,159 +264,16 @@
         </div>
     </div>
 
-    <!-- ═══ ABA 2 — Consolidado ══════════════════════════════════════════════ -->
-    <div id="tab2">
-        <!-- Period Filter -->
-        <div class="period-bar">
-            <span class="period-label">Período:</span>
-            <button class="btn-period active" onclick="setPeriod('ano_atual', this)">Ano</button>
-            <button class="btn-period" onclick="setPeriod('12m', this)">12M</button>
-            <button class="btn-period" onclick="setPeriod('24m', this)">24M</button>
-            <button class="btn-period" onclick="setPeriod('36m', this)">36M</button>
-            <button class="btn-period" onclick="setPeriod('todos', this)">Todos</button>
-        </div>
-
-        <div id="loading" class="loading-msg">⏳ Carregando dados...</div>
-        <div id="consolidado-content" style="display:none;">
-            <!-- KPIs em dois grupos -->
-            <div class="kpi-groups">
-                <div class="kpi-group">
-                    <div class="kpi-group-title">💰 Salário</div>
-                    <div class="kpi-grid" id="kpi-salario"></div>
-                </div>
-                <div class="kpi-group">
-                    <div class="kpi-group-title">🎁 Benefícios</div>
-                    <div class="kpi-grid" id="kpi-beneficios"></div>
-                </div>
-            </div>
-
-            <!-- Gráfico A: Evolução Mensal de Salário -->
-            <div class="card">
-                <div class="card-header"><span>📈 Evolução Mensal — Salário</span></div>
-                <div class="chart-container"><canvas id="cBarSalario"></canvas></div>
-            </div>
-
-            <!-- Gráfico B: Evolução Mensal de Benefícios (empilhado por origem) -->
-            <div class="card">
-                <div class="card-header"><span>📊 Evolução Mensal — Benefícios por Origem</span></div>
-                <div class="chart-container"><canvas id="cBarBeneficios"></canvas></div>
-            </div>
-
-            <!-- Pizza -->
-            <div class="card">
-                <div class="card-header"><span>🥧 % por Subcategoria no Período</span></div>
-                <div class="chart-container"><canvas id="cPie"></canvas></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ═══ ABA 3 — Lançamentos ══════════════════════════════════════════════ -->
-    <div id="tab3" style="display:none;">
-        <div id="tab3-content" style="display:none;">
-            <!-- Filters -->
-            <div class="editor-filters">
-                <select id="f-month" class="f-select" onchange="renderLancamentos()">
-                    <option value="__all__">Todos os meses</option>
-                </select>
-                <select id="f-subcat" class="f-select" onchange="renderLancamentos()">
-                    <option value="__all__">Todas as subcategorias</option>
-                </select>
-                <select id="f-orig" class="f-select" onchange="renderLancamentos()">
-                    <option value="__all__">Todas as origens</option>
-                </select>
-            </div>
-
-            <div class="ed-summary" id="lanc-summary"></div>
-
-            <div class="ed-table-wrap">
-                <table class="ed-table">
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Descrição</th>
-                            <th>Subcategoria</th>
-                            <th>Origem</th>
-                            <th style="text-align:right;">Valor</th>
-                            <th style="text-align:center;">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="lanc-tbody"></tbody>
-                </table>
-            </div>
-        </div>
-        <div id="tab3-loading" class="loading-msg" style="display:none;">⏳ Carregando...</div>
-    </div>
-
-    <!-- Modal de Edição -->
-    <div class="modal-overlay" id="ed-modal" onclick="if(event.target===this)closeModal()">
-        <div class="modal-box">
-            <div class="modal-title" id="modal-title">✏️ Editar Lançamento</div>
-            <div class="modal-field">
-                <label>Data</label>
-                <input type="date" id="m-data">
-            </div>
-            <div class="modal-field">
-                <label>Descrição</label>
-                <input type="text" id="m-desc" placeholder="Descrição">
-            </div>
-            <div class="modal-field">
-                <label>Subcategoria</label>
-                <select id="m-subcat">
-                    <option value="">-- Selecionar --</option>
-                    <option value="Salário">Salário</option>
-                    <option value="Benefícios">Benefícios</option>
-                    <option value="Outras Receitas">Outras Receitas</option>
-                </select>
-            </div>
-            <div class="modal-field">
-                <label>Origem</label>
-                <select id="m-orig">
-                    <option value="">-- Selecionar --</option>
-                </select>
-            </div>
-            <div class="modal-field">
-                <label>Valor (R$)</label>
-                <input type="number" id="m-valor" placeholder="Ex: 5000.00" step="0.01">
-            </div>
-            <div class="modal-error" id="modal-error"></div>
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-                <button class="btn-save" onclick="saveModal()">Salvar</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // ─── State ────────────────────────────────────────────────────────────
-        let allData = [];
-        let origens = {};
-        const SUBCATS = ['Salário', 'Benefícios', 'Outras Receitas'];
-        const SUBCAT_COLORS = ['#48bb78', '#667eea', '#ed8936'];
-        // Paleta para origens (benefícios empilhados)
-        const ORIGEM_PALETTE = ['#667eea','#48bb78','#ed8936','#f56565','#9f7aea','#4299e1','#38b2ac','#d69e2e','#e53e3e','#805ad5'];
-        let currentPeriod = 'ano_atual';
-        let filteredData = [];       // Aba 2: sem "Outras Receitas"
-        let charts = {};
-        let editingIndex = null;
-        let currentTab = 2;
         let contraChequeData = [];
+        let charts = {};
+        let wfIndex = 0;
+        let pieYearIdx = 0;
+        let slider = null;
+        let sortedYears = [];
 
-        // ─── Helpers ──────────────────────────────────────────────────────────
         function brl(v) {
             return 'R$ ' + Math.abs(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-
-        function fmtDate(dateStr) {
-            if (!dateStr) return '';
-            const [y, m, d] = dateStr.split('-');
-            return `${d}/${m}/${String(y).slice(-2)}`;
-        }
-
-        function monthLabel(key) {
-            const [y, m] = key.split('-');
-            return new Date(parseInt(y), parseInt(m) - 1, 1)
-                .toLocaleString('pt-BR', { month: 'short', year: '2-digit' })
-                .replace('.', '');
         }
 
         function toggleTheme() {
@@ -624,83 +283,17 @@
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
             Chart.defaults.color = isDark ? '#cbd5e0' : '#666';
             Chart.defaults.borderColor = isDark ? '#4a5568' : '#e2e8f0';
-            if (currentTab === 1 && contraChequeData.length > 0) renderContraCheque();
-            if (currentTab === 2 && filteredData.length > 0) renderConsolidado();
+            if (contraChequeData.length > 0) renderContraCheque();
         }
-
-        // ─── Period Filter ────────────────────────────────────────────────────
-        function setPeriod(period, btn) {
-            currentPeriod = period;
-            document.querySelectorAll('.btn-period').forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-            applyFilter(period);
-            if (currentTab === 2) renderConsolidado();
-        }
-
-        function applyFilter(period) {
-            // Receitas completas (para Aba 3)
-            const receitas = allData.filter(r => r.categoria === 'receitas');
-            if (!receitas.length) { filteredData = []; return; }
-
-            // Usa a data do último lançamento como referência (em vez de hoje)
-            const lastKey = receitas.reduce((max, r) => r.data > max ? r.data : max, '');
-            const refDate = lastKey ? new Date(lastKey + 'T00:00') : new Date();
-            const curYear = refDate.getFullYear();
-
-            let base;
-            if (period === 'todos') {
-                base = receitas;
-            } else if (period === 'ano_atual') {
-                base = receitas.filter(r => r.data.startsWith(String(curYear)));
-            } else {
-                const months = parseInt(period);
-                const cutoff = new Date(refDate.getFullYear(), refDate.getMonth() - months + 1, 1);
-                const cutKey = `${cutoff.getFullYear()}-${String(cutoff.getMonth() + 1).padStart(2, '0')}`;
-                base = receitas.filter(r => r.data.substring(0, 7) >= cutKey);
-            }
-
-            // Aba 2: exclui "Outras Receitas"
-            filteredData = base.filter(r => r.subcategoria !== 'Outras Receitas');
-        }
-
-        // ─── Tab Navigation ───────────────────────────────────────────────────
-        function switchTab(tab) {
-            currentTab = tab;
-            document.querySelectorAll('.tab-btn').forEach((b, i) => {
-                b.classList.toggle('active', i + 1 === tab);
-            });
-            document.getElementById('tab1').style.display = tab === 1 ? 'block' : 'none';
-            document.getElementById('tab2').style.display = tab === 2 ? 'block' : 'none';
-            document.getElementById('tab3').style.display = tab === 3 ? 'block' : 'none';
-
-            if (tab === 1 && contraChequeData.length === 0) loadContraCheque();
-            if (tab === 3 && allData.length > 0) renderLancamentos();
-        }
-
-        // ─── Contra-cheque (Aba 1) ──────────────────────────────────────────
-        async function loadContraCheque() {
-            try {
-                const res = await fetch('./data/contra_cheque.json?v=' + Date.now());
-                contraChequeData = await res.json();
-                renderContraCheque();
-            } catch (e) { console.error(e); }
-        }
-
-        let wfIndex = 0;
-        let pieYearIdx = 0;
-        let slider = null;
-        let sortedYears = [];
 
         async function loadContraCheque() {
             try {
                 const res = await fetch('./data/contra_cheque.json?v=' + Date.now());
                 contraChequeData = await res.json();
-                
                 const years = [...new Set(contraChequeData.map(d => '20'+d.mes_referencia.split('/')[1]))].sort();
                 sortedYears = years;
                 pieYearIdx = years.length - 1;
                 wfIndex = contraChequeData.length - 1;
-
                 initSlider();
                 renderContraCheque();
             } catch (e) { console.error(e); }
@@ -712,7 +305,6 @@
             const years = sortedYears.map(y => parseInt(y));
             const min = Math.min(...years);
             const max = Math.max(...years);
-
             noUiSlider.create(sliderEl, {
                 start: [min, max],
                 connect: true,
@@ -720,16 +312,12 @@
                 range: { 'min': min, 'max': max },
                 format: { to: v => Math.round(v), from: v => v }
             });
-
             slider = sliderEl.noUiSlider;
             slider.on('slide', (values) => {
                 document.getElementById('slider-min-val').innerText = values[0];
                 document.getElementById('slider-max-val').innerText = values[1];
             });
-            slider.on('set', () => {
-                renderContraCheque();
-            });
-            
+            slider.on('set', () => { renderContraCheque(); });
             document.getElementById('slider-min-val').innerText = min;
             document.getElementById('slider-max-val').innerText = max;
         }
@@ -752,80 +340,62 @@
             const range = slider ? slider.get() : [sortedYears[0], sortedYears[sortedYears.length-1]];
             const startYear = parseInt(range[0]);
             const endYear = parseInt(range[1]);
-
             const filtered = contraChequeData.filter(d => {
                 const y = parseInt('20' + d.mes_referencia.split('/')[1]);
                 return y >= startYear && y <= endYear;
             });
-
             const current = contraChequeData[contraChequeData.length - 1];
             const last12 = contraChequeData.slice(-12);
-            
             const brutoAvg12 = last12.reduce((s, d) => s + d.salario_bruto, 0) / 12;
             const liqAvg12 = last12.reduce((s, d) => s + d.salario_liquido, 0) / 12;
             const baseAvg12 = last12.reduce((s, d) => s + d.salario_base, 0) / 12;
             const brutoTotal12 = last12.reduce((s, d) => s + d.salario_bruto, 0);
             const discAvg12 = (1 - (liqAvg12 / brutoAvg12)) * 100;
-
             const cagr = (start, end, years) => (Math.pow(end / start, 1 / years) - 1) * 100;
             const c5y = cagr(contraChequeData[Math.max(0, contraChequeData.length - 61)].salario_base, current.salario_base, 5);
             const cTotal = cagr(contraChequeData[0].salario_base, current.salario_base, contraChequeData.length / 12);
-
             document.getElementById('kpi-base-atual').innerText = brl(current.salario_base);
             document.getElementById('kpi-bruto-avg').innerText = brl(brutoAvg12);
-            document.getElementById('kpi-bruto-ratio').innerText = `${(brutoAvg12 / baseAvg12).toFixed(2)}x (Bruto/Base)`;
+            document.getElementById('kpi-bruto-ratio').innerText = `Ratio: ${(brutoAvg12 / baseAvg12).toFixed(2)}x (Bruto/Base)`;
             document.getElementById('kpi-liq-avg').innerText = brl(liqAvg12);
-            document.getElementById('kpi-liq-ratio').innerText = `${(liqAvg12 / baseAvg12).toFixed(2)}x (Líq/Base)`;
+            document.getElementById('kpi-liq-ratio').innerText = `Ratio: ${(liqAvg12 / baseAvg12).toFixed(2)}x (Líq/Base)`;
             document.getElementById('kpi-bruto-total').innerText = brl(brutoTotal12);
             document.getElementById('kpi-cagr-5y').innerText = c5y.toFixed(1) + '%';
             document.getElementById('kpi-cagr-total').innerText = `Desde 2012: ${cTotal.toFixed(1)}%`;
             document.getElementById('kpi-discount-avg').innerText = discAvg12.toFixed(1) + '%';
-
             const yearsMap = {};
             contraChequeData.forEach(d => {
                 const y = '20' + d.mes_referencia.split('/')[1];
                 if (!yearsMap[y]) yearsMap[y] = [];
                 yearsMap[y].push(d);
             });
-
             const ratioBruto = brutoAvg12 / baseAvg12;
             const ratioLiq = liqAvg12 / baseAvg12;
             const chartYears = Object.keys(yearsMap).filter(y => parseInt(y) >= startYear && parseInt(y) <= endYear).sort();
-            
             const dataBase = [];
             const dataBrutoReal = [];
             const dataBrutoProj = [];
             const dataLiqReal = [];
             const dataLiqProj = [];
             const dataDescAnual = [];
-
             chartYears.forEach(y => {
                 const yearData = yearsMap[y];
                 const isComplete = yearData.length === 12;
                 const baseProj = getProjBase(yearData, current.salario_base, isComplete);
                 dataBase.push(baseProj);
-
                 const realBruto = yearData.reduce((s, d) => s + d.salario_bruto, 0);
                 const realLiq = yearData.reduce((s, d) => s + d.salario_liquido, 0);
-                
-                // Carga Tributária Anual
                 dataDescAnual.push((1 - (realLiq / realBruto)) * 100);
-
                 if (isComplete) {
-                    dataBrutoReal.push(realBruto);
-                    dataBrutoProj.push(0);
-                    dataLiqReal.push(realLiq);
-                    dataLiqProj.push(0);
+                    dataBrutoReal.push(realBruto); dataBrutoProj.push(0);
+                    dataLiqReal.push(realLiq); dataLiqProj.push(0);
                 } else {
                     const totalProjBruto = baseProj * ratioBruto;
                     const totalProjLiq = baseProj * ratioLiq;
-                    dataBrutoReal.push(realBruto);
-                    dataBrutoProj.push(totalProjBruto - realBruto);
-                    dataLiqReal.push(realLiq);
-                    dataLiqProj.push(totalProjLiq - realLiq);
+                    dataBrutoReal.push(realBruto); dataBrutoProj.push(totalProjBruto - realBruto);
+                    dataLiqReal.push(realLiq); dataLiqProj.push(totalProjLiq - realLiq);
                 }
             });
-
             renderChart('cTotalBaseAno', 'bar', chartYears, [{ label: 'Total Base', data: dataBase, backgroundColor: '#667eea' }]);
             renderChart('cTotalBrutoAno', 'bar', chartYears, [
                 { label: 'Realizado', data: dataBrutoReal, backgroundColor: '#3498db', stack: 'a' },
@@ -835,9 +405,7 @@
                 { label: 'Realizado', data: dataLiqReal, backgroundColor: '#2ecc71', stack: 'a' },
                 { label: 'Projetado', data: dataLiqProj, backgroundColor: 'rgba(46, 204, 113, 0.4)', stack: 'a' }
             ], true);
-
             renderChart('cLinhaDescontos', 'line', chartYears, [{ label: '% Médio Anual', data: dataDescAnual, borderColor: '#f56565', tension: 0.3, fill: false }]);
-
             updatePizza();
             updateWaterfall();
         }
@@ -851,13 +419,10 @@
             const year = sortedYears[pieYearIdx];
             document.getElementById('pie-year-title').innerText = year;
             const yearData = contraChequeData.filter(d => '20' + d.mes_referencia.split('/')[1] === year);
-            
             const sum = (field) => yearData.reduce((s, d) => s + (d.descontos[field] || 0), 0);
             const totals = [sum('inss'), sum('irrf'), sum('previdencia_privada'), sum('outros')];
-
             renderChart('cPizzaDescontos', 'pie', ['INSS', 'IRRF', 'Prev. Privada', 'Outros'], [{
-                data: totals,
-                backgroundColor: ['#ed8936', '#f56565', '#4299e1', '#a0aec0']
+                data: totals, backgroundColor: ['#ed8936', '#f56565', '#4299e1', '#a0aec0']
             }]);
         }
 
@@ -865,8 +430,7 @@
             const ctx = document.getElementById(id).getContext('2d');
             if (charts[id]) charts[id].destroy();
             charts[id] = new Chart(ctx, {
-                type: type,
-                data: { labels, datasets },
+                type: type, data: { labels, datasets },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: { 
@@ -890,362 +454,34 @@
             const d = contraChequeData[wfIndex];
             document.getElementById('wf-month-title').innerText = d.mes_referencia;
             const ctx = document.getElementById('cWaterfall').getContext('2d');
-            
             const brutoExtra = d.salario_bruto - d.salario_base;
             const labels = ['Base', 'Adic. Bruto', 'INSS', 'IRRF', 'Prev. Privada', 'Outros', 'Líquido'];
-            
             const data = [
-                [0, d.salario_base],
-                [d.salario_base, d.salario_bruto],
+                [0, d.salario_base], [d.salario_base, d.salario_bruto],
                 [d.salario_bruto - d.descontos.inss, d.salario_bruto],
                 [d.salario_bruto - d.descontos.inss - d.descontos.irrf, d.salario_bruto - d.descontos.inss],
                 [d.salario_bruto - d.descontos.inss - d.descontos.irrf - d.descontos.previdencia_privada, d.salario_bruto - d.descontos.inss - d.descontos.irrf],
-                [d.salario_liquido, d.salario_liquido + d.descontos.outros],
-                [0, d.salario_liquido]
+                [d.salario_liquido, d.salario_liquido + d.descontos.outros], [0, d.salario_liquido]
             ];
-
-            const adicColor = brutoExtra >= 0 ? '#48bb78' : '#f56565';
-            const colors = ['#667eea', adicColor, '#f56565', '#f56565', '#f56565', '#f56565', '#48bb78'];
-
+            const colors = ['#667eea', brutoExtra >= 0 ? '#48bb78' : '#f56565', '#f56565', '#f56565', '#f56565', '#f56565', '#48bb78'];
             if (charts['cWaterfall']) charts['cWaterfall'].destroy();
             charts['cWaterfall'] = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: data,
-                        backgroundColor: colors,
-                        barPercentage: 0.8
-                    }]
-                },
+                type: 'bar', data: { labels, datasets: [{ data, backgroundColor: colors, barPercentage: 0.8 }] },
                 options: {
                     responsive: true, maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { display: false },
-                        tooltip: { callbacks: { label: ctx => ` ${brl(Math.abs(ctx.raw[1] - ctx.raw[0]))}` } }
-                    },
-                    scales: {
-                        y: { ticks: { callback: v => 'R$ '+(v/1000).toFixed(0)+'k' } }
-                    }
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${brl(Math.abs(ctx.raw[1] - ctx.raw[0]))}` } } },
+                    scales: { y: { ticks: { callback: v => 'R$ '+(v/1000).toFixed(0)+'k' } } }
                 }
             });
         }
 
-        // ─── Consolidado ──────────────────────────────────────────────────────
-        function renderConsolidado() {
-            if (!filteredData.length) return;
-
-            const salData = filteredData.filter(r => r.subcategoria === 'Salário');
-            const benData = filteredData.filter(r => r.subcategoria === 'Benefícios');
-
-            const monthKeys = [...new Set(filteredData.map(r => r.data.substring(0, 7)))].sort();
-            const numMonths = monthKeys.length || 1;
-
-            // ── KPI helpers ──────────────────────────────────────────────────
-            function kpiSet(data, label) {
-                const total = data.reduce((s, r) => s + Math.abs(r.valor), 0);
-                const mKeys = [...new Set(data.map(r => r.data.substring(0, 7)))];
-                const avg = mKeys.length ? total / mKeys.length : 0;
-                const mTotals = {};
-                data.forEach(r => {
-                    const k = r.data.substring(0, 7);
-                    mTotals[k] = (mTotals[k] || 0) + Math.abs(r.valor);
-                });
-                const best = Object.entries(mTotals).sort((a, b) => b[1] - a[1])[0];
-                return { total, avg, bestLabel: best ? monthLabel(best[0]) : '—', bestVal: best ? best[1] : 0 };
-            }
-
-            const sal = kpiSet(salData);
-            const ben = kpiSet(benData);
-
-            function kpiCard(emoji, label, value, sub) {
-                return `<div class="kpi-card">
-                    <span class="kpi-emoji">${emoji}</span>
-                    <span class="kpi-label">${label}</span>
-                    <span class="kpi-value">${value}</span>
-                    <span class="kpi-sub">${sub}</span>
-                </div>`;
-            }
-
-            document.getElementById('kpi-salario').innerHTML =
-                kpiCard('💰', 'Total Salário', brl(sal.total), `${[...new Set(salData.map(r=>r.data.substring(0,7)))].length} mese(s)`) +
-                kpiCard('📅', 'Média Salário', brl(sal.avg), 'por mês') +
-                kpiCard('🏆', 'Mês Maior Salário', sal.bestLabel, brl(sal.bestVal));
-
-            document.getElementById('kpi-beneficios').innerHTML =
-                kpiCard('🎁', 'Total Benefícios', brl(ben.total), `${[...new Set(benData.map(r=>r.data.substring(0,7)))].length} mese(s)`) +
-                kpiCard('📅', 'Média Benefícios', brl(ben.avg), 'por mês') +
-                kpiCard('🏆', 'Mês Maior Benefício', ben.bestLabel, brl(ben.bestVal));
-
-            const barLabels = monthKeys.map(monthLabel);
-
-            // ── Gráfico A: Salário (barras simples por origem) ────────────────
-            const salOrigens = [...new Set(salData.map(r => r.origem).filter(Boolean))];
-            const salDatasets = salOrigens.length
-                ? salOrigens.map((orig, i) => {
-                    const monthly = {};
-                    salData.filter(r => r.origem === orig).forEach(r => {
-                        const k = r.data.substring(0, 7);
-                        monthly[k] = (monthly[k] || 0) + Math.abs(r.valor);
-                    });
-                    return {
-                        label: origens[orig] || orig,
-                        data: monthKeys.map(k => monthly[k] || 0),
-                        backgroundColor: ORIGEM_PALETTE[i % ORIGEM_PALETTE.length],
-                        borderRadius: 4
-                    };
-                })
-                : [{
-                    label: 'Salário',
-                    data: (() => {
-                        const m = {};
-                        salData.forEach(r => { const k=r.data.substring(0,7); m[k]=(m[k]||0)+Math.abs(r.valor); });
-                        return monthKeys.map(k => m[k] || 0);
-                    })(),
-                    backgroundColor: '#48bb78',
-                    borderRadius: 4
-                }];
-
-            if (charts['cBarSalario']) charts['cBarSalario'].destroy();
-            charts['cBarSalario'] = new Chart(document.getElementById('cBarSalario'), {
-                type: 'bar',
-                data: { labels: barLabels, datasets: salDatasets },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } },
-                        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${brl(ctx.parsed.y)}` } }
-                    },
-                    scales: {
-                        x: { ticks: { maxRotation: 45, font: { size: 10 } } },
-                        y: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(1) + 'k' } }
-                    }
-                }
-            });
-
-            // ── Gráfico B: Benefícios (empilhado por origem) ──────────────────
-            const benOrigens = [...new Set(benData.map(r => r.origem).filter(Boolean))];
-            const benDatasets = benOrigens.map((orig, i) => {
-                const monthly = {};
-                benData.filter(r => r.origem === orig).forEach(r => {
-                    const k = r.data.substring(0, 7);
-                    monthly[k] = (monthly[k] || 0) + Math.abs(r.valor);
-                });
-                return {
-                    label: origens[orig] || orig,
-                    data: monthKeys.map(k => monthly[k] || 0),
-                    backgroundColor: ORIGEM_PALETTE[i % ORIGEM_PALETTE.length],
-                    borderRadius: 4,
-                    stack: 'ben'
-                };
-            });
-
-            if (charts['cBarBeneficios']) charts['cBarBeneficios'].destroy();
-            charts['cBarBeneficios'] = new Chart(document.getElementById('cBarBeneficios'), {
-                type: 'bar',
-                data: { labels: barLabels, datasets: benDatasets.length ? benDatasets : [{ label: 'Benefícios', data: monthKeys.map(() => 0), backgroundColor: '#667eea' }] },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } },
-                        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${brl(ctx.parsed.y)}` } }
-                    },
-                    scales: {
-                        x: { stacked: true, ticks: { maxRotation: 45, font: { size: 10 } } },
-                        y: { stacked: true, ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(1) + 'k' } }
-                    }
-                }
-            });
-
-            // ── Pizza: Salário vs Benefícios ──────────────────────────────────
-            const subcatTotals = {};
-            filteredData.forEach(r => {
-                const sub = r.subcategoria || '—';
-                subcatTotals[sub] = (subcatTotals[sub] || 0) + Math.abs(r.valor);
-            });
-            const pieEntries = Object.entries(subcatTotals).sort((a, b) => b[1] - a[1]);
-            const pieLabels = pieEntries.map(([k]) => k);
-            const pieValues = pieEntries.map(([, v]) => v);
-            const pieColors = pieLabels.map(l => {
-                const i = SUBCATS.indexOf(l);
-                return i >= 0 ? SUBCAT_COLORS[i] : '#a0aec0';
-            });
-            const pieTotal = pieValues.reduce((a, b) => a + b, 0);
-
-            if (charts['cPie']) charts['cPie'].destroy();
-            charts['cPie'] = new Chart(document.getElementById('cPie'), {
-                type: 'pie',
-                data: { labels: pieLabels, datasets: [{ data: pieValues, backgroundColor: pieColors, borderWidth: 2 }] },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } },
-                        tooltip: {
-                            callbacks: {
-                                label: ctx => {
-                                    const pct = ((ctx.parsed / pieTotal) * 100).toFixed(1);
-                                    return ` ${brl(ctx.parsed)} (${pct}%)`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // ─── Lançamentos ──────────────────────────────────────────────────────
-        function getLancFiltered() {
-            const monthVal = document.getElementById('f-month').value;
-            const subcatVal = document.getElementById('f-subcat').value;
-            const origVal = document.getElementById('f-orig').value;
-            const receitas = allData.filter(r => r.categoria === 'receitas');
-            return receitas.map((r, i) => ({ ...r, __idx: allData.indexOf(r) }))
-                .filter(r => {
-                    if (monthVal !== '__all__' && !r.data.startsWith(monthVal)) return false;
-                    if (subcatVal !== '__all__' && r.subcategoria !== subcatVal) return false;
-                    if (origVal !== '__all__' && r.origem !== origVal) return false;
-                    return true;
-                })
-                .sort((a, b) => b.data.localeCompare(a.data));
-        }
-
-        function renderLancamentos() {
-            const rows = getLancFiltered();
-            const tbody = document.getElementById('lanc-tbody');
-            if (!tbody) return;
-            const total = rows.reduce((s, r) => s + Math.abs(r.valor || 0), 0);
-            document.getElementById('lanc-summary').innerHTML =
-                `<strong>${rows.length}</strong> lançamento(s) · Total: <strong>${brl(total)}</strong>`;
-
-            tbody.innerHTML = rows.map(r => {
-                const orig = r.origem ? (origens[r.origem] || r.origem) : '';
-                return `<tr style="border-top:1px solid var(--border);">
-                    <td style="padding:9px 10px; white-space:nowrap; color:var(--subtext);">${fmtDate(r.data)}</td>
-                    <td style="padding:9px 10px; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${(r.descricao||'').replace(/"/g,'&quot;')}">${r.descricao || ''}</td>
-                    <td style="padding:9px 10px; color:var(--subtext);">${r.subcategoria || ''}</td>
-                    <td style="padding:9px 10px; color:var(--subtext);">${orig}</td>
-                    <td style="padding:9px 10px; text-align:right; font-weight:700; color:var(--green); white-space:nowrap;">+${brl(Math.abs(r.valor||0))}</td>
-                    <td style="padding:9px 10px; text-align:center; white-space:nowrap;">
-                        <button onclick="openEditModal(${r.__idx})" style="background:var(--accent); color:white; border:none; padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer; margin-right:4px;">✏️</button>
-                        <button onclick="deleteEntry(${r.__idx})" style="background:#dc2626; color:white; border:none; padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">🗑️</button>
-                    </td>
-                </tr>`;
-            }).join('');
-        }
-
-        function populateLancFilters() {
-            const receitas = allData.filter(r => r.categoria === 'receitas');
-            // Month
-            const monthSel = document.getElementById('f-month');
-            const keys = [...new Set(receitas.map(r => r.data.substring(0, 7)))].sort().reverse();
-            monthSel.innerHTML = '<option value="__all__">Todos os meses</option>';
-            keys.forEach(k => {
-                const [y, m] = k.split('-');
-                const label = new Date(parseInt(y), parseInt(m)-1, 1).toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
-                const opt = document.createElement('option');
-                opt.value = k;
-                opt.textContent = label.charAt(0).toUpperCase() + label.slice(1);
-                monthSel.appendChild(opt);
-            });
-            // Subcat
-            const subcatSel = document.getElementById('f-subcat');
-            subcatSel.innerHTML = '<option value="__all__">Todas as subcategorias</option>';
-            const subs = [...new Set(receitas.map(r => r.subcategoria).filter(Boolean))].sort();
-            subs.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s; opt.textContent = s;
-                subcatSel.appendChild(opt);
-            });
-            // Origin
-            const origSel = document.getElementById('f-orig');
-            origSel.innerHTML = '<option value="__all__">Todas as origens</option>';
-            Object.entries(origens).forEach(([id, nome]) => {
-                const opt = document.createElement('option');
-                opt.value = id; opt.textContent = nome;
-                origSel.appendChild(opt);
-            });
-        }
-
-        // ─── Modal ────────────────────────────────────────────────────────────
-        function openEditModal(idx) {
-            editingIndex = idx;
-            const r = allData[idx];
-            document.getElementById('modal-title').textContent = '✏️ Editar Lançamento';
-            document.getElementById('m-data').value = r.data || '';
-            document.getElementById('m-desc').value = r.descricao || '';
-            document.getElementById('m-subcat').value = r.subcategoria || '';
-            document.getElementById('m-valor').value = r.valor !== undefined ? Math.abs(r.valor) : '';
-            document.getElementById('m-orig').value = r.origem || '';
-            document.getElementById('modal-error').style.display = 'none';
-            document.getElementById('ed-modal').style.display = 'flex';
-        }
-
-        function closeModal() { document.getElementById('ed-modal').style.display = 'none'; }
-
-        function saveModal() {
-            const errEl = document.getElementById('modal-error');
-            const data = document.getElementById('m-data').value;
-            const desc = document.getElementById('m-desc').value.trim();
-            const subcat = document.getElementById('m-subcat').value;
-            const valorStr = document.getElementById('m-valor').value;
-            const orig = document.getElementById('m-orig').value;
-
-            if (!data || !desc || !valorStr) {
-                errEl.textContent = '⚠️ Preencha Data, Descrição e Valor.';
-                errEl.style.display = 'block';
-                return;
-            }
-            const valor = Math.abs(parseFloat(valorStr));
-            if (isNaN(valor)) {
-                errEl.textContent = '⚠️ Valor inválido.';
-                errEl.style.display = 'block';
-                return;
-            }
-            allData[editingIndex] = { ...allData[editingIndex], descricao: desc, data, subcategoria: subcat, valor, origem: orig, categoria: 'receitas' };
-            closeModal();
-            applyFilter(currentPeriod);
-            if (currentTab === 2) renderConsolidado();
-            if (currentTab === 3) renderLancamentos();
-        }
-
-        function deleteEntry(idx) {
-            if (!confirm('Excluir este lançamento?')) return;
-            allData.splice(idx, 1);
-            applyFilter(currentPeriod);
-            if (currentTab === 2) renderConsolidado();
-            if (currentTab === 3) renderLancamentos();
-        }
-
-        // ─── Init ─────────────────────────────────────────────────────────────
         async function init() {
             const saved = localStorage.getItem('theme');
             if (saved === 'dark') {
                 document.body.classList.add('dark-mode');
                 document.getElementById('theme-toggle').textContent = '☀️';
-                Chart.defaults.color = '#cbd5e0';
-                Chart.defaults.borderColor = '#4a5568';
             }
-
-            try {
-                const res = await fetch('./data/contra_cheque.json?v=' + Date.now());
-                contraChequeData = await res.json();
-                
-                const years = [...new Set(contraChequeData.map(d => '20'+d.mes_referencia.split('/')[1]))].sort();
-                sortedYears = years;
-                pieYearIdx = years.length - 1;
-                wfIndex = contraChequeData.length - 1;
-
-                initSlider();
-                renderContraCheque();
-
-                const lastDate = contraChequeData[contraChequeData.length - 1].mes_referencia;
-                const el = document.getElementById('last-update');
-                el.textContent = `Última referência: ${lastDate}`;
-                el.style.display = 'block';
-
-            } catch(err) {
-                console.error(err);
-            }
+            loadContraCheque();
         }
         init();
     </script>

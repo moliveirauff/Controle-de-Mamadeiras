@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍼 BI do Matheus</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f3f4f6; margin: 0; padding: 10px; padding-bottom: 60px; color: #1f2937; transition: background-color 0.3s, color 0.3s; }
+        body.dark-mode { background-color: #111827; color: #f3f4f6; }
+        h1 { text-align: center; font-size: 20px; margin: 15px 0 5px 0; font-weight: 800; color: #111827; }
+        body.dark-mode h1 { color: #f3f4f6; }
+        .subtitle { text-align: center; font-size: 12px; color: #6b7280; margin-bottom: 20px; }
+        body.dark-mode .subtitle { color: #9ca3af; }
+        .card { background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); padding: 15px; margin-bottom: 24px; border: 1px solid #e5e7eb; transition: background-color 0.3s, border-color 0.3s; }
+        body.dark-mode .card { background-color: #1f2937; border-color: #374151; }
+        .card-header { font-size: 15px; font-weight: 700; color: #374151; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        body.dark-mode .card-header { color: #e5e7eb; }
+        .kpi-row { display: flex; justify-content: space-between; margin-bottom: 0; }
+        .kpi-box { text-align: center; flex: 1; border-right: 1px solid #f3f4f6; }
+        body.dark-mode .kpi-box { border-right: 1px solid #374151; }
+        .kpi-box:last-child { border-right: none; }
+        .kpi-val { font-size: 22px; font-weight: 800; color: #2563eb; }
+        body.dark-mode .kpi-val { color: #60a5fa; }
+        .kpi-lbl { font-size: 10px; text-transform: uppercase; color: #9ca3af; font-weight: 600; margin-top: 2px; }
+        body.dark-mode .kpi-lbl { color: #9ca3af; }
+        .filter-group { display: flex; gap: 5px; }
+        .btn-filter { background: #e5e7eb; border: none; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; color: #4b5563; cursor: pointer; transition: all 0.2s; }
+        body.dark-mode .btn-filter { background: #374151; color: #d1d5db; }
+        .btn-filter.active { background: #2563eb; color: white; }
+        body.dark-mode .btn-filter.active { background: #3b82f6; color: white; }
+        .chart-container { position: relative; height: 300px; width: 100%; }
+        #loading { text-align: center; padding: 50px; color: #6b7280; }
+        #theme-toggle { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer; }
+        @media (min-width: 768px) { body { max-width: 900px; margin: 0 auto; } .chart-container { height: 380px; } }
+    </style>
+</head>
+<body>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <a href="index.html" style="text-decoration: none; color: #3498db; font-size: 0.9rem; margin-left: 10px; display: inline-block;">← Voltar para Início</a>
+    <h1>🍼 BI do Matheus</h1>
+    <div class="subtitle" id="last-update">Carregando dados...</div>
+
+    <div id="loading">⏳ Conectando à planilha...</div>
+
+    <div id="dashboard" style="display:none;">
+        <div class="card">
+            <div class="kpi-row">
+                <div class="kpi-box"><div class="kpi-val" id="kpi-vol">--</div><div class="kpi-lbl" id="lbl-vol">Vol. Recente</div></div>
+                <div class="kpi-box"><div class="kpi-val" id="kpi-avg">--</div><div class="kpi-lbl">Média (14d)</div></div>
+                <div class="kpi-box"><div class="kpi-val" id="kpi-records">--</div><div class="kpi-lbl">Registros</div></div>
+            </div>
+        </div>
+
+        <!-- 1. Volume Total -->
+        <div class="card">
+            <div class="card-header">
+                <span>📊 Volume Diário (ml)</span>
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateFilter('total', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('total', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('total', 999, this)">Tudo</button>
+                </div>
+            </div>
+            <div class="chart-container"><canvas id="cTotal"></canvas></div>
+        </div>
+
+        <!-- 2a. Média por Mamada com Dispersão -->
+        <div class="card">
+            <div class="card-header">
+                <span>📈 Média/Mamada vs Individual</span>
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateFilter('avgOnly', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('avgOnly', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('avgOnly', 999, this)">Tudo</button>
+                </div>
+            </div>
+            <div class="chart-container"><canvas id="cAvgOnly"></canvas></div>
+        </div>
+
+        <!-- 2b. Quantidade de Mamadas -->
+        <div class="card">
+            <div class="card-header">
+                <span>🔢 Qtd de Mamadas no Dia</span>
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateFilter('countOnly', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('countOnly', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('countOnly', 999, this)">Tudo</button>
+                </div>
+            </div>
+            <div class="chart-container"><canvas id="cCountOnly"></canvas></div>
+        </div>
+
+        <!-- 3. Histograma -->
+        <div class="card">
+            <div class="card-header">
+                <span>🔔 Frequência de Volume</span>
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateFilter('hist', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('hist', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('hist', 999, this)">Tudo</button>
+                </div>
+            </div>
+            <div class="chart-container"><canvas id="cHist"></canvas></div>
+        </div>
+
+        <!-- 4. Tendência Horária -->
+        <div class="card">
+            <div class="card-header">
+                <span>🕐 Tendência Horária (2h)</span>
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateFilter('hourly', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('hourly', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('hourly', 999, this)">Tudo</button>
+                </div>
+            </div>
+            <div class="chart-container"><canvas id="cHourly"></canvas></div>
+        </div>
+
+        <!-- 5. Intervalo -->
+        <div class="card">
+            <div class="card-header">
+                <span>⏳ Intervalo vs Volume</span>
+                <div class="filter-group">
+                    <button class="btn-filter" onclick="updateFilter('interval', 14, this)">14D</button>
+                    <button class="btn-filter" onclick="updateFilter('interval', 30, this)">30D</button>
+                    <button class="btn-filter active" onclick="updateFilter('interval', 999, this)">Tudo</button>
+                </div>
+            </div>
+            <div class="chart-container"><canvas id="cInterval"></canvas></div>
+        </div>
+    </div>
+
+    <script>
+        const LOCAL_DATA_URL = './data/mamadas.json';
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.getElementById('theme-toggle');
+            if (document.body.classList.contains('dark-mode')) {
+                btn.innerHTML = '☀️';
+                Chart.defaults.color = '#e5e7eb';
+                Chart.defaults.borderColor = '#374151';
+            } else {
+                btn.innerHTML = '🌙';
+                Chart.defaults.color = '#666';
+                Chart.defaults.borderColor = '#e5e7eb';
+            }
+            if(chartTotal) chartTotal.update();
+            if(chartAvgOnly) chartAvgOnly.update();
+            if(chartCountOnly) chartCountOnly.update();
+            if(chartHist) chartHist.update();
+            if(chartHourly) chartHourly.update();
+            if(chartInterval) chartInterval.update();
+        }
+
+        let processedData = [];
+        let dailyMap = {};
+        let lastDataDate;
+
+        // Carregar JSON local em vez de CSV do Google Sheets
+        fetch(LOCAL_DATA_URL + '?v=' + Date.now())
+            .then(response => response.json())
+            .then(data => {
+                processAndRender(data);
+            })
+            .catch(err => {
+                document.getElementById('loading').innerHTML = "❌ Erro ao carregar dados locais.<br>Verifique se o arquivo existe.";
+                console.error(err);
+            });
+
+        function processAndRender(jsonData) {
+            processedData = jsonData
+                .filter(row => row.Data && row.Hora && row['Volume (ml)'])
+                .map(row => {
+                    let dStr = row.Data;
+                    if(dStr.includes('/')) {
+                        const parts = dStr.split('/');
+                        dStr = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                    }
+                    return {
+                        d: dStr, 
+                        t: row.Hora, 
+                        v: parseInt(row['Volume (ml)'])
+                    };
+                });
+
+            processedData = processedData
+                .map(r => ({ ...r, dateObj: new Date(r.d + "T" + r.t), dayStr: r.d.split('-').reverse().slice(0,2).join('/') }))
+                .sort((a,b) => a.dateObj - b.dateObj);
+
+            if (processedData.length > 0) {
+                lastDataDate = processedData[processedData.length-1].dateObj;
+                document.getElementById('last-update').innerText = "Dados até: " + processedData[processedData.length-1].d.split('-').reverse().join('/');
+            }
+            
+            dailyMap = {};
+            processedData.forEach(r => {
+                if(!dailyMap[r.d]) dailyMap[r.d] = { vol:0, count:0, list: [] };
+                dailyMap[r.d].vol += r.v;
+                dailyMap[r.d].count++;
+                dailyMap[r.d].list.push(r.v);
+            });
+
+            for(let i=1; i<processedData.length; i++) {
+                const diffMs = processedData[i].dateObj - processedData[i-1].dateObj;
+                processedData[i].intervalHours = (diffMs / 60000) / 60;
+            }
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            
+            initCharts();
+        }
+
+        function getFilteredData(daysLimit) {
+            if (daysLimit > 100) return processedData;
+            const limitTime = new Date(lastDataDate);
+            limitTime.setDate(limitTime.getDate() - daysLimit);
+            limitTime.setHours(0,0,0,0);
+            return processedData.filter(d => d.dateObj >= limitTime);
+        }
+
+        function calculateMovingAverage(data, windowSize) {
+            let result = [];
+            for (let i = 0; i < data.length; i++) {
+                let start = Math.max(0, i - windowSize + 1);
+                let subset = data.slice(start, i + 1);
+                let sum = subset.reduce((a, b) => a + b, 0);
+                result.push(Math.round(sum / subset.length));
+            }
+            return result;
+        }
+
+        function calculatePeriodDailyAvg(data) {
+            const dMap = {};
+            data.forEach(r => {
+                if(!dMap[r.d]) dMap[r.d] = 0;
+                dMap[r.d] += r.v;
+            });
+            const days = Object.keys(dMap).length;
+            const total = Object.values(dMap).reduce((a,b) => a+b, 0);
+            return days ? (total/days) : 0;
+        }
+
+        let chartTotal, chartAvgOnly, chartCountOnly, chartHist, chartHourly, chartInterval;
+
+        function initCharts() {
+            const lastDataObj = processedData[processedData.length-1];
+            const lastDataDateStr = lastDataObj.d;
+            const now = new Date();
+            const last = new Date(lastDataDateStr + "T12:00:00");
+            const isSameDay = (now.getDate() === last.getDate() && now.getMonth() === last.getMonth());
+
+            document.getElementById('kpi-vol').innerText = dailyMap[lastDataDateStr].vol + " ml";
+            const kpiLabel = document.getElementById('lbl-vol');
+            if(isSameDay) {
+                kpiLabel.innerText = "Vol. Hoje (Parcial)";
+                kpiLabel.style.color = "#2563eb";
+            } else {
+                kpiLabel.innerText = "Vol. Ontem (Fechado)";
+                kpiLabel.style.color = "#9ca3af";
+            }
+
+            const avg14d = Math.round(calculatePeriodDailyAvg(getFilteredData(14)));
+            document.getElementById('kpi-avg').innerText = avg14d + " ml";
+            document.getElementById('kpi-records').innerText = processedData.length;
+
+            renderTotal(999);
+            renderAvgOnly(999);
+            renderCountOnly(999);
+            renderHist(999);
+            renderHourly(999);
+            renderInterval(999);
+        }
+
+        function renderTotal(limit) {
+            const data = getFilteredData(limit);
+            const dMap = {};
+            data.forEach(r => {
+                if(!dMap[r.d]) dMap[r.d] = 0;
+                dMap[r.d] += r.v;
+            });
+            const keys = Object.keys(dMap).sort();
+            const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+            const values = keys.map(k => dMap[k]);
+            const movingAvg = calculateMovingAverage(values, 5);
+
+            if(chartTotal) chartTotal.destroy();
+            chartTotal = new Chart(document.getElementById('cTotal'), {
+                type: 'bar',
+                data: { 
+                    labels: labels, 
+                    datasets: [
+                        { label: 'Total', data: values, backgroundColor: '#3b82f6', borderRadius: 4, order: 2 },
+                        { label: 'Tendência (5d)', data: movingAvg, borderColor: '#ef4444', borderWidth: 2, type: 'line', pointRadius: 0, tension: 0.3, order: 1 }
+                    ] 
+                },
+                options: { maintainAspectRatio: false, plugins: {legend:{display:false}}, scales: { x: {grid:{display:false}} } }
+            });
+        }
+
+        function renderAvgOnly(limit) {
+            const data = getFilteredData(limit);
+            const dMap = {};
+            data.forEach(r => {
+                if(!dMap[r.d]) dMap[r.d] = {vol:0, count:0};
+                dMap[r.d].vol += r.v;
+                dMap[r.d].count++;
+            });
+            const keys = Object.keys(dMap).sort();
+            const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+            const avgs = keys.map(k => Math.round(dMap[k].vol / dMap[k].count));
+
+            const scatterPts = data.map(r => ({
+                x: r.dayStr,
+                y: r.v
+            }));
+
+            if(chartAvgOnly) chartAvgOnly.destroy();
+            chartAvgOnly = new Chart(document.getElementById('cAvgOnly'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: 'Média (ml)', data: avgs, borderColor: '#10b981', backgroundColor: '#10b981', borderWidth: 3, pointRadius: 0, tension: 0.4, fill: false, order: 1 },
+                        { label: 'Individual', data: scatterPts, backgroundColor: 'rgba(156, 163, 175, 0.4)', pointRadius: 3, type: 'scatter', order: 2 }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: { 
+                        x: { type: 'category', labels: labels, grid:{display:false} }, 
+                        y: { title: {display:true, text:'Volume ml'} } 
+                    },
+                    plugins: { legend: {display: false} }
+                }
+            });
+        }
+
+        function renderCountOnly(limit) {
+            const data = getFilteredData(limit);
+            const dMap = {};
+            data.forEach(r => {
+                if(!dMap[r.d]) dMap[r.d] = 0;
+                dMap[r.d]++;
+            });
+            const keys = Object.keys(dMap).sort();
+            const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+            const values = keys.map(k => dMap[k]);
+
+            if(chartCountOnly) chartCountOnly.destroy();
+            chartCountOnly = new Chart(document.getElementById('cCountOnly'), {
+                type: 'bar',
+                data: { 
+                    labels: labels, 
+                    datasets: [{ label: 'Qtd Mamadas', data: values, backgroundColor: '#f59e0b', borderRadius: 4 }] 
+                },
+                options: { maintainAspectRatio: false, plugins: {legend:{display:false}}, scales: { x: {grid:{display:false}}, y: {beginAtZero: true, ticks: {stepSize: 1}} } }
+            });
+        }
+
+        function renderHist(limit) {
+            const data = getFilteredData(limit).filter(r => r.v >= 10);
+            const bins = {};
+            data.forEach(r => {
+                let binFloor = Math.floor((Math.min(r.v, 150) - 0.1 - 10) / 20) * 20 + 10;
+                const label = `${binFloor}-${binFloor+20}`;
+                bins[label] = (bins[label] || 0) + 1;
+            });
+            const sortedKeys = Object.keys(bins).sort((a,b) => parseInt(a) - parseInt(b));
+            
+            if(chartHist) chartHist.destroy();
+            chartHist = new Chart(document.getElementById('cHist'), {
+                type: 'bar',
+                data: {
+                    labels: sortedKeys,
+                    datasets: [{ label: 'Frequência', data: sortedKeys.map(k => bins[k]), backgroundColor: '#8b5cf6', borderRadius: 4 }]
+                },
+                options: { maintainAspectRatio: false, plugins: {legend:{display:false}}, scales: {x:{grid:{display:false}}, y:{beginAtZero:true}} }
+            });
+        }
+
+        function renderHourly(limit) {
+            const data = getFilteredData(limit);
+            const bins = {};
+            for(let i=0; i<24; i+=2) bins[`${i}h-${i+2}h`] = [];
+
+            data.forEach(r => {
+                const h = r.dateObj.getHours();
+                const binFloor = Math.floor(h / 2) * 2;
+                bins[`${binFloor}h-${binFloor+2}h`].push(r.v);
+            });
+
+            const labels = Object.keys(bins);
+            const avgs = labels.map(k => {
+                const vols = bins[k];
+                return vols.length === 0 ? 0 : Math.round(vols.reduce((a,b)=>a+b,0) / vols.length);
+            });
+
+            const scatterPts = data.map(r => ({
+                x: r.dateObj.getHours() + (r.dateObj.getMinutes()/60),
+                y: r.v
+            }));
+
+            if(chartHourly) chartHourly.destroy();
+            chartHourly = new Chart(document.getElementById('cHourly'), {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        { type: 'line', label: 'Média', data: avgs.map((v, i) => ({x: i*2 + 1, y: v})), borderColor: '#ec4899', borderWidth: 3, pointRadius: 0, tension: 0.4 },
+                        { label: 'Mamada', data: scatterPts, backgroundColor: 'rgba(156, 163, 175, 0.4)', pointRadius: 3 }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { type: 'linear', min: 0, max: 24, title: {display:true, text:'Hora do Dia'}, ticks: {stepSize: 2} },
+                        y: { title: {display:true, text:'Volume'} }
+                    },
+                    plugins: { legend: {display: false} }
+                }
+            });
+        }
+
+        function renderInterval(limit) {
+            const data = getFilteredData(limit).filter(r => r.intervalHours);
+            
+            // 1. Calcular Média por Bin de 0.5h (30 min)
+            const bins = {};
+            data.forEach(r => {
+                const bin = Math.round(r.intervalHours * 2) / 2;
+                if(!bins[bin]) bins[bin] = {sum:0, count:0};
+                bins[bin].sum += r.v;
+                bins[bin].count++;
+            });
+
+            const avgData = Object.keys(bins).sort((a,b)=>parseFloat(a)-parseFloat(b)).map(k => ({
+                x: parseFloat(k),
+                y: Math.round(bins[k].sum / bins[k].count)
+            }));
+
+            // 2. Pontos Individuais (Scatter)
+            const scatterPts = data.map(r => ({ x: r.intervalHours, y: r.v }));
+
+            if(chartInterval) chartInterval.destroy();
+            chartInterval = new Chart(document.getElementById('cInterval'), {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: 'Média (30min)',
+                            data: avgData,
+                            borderColor: '#3b82f6', // Azul (Padrão)
+                            borderWidth: 3,
+                            pointRadius: 0,
+                            tension: 0.4,
+                            order: 1
+                        },
+                        {
+                            label: 'Mamada',
+                            data: scatterPts,
+                            backgroundColor: 'rgba(156, 163, 175, 0.4)', // Cinza suave (Igual dispersão)
+                            pointRadius: 3,
+                            order: 2
+                        }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { type: 'linear', title: {display:true, text:'Intervalo (Horas)'}, ticks: {stepSize: 0.5} },
+                        y: { title: {display:true, text:'Volume (ml)'} }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    if(ctx.dataset.type === 'line') return `Média: ${ctx.raw.y}ml`;
+                                    return `${ctx.raw.y}ml`;
+                                }
+                            }
+                        },
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        window.updateFilter = function(chartName, days, btn) {
+            const parent = btn.parentNode;
+            parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if(chartName === 'total') renderTotal(days);
+            if(chartName === 'avgOnly') renderAvgOnly(days);
+            if(chartName === 'countOnly') renderCountOnly(days);
+            if(chartName === 'hist') renderHist(days);
+            if(chartName === 'hourly') renderHourly(days);
+            if(chartName === 'interval') renderInterval(days);
+        };
+
+    </script>
+</body>
+</html>
+<!-- Last build: Fri Feb  6 23:50:42 UTC 2026 -->

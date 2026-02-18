@@ -1,0 +1,14 @@
+{
+  "orcamento_mensal": {
+    "moradia": 9476.40,
+    "alimentacao": 5083.06,
+    "compras": 5886.82,
+    "lazer": 2713.78,
+    "saude": 2161.64,
+    "transporte": 2544.46,
+    "despesas_pessoais": 1303.69,
+    "educacao": 702.37,
+    "outros": 136.95
+  },
+  "nota": "Valores baseados na média mensal real (Jan/2023-Dez/2025). Ajuste conforme necessário."
+}
