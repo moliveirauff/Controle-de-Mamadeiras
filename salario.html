@@ -299,58 +299,78 @@
         .cc-kpi-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 20px;
         }
-        @media (max-width: 768px) { .cc-kpi-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 480px) { .cc-kpi-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 599px) { .cc-kpi-grid { grid-template-columns: 1fr 1fr; } }
         
         .cc-kpi-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px 12px;
+            border-radius: 12px;
+            padding: 12px 8px;
             text-align: center;
+            box-shadow: var(--shadow);
         }
-        .cc-kpi-label { font-size: 0.65rem; font-weight: 800; color: var(--subtext); text-transform: uppercase; margin-bottom: 6px; display: block; }
-        .cc-kpi-value { font-size: 1.15rem; font-weight: 800; color: var(--text); }
-        .cc-kpi-ratio { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; font-weight: 600; }
+        .cc-kpi-label { font-size: 0.6rem; font-weight: 800; color: var(--subtext); text-transform: uppercase; margin-bottom: 4px; display: block; letter-spacing: 0.05em; }
+        .cc-kpi-value { font-size: 1.05rem; font-weight: 800; color: var(--text); line-height: 1.2; }
+        .cc-kpi-ratio { font-size: 0.65rem; color: var(--text-muted); margin-top: 2px; font-weight: 600; }
         
         .slider-section {
             background: var(--card-bg);
-            padding: 30px 25px 20px 25px;
-            border-radius: 14px;
+            padding: 25px 25px 15px 25px;
+            border-radius: 12px;
             margin-bottom: 20px;
             border: 1px solid var(--border);
+            box-shadow: var(--shadow);
         }
-        #range-slider { height: 8px; }
+        #range-slider { height: 6px; border: none; background: var(--border); }
         .noUi-connect { background: var(--accent); }
-        .noUi-handle { width: 18px; height: 18px; border-radius: 50%; right: -9px; top: -6px; background: var(--accent); box-shadow: none; border: 2px solid #fff; }
+        .noUi-handle { 
+            width: 22px !important; height: 22px !important; 
+            border-radius: 50% !important; 
+            right: -11px !important; top: -9px !important; 
+            background: var(--accent) !important; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important; 
+            border: 3px solid #fff !important; 
+            cursor: pointer;
+        }
         .noUi-handle:before, .noUi-handle:after { display: none; }
-        .slider-labels { display: flex; justify-content: space-between; margin-top: 12px; font-size: 0.75rem; font-weight: 700; color: var(--subtext); }
+        .slider-labels { display: flex; justify-content: space-between; margin-top: 15px; font-size: 0.85rem; font-weight: 800; color: var(--accent); }
 
-        .waterfall-header {
+        .chart-header-center {
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 15px;
+            display: block;
+            width: 100%;
+        }
+
+        .nav-header-center {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 15px;
+            gap: 15px;
+            margin-bottom: 10px;
         }
         .nav-btn {
             background: var(--border);
             border: none;
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
+            color: var(--text);
         }
         .nav-btn:hover { background: var(--accent); color: white; }
-        .month-title { font-size: 1.1rem; font-weight: 800; color: var(--text); min-width: 120px; text-align: center; }
+        .nav-title { font-size: 1rem; font-weight: 800; color: var(--text); min-width: 110px; text-align: center; }
     </style>
 </head>
 <body>
@@ -370,16 +390,16 @@
     <div id="tab1" style="display:none;">
         <div class="cc-kpi-grid">
             <div class="cc-kpi-card">
-                <span class="cc-kpi-label">Salário Base Atual</span>
+                <span class="cc-kpi-label">Base Atual</span>
                 <span class="cc-kpi-value" id="kpi-base-atual">-</span>
             </div>
             <div class="cc-kpi-card">
-                <span class="cc-kpi-label">Bruto Médio (12m)</span>
+                <span class="cc-kpi-label">Bruto Médio</span>
                 <span class="cc-kpi-value" id="kpi-bruto-avg">-</span>
                 <div class="cc-kpi-ratio" id="kpi-bruto-ratio">-</div>
             </div>
             <div class="cc-kpi-card">
-                <span class="cc-kpi-label">Líquido Médio (12m)</span>
+                <span class="cc-kpi-label">Líquido Médio</span>
                 <span class="cc-kpi-value" id="kpi-liq-avg">-</span>
                 <div class="cc-kpi-ratio" id="kpi-liq-ratio">-</div>
             </div>
@@ -393,7 +413,7 @@
                 <div class="cc-kpi-ratio" id="kpi-cagr-total">-</div>
             </div>
             <div class="cc-kpi-card">
-                <span class="cc-kpi-label">Desconto Médio (12m)</span>
+                <span class="cc-kpi-label">Desconto Médio</span>
                 <span class="cc-kpi-value" id="kpi-discount-avg">-</span>
             </div>
         </div>
@@ -407,37 +427,42 @@
         </div>
 
         <div class="card">
-            <div class="card-header"><span>📊 Total Salário Base / Ano (Méd x 13,3)</span></div>
+            <span class="chart-header-center">Total Salário Base por Ano</span>
             <div class="chart-container"><canvas id="cTotalBaseAno"></canvas></div>
         </div>
 
         <div class="grid-2">
             <div class="card">
-                <div class="card-header"><span>💰 Total Bruto por Ano (Real + Proj)</span></div>
+                <span class="chart-header-center">Total Bruto por Ano</span>
                 <div class="chart-container"><canvas id="cTotalBrutoAno"></canvas></div>
             </div>
             <div class="card">
-                <div class="card-header"><span>💸 Total Líquido por Ano (Real + Proj)</span></div>
+                <span class="chart-header-center">Total Líquido por Ano</span>
                 <div class="chart-container"><canvas id="cTotalLiqAno"></canvas></div>
             </div>
         </div>
 
         <div class="grid-2">
             <div class="card">
-                <div class="card-header"><span>📈 Carga de Descontos (% do Bruto)</span></div>
+                <span class="chart-header-center">Carga de Descontos Anual</span>
                 <div class="chart-container"><canvas id="cLinhaDescontos"></canvas></div>
             </div>
             <div class="card">
-                <div class="card-header"><span id="pie-desc-title">🥧 Composição de Descontos</span></div>
+                <span class="chart-header-center">Composição de Descontos</span>
+                <div class="nav-header-center">
+                    <button class="nav-btn" onclick="navPizza(-1)">❮</button>
+                    <div class="nav-title" id="pie-year-title">-</div>
+                    <button class="nav-btn" onclick="navPizza(1)">❯</button>
+                </div>
                 <div class="chart-container"><canvas id="cPizzaDescontos"></canvas></div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header"><span>🌊 Waterfall Mensal Detalhado</span></div>
-            <div class="waterfall-header">
+            <span class="chart-header-center">Waterfall Mensal Detalhado</span>
+            <div class="nav-header-center">
                 <button class="nav-btn" onclick="navWaterfall(-1)">❮</button>
-                <div class="month-title" id="wf-month-title">-</div>
+                <div class="nav-title" id="wf-month-title">-</div>
                 <button class="nav-btn" onclick="navWaterfall(1)">❯</button>
             </div>
             <div class="chart-container"><canvas id="cWaterfall"></canvas></div>
@@ -669,12 +694,20 @@
         }
 
         let wfIndex = 0;
+        let pieYearIdx = 0;
         let slider = null;
+        let sortedYears = [];
 
         async function loadContraCheque() {
             try {
                 const res = await fetch('./data/contra_cheque.json?v=' + Date.now());
                 contraChequeData = await res.json();
+                
+                const years = [...new Set(contraChequeData.map(d => '20'+d.mes_referencia.split('/')[1]))].sort();
+                sortedYears = years;
+                pieYearIdx = years.length - 1;
+                wfIndex = contraChequeData.length - 1;
+
                 initSlider();
                 renderContraCheque();
             } catch (e) { console.error(e); }
@@ -683,7 +716,7 @@
         function initSlider() {
             if (slider) return;
             const sliderEl = document.getElementById('range-slider');
-            const years = [...new Set(contraChequeData.map(d => d.mes_referencia.split('/')[1]))].map(y => parseInt('20'+y));
+            const years = sortedYears.map(y => parseInt(y));
             const min = Math.min(...years);
             const max = Math.max(...years);
 
@@ -696,36 +729,36 @@
             });
 
             slider = sliderEl.noUiSlider;
-            slider.on('update', (values) => {
+            slider.on('slide', (values) => {
                 document.getElementById('slider-min-val').innerText = values[0];
                 document.getElementById('slider-max-val').innerText = values[1];
+            });
+            slider.on('set', () => {
                 renderContraCheque();
             });
+            
+            document.getElementById('slider-min-val').innerText = min;
+            document.getElementById('slider-max-val').innerText = max;
         }
 
         function getProjBase(yearData, curBase, isComplete) {
             if (isComplete) return yearData.reduce((s, d) => s + d.salario_base, 0);
-            
-            // Lógica: Média x 13,3. Se incompleto, projetar.
-            // Ajuste 5% em Outubro se base não variou no ano.
             const months = yearData.length;
             const hasVariation = new Set(yearData.map(d => d.salario_base)).size > 1;
             let projectedTotal = yearData.reduce((s, d) => s + d.salario_base, 0);
-            
             for (let m = months + 1; m <= 12; m++) {
                 let base = curBase;
                 if (!hasVariation && m >= 10) base = curBase * 1.05;
                 projectedTotal += base;
             }
-            // Add 13o e férias (aproximadamente 1.3 meses extras)
             return projectedTotal + (curBase * 1.3);
         }
 
         function renderContraCheque() {
             if (!contraChequeData.length) return;
-            const range = slider ? slider.get() : null;
-            const startYear = range ? parseInt(range[0]) : 2012;
-            const endYear = range ? parseInt(range[1]) : 2026;
+            const range = slider ? slider.get() : [sortedYears[0], sortedYears[sortedYears.length-1]];
+            const startYear = parseInt(range[0]);
+            const endYear = parseInt(range[1]);
 
             const filtered = contraChequeData.filter(d => {
                 const y = parseInt('20' + d.mes_referencia.split('/')[1]);
@@ -735,29 +768,26 @@
             const current = contraChequeData[contraChequeData.length - 1];
             const last12 = contraChequeData.slice(-12);
             
-            // KPIs (Sempre baseados nos últimos 12 meses reais para Bruto/Liq/Desc)
             const brutoAvg12 = last12.reduce((s, d) => s + d.salario_bruto, 0) / 12;
             const liqAvg12 = last12.reduce((s, d) => s + d.salario_liquido, 0) / 12;
             const baseAvg12 = last12.reduce((s, d) => s + d.salario_base, 0) / 12;
             const brutoTotal12 = last12.reduce((s, d) => s + d.salario_bruto, 0);
             const discAvg12 = (1 - (liqAvg12 / brutoAvg12)) * 100;
 
-            // CAGR 5y e Total
             const cagr = (start, end, years) => (Math.pow(end / start, 1 / years) - 1) * 100;
             const c5y = cagr(contraChequeData[Math.max(0, contraChequeData.length - 61)].salario_base, current.salario_base, 5);
             const cTotal = cagr(contraChequeData[0].salario_base, current.salario_base, contraChequeData.length / 12);
 
             document.getElementById('kpi-base-atual').innerText = brl(current.salario_base);
             document.getElementById('kpi-bruto-avg').innerText = brl(brutoAvg12);
-            document.getElementById('kpi-bruto-ratio').innerText = `Ratio: ${(brutoAvg12 / baseAvg12).toFixed(2)}x (Bruto/Base)`;
+            document.getElementById('kpi-bruto-ratio').innerText = `${(brutoAvg12 / baseAvg12).toFixed(2)}x (Bruto/Base)`;
             document.getElementById('kpi-liq-avg').innerText = brl(liqAvg12);
-            document.getElementById('kpi-liq-ratio').innerText = `Ratio: ${(liqAvg12 / baseAvg12).toFixed(2)}x (Líq/Base)`;
+            document.getElementById('kpi-liq-ratio').innerText = `${(liqAvg12 / baseAvg12).toFixed(2)}x (Líq/Base)`;
             document.getElementById('kpi-bruto-total').innerText = brl(brutoTotal12);
             document.getElementById('kpi-cagr-5y').innerText = c5y.toFixed(1) + '%';
-            document.getElementById('kpi-cagr-total').innerText = `Total: ${cTotal.toFixed(1)}% (desde 2012)`;
+            document.getElementById('kpi-cagr-total').innerText = `Desde 2012: ${cTotal.toFixed(1)}%`;
             document.getElementById('kpi-discount-avg').innerText = discAvg12.toFixed(1) + '%';
 
-            // Agrupamento por Ano
             const yearsMap = {};
             contraChequeData.forEach(d => {
                 const y = '20' + d.mes_referencia.split('/')[1];
@@ -767,7 +797,6 @@
 
             const ratioBruto = brutoAvg12 / baseAvg12;
             const ratioLiq = liqAvg12 / baseAvg12;
-            
             const chartYears = Object.keys(yearsMap).filter(y => parseInt(y) >= startYear && parseInt(y) <= endYear).sort();
             
             const dataBase = [];
@@ -775,6 +804,7 @@
             const dataBrutoProj = [];
             const dataLiqReal = [];
             const dataLiqProj = [];
+            const dataDescAnual = [];
 
             chartYears.forEach(y => {
                 const yearData = yearsMap[y];
@@ -785,6 +815,9 @@
                 const realBruto = yearData.reduce((s, d) => s + d.salario_bruto, 0);
                 const realLiq = yearData.reduce((s, d) => s + d.salario_liquido, 0);
                 
+                // Carga Tributária Anual
+                dataDescAnual.push((1 - (realLiq / realBruto)) * 100);
+
                 if (isComplete) {
                     dataBrutoReal.push(realBruto);
                     dataBrutoProj.push(0);
@@ -800,37 +833,39 @@
                 }
             });
 
-            // 1. Total Base Ano
             renderChart('cTotalBaseAno', 'bar', chartYears, [{ label: 'Total Base', data: dataBase, backgroundColor: '#667eea' }]);
-
-            // 2. Total Bruto Ano (Stack)
             renderChart('cTotalBrutoAno', 'bar', chartYears, [
                 { label: 'Realizado', data: dataBrutoReal, backgroundColor: '#3498db', stack: 'a' },
                 { label: 'Projetado', data: dataBrutoProj, backgroundColor: 'rgba(52, 152, 219, 0.4)', stack: 'a' }
             ], true);
-
-            // 3. Total Líquido Ano (Stack)
             renderChart('cTotalLiqAno', 'bar', chartYears, [
                 { label: 'Realizado', data: dataLiqReal, backgroundColor: '#2ecc71', stack: 'a' },
                 { label: 'Projetado', data: dataLiqProj, backgroundColor: 'rgba(46, 204, 113, 0.4)', stack: 'a' }
             ], true);
 
-            // 4. Linha Descontos %
-            const lineLabels = filtered.map(d => d.mes_referencia);
-            const lineData = filtered.map(d => (1 - (d.salario_liquido / d.salario_bruto)) * 100);
-            renderChart('cLinhaDescontos', 'line', lineLabels, [{ label: '% Descontos', data: lineData, borderColor: '#f56565', tension: 0.3, fill: false }]);
+            renderChart('cLinhaDescontos', 'line', chartYears, [{ label: '% Médio Anual', data: dataDescAnual, borderColor: '#f56565', tension: 0.3, fill: false }]);
 
-            // 5. Pizza (Último mês do filtro)
-            const lastD = filtered[filtered.length - 1];
-            document.getElementById('pie-desc-title').innerText = `🥧 Descontos (${lastD.mes_referencia})`;
+            updatePizza();
+            updateWaterfall();
+        }
+
+        function navPizza(dir) {
+            pieYearIdx = Math.max(0, Math.min(sortedYears.length - 1, pieYearIdx + dir));
+            updatePizza();
+        }
+
+        function updatePizza() {
+            const year = sortedYears[pieYearIdx];
+            document.getElementById('pie-year-title').innerText = year;
+            const yearData = contraChequeData.filter(d => '20' + d.mes_referencia.split('/')[1] === year);
+            
+            const sum = (field) => yearData.reduce((s, d) => s + (d.descontos[field] || 0), 0);
+            const totals = [sum('inss'), sum('irrf'), sum('previdencia_privada'), sum('outros')];
+
             renderChart('cPizzaDescontos', 'pie', ['INSS', 'IRRF', 'Prev. Privada', 'Outros'], [{
-                data: [lastD.descontos.inss, lastD.descontos.irrf, lastD.descontos.previdencia_privada, lastD.descontos.outros],
+                data: totals,
                 backgroundColor: ['#ed8936', '#f56565', '#4299e1', '#a0aec0']
             }]);
-
-            // 6. Waterfall
-            if (wfIndex === 0) wfIndex = contraChequeData.length - 1;
-            updateWaterfall();
         }
 
         function renderChart(id, type, labels, datasets, stacked = false) {
@@ -866,18 +901,18 @@
             const brutoExtra = d.salario_bruto - d.salario_base;
             const labels = ['Base', 'Adic. Bruto', 'INSS', 'IRRF', 'Prev. Privada', 'Outros', 'Líquido'];
             
-            // Waterfall logic: [start, end]
             const data = [
-                [0, d.salario_base], // Base
-                [d.salario_base, d.salario_bruto], // Adicionais
-                [d.salario_bruto - d.descontos.inss, d.salario_bruto], // INSS
-                [d.salario_bruto - d.descontos.inss - d.descontos.irrf, d.salario_bruto - d.descontos.inss], // IRRF
-                [d.salario_bruto - d.descontos.inss - d.descontos.irrf - d.descontos.previdencia_privada, d.salario_bruto - d.descontos.inss - d.descontos.irrf], // Prev
-                [d.salario_liquido, d.salario_liquido + d.descontos.outros], // Outros
-                [0, d.salario_liquido] // Final Líquido
+                [0, d.salario_base],
+                [d.salario_base, d.salario_bruto],
+                [d.salario_bruto - d.descontos.inss, d.salario_bruto],
+                [d.salario_bruto - d.descontos.inss - d.descontos.irrf, d.salario_bruto - d.descontos.inss],
+                [d.salario_bruto - d.descontos.inss - d.descontos.irrf - d.descontos.previdencia_privada, d.salario_bruto - d.descontos.inss - d.descontos.irrf],
+                [d.salario_liquido, d.salario_liquido + d.descontos.outros],
+                [0, d.salario_liquido]
             ];
 
-            const colors = ['#667eea', '#48bb78', '#f56565', '#f56565', '#f56565', '#f56565', '#48bb78'];
+            const adicColor = brutoExtra >= 0 ? '#48bb78' : '#f56565';
+            const colors = ['#667eea', adicColor, '#f56565', '#f56565', '#f56565', '#f56565', '#48bb78'];
 
             if (charts['cWaterfall']) charts['cWaterfall'].destroy();
             charts['cWaterfall'] = new Chart(ctx, {
@@ -894,7 +929,7 @@
                     responsive: true, maintainAspectRatio: false,
                     plugins: { 
                         legend: { display: false },
-                        tooltip: { callbacks: { label: ctx => ` ${brl(ctx.raw[1] - ctx.raw[0])}` } }
+                        tooltip: { callbacks: { label: ctx => ` ${brl(Math.abs(ctx.raw[1] - ctx.raw[0]))}` } }
                     },
                     scales: {
                         y: { ticks: { callback: v => 'R$ '+(v/1000).toFixed(0)+'k' } }
