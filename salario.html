@@ -312,38 +312,47 @@
     <div id="tab1" style="display:none;">
         <div class="kpi-groups" style="margin-top: 10px;">
             <div class="kpi-group">
-                <div class="kpi-group-title">📊 Resumo Atual</div>
+                <div class="kpi-group-title">💰 Renda & Acumulado</div>
                 <div class="kpi-grid">
                     <div class="kpi-card">
                         <span class="kpi-emoji">💵</span>
-                        <span class="kpi-label">Salário Líquido</span>
+                        <span class="kpi-label">Líquido Atual</span>
                         <span class="kpi-value" id="cc-current">-</span>
-                        <span class="kpi-sub">Último recebido</span>
                     </div>
                     <div class="kpi-card">
-                        <span class="kpi-emoji">📅</span>
-                        <span class="kpi-label">Média 12 Meses</span>
-                        <span class="kpi-value" id="cc-avg">-</span>
-                        <span class="kpi-sub">Líquido mensal</span>
+                        <span class="kpi-emoji">🏦</span>
+                        <span class="kpi-label">Total Acumulado (2025)</span>
+                        <span class="kpi-value" id="cc-year-total">-</span>
                     </div>
                 </div>
             </div>
             <div class="kpi-group">
-                <div class="kpi-group-title">⚡ Eficiência</div>
+                <div class="kpi-group-title">📈 Performance Histórica</div>
                 <div class="kpi-grid">
                     <div class="kpi-card">
+                        <span class="kpi-emoji">🚀</span>
+                        <span class="kpi-label">Crescimento (CAGR)</span>
+                        <span class="kpi-value" id="cc-cagr">-</span>
+                        <span class="kpi-sub">Média anual desde 2012</span>
+                    </div>
+                    <div class="kpi-card">
                         <span class="kpi-emoji">🎯</span>
-                        <span class="kpi-label">Líquido / Bruto</span>
+                        <span class="kpi-label">Eficiência (L/B)</span>
                         <span class="kpi-value" id="cc-eff">-</span>
-                        <span class="kpi-sub">Retenção de valor real</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header"><span>📈 Evolução Histórica (Bruto vs Líquido)</span></div>
-            <div class="chart-container"><canvas id="cSalarioHistorico"></canvas></div>
+        <div class="grid-2">
+            <div class="card">
+                <div class="card-header"><span>📉 Escada de Evolução (Base vs Bruto vs Líq)</span></div>
+                <div class="chart-container"><canvas id="cSalarioHistorico"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-header"><span id="donut-title">🍩 Composição de Descontos (Último Mês)</span></div>
+                <div class="chart-container"><canvas id="cDescontosDonut"></canvas></div>
+            </div>
         </div>
 
         <div class="card" style="padding: 0; overflow: hidden;">
@@ -353,9 +362,10 @@
                     <thead>
                         <tr>
                             <th>Mês</th>
+                            <th style="text-align:right;">Base</th>
                             <th style="text-align:right;">Bruto</th>
                             <th style="text-align:right;">Líquido</th>
-                            <th style="text-align:right;">Morde (%)</th>
+                            <th style="text-align:right;">Retenção</th>
                         </tr>
                     </thead>
                     <tbody id="cc-tbody"></tbody>
@@ -591,20 +601,26 @@
         function renderContraCheque() {
             if (!contraChequeData.length) return;
             const current = contraChequeData[contraChequeData.length - 1];
-            const last12 = contraChequeData.slice(-12);
-            const avg12 = last12.reduce((acc, curr) => acc + curr.salario_liquido, 0) / last12.length;
+            
+            // KPIs
+            const year2025 = contraChequeData.filter(d => d.mes_referencia.endsWith('/25'));
+            const total2025 = year2025.reduce((acc, curr) => acc + curr.salario_liquido, 0);
+            
+            const firstSal = contraChequeData[0].salario_base;
+            const lastSal = current.salario_base;
+            const years = contraChequeData.length / 12;
+            const cagr = (Math.pow(lastSal / firstSal, 1 / years) - 1) * 100;
             const efficiency = (current.salario_liquido / current.salario_bruto) * 100;
 
             document.getElementById('cc-current').innerText = brl(current.salario_liquido);
-            document.getElementById('cc-avg').innerText = brl(avg12);
+            document.getElementById('cc-year-total').innerText = brl(total2025);
+            document.getElementById('cc-cagr').innerText = cagr.toFixed(1) + '%';
             document.getElementById('cc-eff').innerText = efficiency.toFixed(1) + '%';
 
-            // Gráfico Histórico
+            // Gráfico Principal (Escada)
             const ctx = document.getElementById('cSalarioHistorico').getContext('2d');
             const labels = contraChequeData.map(d => d.mes_referencia);
-            const dataBruto = contraChequeData.map(d => d.salario_bruto);
-            const dataLiq = contraChequeData.map(d => d.salario_liquido);
-
+            
             if (charts['cSalarioHistorico']) charts['cSalarioHistorico'].destroy();
             charts['cSalarioHistorico'] = new Chart(ctx, {
                 type: 'line',
@@ -613,40 +629,85 @@
                     datasets: [
                         {
                             label: 'Líquido',
-                            data: dataLiq,
+                            data: contraChequeData.map(d => d.salario_liquido),
                             borderColor: '#48bb78',
-                            backgroundColor: 'rgba(72, 187, 120, 0.1)',
-                            fill: true,
-                            tension: 0.3
+                            backgroundColor: 'rgba(72, 187, 120, 0.4)',
+                            fill: true, tension: 0.3
                         },
                         {
                             label: 'Bruto',
-                            data: dataBruto,
+                            data: contraChequeData.map(d => d.salario_bruto),
                             borderColor: '#667eea',
-                            backgroundColor: 'rgba(102, 126, 234, 0.05)',
-                            fill: true,
-                            tension: 0.3
+                            backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                            fill: true, tension: 0.3
+                        },
+                        {
+                            label: 'Base',
+                            data: contraChequeData.map(d => d.salario_base),
+                            borderColor: '#cbd5e0',
+                            backgroundColor: 'rgba(203, 213, 224, 0.1)',
+                            fill: true, tension: 0.3
                         }
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    responsive: true, maintainAspectRatio: false,
                     interaction: { intersect: false, mode: 'index' },
                     plugins: {
-                        legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 10 } },
-                        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${brl(ctx.parsed.y)}` } }
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } },
+                        tooltip: { 
+                            callbacks: { label: ctx => ` ${ctx.dataset.label}: ${brl(ctx.parsed.y)}` }
+                        }
                     },
                     scales: {
-                        y: { 
-                            ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' }
-                        },
-                        x: { 
-                            ticks: { maxRotation: 45, minRotation: 45, font: { size: 9 } }
+                        y: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(0) + 'k' } },
+                        x: { ticks: { maxRotation: 45, font: { size: 9 } } }
+                    },
+                    onClick: (e, elements) => {
+                        if (elements.length > 0) {
+                            const idx = elements[0].index;
+                            updateDonut(idx);
                         }
                     }
                 }
             });
+
+            // Gráfico Donut (Descontos)
+            const updateDonut = (idx) => {
+                const d = contraChequeData[idx];
+                const ctxD = document.getElementById('cDescontosDonut').getContext('2d');
+                document.getElementById('donut-title').innerText = `🍩 Descontos (${d.mes_referencia})`;
+
+                const donutData = [
+                    d.descontos.inss,
+                    d.descontos.irrf,
+                    d.descontos.previdencia_privada,
+                    d.descontos.outros
+                ];
+
+                if (charts['cDescontosDonut']) charts['cDescontosDonut'].destroy();
+                charts['cDescontosDonut'] = new Chart(ctxD, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['INSS', 'IRRF', 'Prev. Privada', 'Outros'],
+                        datasets: [{
+                            data: donutData,
+                            backgroundColor: ['#ed8936', '#f56565', '#4299e1', '#a0aec0'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } },
+                            tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${brl(ctx.parsed)}` } }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            };
+
+            updateDonut(contraChequeData.length - 1);
 
             // Tabela
             const tbody = document.getElementById('cc-tbody');
@@ -654,7 +715,8 @@
                 const retention = ((1 - (d.salario_liquido / d.salario_bruto)) * 100).toFixed(1);
                 return `<tr>
                     <td style="padding:9px 10px; color:var(--subtext); font-weight:700;">${d.mes_referencia}</td>
-                    <td style="padding:9px 10px; text-align:right; color:var(--text);">${brl(d.salario_bruto)}</td>
+                    <td style="padding:9px 10px; text-align:right;">${brl(d.salario_base)}</td>
+                    <td style="padding:9px 10px; text-align:right;">${brl(d.salario_bruto)}</td>
                     <td style="padding:9px 10px; text-align:right; color:var(--green); font-weight:700;">${brl(d.salario_liquido)}</td>
                     <td style="padding:9px 10px; text-align:right; color:var(--red);">${retention}%</td>
                 </tr>`;
