@@ -85337,6 +85337,22 @@
       "valor_total": 0.0,
       "preco_unitario": 0.0,
       "quantidade": 0.02
+    },
+    {
+      "ativo": "ARKG",
+      "data": "2026-02-19",
+      "tipo": "RETIRADA (Ajuste Zeramento)",
+      "valor_total": 0.0,
+      "preco_unitario": 0.0,
+      "quantidade": 0.1
+    },
+    {
+      "ativo": "ARKQ",
+      "data": "2026-02-19",
+      "tipo": "APORTE (Ajuste Zeramento)",
+      "valor_total": 0.0,
+      "preco_unitario": 0.0,
+      "quantidade": 0.1
     }
   ],
   "descricao": "Historico de aportes e retiradas (trades) de ativos financeiros"
