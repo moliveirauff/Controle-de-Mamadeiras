@@ -1,5 +1,5 @@
 {
-  "versao": "2026.2.normalizado",
+  "versao": "2026.2.6",
   "data_atualizacao": "2026-02-19",
   "movimentacoes": [
     {
@@ -12083,14 +12083,6 @@
       "quantidade": 4460.5
     },
     {
-      "ativo": "Argos",
-      "data": "2023-12-30",
-      "tipo": "APORTE",
-      "valor_total": 50000.0,
-      "preco_unitario": 150000.0,
-      "quantidade": 0.3
-    },
-    {
       "ativo": "CELESTIA (TIA)",
       "data": "2023-12-30",
       "tipo": "APORTE",
@@ -13307,14 +13299,6 @@
       "quantidade": 4815.0
     },
     {
-      "ativo": "Argos",
-      "data": "2024-09-01",
-      "tipo": "APORTE",
-      "valor_total": 4000.0,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
-    },
-    {
       "ativo": "XP Superprev 2",
       "data": "2024-09-15",
       "tipo": "APORTE",
@@ -13467,14 +13451,6 @@
       "quantidade": 5029.3
     },
     {
-      "ativo": "Argos",
-      "data": "2024-10-30",
-      "tipo": "APORTE",
-      "valor_total": 2000.0,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
-    },
-    {
       "ativo": "BITCOIN (BTC)",
       "data": "2024-10-30",
       "tipo": "APORTE",
@@ -13593,14 +13569,6 @@
       "valor_total": 6358.96,
       "preco_unitario": 1.26,
       "quantidade": 5034.7
-    },
-    {
-      "ativo": "Argos",
-      "data": "2024-11-30",
-      "tipo": "APORTE",
-      "valor_total": 2000.0,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
     },
     {
       "ativo": "BNB (BNB)",
@@ -13939,22 +13907,6 @@
       "quantidade": 74.1
     },
     {
-      "ativo": "Argos",
-      "data": "2024-12-24",
-      "tipo": "APORTE",
-      "valor_total": 6666.67,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
-    },
-    {
-      "ativo": "Argos",
-      "data": "2024-12-24",
-      "tipo": "APORTE",
-      "valor_total": 2000.0,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
-    },
-    {
       "ativo": "ABEV3",
       "data": "2024-12-27",
       "tipo": "APORTE",
@@ -14081,14 +14033,6 @@
       "valor_total": 2815.0,
       "preco_unitario": 28.15,
       "quantidade": 100.0
-    },
-    {
-      "ativo": "Argos",
-      "data": "2025-01-30",
-      "tipo": "APORTE",
-      "valor_total": 6666.66,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
     },
     {
       "ativo": "BITCOIN (BTC)",
@@ -14235,14 +14179,6 @@
       "quantidade": 11.0
     },
     {
-      "ativo": "Argos",
-      "data": "2025-03-30",
-      "tipo": "APORTE",
-      "valor_total": 23333.33,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
-    },
-    {
       "ativo": "Vitreo Superprev 2",
       "data": "2025-03-30",
       "tipo": "APORTE",
@@ -14329,14 +14265,6 @@
       "valor_total": 1130.14,
       "preco_unitario": 102.74,
       "quantidade": 11.0
-    },
-    {
-      "ativo": "Argos",
-      "data": "2025-04-07",
-      "tipo": "APORTE",
-      "valor_total": 3000.0,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
     },
     {
       "ativo": "VALE3",
@@ -14547,22 +14475,6 @@
       "quantidade": 4909.6
     },
     {
-      "ativo": "Argos",
-      "data": "2025-05-08",
-      "tipo": "APORTE",
-      "valor_total": 25000.0,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
-    },
-    {
-      "ativo": "Argos",
-      "data": "2025-05-08",
-      "tipo": "APORTE",
-      "valor_total": 4251.6,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
-    },
-    {
       "ativo": "SOLANA (SOL)",
       "data": "2025-05-11",
       "tipo": "RETIRADA",
@@ -14635,14 +14547,6 @@
       "quantidade": 15.0
     },
     {
-      "ativo": "Argos",
-      "data": "2025-05-26",
-      "tipo": "APORTE",
-      "valor_total": 1715.08,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
-    },
-    {
       "ativo": "Vitreo Superprev 2",
       "data": "2025-05-30",
       "tipo": "APORTE",
@@ -14673,14 +14577,6 @@
       "valor_total": 6149.91,
       "preco_unitario": 16621.38,
       "quantidade": 0.4
-    },
-    {
-      "ativo": "Argos",
-      "data": "2025-06-10",
-      "tipo": "APORTE",
-      "valor_total": 430.03,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
     },
     {
       "ativo": "Tesouro Selic 2031",
@@ -14753,14 +14649,6 @@
       "valor_total": 5405.0,
       "preco_unitario": 54.05,
       "quantidade": 100.0
-    },
-    {
-      "ativo": "Argos",
-      "data": "2025-06-26",
-      "tipo": "APORTE",
-      "valor_total": 25333.33,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
     },
     {
       "ativo": "ODPV3",
@@ -14985,14 +14873,6 @@
       "valor_total": 7630.0,
       "preco_unitario": 1.33,
       "quantidade": 5744.0
-    },
-    {
-      "ativo": "Argos",
-      "data": "2025-07-30",
-      "tipo": "APORTE",
-      "valor_total": 18427.43,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
     },
     {
       "ativo": "Arca RF Previ",
@@ -15227,14 +15107,6 @@
       "quantidade": 0.8
     },
     {
-      "ativo": "Argos",
-      "data": "2025-08-30",
-      "tipo": "APORTE",
-      "valor_total": 11771.58,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
-    },
-    {
       "ativo": "Tesouro Selic 2031",
       "data": "2025-09-01",
       "tipo": "RETIRADA",
@@ -15273,14 +15145,6 @@
       "valor_total": 1045.6,
       "preco_unitario": 1.47,
       "quantidade": 712.2
-    },
-    {
-      "ativo": "Argos",
-      "data": "2025-09-30",
-      "tipo": "APORTE",
-      "valor_total": 11773.63,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
     },
     {
       "ativo": "SGOV",
@@ -15443,14 +15307,6 @@
       "quantidade": 38.0
     },
     {
-      "ativo": "Argos",
-      "data": "2025-10-31",
-      "tipo": "APORTE",
-      "valor_total": 21772.14,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
-    },
-    {
       "ativo": "Icatu Previ",
       "data": "2025-10-30",
       "tipo": "APORTE",
@@ -15545,14 +15401,6 @@
       "valor_total": 7898.1,
       "preco_unitario": 1.77,
       "quantidade": 4465.0
-    },
-    {
-      "ativo": "Argos",
-      "data": "2025-11-30",
-      "tipo": "APORTE",
-      "valor_total": 31771.2,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
     },
     {
       "ativo": "EGIE3",
@@ -15801,14 +15649,6 @@
       "valor_total": 7898.1,
       "preco_unitario": 1.77,
       "quantidade": 4465.0
-    },
-    {
-      "ativo": "Argos",
-      "data": "2025-12-30",
-      "tipo": "APORTE",
-      "valor_total": 31771.5,
-      "preco_unitario": 0.0,
-      "quantidade": 0.0
     },
     {
       "ativo": "ITUB4",
