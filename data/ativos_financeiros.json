@@ -1,15 +1,15 @@
 {
-  "versao": "2026.2.4",
-  "data_atualizacao": "2026-02-18",
+  "versao": "2026.2.5",
+  "data_atualizacao": "2026-02-19",
   "ativos": [
     {
-      "nome": "SGOV (Caixa Dólar)",
+      "nome": "SGOV",
       "macro_classe": "1_renda_fixa_soberana",
       "subclasse": "1.1_liquidez",
       "status": "aberto"
     },
     {
-      "nome": "TETHER (USDT)_2024.03.30",
+      "nome": "TETHER_2024.03.30",
       "macro_classe": "1_renda_fixa_soberana",
       "subclasse": "1.1_liquidez",
       "status": "fechado"
@@ -33,25 +33,25 @@
       "status": "fechado"
     },
     {
-      "nome": "CBD Agibank (CDI)_2020.01.07",
+      "nome": "CBD Agibank_2020.01.07",
       "macro_classe": "1_renda_fixa_soberana",
       "subclasse": "1.1_liquidez",
       "status": "fechado"
     },
     {
-      "nome": "CDB BMG (CDI)_2019.05.06",
+      "nome": "CDB BMG_2019.05.06",
       "macro_classe": "1_renda_fixa_soberana",
       "subclasse": "1.1_liquidez",
       "status": "fechado"
     },
     {
-      "nome": "CDB Fibra (CDI)_2019.08.27",
+      "nome": "CDB Fibra_2019.08.27",
       "macro_classe": "1_renda_fixa_soberana",
       "subclasse": "1.1_liquidez",
       "status": "fechado"
     },
     {
-      "nome": "CDB Pine (CDI)_2018.03.19",
+      "nome": "CDB Pine_2018.03.19",
       "macro_classe": "1_renda_fixa_soberana",
       "subclasse": "1.1_liquidez",
       "status": "fechado"
@@ -99,31 +99,31 @@
       "status": "fechado"
     },
     {
-      "nome": "CDB BMG (Pré)_2019.04.08",
+      "nome": "CDB BMG_2019.04.08",
       "macro_classe": "",
       "subclasse": "1.4_prefixado",
       "status": "fechado"
     },
     {
-      "nome": "CDB Fibra (Pré)_2020.03.19",
+      "nome": "CDB Fibra_2020.03.19",
       "macro_classe": "",
       "subclasse": "1.4_prefixado",
       "status": "fechado"
     },
     {
-      "nome": "CDB Pine (IPCA)_2018.07.09",
+      "nome": "CDB Pine_2018.07.09",
       "macro_classe": "2_credito_privado",
       "subclasse": "2.1_high_grade",
       "status": "fechado"
     },
     {
-      "nome": "CDB BMG (IPCA)_2020.03.25",
+      "nome": "CDB BMG_2020.03.25",
       "macro_classe": "2_credito_privado",
       "subclasse": "2.1_high_grade",
       "status": "fechado"
     },
     {
-      "nome": "CDB Original (IPCA)_2020.03.09",
+      "nome": "CDB Original_2020.03.09",
       "macro_classe": "2_credito_privado",
       "subclasse": "2.1_high_grade",
       "status": "fechado"
@@ -1032,7 +1032,7 @@
       "status": "fechado"
     },
     {
-      "nome": "IBIT (Bitcoin ETF)",
+      "nome": "IBIT",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.1_reserva_valor",
       "status": "aberto"
@@ -1044,13 +1044,13 @@
       "status": "fechado"
     },
     {
-      "nome": "BITCOIN (BTC)_2025.02.02",
+      "nome": "BITCOIN_2025.02.02",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.1_reserva_valor",
       "status": "fechado"
     },
     {
-      "nome": "ETHA (Ethereum ETF)",
+      "nome": "ETHA",
       "macro_classe": "",
       "subclasse": "6.2_plataforma_utility",
       "status": "aberto"
@@ -1080,13 +1080,13 @@
       "status": "fechado"
     },
     {
-      "nome": "SOLANA (SOL)_2025.05.11",
+      "nome": "SOLANA_2025.05.11",
       "macro_classe": "",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "ETHEREUM (ETH)_2024.12.16",
+      "nome": "ETHEREUM_2024.12.16",
       "macro_classe": "",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
@@ -1176,7 +1176,7 @@
       "status": "fechado"
     },
     {
-      "nome": "SOLANA (SOL)_2022.12.30",
+      "nome": "SOLANA_2022.12.30",
       "macro_classe": "",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
