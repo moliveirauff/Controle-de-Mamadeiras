@@ -92,9 +92,8 @@ def run():
                 total_qty_bought_per_asset[asset_full] += qty
                 aportes_anuais[year_val] += (qty * price) + taxas
             elif m["tipo"] in TIPOS_SUBTRAI:
-                if total_qty_bought_per_asset[asset_full] > 0:
-                    pm = total_invested_per_asset[asset_full] / total_qty_bought_per_asset[asset_full]
-                    total_invested_per_asset[asset_full] -= qty * pm
+                # Total Investido = Aportes - Retiradas (valores diretos, sem preço médio)
+                total_invested_per_asset[asset_full] -= (qty * price)
                 positions[asset_full] -= qty
                 aportes_anuais[year_val] -= (qty * price)
             mov_idx += 1
@@ -112,8 +111,11 @@ def run():
         pat_mes = 0.0
         for asset_full, qty in positions.items():
             if qty <= 0.0001: continue
-            base_name = get_base_name(asset_full)
-            asset_cots = cotacoes_data.get(base_name, {})
+            # Tentar buscar cotação: primeiro com nome completo, depois com base_name
+            asset_cots = cotacoes_data.get(asset_full, {})
+            if not asset_cots:
+                base_name = get_base_name(asset_full)
+                asset_cots = cotacoes_data.get(base_name, {})
             cot_key = f"{MESES_PT[month_val]}/{year_val}"
             price = asset_cots.get(cot_key, 0.0)
             if price is None or price == 0.0:
@@ -142,6 +144,49 @@ def run():
                 "sem_dividendos": round(rent_sem_div, 2),
                 "com_dividendos": round(rent_com_div, 2)
             })
+
+    # === DEBUG: Verificar patrimônio do último mês ===
+    print("\n🔍 DEBUG - Top 10 Ativos (último mês):")
+    last_month = months[-1]
+    year_val, month_val = map(int, last_month.split("-"))
+    debug_values = []
+    sem_cotacao = []
+    for asset_full, qty in positions.items():
+        if qty <= 0.001: continue
+        # Buscar cotação: primeiro nome completo, depois base_name
+        asset_cots = cotacoes_data.get(asset_full, {})
+        base_name = get_base_name(asset_full)
+        if not asset_cots:
+            asset_cots = cotacoes_data.get(base_name, {})
+        cot_key = f"{MESES_PT[month_val]}/{year_val}"
+        price = asset_cots.get(cot_key, 0.0)
+        if price is None or price == 0.0:
+            # Buscar última cotação disponível
+            try:
+                def cot_to_date(k):
+                    m_pt, y = k.split('/')
+                    return date(int(y), next(n for n, v in MESES_PT.items() if v == m_pt), 1)
+                valid = {cot_to_date(k): v for k, v in asset_cots.items() if v is not None and v > 0}
+                last_day = (datetime(year_val, month_val, 1) + relativedelta(months=1, days=-1)).date()
+                past = [d for d in valid.keys() if d <= last_day]
+                price = valid[max(past)] if past else 0.0
+                if price == 0.0:
+                    sem_cotacao.append((base_name, qty))
+            except Exception:
+                price = 0.0
+                sem_cotacao.append((base_name, qty))
+        valor = qty * price
+        debug_values.append((base_name, qty, price, valor))
+    debug_values.sort(key=lambda x: x[3], reverse=True)
+    for i, (name, qty, price, val) in enumerate(debug_values[:10], 1):
+        print(f"  {i}. {name:30} | Cotas: {qty:10.2f} | Cotação: R$ {price:8.2f} | Valor: R$ {val:12,.2f}")
+    total_debug = sum(x[3] for x in debug_values)
+    print(f"\n💰 Patrimônio Total (calculado): R$ {total_debug:,.2f}")
+    if sem_cotacao:
+        print(f"\n⚠️  ATIVOS SEM COTAÇÃO ({len(sem_cotacao)}):")
+        for name, qty in sem_cotacao[:20]:
+            print(f"  - {name:30} | Cotas: {qty:10.2f}")
+    print()
 
     # --- BENCHMARKS (Gráfico 6) ---
     bench_indices = {i["mes"]: i for i in benchmarks_data.get("indices", [])}
@@ -200,7 +245,11 @@ def run():
         if qty <= 0.001: continue
         base_name = get_base_name(asset_full)
         cat = base_class_map.get(base_name, "7_alternativos_estratega")
-        price = cotacoes_data.get(base_name, {}).get(f"{MESES_PT[int(months[-1].split('-')[1])]}/{months[-1].split('-')[0]}", 0) or 0
+        # Buscar cotação: primeiro nome completo, depois base_name
+        cot_data = cotacoes_data.get(asset_full, {})
+        if not cot_data:
+            cot_data = cotacoes_data.get(base_name, {})
+        price = cot_data.get(f"{MESES_PT[int(months[-1].split('-')[1])]}/{months[-1].split('-')[0]}", 0) or 0
         val_atual = qty * price
         pat_cat_atual[cat] += val_atual
         investido = total_invested_per_asset[asset_full]
