@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="only light">
     <meta name="supported-color-schemes" content="light">
-    <title>🍼 BI do Matheus</title>
+    <title>🍼 Mamadas do Matheus</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -103,6 +103,46 @@
             margin-bottom: 20px;
         }
 
+        /* KPIs Style similar to Dividendos */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .kpi-label {
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: var(--subtext);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            order: 1;
+        }
+        .kpi-value {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+            order: 2;
+        }
+        .kpi-sub {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            order: 3;
+        }
+
         /* Cards */
         .card {
             background: var(--surface);
@@ -115,44 +155,17 @@
         }
 
         .card-header {
+            margin-bottom: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-title {
             font-size: 0.95rem;
             font-weight: 700;
             color: var(--text);
-            margin-bottom: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        /* KPIs */
-        .kpi-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-        }
-
-        .kpi-box {
             text-align: center;
-            flex: 1;
-            padding: 8px 4px;
-        }
-
-        .kpi-val {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--text);
-            line-height: 1.2;
-        }
-
-        .kpi-lbl {
-            font-size: 0.6rem;
-            font-weight: 800;
-            color: var(--subtext);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 4px;
         }
 
         /* Filters */
@@ -206,6 +219,7 @@
                 padding: 16px 16px 60px 16px;
             }
             h1 { font-size: 1.75rem; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .chart-container { height: 380px; }
         }
     </style>
@@ -214,33 +228,30 @@
 
 <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
 <a href="index.html" class="nav-link">← Voltar</a>
-<h1>🍼 BI do Matheus</h1>
+<h1>🍼 Mamadas do Matheus</h1>
 <div class="subtitle" id="last-update">Carregando dados...</div>
 
 <div id="loading">⏳ Conectando aos dados...</div>
 
 <div id="dashboard" style="display:none;">
-    <div class="card">
-        <div class="kpi-row">
-            <div class="kpi-box">
-                <div class="kpi-val" id="kpi-vol">--</div>
-                <div class="kpi-lbl" id="lbl-vol">Vol. Recente</div>
-            </div>
-            <div class="kpi-box">
-                <div class="kpi-val" id="kpi-avg">--</div>
-                <div class="kpi-lbl">Média (14d)</div>
-            </div>
-            <div class="kpi-box">
-                <div class="kpi-val" id="kpi-records">--</div>
-                <div class="kpi-lbl">Registros</div>
-            </div>
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <span class="kpi-label" id="lbl-vol">Vol. Ontem</span>
+            <span class="kpi-value" id="kpi-vol">--</span>
+            <span class="kpi-sub" id="lbl-vol-sub">Fechado</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">Média Diária</span>
+            <span class="kpi-value" id="kpi-avg">--</span>
+            <span class="kpi-sub">Últimos 14 dias</span>
         </div>
     </div>
 
     <!-- 1. Volume Total -->
     <div class="card">
         <div class="card-header">
-            <span>📊 Volume Diário (ml)</span>
+            <div class="card-title">📊 Volume Diário (ml)</div>
             <div class="filter-group">
                 <button class="btn-filter" onclick="updateFilter('total', 14, this)">14D</button>
                 <button class="btn-filter" onclick="updateFilter('total', 30, this)">30D</button>
@@ -253,7 +264,7 @@
     <!-- 2a. Média por Mamada com Dispersão -->
     <div class="card">
         <div class="card-header">
-            <span>📈 Média/Mamada vs Individual</span>
+            <div class="card-title">📈 Média/Mamada vs Individual</div>
             <div class="filter-group">
                 <button class="btn-filter" onclick="updateFilter('avgOnly', 14, this)">14D</button>
                 <button class="btn-filter" onclick="updateFilter('avgOnly', 30, this)">30D</button>
@@ -266,7 +277,7 @@
     <!-- 2b. Quantidade de Mamadas -->
     <div class="card">
         <div class="card-header">
-            <span>🔢 Qtd de Mamadas no Dia</span>
+            <div class="card-title">🔢 Qtd de Mamadas no Dia</div>
             <div class="filter-group">
                 <button class="btn-filter" onclick="updateFilter('countOnly', 14, this)">14D</button>
                 <button class="btn-filter" onclick="updateFilter('countOnly', 30, this)">30D</button>
@@ -279,7 +290,7 @@
     <!-- 3. Histograma -->
     <div class="card">
         <div class="card-header">
-            <span>🔔 Frequência de Volume</span>
+            <div class="card-title">🔔 Frequência de Volume</div>
             <div class="filter-group">
                 <button class="btn-filter" onclick="updateFilter('hist', 14, this)">14D</button>
                 <button class="btn-filter" onclick="updateFilter('hist', 30, this)">30D</button>
@@ -292,7 +303,7 @@
     <!-- 4. Tendência Horária -->
     <div class="card">
         <div class="card-header">
-            <span>🕐 Tendência Horária (2h)</span>
+            <div class="card-title">🕐 Tendência Horária (2h)</div>
             <div class="filter-group">
                 <button class="btn-filter" onclick="updateFilter('hourly', 14, this)">14D</button>
                 <button class="btn-filter" onclick="updateFilter('hourly', 30, this)">30D</button>
@@ -305,7 +316,7 @@
     <!-- 5. Intervalo -->
     <div class="card">
         <div class="card-header">
-            <span>⏳ Intervalo vs Volume</span>
+            <div class="card-title">⏳ Intervalo vs Volume</div>
             <div class="filter-group">
                 <button class="btn-filter" onclick="updateFilter('interval', 14, this)">14D</button>
                 <button class="btn-filter" onclick="updateFilter('interval', 30, this)">30D</button>
@@ -491,17 +502,18 @@ function initCharts() {
 
     document.getElementById('kpi-vol').innerText = dailyMap[lastDataDateStr].vol + " ml";
     const kpiLabel = document.getElementById('lbl-vol');
+    const kpiSub = document.getElementById('lbl-vol-sub');
     if(isSameDay) {
-        kpiLabel.innerText = "Vol. Hoje (Parcial)";
-        kpiLabel.style.color = "#667eea";
+        kpiLabel.innerText = "Vol. Hoje";
+        kpiSub.innerText = "Parcial";
+        kpiLabel.style.color = "var(--primary)";
     } else {
-        kpiLabel.innerText = "Vol. Ontem (Fechado)";
-        kpiLabel.style.color = "#718096";
+        kpiLabel.innerText = "Vol. Ontem";
+        kpiSub.innerText = "Fechado";
     }
 
     const avg14d = Math.round(calculatePeriodDailyAvg(getFilteredData(14)));
     document.getElementById('kpi-avg').innerText = avg14d + " ml";
-    document.getElementById('kpi-records').innerText = processedData.length;
 
     renderTotal(999);
     renderAvgOnly(999);
