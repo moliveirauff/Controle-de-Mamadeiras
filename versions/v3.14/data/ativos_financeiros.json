@@ -1,0 +1,1284 @@
+{
+  "versao": "2026.2.5",
+  "data_atualizacao": "2026-02-19",
+  "ativos": [
+    {
+      "nome": "SGOV",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.1_liquidez",
+      "status": "aberto"
+    },
+    {
+      "nome": "TETHER_2024.03.30",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.1_liquidez",
+      "status": "fechado"
+    },
+    {
+      "nome": "Tesouro Selic 2029_2025.08.30",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.1_liquidez",
+      "status": "fechado"
+    },
+    {
+      "nome": "Tesouro Selic 2031_2025.09.01",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.1_liquidez",
+      "status": "fechado"
+    },
+    {
+      "nome": "LFT 2021_2017.04.20",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.1_liquidez",
+      "status": "fechado"
+    },
+    {
+      "nome": "CBD Agibank_2020.01.07",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.1_liquidez",
+      "status": "fechado"
+    },
+    {
+      "nome": "Tesouro IPCA 2029_2025.10.24",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.2_ipca_curto",
+      "status": "fechado"
+    },
+    {
+      "nome": "Tesouro IPCA 2035_2025.10.24",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.2_ipca_curto",
+      "status": "fechado"
+    },
+    {
+      "nome": "NTN-B 2019_2017.09.12",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.2_ipca_curto",
+      "status": "fechado"
+    },
+    {
+      "nome": "NTN-B 2035_2018.12.17",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.2_ipca_curto",
+      "status": "fechado"
+    },
+    {
+      "nome": "LTN 2018_2017.04.27",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.4_prefixado",
+      "status": "fechado"
+    },
+    {
+      "nome": "LTN 2023_2017.08.18",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.4_prefixado",
+      "status": "fechado"
+    },
+    {
+      "nome": "LTN 2025_2020.09.29",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.4_prefixado",
+      "status": "fechado"
+    },
+    {
+      "nome": "DEB ALGA26_2020.02.17",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "DEB CMDT23_2020.02.27",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "DEB PETR26_2020.05.26",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "DEB RUMOA2_2020.02.17",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "DEB TAEE17_2020.02.27",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "RECR11",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.2_high_yield",
+      "status": "aberto"
+    },
+    {
+      "nome": "VGIP11",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.2_high_yield",
+      "status": "aberto"
+    },
+    {
+      "nome": "MCCI11",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.2_high_yield",
+      "status": "aberto"
+    },
+    {
+      "nome": "VRTA11",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.2_high_yield",
+      "status": "aberto"
+    },
+    {
+      "nome": "RBRY11",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.2_high_yield",
+      "status": "aberto"
+    },
+    {
+      "nome": "IRDM11_2025.12.22",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.2_high_yield",
+      "status": "fechado"
+    },
+    {
+      "nome": "KNCR11_2021.07.12",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.2_high_yield",
+      "status": "fechado"
+    },
+    {
+      "nome": "BCRI11_2020.09.22",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.2_high_yield",
+      "status": "fechado"
+    },
+    {
+      "nome": "Icatu Previ",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.3_prev_rf",
+      "status": "aberto",
+      "custodia": "Icatu",
+      "cnpj": "21.596.169/0001-26",
+      "nome_oficial": "PGBL INSTITUIDO ADVANTAGE RF"
+    },
+    {
+      "nome": "Arca Grão RF Previ",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.3_prev_rf",
+      "status": "aberto",
+      "custodia": "XP",
+      "susep": "15414613245202221",
+      "nome_oficial": "PGBL Arca Grão XP Seg Prev Advisory FIC FIM"
+    },
+    {
+      "nome": "Quest Luce Previ",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.3_prev_rf",
+      "status": "aberto",
+      "custodia": "XP",
+      "susep": "15414626297201961",
+      "nome_oficial": "PGBL AZ Quest Luce Advisory Prev XP Seg FICFIRF CP"
+    },
+    {
+      "nome": "Arca RF Previ_2025.07.30",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.3_prev_rf",
+      "status": "fechado"
+    },
+    {
+      "nome": "ARX Denali Previ_2022.06.30",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.3_prev_rf",
+      "status": "fechado"
+    },
+    {
+      "nome": "Capitânia Previ_2022.06.30",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.3_prev_rf",
+      "status": "fechado"
+    },
+    {
+      "nome": "Sparta Premium_2016.05.18",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.3_prev_rf",
+      "status": "fechado"
+    },
+    {
+      "nome": "Sparta Top_2016.11.03",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.3_prev_rf",
+      "status": "fechado"
+    },
+    {
+      "nome": "Sulamérica Previ_2019.02.21",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.3_prev_rf",
+      "status": "fechado"
+    },
+    {
+      "nome": "Vinci Previ_2020.07.09",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.3_prev_rf",
+      "status": "fechado"
+    },
+    {
+      "nome": "VALE3",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.1_beta_commodities",
+      "status": "aberto"
+    },
+    {
+      "nome": "PETR4",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.1_beta_commodities",
+      "status": "aberto"
+    },
+    {
+      "nome": "PETR4_2022.08.15",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.1_beta_commodities",
+      "status": "fechado"
+    },
+    {
+      "nome": "BRKM5_2018.06.18",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.1_beta_commodities",
+      "status": "fechado"
+    },
+    {
+      "nome": "SUZB5_2017.06.23",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.1_beta_commodities",
+      "status": "fechado"
+    },
+    {
+      "nome": "TUPY3_2020.09.10",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.1_beta_commodities",
+      "status": "fechado"
+    },
+    {
+      "nome": "EZTC3_2018.08.21",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "LAME4_2017.10.20",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "HGTX3_2020.09.29",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "ANIM3_2018.09.03",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "FRAS3_2018.08.24",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "LEVE3_2020.09.29",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "LPSB3_2018.09.03",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "MTSA4_2018.08.24",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "PTBL3_2018.09.05",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "SHOW3_2018.08.24",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "TECN3_2018.08.24",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "TEND3_2018.07.17",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "VLID3_2017.09.04",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.2_small_caps",
+      "status": "fechado"
+    },
+    {
+      "nome": "BBDC4",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "ITUB4",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "BBSE3",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "PSSA3",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "EGIE3",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "EQTL3",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "SAPR11",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "VIVT3",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "WEGE3",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "RADL3",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "FLRY3",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "RDOR3",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "aberto"
+    },
+    {
+      "nome": "ABEV3_2025.12.19",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "ABEV3_2020.10.13",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "MDIA3_2025.12.16",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "MDIA3_2020.10.13",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "HYPE3_2025.11.21",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "TAEE11_2025.11.21",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "SULA11_2022.12.23",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "ODPV3_2025.06.27",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "ENBR3_2023.04.03",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "XPBR31_2022.09.15",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "BBSE3_2022.01.10",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "XP_2021.10.06",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "QUAL3_2021.02.11",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "BBDC3_2020.10.08",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "ITSA4_2020.09.29",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "ALUP11_2020.09.29",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "ABCB4_2020.12.16",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "BBAS3_2018.11.23",
+      "macro_classe": "3_acoes_brasil",
+      "subclasse": "3.3_dividendos",
+      "status": "fechado"
+    },
+    {
+      "nome": "BTLG11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.1_logistico",
+      "status": "aberto"
+    },
+    {
+      "nome": "HGLG11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.1_logistico",
+      "status": "aberto"
+    },
+    {
+      "nome": "XPLG11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.1_logistico",
+      "status": "aberto"
+    },
+    {
+      "nome": "BRCO11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.1_logistico",
+      "status": "aberto"
+    },
+    {
+      "nome": "VILG11_2024.12.04",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.1_logistico",
+      "status": "fechado"
+    },
+    {
+      "nome": "LVBI11_2025.10.29",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.1_logistico",
+      "status": "fechado"
+    },
+    {
+      "nome": "LVBI11_2020.09.15",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.1_logistico",
+      "status": "fechado"
+    },
+    {
+      "nome": "ALZR11_2025.04.02",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.1_logistico",
+      "status": "fechado"
+    },
+    {
+      "nome": "RNGO11_2018.12.17",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.1_logistico",
+      "status": "fechado"
+    },
+    {
+      "nome": "TRXL11_2018.03.02",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.1_logistico",
+      "status": "fechado"
+    },
+    {
+      "nome": "XPML11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "aberto"
+    },
+    {
+      "nome": "VISC11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "aberto"
+    },
+    {
+      "nome": "PMLL11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "aberto"
+    },
+    {
+      "nome": "PVBI11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "aberto"
+    },
+    {
+      "nome": "KNRI11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "aberto"
+    },
+    {
+      "nome": "FATN11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "aberto"
+    },
+    {
+      "nome": "TRXF11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "aberto"
+    },
+    {
+      "nome": "HGRU11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "aberto"
+    },
+    {
+      "nome": "GARE11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "aberto"
+    },
+    {
+      "nome": "KNUQ11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "aberto"
+    },
+    {
+      "nome": "RBRP11_2025.02.11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "HSML11_2021.07.12",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "KNRI11_2021.05.11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "XPPR11_2021.05.11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "RBRR11_2021.05.11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "JSRE11_2020.04.28",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "HGRE11_2020.09.15",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "GTWR11_2020.09.15",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "VISC11_2020.02.17",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "ABCP11_2019.07.24",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "MALL11_2019.07.24",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "BRCR11_2019.04.08",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "HTMX11_2019.03.18",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "BBPO11_2020.09.15",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "CBOP11_2018.05.25",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "ALMI11_2018.01.18",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "FEXC11_2017.06.02",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.2_urbano",
+      "status": "fechado"
+    },
+    {
+      "nome": "TGAR11",
+      "macro_classe": "4_ativos_reais",
+      "subclasse": "4.4_desenvolvimento",
+      "status": "aberto"
+    },
+    {
+      "nome": "QQQM_2025.11.12",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "VEU_2025.08.25",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "VTV_2025.08.18",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "IJS_2025.08.18",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "NOBL_2025.08.18",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "QQQ_2025.08.18",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "VT_2022.09.06",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "ARKK_2022.08.29",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "ARKQ_2022.08.29",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "ARKG_2022.08.29",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "ARKF_2022.08.29",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "AAPL_2022.03.28",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "AMZN_2022.03.28",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "GOOGL_2022.03.28",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "FB_2022.04.01",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "MSFT_2022.04.01",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "INDA_2021.11.23",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "MCHI_2021.11.23",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "IUSV_2021.05.18",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "BRK.B_2021.02.05",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "VYM_2020.12.02",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "NVDA_2020.11.04",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "VZ_2020.10.21",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "DIS_2020.10.21",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "CVS_2020.10.07",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "BMY_2020.10.07",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "ED_2020.10.07",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "SQ_2020.10.07",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "JPM_2020.03.09",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "VNQ",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.2_real_estate",
+      "status": "aberto"
+    },
+    {
+      "nome": "VNQI_2025.06.30",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.2_real_estate",
+      "status": "fechado"
+    },
+    {
+      "nome": "XLRE_2023.05.15",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.2_real_estate",
+      "status": "fechado"
+    },
+    {
+      "nome": "SCHH_2023.04.17",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.2_real_estate",
+      "status": "fechado"
+    },
+    {
+      "nome": "XLRE_2021.05.18",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.2_real_estate",
+      "status": "fechado"
+    },
+    {
+      "nome": "SCHH_2021.05.18",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.2_real_estate",
+      "status": "fechado"
+    },
+    {
+      "nome": "VNQI_2021.02.05",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.2_real_estate",
+      "status": "fechado"
+    },
+    {
+      "nome": "IBIT",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.1_reserva_valor",
+      "status": "aberto"
+    },
+    {
+      "nome": "BITH11_2025.07.21",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.1_reserva_valor",
+      "status": "fechado"
+    },
+    {
+      "nome": "BITCOIN_2025.02.02",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.1_reserva_valor",
+      "status": "fechado"
+    },
+    {
+      "nome": "ETHA",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "aberto"
+    },
+    {
+      "nome": "CHAINLINK_2025.08.08",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "POLYGON_2025.08.10",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "BNB_2025.08.08",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "SOLH11_2025.08.11",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "SOLANA_2025.05.11",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "ETHEREUM_2024.12.16",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "PENDLE",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "NEAR",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "MKR_2024.12.08",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "AAVE_2023.12.26",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "OPTIMISM_2024.11.20",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "GMX",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "DYDX_2024.11.22",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "POLKADOT_2023.11.30",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "SANDBOX_2022.12.30",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "DECENTRALAND_2022.06.06",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "CARDANO_2022.05.31",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "HASH11_2021.11.22",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "HASH11_2021.07.12",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "Arca Previ",
+      "macro_classe": "7_alternativos_estratega",
+      "subclasse": "7.1_multimercado",
+      "status": "aberto",
+      "custodia": "XP",
+      "susep": "15414613245202221",
+      "nome_oficial": "PGBL Arca Grão XP Seg Prev Advisory FIC FIM"
+    },
+    {
+      "nome": "XP Superprev 2",
+      "macro_classe": "7_alternativos_estratega",
+      "subclasse": "7.1_multimercado",
+      "status": "aberto",
+      "custodia": "XP",
+      "susep": "15414613328202058",
+      "nome_oficial": "PGBL XP Seg Superprev 2 FIM"
+    },
+    {
+      "nome": "Vitreo Superprev 2",
+      "macro_classe": "7_alternativos_estratega",
+      "subclasse": "7.1_multimercado",
+      "status": "aberto",
+      "custodia": "Icatu",
+      "cnpj": "33.269.171/0001-70",
+      "nome_oficial": "PGBL INSTITUÍDO VITREO FOF SUPERPREVIDÊNCIA"
+    },
+    {
+      "nome": "Kapitalo K10 Previ_2024.01.15",
+      "macro_classe": "7_alternativos_estratega",
+      "subclasse": "7.1_multimercado",
+      "status": "fechado"
+    },
+    {
+      "nome": "Verde Mundi Previ_2023.09.15",
+      "macro_classe": "7_alternativos_estratega",
+      "subclasse": "7.1_multimercado",
+      "status": "fechado"
+    },
+    {
+      "nome": "Verde Previdência_2020.07.09",
+      "macro_classe": "7_alternativos_estratega",
+      "subclasse": "7.1_multimercado",
+      "status": "fechado"
+    },
+    {
+      "nome": "Adam Previ_2019.12.10",
+      "macro_classe": "7_alternativos_estratega",
+      "subclasse": "7.1_multimercado",
+      "status": "fechado"
+    },
+    {
+      "nome": "DEB CMTR33_2033.01.01",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "DEB GASP15_2015.01.01",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "LDO_2024.12.08",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "TIA_2024.11.22",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "TON_2024.12.08",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "UNI_2024.12.08",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "ZIL_2024.11.22",
+      "macro_classe": "6_criptoativos",
+      "subclasse": "6.2_plataforma_utility",
+      "status": "fechado"
+    },
+    {
+      "nome": "CDB Pine (IPCA)_2018.07.09",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "CDB BMG (CDI)_2019.05.06",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "CDB BMG (IPCA)_2020.03.25",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "CDB BMG (IPCA) (2)_2020.04.17",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "CDB BMG (Pré)_2019.04.08",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "CDB Fibra (CDI)_2019.08.27",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "CDB Fibra (Pré)_2020.03.19",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "CDB Original (IPCA)_2020.03.09",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "CDB Pine (CDI)_2018.03.19",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "CDB Pine (CDI) (2)_2019.10.03",
+      "macro_classe": "2_credito_privado",
+      "subclasse": "2.1_high_grade",
+      "status": "fechado"
+    },
+    {
+      "nome": "SPY",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "aberto"
+    },
+    {
+      "nome": "SPYD_2021.11.09",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "SPY_2025.08.18",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    },
+    {
+      "nome": "SPYM_2025.11.21",
+      "macro_classe": "5_internacional",
+      "subclasse": "5.1_acoes_globais",
+      "status": "fechado"
+    }
+  ]
+}

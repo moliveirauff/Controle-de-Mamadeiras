@@ -836,7 +836,9 @@ function renderDYAtivo() {
   const chartHeight = (sorted.length * barHeight) + paddingTop + paddingBottom;
   
   const canvas = document.getElementById('chartDYAtivo');
+  canvas.style.width = '100%';
   canvas.style.height = chartHeight + 'px';
+  canvas.width = canvas.parentElement.clientWidth;
   canvas.height = chartHeight;
   
   if (charts.dyAtivo) charts.dyAtivo.destroy();
@@ -864,7 +866,7 @@ function renderDYAtivo() {
     },
     options: {
       indexAxis: 'y',
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false,
       layout: {
         padding: { top: paddingTop, right: 50, bottom: paddingBottom }
