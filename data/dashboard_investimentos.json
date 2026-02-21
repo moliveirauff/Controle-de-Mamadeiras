@@ -7,6 +7,54 @@
   },
   "evolucao_mensal": [
     {
+      "mes": "2024-03",
+      "patrimonio": 870420.69
+    },
+    {
+      "mes": "2024-04",
+      "patrimonio": 911699.51
+    },
+    {
+      "mes": "2024-05",
+      "patrimonio": 938397.94
+    },
+    {
+      "mes": "2024-06",
+      "patrimonio": 965928.55
+    },
+    {
+      "mes": "2024-07",
+      "patrimonio": 1003286.92
+    },
+    {
+      "mes": "2024-08",
+      "patrimonio": 1050545.36
+    },
+    {
+      "mes": "2024-09",
+      "patrimonio": 1050806.2
+    },
+    {
+      "mes": "2024-10",
+      "patrimonio": 1060512.61
+    },
+    {
+      "mes": "2024-11",
+      "patrimonio": 1099190.42
+    },
+    {
+      "mes": "2024-12",
+      "patrimonio": 1147643.42
+    },
+    {
+      "mes": "2025-01",
+      "patrimonio": 1190906.9
+    },
+    {
+      "mes": "2025-02",
+      "patrimonio": 1196117.9
+    },
+    {
       "mes": "2025-03",
       "patrimonio": 1219523.39
     },
@@ -1685,5 +1733,5 @@
       "categoria": "3_acoes_brasil"
     }
   ],
-  "last_update": "2026-02-21 18:10"
+  "last_update": "2026-02-21 19:47"
 }

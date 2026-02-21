@@ -117,12 +117,15 @@ def run():
             cot_key = f"{MESES_PT[month_val]}/{year_val}"
             price = asset_cots.get(cot_key, 0.0)
             if price is None or price == 0.0:
-                def cot_to_date(k):
-                    m_pt, y = k.split('/')
-                    return date(int(y), next(n for n, v in MESES_PT.items() if v == m_pt), 1)
-                valid = {cot_to_date(k): v for k, v in asset_cots.items() if v is not None}
-                past = [d for d in valid.keys() if d <= last_day]
-                price = valid[max(past)] if past else 0.0
+                try:
+                    def cot_to_date(k):
+                        m_pt, y = k.split('/')
+                        return date(int(y), next(n for n, v in MESES_PT.items() if v == m_pt), 1)
+                    valid = {cot_to_date(k): v for k, v in asset_cots.items() if v is not None and v > 0}
+                    past = [d for d in valid.keys() if d <= last_day]
+                    price = valid[max(past)] if past else 0.0
+                except Exception:
+                    price = 0.0
             pat_mes += qty * price
 
         evolucao_mensal.append({"mes": month_key, "patrimonio": round(pat_mes, 2)})
@@ -219,9 +222,9 @@ def run():
             "patrimonio_total": round(pat_atual, 2),
             "total_investido": round(invest_total, 2),
             "rentabilidade_nominal": round(((pat_atual - invest_total)/invest_total*100), 2) if invest_total > 0 else 0,
-            "cagr_5anos": round((((pat_atual / evolucao_mensal[-61]["patrimonio"])**(1/5))-1)*100, 2) if len(evolucao_mensal) > 60 else 0
+            "cagr_5anos": round((((pat_atual / evolucao_mensal[-61]["patrimonio"])**(1/5))-1)*100, 2) if len(evolucao_mensal) >= 61 and evolucao_mensal[-61]["patrimonio"] > 0 else 0
         },
-        "evolucao_mensal": evolucao_mensal[-12:],
+        "evolucao_mensal": evolucao_mensal[-24:],
         "evolucao_anual": evolucao_anual,
         "aportes_liquidos": [{"ano": y, "aporte": round(v, 2)} for y, v in sorted(aportes_anuais.items())],
         "rentabilidade_anual": rentabilidade_anual_data,
