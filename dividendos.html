@@ -147,7 +147,7 @@
     }
     .chart-scroll {
       position: relative;
-      height: 380px;
+      height: 300px;
       width: 100%;
       overflow-y: auto;
       overflow-x: hidden;
@@ -161,7 +161,7 @@
       flex-wrap: wrap;
       justify-content: center;
     }
-    select.filter-select {
+    select.filter-select, button.filter-select {
       background: var(--border);
       border: none;
       padding: 4px 10px;
@@ -171,6 +171,41 @@
       color: var(--text);
       cursor: pointer;
       outline: none;
+    }
+    .multiselect-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .multiselect-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 4px;
+      padding: 8px;
+      min-width: 180px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .multiselect-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+    .multiselect-option:hover {
+      background: var(--border);
+    }
+    .multiselect-option input[type="checkbox"] {
+      cursor: pointer;
     }
     .filter-btn {
       background: var(--border);
@@ -250,9 +285,17 @@
     <div class="card-header">
       <div class="card-title"><span>📊</span> Evolução Anual</div>
       <div class="controls">
-        <select id="filterClass" class="filter-select" onchange="updateCharts()">
-          <option value="all">Todas as Classes</option>
-        </select>
+        <div class="multiselect-wrapper">
+          <button id="filterClassBtn" class="filter-select" onclick="toggleClassFilter(event)">
+            <span id="filterClassLabel">Todas as Classes</span> ▾
+          </button>
+          <div id="filterClassDropdown" class="multiselect-dropdown" style="display: none;">
+            <label class="multiselect-option">
+              <input type="checkbox" value="all" checked onchange="toggleAllClasses(this)"> Todas
+            </label>
+            <div id="classCheckboxes"></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="chart-container">
@@ -466,16 +509,24 @@ async function init() {
 
     // Popular Filtro de Classes
     const uniqueClasses = [...new Set(rawData.map(d => d.class))].sort();
-    const select1 = document.getElementById('filterClass');
+    const checkboxContainer = document.getElementById('classCheckboxes');
     const select2 = document.getElementById('filterDYClass');
     const select3 = document.getElementById('filterTopClass');
     
     uniqueClasses.forEach(c => {
-      const opt1 = document.createElement('option');
-      opt1.value = c;
-      opt1.textContent = LABELS[c] || c;
-      select1.appendChild(opt1);
+      // Multi-select para Evolução Anual
+      const label = document.createElement('label');
+      label.className = 'multiselect-option';
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.value = c;
+      checkbox.checked = true;
+      checkbox.onchange = () => updateClassFilter();
+      label.appendChild(checkbox);
+      label.appendChild(document.createTextNode(LABELS[c] || c));
+      checkboxContainer.appendChild(label);
       
+      // Selects para os outros gráficos
       const opt2 = document.createElement('option');
       opt2.value = c;
       opt2.textContent = LABELS[c] || c;
@@ -530,13 +581,53 @@ function updateKPIs() {
 }
 
 // === CHARTS ===
+// === FILTRO MULTI-SELECT ===
+function toggleClassFilter(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById('filterClassDropdown');
+  dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleAllClasses(checkbox) {
+  const checkboxes = document.querySelectorAll('#classCheckboxes input[type="checkbox"]');
+  checkboxes.forEach(cb => cb.checked = checkbox.checked);
+  updateClassFilter();
+}
+
+function updateClassFilter() {
+  const checkboxes = document.querySelectorAll('#classCheckboxes input[type="checkbox"]');
+  const allCheckbox = document.querySelector('input[value="all"]');
+  const selected = Array.from(checkboxes).filter(cb => cb.checked);
+  
+  // Atualizar estado do "Todas"
+  allCheckbox.checked = selected.length === checkboxes.length;
+  
+  // Atualizar label
+  const label = document.getElementById('filterClassLabel');
+  if (selected.length === 0 || selected.length === checkboxes.length) {
+    label.textContent = 'Todas as Classes';
+  } else if (selected.length === 1) {
+    label.textContent = LABELS[selected[0].value] || selected[0].value;
+  } else {
+    label.textContent = `${selected.length} selecionadas`;
+  }
+  
+  renderAnual();
+}
+
+// Fechar dropdown ao clicar fora
+document.addEventListener('click', () => {
+  document.getElementById('filterClassDropdown').style.display = 'none';
+});
+
 function renderAnual() {
   const ctx = getCtx('chartAnual');
   const years = [...new Set(rawData.map(d => d.year))].sort();
   const classes = [...new Set(rawData.map(d => d.class))];
   
-  const selectedClass = document.getElementById('filterClass').value;
-  const activeClasses = selectedClass === 'all' ? classes : [selectedClass];
+  // Ler classes selecionadas dos checkboxes
+  const checkboxes = document.querySelectorAll('#classCheckboxes input[type="checkbox"]:checked');
+  const activeClasses = checkboxes.length === 0 ? classes : Array.from(checkboxes).map(cb => cb.value);
 
   const datasets = activeClasses.map(c => ({
     label: LABELS[c] || c,
@@ -829,12 +920,12 @@ function renderDYAtivo() {
   
   const sorted = filtered.sort((a, b) => b[1].dy - a[1].dy);
   
-  // Altura dinâmica: 38px por ativo — mesmo ritmo do Top Pagadores (380px / 10 ativos)
-  // Configuração idêntica ao Top Pagadores para barras com mesma altura
-  const barHeight = 38;
+  // Detectar altura da barra do Top Pagadores (300px/10 no mobile, 380px/10 no desktop)
+  const topContainer = document.getElementById('chartTop').parentElement;
+  const barHeight = topContainer.clientHeight / 10;
   const chartHeight = sorted.length * barHeight;
   
-  // Setar altura do container, não do canvas — Chart.js gerencia com responsive: true
+  // Setar altura do container dinamicamente — Chart.js gerencia com responsive: true
   const scrollContainer = document.getElementById('chartDYAtivo').parentElement;
   scrollContainer.style.height = chartHeight + 'px';
   
