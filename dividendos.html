@@ -16,11 +16,8 @@
       --accent: #3498db;
       --border: #e2e8f0;
       --badge-bg: #ecf0f1;
-      --badge-text: #7f8c8d;
       --shadow: 0 4px 16px rgba(0,0,0,0.07);
-      --shadow-hover: 0 10px 28px rgba(0,0,0,0.13);
       --radius: 16px;
-      --radius-sm: 8px;
     }
     body.dark-mode {
       --bg: #1a1a1a;
@@ -28,665 +25,503 @@
       --text-muted: #a0aec0;
       --surface: #2d2d2d;
       --primary: #ecf0f1;
-      --accent: #3498db;
       --border: #4a5568;
       --badge-bg: #3d3d3d;
-      --badge-text: #bdc3c7;
       --shadow: 0 4px 16px rgba(0,0,0,0.3);
-      --shadow-hover: 0 10px 28px rgba(0,0,0,0.4);
     }
 
-    /* === RESET & BASE === */
+    /* === BASE === */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       transition: background 0.3s, color 0.3s;
-      min-height: 100vh;
-      position: relative;
       padding: 10px 10px 60px 10px;
     }
 
-    /* === NAVBAR === */
-    #theme-toggle {
-      position: absolute; top: 12px; right: 12px;
-      background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
-      padding: 8px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 10; transition: background 0.2s;
+    /* === HEADER === */
+    .header-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 1280px; margin: 0 auto 20px; padding: 10px;
     }
-    body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
-    .nav-link {
-      text-decoration: none;
-      color: var(--accent);
-      font-size: 0.9rem;
-      margin: 10px 0 0 4px;
-      display: inline-block;
-      font-weight: 500;
-    }
-    .nav-link:hover { text-decoration: underline; }
-    h1 {
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin: 10px 44px 4px 44px;
-      color: var(--text);
-    }
-    .page-subtitle {
-      text-align: center;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-bottom: 18px;
-    }
+    h1 { font-size: 1.5rem; font-weight: 800; color: var(--text); margin: 0; }
+    .nav-link { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    #theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; }
 
-    /* === MAIN LAYOUT === */
-    main {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0.75rem 1.25rem 3rem;
-    }
+    /* === LAYOUT === */
+    main { max-width: 1280px; margin: 0 auto; }
 
-    /* === LOADING OVERLAY === */
-    #loadingOverlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.45);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 999;
-      flex-direction: column; gap: 1rem;
-    }
-    #loadingOverlay.hidden { display: none; }
-    .spinner {
-      width: 44px; height: 44px;
-      border: 4px solid rgba(255,255,255,0.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #loadingOverlay p { color: #fff; font-weight: 600; font-size: 1rem; }
-
-    /* === CARDS === */
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1.4rem 1.5rem;
-      transition: box-shadow 0.2s;
-    }
-    .card:hover { box-shadow: var(--shadow-hover); }
-    .card-header {
-      display: flex; align-items: center; gap: 0.6rem;
-      margin-bottom: 1rem;
-    }
-    .card-icon { font-size: 1.4rem; line-height: 1; }
-    .card-header h3 {
-      font-size: 1rem; font-weight: 700;
-      color: var(--primary); margin: 0;
-    }
-
-    /* === KPI GRID ===
-       Mobile-first: 2 per row always, 4 per row on desktop */
+    /* === KPI GRID === */
     .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;
     }
-    @media (min-width: 768px) {
-      .kpi-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1rem;
-      }
-    }
+    @media (min-width: 768px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 15px; } }
 
     .kpi-card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1rem 1.1rem;
-      display: flex; flex-direction: column; gap: 0.3rem;
-      transition: transform 0.2s, box-shadow 0.2s;
+      background: var(--surface); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 15px;
+      display: flex; flex-direction: column;
     }
-    @media (min-width: 768px) {
-      .kpi-card { padding: 1.25rem 1.4rem; gap: 0.35rem; }
-    }
-    .kpi-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
-    .kpi-label {
-      font-size: 0.7rem; font-weight: 600;
-      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;
-    }
-    @media (min-width: 768px) { .kpi-label { font-size: 0.75rem; } }
-    .kpi-value {
-      font-size: 1.25rem; font-weight: 800;
-      color: var(--primary); line-height: 1.1;
-    }
-    @media (min-width: 768px) { .kpi-value { font-size: 1.65rem; } }
-    .kpi-sub { font-size: 0.72rem; color: var(--text-muted); }
-    .kpi-icon { font-size: 1.4rem; margin-bottom: 0.15rem; }
-    @media (min-width: 768px) { .kpi-icon { font-size: 1.6rem; margin-bottom: 0.25rem; } }
+    .kpi-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+    .kpi-value { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+    .kpi-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: auto; }
 
-    /* === CHARTS GRID === */
-    .charts-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-      margin-bottom: 1.5rem;
-    }
-    @media (min-width: 900px) {
-      .charts-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
+    /* === CHARTS === */
+    .charts-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 900px) { .charts-grid { grid-template-columns: 1fr 1fr; } }
+    .chart-full { grid-column: 1 / -1; }
 
-    .chart-card-full { grid-column: 1 / -1; }
+    .card {
+      background: var(--surface); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 20px;
+    }
+    .card-header { 
+      display: flex; justify-content: space-between; align-items: center; 
+      margin-bottom: 15px; flex-wrap: wrap; gap: 10px;
+    }
+    .card-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+    
+    .chart-container {
+      position: relative; width: 100%; height: 450px;
+    }
+    @media (max-width: 600px) { .chart-container { height: 380px; } }
 
-    .chart-wrap {
-      position: relative;
-      width: 100%;
-      min-height: 280px;
-      max-height: 440px;
-      overflow-x: auto;
+    /* === CONTROLS === */
+    .controls { display: flex; gap: 8px; align-items: center; }
+    select, button.filter-btn {
+      background: var(--badge-bg); color: var(--text);
+      border: 1px solid var(--border); padding: 6px 12px;
+      border-radius: 8px; font-size: 0.85rem; cursor: pointer;
+      font-family: inherit;
     }
-    .chart-wrap canvas {
-      max-height: 420px;
-      min-width: 0;
-      width: 100% !important;
-    }
-    @media (max-width: 600px) {
-      .chart-wrap { min-height: 260px; max-height: 340px; }
-      .chart-wrap canvas { max-height: 320px; }
+    button.filter-btn.active {
+      background: var(--accent); color: white; border-color: var(--accent);
     }
 
-    /* Monthly chart filter tabs */
-    .tab-group {
-      display: flex; gap: 0.4rem; margin-bottom: 1rem;
+    /* === LOADING === */
+    #loading {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      display: flex; align-items: center; justify-content: center; z-index: 1000;
+      color: white; font-weight: bold; backdrop-filter: blur(4px);
     }
-    .tab-btn {
-      background: var(--badge-bg); border: none;
-      color: var(--text-muted); padding: 0.3rem 0.8rem;
-      border-radius: 9999px; cursor: pointer;
-      font-size: 0.8rem; font-weight: 600;
-      transition: all 0.2s;
-      min-height: 36px; min-width: 44px; /* touch-friendly */
-    }
-    .tab-btn.active {
-      background: var(--accent); color: #fff;
-    }
-    .tab-btn:hover:not(.active) { background: var(--border); }
-
-    /* Macro class color dots */
-    .class-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      display: inline-block; flex-shrink: 0;
-    }
-
-    /* === RESPONSIVE FIXES === */
-    @media (max-width: 600px) {
-      main { padding: 0.5rem 0.75rem 2.5rem; }
-      h1 { font-size: 1.25rem; }
-    }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-<!-- Loading Overlay -->
-<div id="loadingOverlay">
-  <div class="spinner"></div>
-  <p>Carregando proventos…</p>
+<div id="loading">Carregando dados...</div>
+
+<div class="header-bar">
+  <div>
+    <a href="index.html" class="nav-link">← Voltar</a>
+    <h1>📊 Dividendos</h1>
+  </div>
+  <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
 </div>
 
-<!-- Header — padrão Hub -->
-<button id="theme-toggle" onclick="toggleTheme()">🌙</button>
-<a href="index.html" class="nav-link">← Voltar para Início</a>
-<h1>📊 Dividendos &amp; Proventos</h1>
-<p class="page-subtitle">Histórico completo de dividendos, JCP e rendimentos</p>
-
 <main>
-  <!-- KPI Row: 2 per row mobile, 4 per row desktop -->
-  <div class="kpi-grid" id="kpiGrid">
+  <!-- KPIs -->
+  <div class="kpi-grid">
     <div class="kpi-card">
-      <span class="kpi-icon">💰</span>
-      <span class="kpi-label">Total Acumulado</span>
+      <span class="kpi-label">💰 Total Acumulado</span>
       <span class="kpi-value" id="kpiTotal">—</span>
-      <span class="kpi-sub">Desde o início</span>
+      <span class="kpi-sub">Histórico completo</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-icon">📅</span>
-      <span class="kpi-label">Total YTD</span>
+      <span class="kpi-label">📅 Total YTD</span>
       <span class="kpi-value" id="kpiYTD">—</span>
-      <span class="kpi-sub" id="kpiYTDSub">ano atual</span>
+      <span class="kpi-sub" id="kpiYTDLabel">Ano atual</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-icon">📈</span>
-      <span class="kpi-label">Média Mensal</span>
-      <span class="kpi-value" id="kpiL12M">—</span>
-      <span class="kpi-sub">últimos 12 meses</span>
+      <span class="kpi-label">📈 Média Mensal (12M)</span>
+      <span class="kpi-value" id="kpiAvg">—</span>
+      <span class="kpi-sub">Últimos 12 meses</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-icon">🚀</span>
-      <span class="kpi-label">CAGR 5 Anos</span>
+      <span class="kpi-label">🚀 CAGR (5 Anos)</span>
       <span class="kpi-value" id="kpiCAGR">—</span>
-      <span class="kpi-sub">crescimento anual composto</span>
+      <span class="kpi-sub">Crescimento anual</span>
     </div>
   </div>
 
-  <!-- Charts: Anual (full width) + Mensal + Donut -->
+  <!-- Charts -->
   <div class="charts-grid">
-    <!-- Evolução Anual: full row -->
-    <div class="card chart-card-full">
+    <!-- Chart 1: Anual -->
+    <div class="card chart-full">
       <div class="card-header">
-        <span class="card-icon">📊</span>
-        <h3>Evolução Anual por Classe</h3>
+        <div class="card-title"><span>📊</span> Evolução Anual</div>
+        <div class="controls">
+          <!-- Filtro de Classes (Opcional, implementado visualmente) -->
+          <select id="filterClass" onchange="updateCharts()">
+            <option value="all">Todas as Classes</option>
+          </select>
+        </div>
       </div>
-      <div class="chart-wrap">
+      <div class="chart-container">
         <canvas id="chartAnual"></canvas>
       </div>
     </div>
 
-    <!-- Evolução Mensal -->
-    <div class="card">
+    <!-- Chart 2: Mensal -->
+    <div class="card chart-full">
       <div class="card-header">
-        <span class="card-icon">🗓️</span>
-        <h3>Evolução Mensal por Classe</h3>
+        <div class="card-title"><span>🗓️</span> Evolução Mensal</div>
+        <div class="controls">
+          <button class="filter-btn active" onclick="setMonthRange(12, this)">12M</button>
+          <button class="filter-btn" onclick="setMonthRange(24, this)">24M</button>
+          <button class="filter-btn" onclick="setMonthRange(36, this)">36M</button>
+          <button class="filter-btn" onclick="setMonthRange(999, this)">Todos</button>
+        </div>
       </div>
-      <div class="tab-group">
-        <button class="tab-btn active" onclick="setMonthRange(12, this)">12M</button>
-        <button class="tab-btn" onclick="setMonthRange(24, this)">24M</button>
-        <button class="tab-btn" onclick="setMonthRange(36, this)">36M</button>
-      </div>
-      <div class="chart-wrap">
+      <div class="chart-container">
         <canvas id="chartMensal"></canvas>
       </div>
     </div>
 
-    <!-- Donut -->
+    <!-- Chart 3: Donut -->
     <div class="card">
       <div class="card-header">
-        <span class="card-icon">🥧</span>
-        <h3>Composição por Classe</h3>
+        <div class="card-title"><span>🥧</span> Composição por Classe</div>
+        <div class="controls">
+          <button class="filter-btn active" onclick="setDonutRange(12, this)">12M</button>
+          <button class="filter-btn" onclick="setDonutRange(24, this)">24M</button>
+          <button class="filter-btn" onclick="setDonutRange(36, this)">36M</button>
+          <button class="filter-btn" onclick="setDonutRange(999, this)">Todos</button>
+        </div>
       </div>
-      <div class="chart-wrap" style="min-height:220px;">
+      <div class="chart-container" style="height: 400px;">
         <canvas id="chartDonut"></canvas>
+      </div>
+    </div>
+    
+    <!-- Chart 4: Top Pagadores -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><span>🏆</span> Top Pagadores (12M)</div>
+      </div>
+      <div class="chart-container" style="height: 300px;">
+        <canvas id="chartTop"></canvas>
       </div>
     </div>
   </div>
 </main>
 
 <script>
-// === SECTION: THEME ===
-function toggleTheme() {
-  document.body.classList.toggle('dark-mode');
-  const isDark = document.body.classList.contains('dark-mode');
-  document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  refreshChartThemes();
-}
-if (localStorage.getItem('theme') === 'dark') {
-  document.body.classList.add('dark-mode');
-  document.getElementById('theme-toggle').textContent = '☀️';
-}
-
-// === SECTION: COLOR PALETTE PER CLASS ===
-// Colors assigned per macro_classe key — DRY, never hardcoded elsewhere
-const CLASS_PALETTE = {
-  '1_renda_fixa_soberana':    '#3498db',
-  '2_credito_privado':        '#2ecc71',
-  '3_acoes_brasil':           '#e74c3c',
-  '4_ativos_reais':           '#f39c12',
-  '5_internacional':          '#9b59b6',
-  '6_criptoativos':           '#1abc9c',
+// === CONFIG ===
+const COLORS = {
+  '1_renda_fixa_soberana': '#3498db',
+  '2_credito_privado': '#2ecc71', 
+  '3_acoes_brasil': '#e74c3c',
+  '4_ativos_reais': '#f39c12',
+  '5_internacional': '#9b59b6',
+  '6_criptoativos': '#1abc9c',
   '7_alternativos_estratega': '#e67e22',
-  'Indefinido':               '#95a5a6',
+  'default': '#95a5a6'
 };
-const CLASS_LABELS = {
-  '1_renda_fixa_soberana':    'Renda Fixa Soberana',
-  '2_credito_privado':        'Crédito Privado',
-  '3_acoes_brasil':           'Ações Brasil',
-  '4_ativos_reais':           'Ativos Reais',
-  '5_internacional':          'Internacional',
-  '6_criptoativos':           'Criptoativos',
-  '7_alternativos_estratega': 'Alternativos',
-  'Indefinido':               'Indefinido',
+
+const LABELS = {
+  '1_renda_fixa_soberana': 'Renda Fixa',
+  '2_credito_privado': 'Crédito',
+  '3_acoes_brasil': 'Ações BR',
+  '4_ativos_reais': 'FIIs/Imóveis',
+  '5_internacional': 'Exterior',
+  '6_criptoativos': 'Cripto',
+  '7_alternativos_estratega': 'Alternativos'
 };
-function classColor(cls) { return CLASS_PALETTE[cls] || '#95a5a6'; }
-function classLabel(cls) { return CLASS_LABELS[cls] || cls; }
 
-// === SECTION: GLOBAL STATE ===
-let allMovs = [];        // raw movimentacoes from JSON (all history)
-let tickerClassMap = {}; // ticker -> macro_classe (from ativos_financeiros.json)
-let allClasses = [];     // sorted list of classes present in dividendos data
-let monthRange = 12;
+// === STATE ===
+let rawData = [];
+let monthLimit = 12;
+let donutLimit = 12;
+let charts = {};
 
-let chartAnual = null, chartMensal = null, chartDonut = null;
+// === INIT ===
+async function init() {
+  try {
+    const [divReq, ativosReq] = await Promise.all([
+      fetch('data/dividendos_historico.json'),
+      fetch('data/ativos_financeiros.json')
+    ]);
+    
+    const divData = await divReq.json();
+    const ativosData = await ativosReq.json();
+    
+    // Mapear Ticker -> Classe
+    const tickerMap = {};
+    ativosData.ativos.forEach(a => {
+      const t = a.nome.split('_')[0];
+      tickerMap[t] = a.macro_classe;
+    });
 
-// === SECTION: DATA LOADING ===
-async function loadData() {
-  const [divRes, ativoRes] = await Promise.all([
-    fetch('./data/dividendos_historico.json?v=' + Date.now()),
-    fetch('./data/ativos_financeiros.json?v=' + Date.now()),
-  ]);
-  if (!divRes.ok) throw new Error('Falha ao carregar dividendos_historico.json');
-  if (!ativoRes.ok) throw new Error('Falha ao carregar ativos_financeiros.json');
+    // Processar Dados
+    rawData = divData.movimentacoes.map(m => {
+      const ticker = m.ativo.split('_')[0];
+      return {
+        date: new Date(m.data), // YYYY-MM-DD funciona no construtor Date
+        year: m.data.substring(0, 4),
+        month: m.data.substring(0, 7), // YYYY-MM
+        val: m.valor_total || 0,
+        class: tickerMap[ticker] || 'Outros',
+        ticker: ticker
+      };
+    }).sort((a,b) => a.date - b.date);
 
-  const divData = await divRes.json();
-  const ativoData = await ativoRes.json();
+    // Popular Filtro de Classes
+    const uniqueClasses = [...new Set(rawData.map(d => d.class))].sort();
+    const select = document.getElementById('filterClass');
+    uniqueClasses.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = LABELS[c] || c;
+      select.appendChild(opt);
+    });
 
-  // Build ticker -> macro_classe map (DRY: read from JSON, never hardcoded)
-  ativoData.ativos.forEach(a => {
-    const ticker = a.nome.split('_')[0];
-    tickerClassMap[ticker] = a.macro_classe;
-  });
+    renderAll();
+    document.getElementById('loading').classList.add('hidden');
 
-  // Enrich movimentacoes with resolved ticker and class
-  allMovs = divData.movimentacoes.map(m => {
-    const ticker = m.ativo.split('_')[0];
-    const macroClasse = tickerClassMap[ticker] || 'Indefinido';
-    return {
-      ...m,
-      ticker,
-      macroClasse,
-      valor: m.valor_total ?? m.valor ?? 0,
-      year: parseInt(m.data.substring(0, 4)),
-      month: parseInt(m.data.substring(5, 7)),
-      yearMonth: m.data.substring(0, 7),  // e.g. "2024-03"
-    };
-  });
-
-  // Derive all unique classes present in the data (sorted for consistency)
-  const classSet = new Set(allMovs.map(m => m.macroClasse));
-  allClasses = Array.from(classSet).sort();
-}
-
-// === SECTION: KPI CALCULATIONS ===
-function calcKPIs(movs) {
-  const currentYear = new Date().getFullYear();
-  const total = movs.reduce((s, m) => s + m.valor, 0);
-
-  const ytd = movs
-    .filter(m => m.year === currentYear)
-    .reduce((s, m) => s + m.valor, 0);
-
-  // L12M: last 12 calendar months from today
-  const now = new Date();
-  const l12mStart = new Date(now.getFullYear(), now.getMonth() - 11, 1);
-  const l12mTotal = movs
-    .filter(m => new Date(m.data) >= l12mStart)
-    .reduce((s, m) => s + m.valor, 0);
-  const l12mAvg = l12mTotal / 12;
-
-  // CAGR 5 anos: usa o ano mais completo (ignora ano atual se parcial)
-  // Usa ano anterior como referência "final" para evitar distorção de ano incompleto
-  const allYears = [...new Set(movs.map(m => m.year))].sort();
-  const byYear = {};
-  movs.forEach(m => { byYear[m.year] = (byYear[m.year] || 0) + m.valor; });
-  // Prioriza ano anterior ao atual (ano completo) como ano final do CAGR
-  const finalYear = allYears.includes(currentYear - 1) ? currentYear - 1 : Math.max(...allYears);
-  const vN = byYear[finalYear] || null;
-  // Tenta 5, 4, 3 anos atrás (fallback graceful)
-  let cagrStr = 'N/A';
-  let cagrFound = false;
-  for (const nYears of [5, 4, 3]) {
-    const startYear = finalYear - nYears;
-    const v0 = byYear[startYear] || null;
-    if (v0 && vN && v0 > 0) {
-      const cagr = Math.pow(vN / v0, 1 / nYears) - 1;
-      const sign = cagr >= 0 ? '+' : '';
-      cagrStr = `${sign}${(cagr * 100).toFixed(1)}%`;
-      if (nYears < 5) cagrStr += ` (${nYears}a)`;
-      cagrFound = true;
-      break;
-    }
+  } catch (e) {
+    alert('Erro ao carregar dados: ' + e.message);
+    console.error(e);
   }
-  if (!cagrFound) cagrStr = 'N/A';
-
-  return { total, ytd, l12mAvg, cagrStr, currentYear };
 }
 
-function fmtBRL(value) {
-  return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+function renderAll() {
+  updateKPIs();
+  renderAnual();
+  renderMensal();
+  renderDonut();
+  renderTop();
 }
 
+// === KPIS ===
 function updateKPIs() {
-  const { total, ytd, l12mAvg, cagrStr, currentYear } = calcKPIs(allMovs);
-  document.getElementById('kpiTotal').textContent  = fmtBRL(total);
-  document.getElementById('kpiYTD').textContent    = fmtBRL(ytd);
-  document.getElementById('kpiYTDSub').textContent = `ano ${currentYear}`;
-  document.getElementById('kpiL12M').textContent   = fmtBRL(l12mAvg);
-  document.getElementById('kpiCAGR').textContent   = cagrStr;
-}
-
-// === SECTION: CHART HELPERS ===
-function isDark() { return document.body.classList.contains('dark-mode'); }
-function gridColor() { return isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.07)'; }
-function tickColor() { return isDark() ? '#cbd5e0' : '#718096'; }
-
-function chartDefaults() {
-  return {
-    responsive: true,
-    maintainAspectRatio: true,
-    animation: { duration: 400 },
-    plugins: {
-      legend: {
-        labels: { color: tickColor(), font: { size: 11 }, boxWidth: 12 },
-        position: 'bottom',
-      },
-      tooltip: {
-        callbacks: {
-          label: ctx => ` ${ctx.dataset.label}: ${fmtBRL(ctx.raw || 0)}`
-        }
-      }
-    },
-    scales: {
-      x: {
-        stacked: true,
-        ticks: { color: tickColor(), font: { size: 11 } },
-        grid: { color: gridColor() },
-      },
-      y: {
-        stacked: true,
-        ticks: {
-          color: tickColor(), font: { size: 11 },
-          callback: v => fmtBRL(v),
-        },
-        grid: { color: gridColor() },
-      }
-    }
-  };
-}
-
-// Aggregate: sum values grouped by a key per class
-function aggregateByKeyAndClass(movs, keyFn) {
-  const map = {};  // key -> { class: value }
-  movs.forEach(m => {
-    const k = keyFn(m);
-    if (!map[k]) map[k] = {};
-    map[k][m.macroClasse] = (map[k][m.macroClasse] || 0) + m.valor;
-  });
-  return map;
-}
-
-// === SECTION: CHART — ANUAL ===
-function buildAnualChart(movs) {
-  if (!movs || movs.length === 0) { console.warn('buildAnualChart: sem dados'); return; }
-
-  const years = [];
-  const minYear = Math.min(...movs.map(m => m.year));
-  const maxYear = Math.max(...movs.map(m => m.year));
-  for (let y = minYear; y <= maxYear; y++) years.push(y);
-
-  // aggregate: chave é STRING do ano para compatibilidade com JS object keys
-  const agg = {};
-  movs.forEach(m => {
-    const k = String(m.year);
-    if (!agg[k]) agg[k] = {};
-    agg[k][m.macroClasse] = (agg[k][m.macroClasse] || 0) + m.valor;
-  });
-
-  const datasets = allClasses.map(cls => ({
-    label: classLabel(cls),
-    data: years.map(y => agg[String(y)]?.[cls] || 0),
-    backgroundColor: classColor(cls),
-    borderRadius: 3,
-  }));
-
-  const ctx = document.getElementById('chartAnual').getContext('2d');
-  if (chartAnual) chartAnual.destroy();
-
-  chartAnual = new Chart(ctx, {
-    type: 'bar',
-    data: { labels: years.map(String), datasets },
-    options: {
-      ...chartDefaults(),
-      plugins: {
-        ...chartDefaults().plugins,
-        tooltip: {
-          callbacks: {
-            label: ctx => ` ${ctx.dataset.label}: ${fmtBRL(ctx.raw || 0)}`,
-            footer: items => {
-              const total = items.reduce((s, i) => s + (i.raw || 0), 0);
-              return `Total: ${fmtBRL(total)}`;
-            }
-          }
-        }
-      }
-    }
-  });
-}
-
-// === SECTION: CHART — MENSAL ===
-function buildMensalChart(movs) {
-  // Generate last N months
+  const total = rawData.reduce((s, d) => s + d.val, 0);
   const now = new Date();
-  const months = [];
-  for (let i = monthRange - 1; i >= 0; i--) {
-    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    const ym = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-    months.push(ym);
+  const currentYear = now.getFullYear().toString();
+  
+  const ytd = rawData.filter(d => d.year === currentYear).reduce((s, d) => s + d.val, 0);
+  
+  const oneYearAgo = new Date();
+  oneYearAgo.setMonth(now.getMonth() - 12);
+  const l12mTotal = rawData.filter(d => d.date >= oneYearAgo).reduce((s, d) => s + d.val, 0);
+  
+  // CAGR simplificado (Total 5 anos atrás vs Total ano passado)
+  // Pegar ano completo anterior
+  const lastFullYear = currentYear - 1;
+  const startYear = lastFullYear - 4; // 5 anos de janela
+  
+  const endVal = rawData.filter(d => d.year == lastFullYear).reduce((s,d) => s+d.val, 0);
+  const startVal = rawData.filter(d => d.year == startYear).reduce((s,d) => s+d.val, 0);
+  
+  let cagr = 0;
+  if (startVal > 0 && endVal > 0) {
+    cagr = (Math.pow(endVal / startVal, 1/4) - 1) * 100;
   }
 
-  const movsInRange = movs.filter(m => months.includes(m.yearMonth));
-  // aggregate manual (string keys garantidos)
-  const agg = {};
-  movsInRange.forEach(m => {
-    if (!agg[m.yearMonth]) agg[m.yearMonth] = {};
-    agg[m.yearMonth][m.macroClasse] = (agg[m.yearMonth][m.macroClasse] || 0) + m.valor;
-  });
+  setTxt('kpiTotal', fmt(total));
+  setTxt('kpiYTD', fmt(ytd));
+  setTxt('kpiAvg', fmt(l12mTotal / 12));
+  setTxt('kpiCAGR', cagr.toFixed(1) + '%');
+  setTxt('kpiYTDLabel', `Em ${currentYear}`);
+}
 
-  const datasets = allClasses.map(cls => ({
-    label: classLabel(cls),
-    data: months.map(ym => agg[ym]?.[cls] || 0),
-    backgroundColor: classColor(cls),
-    borderRadius: 2,
+// === CHARTS ===
+function renderAnual() {
+  const ctx = getCtx('chartAnual');
+  const years = [...new Set(rawData.map(d => d.year))].sort();
+  const classes = [...new Set(rawData.map(d => d.class))];
+  
+  // Filtrar classe se selecionada
+  const selectedClass = document.getElementById('filterClass').value;
+  const activeClasses = selectedClass === 'all' ? classes : [selectedClass];
+
+  const datasets = activeClasses.map(c => ({
+    label: LABELS[c] || c,
+    data: years.map(y => {
+      return rawData.filter(d => d.year === y && d.class === c).reduce((s,d) => s+d.val, 0);
+    }),
+    backgroundColor: COLORS[c] || getColorHash(c),
+    borderRadius: 4
   }));
 
-  // Short label for months (e.g. "jan/24")
-  const MONTH_NAMES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
-  const labels = months.map(ym => {
-    const [y, m] = ym.split('-');
-    return `${MONTH_NAMES[parseInt(m) - 1]}/${y.slice(2)}`;
-  });
-
-  const ctx = document.getElementById('chartMensal').getContext('2d');
-  if (chartMensal) chartMensal.destroy();
-
-  chartMensal = new Chart(ctx, {
+  if (charts.anual) charts.anual.destroy();
+  charts.anual = new Chart(ctx, {
     type: 'bar',
-    data: { labels, datasets },
+    data: { labels: years, datasets },
     options: {
-      ...chartDefaults(),
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { stacked: true, grid: { display: false } },
+        y: { stacked: true, ticks: { callback: v => compactFmt(v) } }
+      },
       plugins: {
-        ...chartDefaults().plugins,
-        tooltip: {
-          callbacks: {
-            label: ctx => ` ${ctx.dataset.label}: ${fmtBRL(ctx.raw || 0)}`,
-            footer: items => `Total: ${fmtBRL(items.reduce((s, i) => s + (i.raw || 0), 0))}`,
-          }
-        }
+        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + fmt(ctx.raw) } }
       }
     }
   });
 }
 
-// === SECTION: CHART — DONUT ===
-function buildDonutChart(movs) {
-  const totals = allClasses.map(cls =>
-    movs.filter(m => m.macroClasse === cls).reduce((s, m) => s + m.valor, 0)
-  );
+function renderMensal() {
+  const ctx = getCtx('chartMensal');
+  
+  // Pegar últimos N meses
+  // Agrupar rawData por month
+  const monthlyData = {};
+  rawData.forEach(d => {
+    if (!monthlyData[d.month]) monthlyData[d.month] = {};
+    if (!monthlyData[d.month][d.class]) monthlyData[d.month][d.class] = 0;
+    monthlyData[d.month][d.class] += d.val;
+  });
 
-  const ctx = document.getElementById('chartDonut').getContext('2d');
-  if (chartDonut) chartDonut.destroy();
+  let months = Object.keys(monthlyData).sort();
+  if (monthLimit !== 999) {
+    months = months.slice(-monthLimit);
+  }
 
-  chartDonut = new Chart(ctx, {
+  const classes = [...new Set(rawData.map(d => d.class))];
+  const datasets = classes.map(c => ({
+    label: LABELS[c] || c,
+    data: months.map(m => monthlyData[m][c] || 0),
+    backgroundColor: COLORS[c] || getColorHash(c),
+    stack: 'Stack 0',
+    barPercentage: 0.8,
+    categoryPercentage: 0.9
+  }));
+
+  if (charts.mensal) charts.mensal.destroy();
+  charts.mensal = new Chart(ctx, {
+    type: 'bar',
+    data: { labels: months, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      scales: {
+        x: { stacked: true, grid: { display: false } },
+        y: { stacked: true, ticks: { callback: v => compactFmt(v) } }
+      }
+    }
+  });
+}
+
+function renderDonut() {
+  const ctx = getCtx('chartDonut');
+  
+  // Filtrar por período (igual ao gráfico mensal)
+  let filteredData = rawData;
+  if (donutLimit !== 999) {
+    const now = new Date();
+    const limitDate = new Date();
+    limitDate.setMonth(now.getMonth() - donutLimit);
+    filteredData = rawData.filter(d => d.date >= limitDate);
+  }
+  
+  const classes = [...new Set(filteredData.map(d => d.class))];
+  const data = classes.map(c => filteredData.filter(d => d.class === c).reduce((s,d)=>s+d.val, 0));
+
+  if (charts.donut) charts.donut.destroy();
+  charts.donut = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: allClasses.map(classLabel),
+      labels: classes.map(c => LABELS[c] || c),
       datasets: [{
-        data: totals,
-        backgroundColor: allClasses.map(classColor),
-        borderWidth: 2,
-        borderColor: isDark() ? '#2d2d2d' : '#ffffff',
+        data: data,
+        backgroundColor: classes.map(c => COLORS[c] || getColorHash(c)),
+        borderWidth: 0
       }]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true,
-      cutout: '62%',
-      animation: { duration: 400 },
+      maintainAspectRatio: false,
+      cutout: '65%',
       plugins: {
-        legend: {
-          labels: { color: tickColor(), font: { size: 11 }, boxWidth: 12 },
-          position: 'bottom',
-        },
-        tooltip: {
-          callbacks: {
-            label: ctx => {
-              const total = ctx.dataset.data.reduce((s, v) => s + v, 0);
-              const pct = total > 0 ? ((ctx.raw / total) * 100).toFixed(1) : 0;
-              return ` ${ctx.label}: ${fmtBRL(ctx.raw)} (${pct}%)`;
-            }
-          }
-        }
+        legend: { position: 'right', labels: { boxWidth: 12 } }
       }
     }
   });
 }
 
-// === SECTION: MONTH RANGE TAB ===
+function renderTop() {
+  const ctx = getCtx('chartTop');
+  const oneYearAgo = new Date();
+  oneYearAgo.setMonth(new Date().getMonth() - 12);
+  
+  const grouped = {};
+  rawData.filter(d => d.date >= oneYearAgo).forEach(d => {
+    grouped[d.ticker] = (grouped[d.ticker] || 0) + d.val;
+  });
+
+  const sorted = Object.entries(grouped).sort((a,b) => b[1] - a[1]).slice(0, 7);
+  
+  if (charts.top) charts.top.destroy();
+  charts.top = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: sorted.map(s => s[0]),
+      datasets: [{
+        label: 'Total 12M',
+        data: sorted.map(s => s[1]),
+        backgroundColor: '#34495e',
+        borderRadius: 4
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+
+// === UTILS ===
 function setMonthRange(n, btn) {
-  monthRange = n;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  monthLimit = n;
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  buildMensalChart(allMovs);
+  renderMensal();
 }
 
-function refreshAll() {
-  updateKPIs();
-  buildAnualChart(allMovs);
-  buildMensalChart(allMovs);
-  buildDonutChart(allMovs);
+function setDonutRange(n, btn) {
+  donutLimit = n;
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDonut();
 }
 
-function refreshChartThemes() {
-  // Rebuild all charts so axis/legend colors update
-  refreshAll();
+function updateCharts() {
+  renderAnual();
 }
 
-// === SECTION: INIT ===
-(async () => {
-  try {
-    await loadData();
-    refreshAll();
-  } catch (err) {
-    document.getElementById('loadingOverlay').innerHTML =
-      `<div style="background:#fff3;padding:2rem;border-radius:12px;text-align:center;">
-        <p style="color:#fff;font-size:1rem;">❌ Erro ao carregar dados</p>
-        <p style="color:#ffcdd2;font-size:0.85rem;margin-top:0.5rem;">${err.message}</p>
-      </div>`;
-    return;
+function fmt(n) { return n.toLocaleString('pt-BR', {style:'currency', currency:'BRL'}); }
+function compactFmt(n) { return Intl.NumberFormat('pt-BR', { notation: "compact", compactDisplay: "short" }).format(n); }
+function setTxt(id, t) { document.getElementById(id).textContent = t; }
+function getCtx(id) { return document.getElementById(id).getContext('2d'); }
+
+// Simple hash for consistent colors on unknown classes
+function getColorHash(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
-  document.getElementById('loadingOverlay').classList.add('hidden');
-})();
+  const c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+  return '#' + '00000'.substring(0, 6 - c.length) + c;
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+}
+
+if (localStorage.getItem('theme') === 'dark') toggleTheme();
+
+init();
 </script>
 </body>
 </html>
