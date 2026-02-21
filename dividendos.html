@@ -147,6 +147,7 @@
     }
     .chart-scroll {
       position: relative;
+      height: 380px;
       width: 100%;
       overflow-y: auto;
       overflow-x: hidden;
@@ -827,13 +828,17 @@ function renderDYAtivo() {
   }
   
   const sorted = filtered.sort((a, b) => b[1].dy - a[1].dy);
-
-  // Altura dinâmica via container (38px por barra, mínimo 380px — igual ao Top Pagadores)
+  
+  // Altura dinâmica: 38px por ativo (mesmo que Top Pagadores: 380px / 10 ativos)
   const barHeight = 38;
-  const containerHeight = Math.max(380, sorted.length * barHeight);
-  const scrollContainer = document.getElementById('chartDYAtivo').parentElement;
-  scrollContainer.style.height = containerHeight + 'px';
-
+  const paddingTop = 20;
+  const paddingBottom = 20;
+  const chartHeight = (sorted.length * barHeight) + paddingTop + paddingBottom;
+  
+  const canvas = document.getElementById('chartDYAtivo');
+  canvas.style.height = chartHeight + 'px';
+  canvas.height = chartHeight;
+  
   if (charts.dyAtivo) charts.dyAtivo.destroy();
   charts.dyAtivo = new Chart(ctx, {
     type: 'bar',
@@ -862,7 +867,7 @@ function renderDYAtivo() {
       responsive: true,
       maintainAspectRatio: false,
       layout: {
-        padding: { right: 50 }
+        padding: { top: paddingTop, right: 50, bottom: paddingBottom }
       },
       plugins: { 
         legend: { display: false },
