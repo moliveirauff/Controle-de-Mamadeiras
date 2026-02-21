@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="only light">
+    <meta name="supported-color-schemes" content="light">
+    <title>🛒 Lista de Compras</title>
+    <style>
+        /* Force Light Mode variables as default, override if class is present */
+        :root {
+            color-scheme: only light !important;
+            isolation: isolate;
+            --bg: #f7fafc;
+            --text: #2d3748;
+            --surface: #ffffff;
+            --card-bg: var(--surface);
+            --border: #e2e8f0;
+            --text-muted: #718096;
+            --subtext: var(--text-muted);
+            --primary: #667eea;
+            --accent: var(--primary);
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #dc2626;
+            --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+        }
+        
+        /* Apply Dark Mode only when class is present */
+        body.dark-mode {
+            color-scheme: only dark !important;
+            --bg: #1a202c;
+            --text: #f7fafc;
+            --surface: #2d3748;
+            --card-bg: var(--surface);
+            --border: #4a5568;
+            --text-muted: #cbd5e0;
+            --subtext: var(--text-muted);
+            --primary: #7f9cf5;
+            --accent: var(--primary);
+            background-image: none;
+            background-color: var(--bg);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html {
+            background-color: var(--bg);
+            min-height: 100vh;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=');
+            background-repeat: repeat;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background-color 0.3s, color 0.3s;
+            padding: 10px 10px 60px 10px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        #theme-toggle {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.05);
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.2s;
+        }
+        body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+        body:not(.dark-mode) #theme-toggle { background: rgba(0,0,0,0.05); }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin: 10px 0 0 4px;
+            display: inline-block;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 10px 44px 20px 44px;
+            color: var(--text);
+        }
+
+        /* View Toggle */
+        .view-toggle { 
+            display: flex; 
+            justify-content: center; 
+            gap: 8px; 
+            margin-bottom: 20px; 
+        }
+        
+        .btn-view { 
+            flex: 1;
+            max-width: 200px;
+            background: var(--border); 
+            border: none; 
+            padding: 10px; 
+            border-radius: 8px; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            color: var(--text); 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        .btn-view.active { background: var(--accent); color: white; }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--card-bg);
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        
+        .btn-conclude, .btn-sync {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+        .btn-conclude { background: var(--success); }
+        .btn-sync { background: var(--primary); }
+        .btn-conclude:active, .btn-sync:active { transform: scale(0.98); }
+
+        /* Total Card */
+        .total-card {
+            background: var(--primary);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        .total-value { font-size: 1.6rem; font-weight: 800; }
+        .total-label { font-size: 0.65rem; text-transform: uppercase; opacity: 0.9; letter-spacing: 0.05em; margin-top: 4px; }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .category-header { 
+            font-size: 0.95rem; 
+            font-weight: 700; 
+            color: var(--text); 
+            margin-bottom: 12px; 
+            padding-bottom: 8px; 
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item-row { 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 10px; 
+            padding: 10px 0; 
+            border-bottom: 1px solid var(--border);
+        }
+        .item-row:last-child { border-bottom: none; }
+        
+        .item-checkbox { 
+            width: 20px; 
+            height: 20px; 
+            margin-top: 2px; 
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        
+        .item-name-wrapper { flex-grow: 1; min-width: 0; }
+        .item-name { font-size: 0.95rem; font-weight: 600; line-height: 1.3; color: var(--text); }
+        .item-name.checked { text-decoration: line-through; opacity: 0.5; }
+        
+        .recipe-tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4338ca;
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+            font-weight: 700;
+            vertical-align: middle;
+        }
+        body.dark-mode .recipe-tag { background: #312e81; color: #c7d2fe; }
+
+        .item-obs { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+        
+        .item-info { 
+            display: flex; 
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px; 
+            flex-shrink: 0;
+        }
+        
+        .price-tag { display: flex; gap: 4px; align-items: center; }
+        .item-qty { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); }
+        .item-price { 
+            font-size: 0.85rem; 
+            font-weight: 700; 
+            color: var(--text);
+            background: var(--border);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .item-actions { display: flex; gap: 6px; }
+        .btn-icon {
+            background: none; 
+            border: 1px solid var(--border); 
+            padding: 4px 6px; 
+            border-radius: 6px; 
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .btn-icon:hover { opacity: 0.7; }
+
+        /* Modal */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.7); 
+        }
+        .modal-content { 
+            background-color: var(--card-bg); 
+            margin: 10% auto; 
+            padding: 20px; 
+            border-radius: 12px; 
+            width: 90%; 
+            max-width: 450px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        @media (max-width: 480px) {
+            .modal-content { margin: 20% auto; }
+        }
+        .modal-header { 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            margin-bottom: 16px; 
+            color: var(--text);
+        }
+        .modal-field { margin-bottom: 12px; }
+        .modal-field label { 
+            display: block; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            margin-bottom: 6px; 
+            color: var(--text-muted);
+        }
+        .modal-field input { 
+            width: 100%; 
+            padding: 10px; 
+            border: 1px solid var(--border); 
+            border-radius: 8px; 
+            font-size: 0.95rem; 
+            background: var(--bg); 
+            color: var(--text);
+        }
+        .modal-buttons { display: flex; gap: 8px; margin-top: 20px; }
+        .modal-btn { 
+            flex: 1; 
+            padding: 12px; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            font-size: 0.9rem;
+        }
+        .modal-btn-cancel { background: var(--border); color: var(--text); }
+        .modal-btn-save { background: var(--primary); color: white; }
+
+        .hidden { display: none !important; }
+
+        /* Desktop */
+        @media (min-width: 768px) {
+            body {
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 16px 16px 60px 16px;
+            }
+            h1 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+<button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+<a href="index.html" class="nav-link">← Voltar</a>
+<h1>🛒 Lista de Compras</h1>
+
+<div class="view-toggle">
+    <button class="btn-view active" id="tab-proxima" onclick="switchView('proxima')">📝 Próxima</button>
+    <button class="btn-view" id="tab-mestre" onclick="switchView('mestre')">📋 Mestre</button>
+</div>
+
+<div id="filters-proxima" class="filters">
+    <label class="filter-checkbox">
+        <input type="checkbox" id="hide-checked" onchange="render()">
+        <span>Ocultar riscados</span>
+    </label>
+    <button class="btn-conclude" onclick="concludeShoppingConfirm()">✅ Concluir</button>
+    <button class="btn-sync" onclick="syncWithBot()" id="syncBtn">☁️ Sincronizar</button>
+</div>
+
+<div id="filters-mestre" class="filters hidden">
+    <label class="filter-checkbox">
+        <input type="checkbox" id="hide-in-list" checked onchange="render()">
+        <span>Ocultar itens da lista</span>
+    </label>
+    <button class="btn-sync" onclick="syncWithBot()" id="syncBtnMestre">☁️ Sincronizar</button>
+</div>
+
+<div id="total-proxima"></div>
+<div id="view-proxima"></div>
+<div id="view-mestre" class="hidden"></div>
+
+<div id="edit-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">Editar Item</div>
+        <div class="modal-field">
+            <label>Nome</label>
+            <input type="text" id="edit-name" readonly>
+        </div>
+        <div class="modal-field">
+            <label>Quantidade</label>
+            <input type="number" id="edit-qty" step="1">
+        </div>
+        <div class="modal-field">
+            <label>Preço (R$)</label>
+            <input type="number" id="edit-price" step="0.01">
+        </div>
+        <div class="modal-field">
+            <label>Observações</label>
+            <input type="text" id="edit-obs">
+        </div>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-cancel" onclick="closeModal()">Cancelar</button>
+            <button class="modal-btn modal-btn-save" onclick="saveEdit()">Salvar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let masterData = []; 
+let shoppingList = []; 
+let currentView = 'proxima';
+let editingItem = null;
+const DATA_VERSION = '2026-02-07-v3'; 
+
+// === THEME HANDLING ===
+function updateMetaThemeColor(isDark) {
+    const color = isDark ? '#1a202c' : '#f7fafc';
+    const scheme = isDark ? 'only dark' : 'only light';
+    
+    let metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (!metaTheme) {
+        metaTheme = document.createElement('meta');
+        metaTheme.name = 'theme-color';
+        document.head.appendChild(metaTheme);
+    }
+    metaTheme.content = color;
+
+    let metaScheme = document.querySelector('meta[name="color-scheme"]');
+    if (!metaScheme) {
+        metaScheme = document.createElement('meta');
+        metaScheme.name = 'color-scheme';
+        document.head.appendChild(metaScheme);
+    }
+    metaScheme.content = scheme;
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    let isDark = false;
+    if (savedTheme === 'dark') {
+        isDark = true;
+    } else if (savedTheme === 'light') {
+        isDark = false;
+    } else if (prefersDark) {
+        isDark = true;
+    }
+    
+    if (isDark) {
+        document.body.classList.add('dark-mode');
+        document.getElementById('theme-toggle').textContent = '☀️';
+    } else {
+        document.body.classList.remove('dark-mode');
+        document.getElementById('theme-toggle').textContent = '🌙';
+    }
+    updateMetaThemeColor(isDark);
+}
+
+function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+    updateMetaThemeColor(isDark);
+}
+
+// === DATA LOADING ===
+Promise.all([
+    fetch('data/compras.json?v=' + Date.now()).then(r => r.json()),
+    fetch('data/compras-proxima.json?v=' + Date.now()).then(r => r.json()).catch(() => [])
+]).then(([master, initial]) => {
+    masterData = master;
+    const savedVersion = localStorage.getItem('compras-data-version');
+    if (savedVersion !== DATA_VERSION) {
+        localStorage.removeItem('compras-shopping-list');
+        localStorage.setItem('compras-data-version', DATA_VERSION);
+    }
+    const saved = localStorage.getItem('compras-shopping-list');
+    if (saved) {
+        shoppingList = JSON.parse(saved);
+        saveState();
+    } else if (initial.length > 0) {
+        shoppingList = initial;
+        saveState();
+    }
+    render();
+});
+
+function saveState() { 
+    localStorage.setItem('compras-shopping-list', JSON.stringify(shoppingList)); 
+}
+
+function switchView(view) {
+    currentView = view;
+    document.querySelectorAll('.btn-view').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('tab-' + view).classList.add('active');
+    
+    const pElements = ['view-proxima', 'filters-proxima', 'total-proxima'];
+    const mElements = ['view-mestre', 'filters-mestre'];
+    
+    pElements.forEach(id => document.getElementById(id).classList.toggle('hidden', view !== 'proxima'));
+    mElements.forEach(id => document.getElementById(id).classList.toggle('hidden', view !== 'mestre'));
+    render();
+}
+
+function addToList(itemName) {
+    const m = masterData.find(i => i.Item === itemName);
+    if (!m || shoppingList.find(i => i.Item === itemName)) return;
+    shoppingList.push({ 
+        Item: m.Item, 
+        Categoria: m.Categoria, 
+        qty: m["Quantidade Típica"], 
+        price: m["Valor Esperado (Un)"].replace(',','.'), 
+        checked: false 
+    });
+    saveState(); 
+    render();
+}
+
+function removeFromList(itemName) {
+    shoppingList = shoppingList.filter(i => i.Item !== itemName);
+    saveState(); 
+    render();
+}
+
+function render() {
+    const groupByCategory = (items) => items.reduce((acc, i) => {
+        (acc[i.Categoria || 'Outros'] = acc[i.Categoria || 'Outros'] || []).push(i); 
+        return acc;
+    }, {});
+    
+    // Render Proxima
+    const pCont = document.getElementById('view-proxima');
+    const hideChecked = document.getElementById('hide-checked').checked;
+    const total = shoppingList.reduce((s, i) => s + (i.checked && hideChecked ? 0 : parseFloat(i.qty)*parseFloat(i.price)), 0);
+    document.getElementById('total-proxima').innerHTML = `<div class="total-card"><div class="total-value">R$ ${total.toFixed(2)}</div><div class="total-label">Total estimado</div></div>`;
+    
+    const pGrouped = groupByCategory(shoppingList.filter(i => !hideChecked || !i.checked));
+    pCont.innerHTML = Object.keys(pGrouped).length ? '' : '<div class="card" style="text-align:center; padding:40px; opacity:0.6">🛒 Lista vazia!</div>';
+    
+    for(const cat in pGrouped) {
+        const card = document.createElement('div'); 
+        card.className = 'card';
+        card.innerHTML = `<div class="category-header"><span>${cat}</span><span>R$ ${pGrouped[cat].reduce((s,i)=>s+(parseFloat(i.qty)*parseFloat(i.price)),0).toFixed(2)}</span></div>`;
+        pGrouped[cat].forEach(item => {
+            const row = document.createElement('div'); 
+            row.className = 'item-row';
+            row.innerHTML = `
+                <input type="checkbox" class="item-checkbox" ${item.checked?'checked':''} onchange="item.checked=!item.checked;saveState();render()">
+                <div class="item-name-wrapper">
+                    <div class="item-name ${item.checked?'checked':''}">${item.Item}${item.from_recipe?`<span class="recipe-tag">${item.from_recipe}</span>`:''}</div>
+                    ${item.obs?`<div class="item-obs">${item.obs}</div>`:''}
+                </div>
+                <div class="item-info">
+                    <div class="price-tag">
+                        <span class="item-qty">${item.qty}x</span>
+                        <span class="item-price">R$ ${parseFloat(item.price).toFixed(2)}</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-icon" onclick="openEditModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">✏️</button>
+                        <button class="btn-icon" style="color:var(--danger)" onclick="removeFromList('${item.Item}')">🗑️</button>
+                    </div>
+                </div>`;
+            card.appendChild(row);
+        });
+        pCont.appendChild(card);
+    }
+
+    // Render Mestre
+    const mCont = document.getElementById('view-mestre');
+    const hideInList = document.getElementById('hide-in-list').checked;
+    const mItems = masterData.filter(i => !hideInList || !shoppingList.find(s => s.Item === i.Item));
+    const mGrouped = groupByCategory(mItems);
+    mCont.innerHTML = '';
+    for(const cat in mGrouped) {
+        const card = document.createElement('div'); 
+        card.className = 'card';
+        card.innerHTML = `<div class="category-header">${cat}</div>`;
+        mGrouped[cat].forEach(item => {
+            const row = document.createElement('div'); 
+            row.className = 'item-row';
+            row.innerHTML = `
+                <div class="item-name-wrapper">
+                    <div class="item-name">${item.Item}</div>
+                    ${item.Observações?`<div class="item-obs">${item.Observações}</div>`:''}
+                </div>
+                <div class="item-info">
+                    <span class="item-price">R$ ${parseFloat(item["Valor Esperado (Un)"].replace(',','.')).toFixed(2)}</span>
+                    <div class="item-actions">
+                        <button class="btn-icon" onclick="addToList('${item.Item}')">➕</button>
+                        <button class="btn-icon" onclick="openEditModal(${JSON.stringify({Item:item.Item, qty:item["Quantidade Típica"], price:item["Valor Esperado (Un)"].replace(',','.'), obs:item.Observações}).replace(/"/g, '&quot;')})">✏️</button>
+                    </div>
+                </div>`;
+            card.appendChild(row);
+        });
+        mCont.appendChild(card);
+    }
+}
+
+function openEditModal(item) {
+    editingItem = item;
+    document.getElementById('edit-name').value = item.Item;
+    document.getElementById('edit-qty').value = item.qty;
+    document.getElementById('edit-price').value = item.price;
+    document.getElementById('edit-obs').value = item.obs || "";
+    document.getElementById('edit-modal').style.display = 'block';
+}
+
+function closeModal() { 
+    document.getElementById('edit-modal').style.display = 'none'; 
+}
+
+function saveEdit() {
+    const qty = document.getElementById('edit-qty').value;
+    const price = document.getElementById('edit-price').value;
+    const obs = document.getElementById('edit-obs').value;
+    
+    let sItem = shoppingList.find(i => i.Item === editingItem.Item);
+    if(sItem) { 
+        sItem.qty = qty; 
+        sItem.price = price; 
+        sItem.obs = obs; 
+    }
+    
+    if (currentView === 'mestre') {
+        let mItem = masterData.find(i => i.Item === editingItem.Item);
+        if(mItem) { 
+            mItem["Observações"] = obs; 
+            mItem["Quantidade Típica"] = qty; 
+            mItem["Valor Esperado (Un)"] = price.replace('.', ','); 
+        }
+    }
+    saveState(); 
+    render(); 
+    closeModal();
+}
+
+function concludeShoppingConfirm() {
+    const count = shoppingList.filter(i => i.checked).length;
+    if(!count) return alert('Marque itens comprados!');
+    if(confirm(`Remover ${count} itens da lista?`)) {
+        shoppingList = shoppingList.filter(i => !i.checked);
+        saveState(); 
+        render();
+    }
+}
+
+const API_CONFIG = {
+    baseUrl: 'https://attempted-uncertainty-currencies-camps.trycloudflare.com',
+    apiKey: 'argos-secret-2026'
+};
+
+async function syncToApi(module, data) {
+    const res = await fetch(`${API_CONFIG.baseUrl}/sync/${module}`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-API-Key': API_CONFIG.apiKey
+        },
+        body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Falha na resposta da API');
+    return res.json();
+}
+
+async function syncWithBot() {
+    const btn = document.getElementById('syncBtn') || event.target; 
+    const oldText = btn.innerText;
+    btn.innerText = "⏳..."; 
+    btn.disabled = true;
+    try {
+        await syncToApi('compras', {shoppingList, masterData});
+        btn.innerText = "✅";
+        setTimeout(() => { 
+            btn.innerText = oldText; 
+            btn.disabled = false; 
+        }, 2000);
+    } catch (e) { 
+        console.error(e);
+        alert("Erro na sincronização!"); 
+        btn.innerText = oldText; 
+        btn.disabled = false; 
+    }
+}
+
+initTheme();
+</script>
+</body>
+</html>
