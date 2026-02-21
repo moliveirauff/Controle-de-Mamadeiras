@@ -47,6 +47,7 @@
             transition: background-color 0.3s, color 0.3s;
             padding: 10px 10px 60px 10px;
         }
+        /* ── Cabeçalho ── */
         #theme-toggle {
             position: absolute; top: 12px; right: 12px;
             background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
@@ -263,16 +264,6 @@
             <div class="card-header"><span>🎯 Comparação com Orçamento Mensal</span></div>
             <div id="budgetChartDetail"></div>
         </div>
-
-        <div class="card">
-            <div class="card-header"><span>📈 Gasto Acumulado Dia a Dia</span></div>
-            <div class="chart-container"><canvas id="cT2C"></canvas></div>
-        </div>
-
-        <div class="card">
-            <div class="card-header"><span>🏦 Gastos por Origem no Mês</span></div>
-            <div class="chart-container"><canvas id="cT2P3"></canvas></div>
-        </div>
     </div>
 
     <script>
@@ -467,26 +458,6 @@
                 budgetContainer.innerHTML += `<div class="budget-item"><div class="budget-row"><span class="budget-cat">${categorias[catId] || catId}</span><span class="budget-vals">${brl(realV)} / ${brl(orcV)} · <strong style="color:var(--${cls})">${pct.toFixed(0)}%</strong></span></div><div class="budget-track"><div class="budget-fill ${cls}" style="width:${Math.min(pct, 100)}%"></div></div></div>`;
             });
         }
-
-        const dailyMap = {}; curMonthData.forEach(r => { const d = parseInt(r.data.split('-')[2]); dailyMap[d] = (dailyMap[d] || 0) + Math.abs(r.valor); });
-        const dayLabels = [], realAcc = []; let running = 0;
-        const daysInMonth = new Date(selectedMonth.year, selectedMonth.month, 0).getDate();
-        for (let d = 1; d <= daysInMonth; d++) { dayLabels.push(`Dia ${d}`); running += (dailyMap[d] || 0); realAcc.push(running); }
-        
-        if (charts['cT2C']) charts['cT2C'].destroy();
-        charts['cT2C'] = new Chart(document.getElementById('cT2C'), {
-            type: 'line', data: { labels: dayLabels, datasets: [{ label: 'Acumulado', data: realAcc, borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.1)', fill: true, tension: 0.3 }] },
-            options: { responsive: true, maintainAspectRatio: false }
-        });
-
-        const origTotals = {}; curMonthData.forEach(r => { const n = origens[r.origem] || r.origem; origTotals[n] = (origTotals[n] || 0) + Math.abs(r.valor); });
-        const origSorted = Object.entries(origTotals).sort((a,b) => b[1]-a[1]);
-        
-        if (charts['cT2P3']) charts['cT2P3'].destroy();
-        charts['cT2P3'] = new Chart(document.getElementById('cT2P3'), {
-            type: 'doughnut', data: { labels: origSorted.map(e => e[0]), datasets: [{ data: origSorted.map(e => e[1]), backgroundColor: CAT_COLORS }] },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-        });
     }
 
     async function init() {
