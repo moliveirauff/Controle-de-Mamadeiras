@@ -1,0 +1,261 @@
+[
+  {
+    "id": "cafe-caramelo-nespresso",
+    "nome": "Café Caramelo Nespresso",
+    "categoria": "Bebidas & Cafés",
+    "ingredientes": [
+      { "nome": "MONIN Caramelo", "qtd": "15", "unidade": "ml" },
+      { "nome": "Cápsula Nespresso Caramel Crème Brûlée", "qtd": "1", "unidade": "un" },
+      { "nome": "Leite", "qtd": "120", "unidade": "ml" }
+    ],
+    "preparo": "1. Vaporize o leite até obter uma textura cremosa.\n2. Adicione o leite vaporizado em uma xícara.\n3. Coloque o MONIN Caramelo.\n4. Prepare o café Nespresso diretamente sobre a mistura gentilmente e sirva com um sorriso.",
+    "tempo": "5 min",
+    "dificuldade": "Fácil"
+  },
+  {
+    "id": "panqueca-doce",
+    "nome": "Panqueca Doce",
+    "categoria": "Café da Manhã & Brunch",
+    "ingredientes": [
+      { "nome": "Farinha de trigo", "qtd": "75", "unidade": "g" },
+      { "nome": "Fermento em pó", "qtd": "5", "unidade": "g" },
+      { "nome": "Leite", "qtd": "120", "unidade": "ml" },
+      { "nome": "Açúcar", "qtd": "20", "unidade": "g" },
+      { "nome": "Ovo", "qtd": "1", "unidade": "un" },
+      { "nome": "Manteiga", "qtd": "10", "unidade": "g" }
+    ],
+    "preparo": "1. Bata o ovo levemente.\n2. Misture os ingredientes secos (farinha, açúcar, fermento).\n3. Adicione o leite e o ovo batido, misturando até ficar homogêneo.\n4. Derreta a manteiga e incorpore à massa.\n5. Aqueça uma frigideira antiaderente e despeje porções da massa.\n6. Vire quando surgirem bolhas e doure o outro lado.",
+    "tempo": "15 min",
+    "dificuldade": "Fácil"
+  },
+  {
+    "id": "mousse-de-chocolate",
+    "nome": "Mousse de Chocolate",
+    "categoria": "Sobremesas",
+    "ingredientes": [
+      { "nome": "Chocolate amargo", "qtd": "300", "unidade": "g" },
+      { "nome": "Manteiga", "qtd": "160", "unidade": "g" },
+      { "nome": "Extrato de baunilha ou Rum", "qtd": "2", "unidade": "colher de sopa" },
+      { "nome": "Gema de ovo", "qtd": "4", "unidade": "un" },
+      { "nome": "Clara de ovo", "qtd": "8", "unidade": "un" },
+      { "nome": "Açúcar", "qtd": "50", "unidade": "g" }
+    ],
+    "preparo": "1. Derreta o chocolate com a manteiga no micro-ondas ou em banho-maria.\n2. Misture as gemas com o açúcar e bata até formar um creme mais claro e fofo.\n3. Adicione o chocolate morno, aos poucos, ao creme de gemas, misturando bem até formar um creme uniforme e brilhante.\n4. Adicione a baunilha ou rum.\n5. Bata as claras em ponto de neve e misture delicadamente ao creme de chocolate.\n6. Leve à geladeira por pelo menos 4h ou até que fique firme.",
+    "tempo": "30 min + 4h geladeira",
+    "dificuldade": "Média"
+  },
+  {
+    "id": "strogonoff-de-filet-mignon",
+    "nome": "Strogonoff de Filet Mignon",
+    "categoria": "Pratos Principais",
+    "ingredientes": [
+      { "nome": "Filet Mignon", "qtd": "500", "unidade": "g" },
+      { "nome": "Sal", "qtd": "1.5", "unidade": "colher de chá" },
+      { "nome": "Whisky", "qtd": "1", "unidade": "cálice" },
+      { "nome": "Farinha de trigo", "qtd": "2.5", "unidade": "colher de sopa" },
+      { "nome": "Água", "qtd": "400", "unidade": "ml" },
+      { "nome": "Caldo de carne (Knorr)", "qtd": "1", "unidade": "tablete" },
+      { "nome": "Ketchup", "qtd": "125", "unidade": "ml" },
+      { "nome": "Creme de leite", "qtd": "1", "unidade": "caixinha" }
+    ],
+    "preparo": "1. Refogue a carne até dourar.\n2. Adicione o whisky e flambe a carne com cuidado até o fogo apagar.\n3. Coloque a farinha de trigo e mexa bem.\n4. Acrescente a água e o caldo de carne, mexendo por cerca de 5 min até atingir uma consistência cremosa (não muito ralo nem muito grosso).\n5. Adicione o ketchup.\n6. Finalize misturando o creme de leite.",
+    "tempo": "25 min",
+    "dificuldade": "Média"
+  },
+  {
+    "id": "bruschetta-italiana",
+    "nome": "Bruschetta Italiana",
+    "categoria": "Lanches & Petiscos",
+    "ingredientes": [
+      { "nome": "Pão Italiano", "qtd": "1", "unidade": "un" },
+      { "nome": "Tomate Italiano", "qtd": "400", "unidade": "g" },
+      { "nome": "Alho", "qtd": "1", "unidade": "dente" },
+      { "nome": "Sal", "qtd": "0.5", "unidade": "colher de chá" },
+      { "nome": "Orégano", "qtd": "1", "unidade": "colher de sopa" },
+      { "nome": "Manjericão", "qtd": "1", "unidade": "maço pequeno" },
+      { "nome": "Queijo ralado", "qtd": "100", "unidade": "g" }
+    ],
+    "preparo": "1. Corte os tomates em cubos pequenos e misture com alho picado, sal, orégano e manjericão.\n2. Corte o pão italiano em fatias (torradas), coloque um pouco de azeite e leve ao forno para dourar levemente.\n3. Coloque o queijo ralado sobre as torradas e, por cima, a mistura de tomate.\n4. Leve ao forno por mais 5 a 10 minutos até o queijo derreter.",
+    "tempo": "20 min",
+    "dificuldade": "Fácil"
+  },
+  {
+    "id": "carne-assada-na-pressao",
+    "nome": "Carne Assada na Pressão",
+    "categoria": "Pratos Principais",
+    "ingredientes": [
+      { "nome": "Lagarto ou Pá", "qtd": "1.5", "unidade": "kg" },
+      { "nome": "Alho triturado", "qtd": "2", "unidade": "colher de sopa" },
+      { "nome": "Sal", "qtd": "1.5", "unidade": "colher de chá" },
+      { "nome": "Cebola", "qtd": "4", "unidade": "un (pequenas)" },
+      { "nome": "Cerveja preta (long neck)", "qtd": "1", "unidade": "un" },
+      { "nome": "Molho de tomate", "qtd": "1", "unidade": "xícara" },
+      { "nome": "Água", "qtd": "200", "unidade": "ml" },
+      { "nome": "Caldo de costela", "qtd": "2", "unidade": "tablete" }
+    ],
+    "preparo": "1. Tempere a carne com alho e sal.\n2. Na panela de pressão, coloque as cebolas em rodelas grossas no fundo.\n3. Adicione a carne, a cerveja preta, o molho de tomate, a água e os caldos de costela.\n4. Deixe cozinhar por 1h15 após pegar pressão.\n5. Abra a panela e deixe o caldo reduzir em fogo aberto até a consistência desejada.",
+    "tempo": "1h 40min",
+    "dificuldade": "Média"
+  },
+  {
+    "id": "arroz-piamontese",
+    "nome": "Arroz Piamontese",
+    "categoria": "Pratos Principais",
+    "ingredientes": [
+      { "nome": "Arroz", "qtd": "150", "unidade": "g" },
+      { "nome": "Cebola", "qtd": "0.5", "unidade": "un" },
+      { "nome": "Sal", "qtd": "2", "unidade": "colher de chá" },
+      { "nome": "Alho", "qtd": "1", "unidade": "cabeça" },
+      { "nome": "Creme de leite", "qtd": "1", "unidade": "caixinha" },
+      { "nome": "Queijo Mussarela", "qtd": "125", "unidade": "g" },
+      { "nome": "Queijo Parmesão", "qtd": "100", "unidade": "g" }
+    ],
+    "preparo": "1. Cozinhe o arroz com a cebola, alho e 1 colher de sal, usando cerca de 2,5x a quantidade normal de água para deixá-lo mais molhado.\n2. Com o arroz ainda quente e úmido, misture o creme de leite e os queijos (mussarela e parmesão).\n3. Adicione a outra colher de chá de sal e misture até o queijo derreter e ficar cremoso.",
+    "tempo": "25 min",
+    "dificuldade": "Fácil"
+  },
+  {
+    "id": "feijao-caseiro",
+    "nome": "Feijão Caseiro",
+    "categoria": "Pratos Principais",
+    "ingredientes": [
+      { "nome": "Feijão", "qtd": "500", "unidade": "g" },
+      { "nome": "Folha de Louro", "qtd": "2", "unidade": "un" },
+      { "nome": "Água", "qtd": "1.8", "unidade": "l" },
+      { "nome": "Alho", "qtd": "2", "unidade": "colher de sopa" },
+      { "nome": "Cebola", "qtd": "1", "unidade": "un" },
+      { "nome": "Azeite", "qtd": "1", "unidade": "fio" },
+      { "nome": "Sal", "qtd": "1", "unidade": "colher de sopa" }
+    ],
+    "preparo": "1. Coloque o feijão com o louro e a água para ferver. Retire a espuma que subir.\n2. Feche a panela (elétrica ou pressão) e deixe por 1h em fogo baixo.\n3. Em outra panela, refogue o alho e a cebola no azeite.\n4. No liquidificador, bata 2 conchas de grãos com 1 concha de caldo do cozimento.\n5. Misture o batido de volta na panela do feijão, adicione o refogado e o sal.\n6. Deixe apurar por alguns minutos.",
+    "tempo": "1h 15min",
+    "dificuldade": "Média"
+  },
+  {
+    "id": "ovos-no-purgatorio",
+    "nome": "Ovos no Purgatório",
+    "categoria": "Lanches & Petiscos",
+    "ingredientes": [
+      { "nome": "Ovo", "qtd": "2", "unidade": "un" },
+      { "nome": "Tomate Italiano", "qtd": "250", "unidade": "g" },
+      { "nome": "Cebola", "qtd": "0.5", "unidade": "un" },
+      { "nome": "Alho", "qtd": "1", "unidade": "colher de chá" },
+      { "nome": "Sal", "qtd": "0.25", "unidade": "colher de chá" },
+      { "nome": "Queijo Mussarela", "qtd": "25", "unidade": "g" },
+      { "nome": "Manjericão", "qtd": "1", "unidade": "maço pequeno" },
+      { "nome": "Torradas", "qtd": "4", "unidade": "un" }
+    ],
+    "preparo": "1. Refogue a cebola e o alho rapidamente.\n2. Adicione os tomates cortados ao meio, tampe a panela e deixe em fogo baixo.\n3. Quando a pele do tomate começar a soltar, retire-a e amasse os tomates na panela.\n4. Coloque o queijo picado.\n5. Faça dois 'buracos' no molho com a concha e quebre os ovos dentro deles.\n6. Tampe e deixe por 5 min até o ovo firmar (clara branca).\n7. Finalize com manjericão e sirva na própria panela com torradas.",
+    "tempo": "20 min",
+    "dificuldade": "Fácil"
+  },
+  {
+    "id": "iogurte-caseiro",
+    "nome": "Iogurte Caseiro",
+    "categoria": "Café da Manhã & Brunch",
+    "ingredientes": [
+      { "nome": "Leite", "qtd": "1", "unidade": "l" },
+      { "nome": "Leite Ninho", "qtd": "2", "unidade": "colher de sopa" },
+      { "nome": "Iogurte Integral Nestlé", "qtd": "1", "unidade": "pote" }
+    ],
+    "preparo": "1. Aqueça o leite até começar a formar bolhas nas bordas (40-45°C - suportável ao toque por 10s).\n2. Dissolva o leite Ninho e o pote de iogurte no leite morno, mexendo bem.\n3. Coloque em um recipiente com tampa, envolva em um pano e guarde no forno desligado por 8 a 12 horas.\n4. Após firmar, leve à geladeira por 4h antes de consumir.",
+    "tempo": "12h (fermentação)",
+    "dificuldade": "Média"
+  },
+  {
+    "id": "molho-grana-padano",
+    "nome": "Molho Grana Padano",
+    "categoria": "Pratos Principais",
+    "ingredientes": [
+      { "nome": "Cebola", "qtd": "1", "unidade": "un (grande)" },
+      { "nome": "Sal", "qtd": "1", "unidade": "pitada" },
+      { "nome": "Orégano", "qtd": "1", "unidade": "pitada" },
+      { "nome": "Maionese", "qtd": "3", "unidade": "colher de sopa" },
+      { "nome": "Creme de leite", "qtd": "1", "unidade": "caixinha" },
+      { "nome": "Queijo Grana Padano", "qtd": "200", "unidade": "g" }
+    ],
+    "preparo": "1. Refogue a cebola picada com o sal e o orégano.\n2. Acrescente a maionese e o creme de leite, mexendo bem.\n3. Por fim, adicione o queijo Grana Padano ralado e misture até incorporar.",
+    "tempo": "10 min",
+    "dificuldade": "Fácil"
+  },
+  {
+    "id": "molho-branco-classico",
+    "nome": "Molho Branco Clássico",
+    "categoria": "Pratos Principais",
+    "ingredientes": [
+      { "nome": "Manteiga", "qtd": "50", "unidade": "g" },
+      { "nome": "Cebola", "qtd": "1", "unidade": "un" },
+      { "nome": "Farinha de trigo", "qtd": "2", "unidade": "colher de sopa" },
+      { "nome": "Leite Ninho", "qtd": "500", "unidade": "ml" },
+      { "nome": "Creme de leite Nestlé", "qtd": "2", "unidade": "caixinha" },
+      { "nome": "Sal", "qtd": "1", "unidade": "colher de chá" }
+    ],
+    "preparo": "1. Aqueça a manteiga e doure a cebola picada.\n2. Junte a farinha de trigo e mexa até dourar e formar uma massa.\n3. Coloque o leite aos poucos, batendo vigorosamente para não empelotar.\n4. Adicione o creme de leite e o sal.\n5. Aqueça sem deixar ferver e sirva.",
+    "tempo": "15 min",
+    "dificuldade": "Média"
+  },
+  {
+    "id": "bolo-de-banana-integral",
+    "nome": "Bolo de Banana Integral",
+    "categoria": "Sobremesas",
+    "ingredientes": [
+      { "nome": "Banana d'água", "qtd": "3", "unidade": "un" },
+      { "nome": "Óleo", "qtd": "1", "unidade": "dedo" },
+      { "nome": "Ovo", "qtd": "3", "unidade": "un" },
+      { "nome": "Gérmen de trigo", "qtd": "2", "unidade": "xícara" },
+      { "nome": "Açúcar", "qtd": "1", "unidade": "xícara" },
+      { "nome": "Fermento em pó (Royal)", "qtd": "1", "unidade": "colher de sopa" },
+      { "nome": "Uvas Passas", "qtd": "50", "unidade": "g" },
+      { "nome": "Damasco", "qtd": "50", "unidade": "g" },
+      { "nome": "Nozes", "qtd": "50", "unidade": "g" },
+      { "nome": "Canela em pó", "qtd": "1", "unidade": "colher de sobremesa" }
+    ],
+    "preparo": "1. No liquidificador, bata as bananas, o óleo e os ovos.\n2. Em uma tigela, misture o gérmen de trigo, o açúcar e a canela.\n3. Junte a mistura do liquidificador aos secos e mexa bem.\n4. Adicione as passas, damascos picados, nozes e, por último, o fermento.\n5. Asse em forno médio por cerca de 35 minutos.",
+    "tempo": "45 min",
+    "dificuldade": "Fácil"
+  },
+  {
+    "id": "limonada-de-morango",
+    "nome": "Limonada de Morango",
+    "categoria": "Bebidas & Cafés",
+    "ingredientes": [
+      { "nome": "Água", "qtd": "450", "unidade": "ml" },
+      { "nome": "Morango", "qtd": "300", "unidade": "g" },
+      { "nome": "Limão", "qtd": "2", "unidade": "un (sem casca e miolo)" },
+      { "nome": "Açúcar", "qtd": "4", "unidade": "colher de sopa" }
+    ],
+    "preparo": "1. Bata todos os ingredientes no liquidificador com gelo.\n2. Coe se preferir e sirva gelado.",
+    "tempo": "5 min",
+    "dificuldade": "Fácil"
+  },
+  {
+    "id": "suco-de-maracuja-com-morango",
+    "nome": "Suco de Maracujá com Morango",
+    "categoria": "Bebidas & Cafés",
+    "ingredientes": [
+      { "nome": "Maracujá", "qtd": "1", "unidade": "porção" },
+      { "nome": "Morango", "qtd": "1", "unidade": "porção" },
+      { "nome": "Água", "qtd": "3", "unidade": "porções" },
+      { "nome": "Açúcar", "qtd": "1", "unidade": "colher de sopa (p/ cada 50g maracujá)" }
+    ],
+    "preparo": "1. Bata o maracujá com a água rapidamente (pulsar) e coe para tirar as sementes.\n2. Volte o suco de maracujá para o liquidificador, adicione os morangos e o açúcar.\n3. Bata bem e sirva com gelo.",
+    "tempo": "5 min",
+    "dificuldade": "Fácil"
+  },
+  {
+    "id": "batida-de-coco",
+    "nome": "Bebidas & Cafés",
+    "categoria": "Bebidas & Cafés",
+    "ingredientes": [
+      { "nome": "Vodka", "qtd": "250", "unidade": "ml" },
+      { "nome": "Leite de coco", "qtd": "400", "unidade": "ml" },
+      { "nome": "Água ou Gelo", "qtd": "200", "unidade": "ml" },
+      { "nome": "Coco ralado fino", "qtd": "1", "unidade": "pacotinho" },
+      { "nome": "Açúcar", "qtd": "6", "unidade": "colher de sopa" },
+      { "nome": "Leite condensado", "qtd": "2", "unidade": "latas" }
+    ],
+    "preparo": "1. No liquidificador, bata a vodka, o leite de coco, o leite condensado e o açúcar.\n2. Adicione a água ou gelo e bata mais um pouco.\n3. Por último, adicione o coco ralado e misture levemente.\n4. Sirva bem gelado.",
+    "tempo": "10 min",
+    "dificuldade": "Fácil"
+  }
+]
