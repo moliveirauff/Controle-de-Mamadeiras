@@ -64,6 +64,10 @@ def run():
     total_divs_accumulated = 0.0
     total_divs_per_year = defaultdict(float)
     
+    # Contadores globais de aportes e retiradas
+    total_aportes_geral = 0.0
+    total_retiradas_geral = 0.0
+    
     evolucao_mensal = []
     evolucao_anual = []
     aportes_anuais = defaultdict(float)
@@ -88,16 +92,21 @@ def run():
             taxas = float(m.get("taxas", 0))
             if m["tipo"] in TIPOS_SOMA:
                 positions[asset_full] += qty
-                valor_mov = m.get("valor_total", (qty * price) + taxas)
+                # Usar SOMENTE valor_total do JSON (sem fallback qty*price)
+                valor_mov = m["valor_total"]
                 aportes_liquidos_per_asset[asset_full] += valor_mov
                 total_qty_bought_per_asset[asset_full] += qty
                 aportes_anuais[year_val] += valor_mov
+                # Acumular aportes globais
+                total_aportes_geral += valor_mov
             elif m["tipo"] in TIPOS_SUBTRAI:
-                # Aportes Líquidos = Aportes - Retiradas (usar valor_total direto)
-                valor_mov = m.get("valor_total", qty * price)
+                # Aportes Líquidos = Aportes - Retiradas (usar valor_total direto do JSON)
+                valor_mov = m["valor_total"]
                 aportes_liquidos_per_asset[asset_full] -= valor_mov
                 positions[asset_full] -= qty
                 aportes_anuais[year_val] -= valor_mov
+                # Acumular retiradas globais
+                total_retiradas_geral += valor_mov
             mov_idx += 1
 
         while div_idx < len(divs):
@@ -296,7 +305,12 @@ def run():
 
     # --- FINAL EXPORT ---
     pat_atual = evolucao_mensal[-1]["patrimonio"]
-    aportes_total_geral = sum(v for v in aportes_liquidos_per_asset.values() if v > 0)
+    aportes_liquido_total = total_aportes_geral - total_retiradas_geral
+    
+    print(f"\n💰 DEBUG - Aportes e Retiradas:")
+    print(f"  Total Aportes: R$ {total_aportes_geral:,.2f}")
+    print(f"  Total Retiradas: R$ {total_retiradas_geral:,.2f}")
+    print(f"  Aportes Líquidos: R$ {aportes_liquido_total:,.2f}\n")
     
     # Reuso da lógica de Alocação e Ranking do script anterior
     pat_cat_atual = defaultdict(float)
@@ -329,8 +343,8 @@ def run():
     output = {
         "kpis": {
             "patrimonio_total": round(pat_atual, 2),
-            "aportes_liquido_total": round(aportes_total_geral, 2),
-            "rentabilidade_nominal": round(((pat_atual - aportes_total_geral)/aportes_total_geral*100), 2) if aportes_total_geral > 0 else 0,
+            "aportes_liquido_total": round(aportes_liquido_total, 2),
+            "rentabilidade_nominal": round(((pat_atual - aportes_liquido_total)/aportes_liquido_total*100), 2) if aportes_liquido_total > 0 else 0,
             "cagr_5anos": round((((pat_atual / evolucao_mensal[-61]["patrimonio"])**(1/5))-1)*100, 2) if len(evolucao_mensal) >= 61 and evolucao_mensal[-61]["patrimonio"] > 0 else 0
         },
         "evolucao_mensal": evolucao_mensal[-24:],

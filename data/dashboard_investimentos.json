@@ -1,8 +1,8 @@
 {
   "kpis": {
     "patrimonio_total": 2268539.18,
-    "aportes_liquido_total": 2096696.58,
-    "rentabilidade_nominal": 8.2,
+    "aportes_liquido_total": 1692876.39,
+    "rentabilidade_nominal": 34.01,
     "cagr_5anos": 19.42
   },
   "evolucao_mensal": [
@@ -104,298 +104,102 @@
     }
   ],
   "evolucao_mensal_por_categoria": {
-    "6_criptoativos": [
+    "5_internacional": [
       {
         "mes": "2024-03",
-        "patrimonio": 0.0
+        "patrimonio": 148206.5
       },
       {
         "mes": "2024-04",
-        "patrimonio": 31440.89
+        "patrimonio": 149515.86
       },
       {
         "mes": "2024-05",
-        "patrimonio": 36109.31
+        "patrimonio": 158190.86
       },
       {
         "mes": "2024-06",
-        "patrimonio": 34258.49
+        "patrimonio": 171731.18
       },
       {
         "mes": "2024-07",
-        "patrimonio": 46311.08
+        "patrimonio": 177527.13
       },
       {
         "mes": "2024-08",
-        "patrimonio": 47981.9
+        "patrimonio": 187486.48
       },
       {
         "mes": "2024-09",
-        "patrimonio": 47923.9
+        "patrimonio": 184062.52
       },
       {
         "mes": "2024-10",
-        "patrimonio": 57655.61
+        "patrimonio": 194256.29
       },
       {
         "mes": "2024-11",
-        "patrimonio": 82967.8
+        "patrimonio": 209284.4
       },
       {
         "mes": "2024-12",
-        "patrimonio": 100581.38
+        "patrimonio": 203204.87
       },
       {
         "mes": "2025-01",
-        "patrimonio": 128497.76
+        "patrimonio": 196102.45
       },
       {
         "mes": "2025-02",
-        "patrimonio": 106028.68
+        "patrimonio": 196872.9
       },
       {
         "mes": "2025-03",
-        "patrimonio": 96196.38
+        "patrimonio": 184534.98
       },
       {
         "mes": "2025-04",
-        "patrimonio": 105846.81
+        "patrimonio": 186762.02
       },
       {
         "mes": "2025-05",
-        "patrimonio": 120880.77
+        "patrimonio": 193233.6
       },
       {
         "mes": "2025-06",
-        "patrimonio": 114805.57
+        "patrimonio": 159999.15
       },
       {
         "mes": "2025-07",
-        "patrimonio": 167350.49
+        "patrimonio": 162139.01
       },
       {
         "mes": "2025-08",
-        "patrimonio": 185960.66
+        "patrimonio": 66037.05
       },
       {
         "mes": "2025-09",
-        "patrimonio": 193747.89
+        "patrimonio": 64144.29
       },
       {
         "mes": "2025-10",
-        "patrimonio": 187235.44
+        "patrimonio": 47936.0
       },
       {
         "mes": "2025-11",
-        "patrimonio": 155843.98
+        "patrimonio": 413419.0
       },
       {
         "mes": "2025-12",
-        "patrimonio": 154694.24
+        "patrimonio": 425106.0
       },
       {
         "mes": "2026-01",
-        "patrimonio": 132454.08
+        "patrimonio": 413500.0
       },
       {
         "mes": "2026-02",
-        "patrimonio": 111213.92
-      }
-    ],
-    "2_credito_privado": [
-      {
-        "mes": "2024-03",
-        "patrimonio": 238459.03
-      },
-      {
-        "mes": "2024-04",
-        "patrimonio": 241667.87
-      },
-      {
-        "mes": "2024-05",
-        "patrimonio": 243856.54
-      },
-      {
-        "mes": "2024-06",
-        "patrimonio": 246392.31
-      },
-      {
-        "mes": "2024-07",
-        "patrimonio": 266118.06
-      },
-      {
-        "mes": "2024-08",
-        "patrimonio": 268520.3
-      },
-      {
-        "mes": "2024-09",
-        "patrimonio": 271681.55
-      },
-      {
-        "mes": "2024-10",
-        "patrimonio": 270626.16
-      },
-      {
-        "mes": "2024-11",
-        "patrimonio": 272337.24
-      },
-      {
-        "mes": "2024-12",
-        "patrimonio": 301923.15
-      },
-      {
-        "mes": "2025-01",
-        "patrimonio": 304233.05
-      },
-      {
-        "mes": "2025-02",
-        "patrimonio": 323997.8
-      },
-      {
-        "mes": "2025-03",
-        "patrimonio": 338231.15
-      },
-      {
-        "mes": "2025-04",
-        "patrimonio": 369558.73
-      },
-      {
-        "mes": "2025-05",
-        "patrimonio": 377275.17
-      },
-      {
-        "mes": "2025-06",
-        "patrimonio": 384700.46
-      },
-      {
-        "mes": "2025-07",
-        "patrimonio": 428361.24
-      },
-      {
-        "mes": "2025-08",
-        "patrimonio": 436707.95
-      },
-      {
-        "mes": "2025-09",
-        "patrimonio": 455564.69
-      },
-      {
-        "mes": "2025-10",
-        "patrimonio": 494601.35
-      },
-      {
-        "mes": "2025-11",
-        "patrimonio": 509888.38
-      },
-      {
-        "mes": "2025-12",
-        "patrimonio": 512900.48
-      },
-      {
-        "mes": "2026-01",
-        "patrimonio": 513742.45
-      },
-      {
-        "mes": "2026-02",
-        "patrimonio": 511271.13
-      }
-    ],
-    "3_acoes_brasil": [
-      {
-        "mes": "2024-03",
-        "patrimonio": 134946.76
-      },
-      {
-        "mes": "2024-04",
-        "patrimonio": 137492.5
-      },
-      {
-        "mes": "2024-05",
-        "patrimonio": 141154.19
-      },
-      {
-        "mes": "2024-06",
-        "patrimonio": 147853.84
-      },
-      {
-        "mes": "2024-07",
-        "patrimonio": 153097.29
-      },
-      {
-        "mes": "2024-08",
-        "patrimonio": 168242.96
-      },
-      {
-        "mes": "2024-09",
-        "patrimonio": 167829.01
-      },
-      {
-        "mes": "2024-10",
-        "patrimonio": 162014.11
-      },
-      {
-        "mes": "2024-11",
-        "patrimonio": 156183.43
-      },
-      {
-        "mes": "2024-12",
-        "patrimonio": 153948.31
-      },
-      {
-        "mes": "2025-01",
-        "patrimonio": 166076.28
-      },
-      {
-        "mes": "2025-02",
-        "patrimonio": 159262.44
-      },
-      {
-        "mes": "2025-03",
-        "patrimonio": 168257.82
-      },
-      {
-        "mes": "2025-04",
-        "patrimonio": 198458.87
-      },
-      {
-        "mes": "2025-05",
-        "patrimonio": 210050.2
-      },
-      {
-        "mes": "2025-06",
-        "patrimonio": 249144.4
-      },
-      {
-        "mes": "2025-07",
-        "patrimonio": 244541.0
-      },
-      {
-        "mes": "2025-08",
-        "patrimonio": 262008.85
-      },
-      {
-        "mes": "2025-09",
-        "patrimonio": 268560.1
-      },
-      {
-        "mes": "2025-10",
-        "patrimonio": 272385.35
-      },
-      {
-        "mes": "2025-11",
-        "patrimonio": 305131.21
-      },
-      {
-        "mes": "2025-12",
-        "patrimonio": 447560.76
-      },
-      {
-        "mes": "2026-01",
-        "patrimonio": 498385.58
-      },
-      {
-        "mes": "2026-02",
-        "patrimonio": 509844.08
+        "patrimonio": 405734.0
       }
     ],
     "7_alternativos_estratega": [
@@ -496,200 +300,200 @@
         "patrimonio": 388941.38
       }
     ],
-    "5_internacional": [
+    "3_acoes_brasil": [
       {
         "mes": "2024-03",
-        "patrimonio": 148206.5
+        "patrimonio": 134946.76
       },
       {
         "mes": "2024-04",
-        "patrimonio": 149515.86
+        "patrimonio": 137492.5
       },
       {
         "mes": "2024-05",
-        "patrimonio": 158190.86
+        "patrimonio": 141154.19
       },
       {
         "mes": "2024-06",
-        "patrimonio": 171731.18
+        "patrimonio": 147853.84
       },
       {
         "mes": "2024-07",
-        "patrimonio": 177527.13
+        "patrimonio": 153097.29
       },
       {
         "mes": "2024-08",
-        "patrimonio": 187486.48
+        "patrimonio": 168242.96
       },
       {
         "mes": "2024-09",
-        "patrimonio": 184062.52
+        "patrimonio": 167829.01
       },
       {
         "mes": "2024-10",
-        "patrimonio": 194256.29
+        "patrimonio": 162014.11
       },
       {
         "mes": "2024-11",
-        "patrimonio": 209284.4
+        "patrimonio": 156183.43
       },
       {
         "mes": "2024-12",
-        "patrimonio": 203204.87
+        "patrimonio": 153948.31
       },
       {
         "mes": "2025-01",
-        "patrimonio": 196102.45
+        "patrimonio": 166076.28
       },
       {
         "mes": "2025-02",
-        "patrimonio": 196872.9
+        "patrimonio": 159262.44
       },
       {
         "mes": "2025-03",
-        "patrimonio": 184534.98
+        "patrimonio": 168257.82
       },
       {
         "mes": "2025-04",
-        "patrimonio": 186762.02
+        "patrimonio": 198458.87
       },
       {
         "mes": "2025-05",
-        "patrimonio": 193233.6
+        "patrimonio": 210050.2
       },
       {
         "mes": "2025-06",
-        "patrimonio": 159999.15
+        "patrimonio": 249144.4
       },
       {
         "mes": "2025-07",
-        "patrimonio": 162139.01
+        "patrimonio": 244541.0
       },
       {
         "mes": "2025-08",
-        "patrimonio": 66037.05
+        "patrimonio": 262008.85
       },
       {
         "mes": "2025-09",
-        "patrimonio": 64144.29
+        "patrimonio": 268560.1
       },
       {
         "mes": "2025-10",
-        "patrimonio": 47936.0
+        "patrimonio": 272385.35
       },
       {
         "mes": "2025-11",
-        "patrimonio": 413419.0
+        "patrimonio": 305131.21
       },
       {
         "mes": "2025-12",
-        "patrimonio": 425106.0
+        "patrimonio": 447560.76
       },
       {
         "mes": "2026-01",
-        "patrimonio": 413500.0
+        "patrimonio": 498385.58
       },
       {
         "mes": "2026-02",
-        "patrimonio": 405734.0
+        "patrimonio": 509844.08
       }
     ],
-    "1_renda_fixa_soberana": [
+    "2_credito_privado": [
       {
         "mes": "2024-03",
-        "patrimonio": 0.0
+        "patrimonio": 238459.03
       },
       {
         "mes": "2024-04",
-        "patrimonio": 0.0
+        "patrimonio": 241667.87
       },
       {
         "mes": "2024-05",
-        "patrimonio": 0.0
+        "patrimonio": 243856.54
       },
       {
         "mes": "2024-06",
-        "patrimonio": 0.0
+        "patrimonio": 246392.31
       },
       {
         "mes": "2024-07",
-        "patrimonio": 0.0
+        "patrimonio": 266118.06
       },
       {
         "mes": "2024-08",
-        "patrimonio": 0.0
+        "patrimonio": 268520.3
       },
       {
         "mes": "2024-09",
-        "patrimonio": 0.0
+        "patrimonio": 271681.55
       },
       {
         "mes": "2024-10",
-        "patrimonio": 0.0
+        "patrimonio": 270626.16
       },
       {
         "mes": "2024-11",
-        "patrimonio": 0.0
+        "patrimonio": 272337.24
       },
       {
         "mes": "2024-12",
-        "patrimonio": 0.0
+        "patrimonio": 301923.15
       },
       {
         "mes": "2025-01",
-        "patrimonio": 0.0
+        "patrimonio": 304233.05
       },
       {
         "mes": "2025-02",
-        "patrimonio": 0.0
+        "patrimonio": 323997.8
       },
       {
         "mes": "2025-03",
-        "patrimonio": 0.0
+        "patrimonio": 338231.15
       },
       {
         "mes": "2025-04",
-        "patrimonio": 0.0
+        "patrimonio": 369558.73
       },
       {
         "mes": "2025-05",
-        "patrimonio": 0.0
+        "patrimonio": 377275.17
       },
       {
         "mes": "2025-06",
-        "patrimonio": 53594.4
+        "patrimonio": 384700.46
       },
       {
         "mes": "2025-07",
-        "patrimonio": 54375.82
+        "patrimonio": 428361.24
       },
       {
         "mes": "2025-08",
-        "patrimonio": 69990.44
+        "patrimonio": 436707.95
       },
       {
         "mes": "2025-09",
-        "patrimonio": 68562.04
+        "patrimonio": 455564.69
       },
       {
         "mes": "2025-10",
-        "patrimonio": 77960.16
+        "patrimonio": 494601.35
       },
       {
         "mes": "2025-11",
-        "patrimonio": 77358.24
+        "patrimonio": 509888.38
       },
       {
         "mes": "2025-12",
-        "patrimonio": 79156.8
+        "patrimonio": 512900.48
       },
       {
         "mes": "2026-01",
-        "patrimonio": 76076.64
+        "patrimonio": 513742.45
       },
       {
         "mes": "2026-02",
-        "patrimonio": 75438.72
+        "patrimonio": 511271.13
       }
     ],
     "4_ativos_reais": [
@@ -789,6 +593,202 @@
         "mes": "2026-02",
         "patrimonio": 266095.95
       }
+    ],
+    "6_criptoativos": [
+      {
+        "mes": "2024-03",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2024-04",
+        "patrimonio": 31440.89
+      },
+      {
+        "mes": "2024-05",
+        "patrimonio": 36109.31
+      },
+      {
+        "mes": "2024-06",
+        "patrimonio": 34258.49
+      },
+      {
+        "mes": "2024-07",
+        "patrimonio": 46311.08
+      },
+      {
+        "mes": "2024-08",
+        "patrimonio": 47981.9
+      },
+      {
+        "mes": "2024-09",
+        "patrimonio": 47923.9
+      },
+      {
+        "mes": "2024-10",
+        "patrimonio": 57655.61
+      },
+      {
+        "mes": "2024-11",
+        "patrimonio": 82967.8
+      },
+      {
+        "mes": "2024-12",
+        "patrimonio": 100581.38
+      },
+      {
+        "mes": "2025-01",
+        "patrimonio": 128497.76
+      },
+      {
+        "mes": "2025-02",
+        "patrimonio": 106028.68
+      },
+      {
+        "mes": "2025-03",
+        "patrimonio": 96196.38
+      },
+      {
+        "mes": "2025-04",
+        "patrimonio": 105846.81
+      },
+      {
+        "mes": "2025-05",
+        "patrimonio": 120880.77
+      },
+      {
+        "mes": "2025-06",
+        "patrimonio": 114805.57
+      },
+      {
+        "mes": "2025-07",
+        "patrimonio": 167350.49
+      },
+      {
+        "mes": "2025-08",
+        "patrimonio": 185960.66
+      },
+      {
+        "mes": "2025-09",
+        "patrimonio": 193747.89
+      },
+      {
+        "mes": "2025-10",
+        "patrimonio": 187235.44
+      },
+      {
+        "mes": "2025-11",
+        "patrimonio": 155843.98
+      },
+      {
+        "mes": "2025-12",
+        "patrimonio": 154694.24
+      },
+      {
+        "mes": "2026-01",
+        "patrimonio": 132454.08
+      },
+      {
+        "mes": "2026-02",
+        "patrimonio": 111213.92
+      }
+    ],
+    "1_renda_fixa_soberana": [
+      {
+        "mes": "2024-03",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2024-04",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2024-05",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2024-06",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2024-07",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2024-08",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2024-09",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2024-10",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2024-11",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2024-12",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2025-01",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2025-02",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2025-03",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2025-04",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2025-05",
+        "patrimonio": 0.0
+      },
+      {
+        "mes": "2025-06",
+        "patrimonio": 53594.4
+      },
+      {
+        "mes": "2025-07",
+        "patrimonio": 54375.82
+      },
+      {
+        "mes": "2025-08",
+        "patrimonio": 69990.44
+      },
+      {
+        "mes": "2025-09",
+        "patrimonio": 68562.04
+      },
+      {
+        "mes": "2025-10",
+        "patrimonio": 77960.16
+      },
+      {
+        "mes": "2025-11",
+        "patrimonio": 77358.24
+      },
+      {
+        "mes": "2025-12",
+        "patrimonio": 79156.8
+      },
+      {
+        "mes": "2026-01",
+        "patrimonio": 76076.64
+      },
+      {
+        "mes": "2026-02",
+        "patrimonio": 75438.72
+      }
     ]
   },
   "evolucao_anual": [
@@ -854,7 +854,7 @@
     }
   ],
   "evolucao_anual_por_categoria": {
-    "6_criptoativos": [
+    "5_internacional": [
       {
         "ano": 2012,
         "patrimonio": 0.0
@@ -889,155 +889,31 @@
       },
       {
         "ano": 2020,
-        "patrimonio": 0.0
+        "patrimonio": 31385.59
       },
       {
         "ano": 2021,
-        "patrimonio": 0.0
+        "patrimonio": 96131.46
       },
       {
         "ano": 2022,
-        "patrimonio": 0.0
+        "patrimonio": 86528.03
       },
       {
         "ano": 2023,
-        "patrimonio": 0.0
+        "patrimonio": 139387.72
       },
       {
         "ano": 2024,
-        "patrimonio": 100581.38
+        "patrimonio": 203204.87
       },
       {
         "ano": 2025,
-        "patrimonio": 154694.24
+        "patrimonio": 425106.0
       },
       {
         "ano": 2026,
-        "patrimonio": 111213.92
-      }
-    ],
-    "2_credito_privado": [
-      {
-        "ano": 2012,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2013,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2014,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2015,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2016,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2017,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2018,
-        "patrimonio": 3141.61
-      },
-      {
-        "ano": 2019,
-        "patrimonio": 85795.66
-      },
-      {
-        "ano": 2020,
-        "patrimonio": 126561.65
-      },
-      {
-        "ano": 2021,
-        "patrimonio": 173269.39
-      },
-      {
-        "ano": 2022,
-        "patrimonio": 208085.7
-      },
-      {
-        "ano": 2023,
-        "patrimonio": 232844.2
-      },
-      {
-        "ano": 2024,
-        "patrimonio": 301923.15
-      },
-      {
-        "ano": 2025,
-        "patrimonio": 512900.48
-      },
-      {
-        "ano": 2026,
-        "patrimonio": 511271.13
-      }
-    ],
-    "3_acoes_brasil": [
-      {
-        "ano": 2012,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2013,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2014,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2015,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2016,
-        "patrimonio": 0.0
-      },
-      {
-        "ano": 2017,
-        "patrimonio": 16511.0
-      },
-      {
-        "ano": 2018,
-        "patrimonio": 49883.36
-      },
-      {
-        "ano": 2019,
-        "patrimonio": 79025.28
-      },
-      {
-        "ano": 2020,
-        "patrimonio": 237410.28
-      },
-      {
-        "ano": 2021,
-        "patrimonio": 186179.5
-      },
-      {
-        "ano": 2022,
-        "patrimonio": 131135.72
-      },
-      {
-        "ano": 2023,
-        "patrimonio": 143671.98
-      },
-      {
-        "ano": 2024,
-        "patrimonio": 153948.31
-      },
-      {
-        "ano": 2025,
-        "patrimonio": 447560.76
-      },
-      {
-        "ano": 2026,
-        "patrimonio": 509844.08
+        "patrimonio": 405734.0
       }
     ],
     "7_alternativos_estratega": [
@@ -1102,7 +978,7 @@
         "patrimonio": 388941.38
       }
     ],
-    "5_internacional": [
+    "3_acoes_brasil": [
       {
         "ano": 2012,
         "patrimonio": 0.0
@@ -1125,46 +1001,46 @@
       },
       {
         "ano": 2017,
-        "patrimonio": 0.0
+        "patrimonio": 16511.0
       },
       {
         "ano": 2018,
-        "patrimonio": 0.0
+        "patrimonio": 49883.36
       },
       {
         "ano": 2019,
-        "patrimonio": 0.0
+        "patrimonio": 79025.28
       },
       {
         "ano": 2020,
-        "patrimonio": 31385.59
+        "patrimonio": 237410.28
       },
       {
         "ano": 2021,
-        "patrimonio": 96131.46
+        "patrimonio": 186179.5
       },
       {
         "ano": 2022,
-        "patrimonio": 86528.03
+        "patrimonio": 131135.72
       },
       {
         "ano": 2023,
-        "patrimonio": 139387.72
+        "patrimonio": 143671.98
       },
       {
         "ano": 2024,
-        "patrimonio": 203204.87
+        "patrimonio": 153948.31
       },
       {
         "ano": 2025,
-        "patrimonio": 425106.0
+        "patrimonio": 447560.76
       },
       {
         "ano": 2026,
-        "patrimonio": 405734.0
+        "patrimonio": 509844.08
       }
     ],
-    "1_renda_fixa_soberana": [
+    "2_credito_privado": [
       {
         "ano": 2012,
         "patrimonio": 0.0
@@ -1191,39 +1067,39 @@
       },
       {
         "ano": 2018,
-        "patrimonio": 0.0
+        "patrimonio": 3141.61
       },
       {
         "ano": 2019,
-        "patrimonio": 0.0
+        "patrimonio": 85795.66
       },
       {
         "ano": 2020,
-        "patrimonio": 0.0
+        "patrimonio": 126561.65
       },
       {
         "ano": 2021,
-        "patrimonio": 0.0
+        "patrimonio": 173269.39
       },
       {
         "ano": 2022,
-        "patrimonio": 0.0
+        "patrimonio": 208085.7
       },
       {
         "ano": 2023,
-        "patrimonio": 0.0
+        "patrimonio": 232844.2
       },
       {
         "ano": 2024,
-        "patrimonio": 0.0
+        "patrimonio": 301923.15
       },
       {
         "ano": 2025,
-        "patrimonio": 79156.8
+        "patrimonio": 512900.48
       },
       {
         "ano": 2026,
-        "patrimonio": 75438.72
+        "patrimonio": 511271.13
       }
     ],
     "4_ativos_reais": [
@@ -1286,6 +1162,130 @@
       {
         "ano": 2026,
         "patrimonio": 266095.95
+      }
+    ],
+    "6_criptoativos": [
+      {
+        "ano": 2012,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2013,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2014,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2015,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2016,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2017,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2018,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2019,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2020,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2021,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2022,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2023,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2024,
+        "patrimonio": 100581.38
+      },
+      {
+        "ano": 2025,
+        "patrimonio": 154694.24
+      },
+      {
+        "ano": 2026,
+        "patrimonio": 111213.92
+      }
+    ],
+    "1_renda_fixa_soberana": [
+      {
+        "ano": 2012,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2013,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2014,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2015,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2016,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2017,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2018,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2019,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2020,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2021,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2022,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2023,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2024,
+        "patrimonio": 0.0
+      },
+      {
+        "ano": 2025,
+        "patrimonio": 79156.8
+      },
+      {
+        "ano": 2026,
+        "patrimonio": 75438.72
       }
     ]
   },
@@ -2857,5 +2857,5 @@
       "categoria": "3_acoes_brasil"
     }
   ],
-  "last_update": "2026-02-21 20:10"
+  "last_update": "2026-02-21 20:33"
 }
