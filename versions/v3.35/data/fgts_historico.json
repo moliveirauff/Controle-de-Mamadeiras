@@ -1,0 +1,1415 @@
+{
+  "versao": "2026.2.normalizado",
+  "data_atualizacao": "2026-02-19",
+  "descricao": "Historico de depósitos e rendimentos do FGTS",
+  "movimentacoes": [
+    {
+      "ativo": "FGTS",
+      "data": "2012-01-31",
+      "tipo": "APORTE",
+      "valor_total": 507.52,
+      "preco_unitario": 1.0,
+      "quantidade": 507.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-01-31",
+      "tipo": "APORTE",
+      "valor_total": 507.52,
+      "preco_unitario": 1.0,
+      "quantidade": 505.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-02-29",
+      "tipo": "APORTE",
+      "valor_total": 665.39,
+      "preco_unitario": 1.01,
+      "quantidade": 660.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-03-31",
+      "tipo": "APORTE",
+      "valor_total": 665.39,
+      "preco_unitario": 1.01,
+      "quantidade": 659.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-04-30",
+      "tipo": "APORTE",
+      "valor_total": 1104.67,
+      "preco_unitario": 1.01,
+      "quantidade": 1090.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-05-31",
+      "tipo": "APORTE",
+      "valor_total": 881.89,
+      "preco_unitario": 1.02,
+      "quantidade": 868.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-06-30",
+      "tipo": "APORTE",
+      "valor_total": 540.47,
+      "preco_unitario": 1.02,
+      "quantidade": 530.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-07-31",
+      "tipo": "APORTE",
+      "valor_total": 540.47,
+      "preco_unitario": 1.02,
+      "quantidade": 529.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-08-31",
+      "tipo": "APORTE",
+      "valor_total": 540.47,
+      "preco_unitario": 1.02,
+      "quantidade": 528.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-09-30",
+      "tipo": "APORTE",
+      "valor_total": 563.6,
+      "preco_unitario": 1.03,
+      "quantidade": 549.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-10-31",
+      "tipo": "APORTE",
+      "valor_total": 546.25,
+      "preco_unitario": 1.03,
+      "quantidade": 530.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-11-30",
+      "tipo": "APORTE",
+      "valor_total": 921.35,
+      "preco_unitario": 1.03,
+      "quantidade": 893.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2012-12-31",
+      "tipo": "APORTE",
+      "valor_total": 1181.74,
+      "preco_unitario": 1.03,
+      "quantidade": 1143.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-01-31",
+      "tipo": "APORTE",
+      "valor_total": 1072.07,
+      "preco_unitario": 1.04,
+      "quantidade": 1034.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-02-28",
+      "tipo": "APORTE",
+      "valor_total": 814.16,
+      "preco_unitario": 1.05,
+      "quantidade": 773.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-03-31",
+      "tipo": "APORTE",
+      "valor_total": 624.58,
+      "preco_unitario": 1.05,
+      "quantidade": 592.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-04-30",
+      "tipo": "APORTE",
+      "valor_total": 600.88,
+      "preco_unitario": 1.06,
+      "quantidade": 568.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-05-31",
+      "tipo": "APORTE",
+      "valor_total": 660.97,
+      "preco_unitario": 1.06,
+      "quantidade": 623.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-06-30",
+      "tipo": "APORTE",
+      "valor_total": 1131.14,
+      "preco_unitario": 1.06,
+      "quantidade": 1064.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-07-31",
+      "tipo": "APORTE",
+      "valor_total": 660.97,
+      "preco_unitario": 1.06,
+      "quantidade": 622.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-08-31",
+      "tipo": "APORTE",
+      "valor_total": 844.95,
+      "preco_unitario": 1.07,
+      "quantidade": 791.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-09-30",
+      "tipo": "APORTE",
+      "valor_total": 1543.56,
+      "preco_unitario": 1.07,
+      "quantidade": 1442.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-10-31",
+      "tipo": "APORTE",
+      "valor_total": 710.54,
+      "preco_unitario": 1.07,
+      "quantidade": 663.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-11-30",
+      "tipo": "APORTE",
+      "valor_total": 781.6,
+      "preco_unitario": 1.07,
+      "quantidade": 728.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2013-12-31",
+      "tipo": "APORTE",
+      "valor_total": 2284.35,
+      "preco_unitario": 1.08,
+      "quantidade": 2116.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-01-31",
+      "tipo": "APORTE",
+      "valor_total": 1458.24,
+      "preco_unitario": 1.08,
+      "quantidade": 1347.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-02-28",
+      "tipo": "APORTE",
+      "valor_total": 958.9,
+      "preco_unitario": 1.09,
+      "quantidade": 882.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-03-31",
+      "tipo": "APORTE",
+      "valor_total": 2907.13,
+      "preco_unitario": 1.09,
+      "quantidade": 2667.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-04-30",
+      "tipo": "APORTE",
+      "valor_total": 781.6,
+      "preco_unitario": 1.09,
+      "quantidade": 715.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-05-31",
+      "tipo": "APORTE",
+      "valor_total": 781.6,
+      "preco_unitario": 1.1,
+      "quantidade": 713.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-06-30",
+      "tipo": "APORTE",
+      "valor_total": 1792.47,
+      "preco_unitario": 1.1,
+      "quantidade": 1630.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-07-31",
+      "tipo": "APORTE",
+      "valor_total": 781.6,
+      "preco_unitario": 1.1,
+      "quantidade": 708.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-08-31",
+      "tipo": "APORTE",
+      "valor_total": 1584.35,
+      "preco_unitario": 1.11,
+      "quantidade": 1432.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-09-30",
+      "tipo": "APORTE",
+      "valor_total": 2690.41,
+      "preco_unitario": 1.11,
+      "quantidade": 2431.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-10-31",
+      "tipo": "APORTE",
+      "valor_total": 2228.69,
+      "preco_unitario": 1.11,
+      "quantidade": 2002.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-11-30",
+      "tipo": "APORTE",
+      "valor_total": 878.12,
+      "preco_unitario": 1.12,
+      "quantidade": 786.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2014-12-31",
+      "tipo": "APORTE",
+      "valor_total": 1317.19,
+      "preco_unitario": 1.12,
+      "quantidade": 1179.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-01-31",
+      "tipo": "APORTE",
+      "valor_total": 2893.91,
+      "preco_unitario": 1.12,
+      "quantidade": 2574.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-02-28",
+      "tipo": "APORTE",
+      "valor_total": 1896.41,
+      "preco_unitario": 1.13,
+      "quantidade": 1681.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-03-31",
+      "tipo": "APORTE",
+      "valor_total": 878.12,
+      "preco_unitario": 1.13,
+      "quantidade": 776.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-04-30",
+      "tipo": "APORTE",
+      "valor_total": 878.12,
+      "preco_unitario": 1.14,
+      "quantidade": 773.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-05-31",
+      "tipo": "APORTE",
+      "valor_total": 1836.46,
+      "preco_unitario": 1.14,
+      "quantidade": 1617.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-06-30",
+      "tipo": "APORTE",
+      "valor_total": 957.32,
+      "preco_unitario": 1.14,
+      "quantidade": 840.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-07-31",
+      "tipo": "APORTE",
+      "valor_total": 2032.57,
+      "preco_unitario": 1.15,
+      "quantidade": 1770.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-08-31",
+      "tipo": "APORTE",
+      "valor_total": 2010.76,
+      "preco_unitario": 1.15,
+      "quantidade": 1743.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-09-30",
+      "tipo": "APORTE",
+      "valor_total": 948.37,
+      "preco_unitario": 1.15,
+      "quantidade": 822.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-10-31",
+      "tipo": "APORTE",
+      "valor_total": 3097.25,
+      "preco_unitario": 1.16,
+      "quantidade": 2661.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-11-30",
+      "tipo": "APORTE",
+      "valor_total": 948.37,
+      "preco_unitario": 1.17,
+      "quantidade": 811.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2015-12-31",
+      "tipo": "APORTE",
+      "valor_total": 2542.28,
+      "preco_unitario": 1.17,
+      "quantidade": 2175.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-01-31",
+      "tipo": "APORTE",
+      "valor_total": 2277.06,
+      "preco_unitario": 1.17,
+      "quantidade": 1941.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-02-29",
+      "tipo": "APORTE",
+      "valor_total": 1754.25,
+      "preco_unitario": 1.18,
+      "quantidade": 1483.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-03-31",
+      "tipo": "APORTE",
+      "valor_total": 1829.49,
+      "preco_unitario": 1.19,
+      "quantidade": 1541.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-04-30",
+      "tipo": "APORTE",
+      "valor_total": 2545.55,
+      "preco_unitario": 1.19,
+      "quantidade": 2145.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-05-31",
+      "tipo": "APORTE",
+      "valor_total": 948.37,
+      "preco_unitario": 1.2,
+      "quantidade": 792.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-06-30",
+      "tipo": "APORTE",
+      "valor_total": 948.37,
+      "preco_unitario": 1.2,
+      "quantidade": 789.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-07-31",
+      "tipo": "APORTE",
+      "valor_total": 948.37,
+      "preco_unitario": 1.2,
+      "quantidade": 789.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-08-31",
+      "tipo": "APORTE",
+      "valor_total": 1650.66,
+      "preco_unitario": 1.21,
+      "quantidade": 1368.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-09-30",
+      "tipo": "APORTE",
+      "valor_total": 1046.13,
+      "preco_unitario": 1.22,
+      "quantidade": 859.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-10-31",
+      "tipo": "APORTE",
+      "valor_total": 1365.66,
+      "preco_unitario": 1.22,
+      "quantidade": 1117.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-11-30",
+      "tipo": "APORTE",
+      "valor_total": 1409.92,
+      "preco_unitario": 1.23,
+      "quantidade": 1148.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2016-12-31",
+      "tipo": "APORTE",
+      "valor_total": 948.37,
+      "preco_unitario": 1.23,
+      "quantidade": 769.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-01-31",
+      "tipo": "APORTE",
+      "valor_total": 3570.23,
+      "preco_unitario": 1.24,
+      "quantidade": 2885.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-02-28",
+      "tipo": "APORTE",
+      "valor_total": 1618.31,
+      "preco_unitario": 1.24,
+      "quantidade": 1302.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-03-31",
+      "tipo": "APORTE",
+      "valor_total": 1403.22,
+      "preco_unitario": 1.25,
+      "quantidade": 1126.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-04-30",
+      "tipo": "APORTE",
+      "valor_total": 1666.11,
+      "preco_unitario": 1.25,
+      "quantidade": 1331.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-05-31",
+      "tipo": "APORTE",
+      "valor_total": 1474.92,
+      "preco_unitario": 1.25,
+      "quantidade": 1179.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-06-30",
+      "tipo": "APORTE",
+      "valor_total": 1642.21,
+      "preco_unitario": 1.26,
+      "quantidade": 1305.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-07-31",
+      "tipo": "APORTE",
+      "valor_total": 1666.11,
+      "preco_unitario": 1.26,
+      "quantidade": 1320.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-08-31",
+      "tipo": "APORTE",
+      "valor_total": 2270.8,
+      "preco_unitario": 1.29,
+      "quantidade": 1765.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-09-30",
+      "tipo": "APORTE",
+      "valor_total": 2014.31,
+      "preco_unitario": 1.29,
+      "quantidade": 1559.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-10-31",
+      "tipo": "APORTE",
+      "valor_total": 1065.21,
+      "preco_unitario": 1.3,
+      "quantidade": 822.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-11-30",
+      "tipo": "APORTE",
+      "valor_total": 1065.21,
+      "preco_unitario": 1.3,
+      "quantidade": 820.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2017-12-31",
+      "tipo": "APORTE",
+      "valor_total": 1122.05,
+      "preco_unitario": 1.3,
+      "quantidade": 862.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-01-31",
+      "tipo": "APORTE",
+      "valor_total": 2491.41,
+      "preco_unitario": 1.3,
+      "quantidade": 1914.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-02-28",
+      "tipo": "APORTE",
+      "valor_total": 1169.85,
+      "preco_unitario": 1.31,
+      "quantidade": 894.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-03-31",
+      "tipo": "APORTE",
+      "valor_total": 1150.4,
+      "preco_unitario": 1.31,
+      "quantidade": 877.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-04-30",
+      "tipo": "APORTE",
+      "valor_total": 1150.4,
+      "preco_unitario": 1.31,
+      "quantidade": 875.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-05-31",
+      "tipo": "APORTE",
+      "valor_total": 1314.09,
+      "preco_unitario": 1.32,
+      "quantidade": 997.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-06-30",
+      "tipo": "APORTE",
+      "valor_total": 2148.7,
+      "preco_unitario": 1.32,
+      "quantidade": 1626.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-07-31",
+      "tipo": "APORTE",
+      "valor_total": 1475.35,
+      "preco_unitario": 1.32,
+      "quantidade": 1114.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-08-31",
+      "tipo": "APORTE",
+      "valor_total": 1150.4,
+      "preco_unitario": 1.33,
+      "quantidade": 866.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-09-30",
+      "tipo": "APORTE",
+      "valor_total": 1150.4,
+      "preco_unitario": 1.35,
+      "quantidade": 851.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-10-31",
+      "tipo": "APORTE",
+      "valor_total": 1150.4,
+      "preco_unitario": 1.35,
+      "quantidade": 851.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-11-30",
+      "tipo": "APORTE",
+      "valor_total": 1175.33,
+      "preco_unitario": 1.36,
+      "quantidade": 865.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2018-12-31",
+      "tipo": "APORTE",
+      "valor_total": 1265.44,
+      "preco_unitario": 1.36,
+      "quantidade": 929.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-01-31",
+      "tipo": "APORTE",
+      "valor_total": 1977.13,
+      "preco_unitario": 1.36,
+      "quantidade": 1452.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-02-28",
+      "tipo": "APORTE",
+      "valor_total": 1265.44,
+      "preco_unitario": 1.37,
+      "quantidade": 925.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-03-31",
+      "tipo": "APORTE",
+      "valor_total": 1265.44,
+      "preco_unitario": 1.37,
+      "quantidade": 923.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-04-30",
+      "tipo": "APORTE",
+      "valor_total": 1265.44,
+      "preco_unitario": 1.37,
+      "quantidade": 920.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-05-31",
+      "tipo": "APORTE",
+      "valor_total": 1265.44,
+      "preco_unitario": 1.38,
+      "quantidade": 918.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-06-30",
+      "tipo": "APORTE",
+      "valor_total": 1265.44,
+      "preco_unitario": 1.38,
+      "quantidade": 916.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-07-31",
+      "tipo": "APORTE",
+      "valor_total": 1518.56,
+      "preco_unitario": 1.38,
+      "quantidade": 1099.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-08-31",
+      "tipo": "APORTE",
+      "valor_total": 2335.51,
+      "preco_unitario": 1.38,
+      "quantidade": 1686.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-09-30",
+      "tipo": "APORTE",
+      "valor_total": 1845.39,
+      "preco_unitario": 1.43,
+      "quantidade": 1293.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-10-31",
+      "tipo": "APORTE",
+      "valor_total": 1910.17,
+      "preco_unitario": 1.43,
+      "quantidade": 1336.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-11-30",
+      "tipo": "APORTE",
+      "valor_total": 1595.55,
+      "preco_unitario": 1.43,
+      "quantidade": 1113.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2019-12-31",
+      "tipo": "APORTE",
+      "valor_total": 1595.55,
+      "preco_unitario": 1.44,
+      "quantidade": 1111.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-01-31",
+      "tipo": "APORTE",
+      "valor_total": 2551.48,
+      "preco_unitario": 1.44,
+      "quantidade": 1772.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-02-29",
+      "tipo": "APORTE",
+      "valor_total": 1635.44,
+      "preco_unitario": 1.44,
+      "quantidade": 1133.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-03-31",
+      "tipo": "APORTE",
+      "valor_total": 1635.44,
+      "preco_unitario": 1.44,
+      "quantidade": 1133.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-07-31",
+      "tipo": "APORTE",
+      "valor_total": 1635.44,
+      "preco_unitario": 1.46,
+      "quantidade": 1119.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-07-31",
+      "tipo": "APORTE",
+      "valor_total": 1635.44,
+      "preco_unitario": 1.46,
+      "quantidade": 1119.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-07-31",
+      "tipo": "APORTE",
+      "valor_total": 8.07,
+      "preco_unitario": 1.46,
+      "quantidade": 5.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-08-31",
+      "tipo": "APORTE",
+      "valor_total": 1635.44,
+      "preco_unitario": 1.46,
+      "quantidade": 1116.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-09-30",
+      "tipo": "APORTE",
+      "valor_total": 1635.44,
+      "preco_unitario": 1.48,
+      "quantidade": 1101.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-09-30",
+      "tipo": "APORTE",
+      "valor_total": 1635.44,
+      "preco_unitario": 1.48,
+      "quantidade": 1101.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-09-30",
+      "tipo": "APORTE",
+      "valor_total": 12.12,
+      "preco_unitario": 1.48,
+      "quantidade": 8.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-10-31",
+      "tipo": "APORTE",
+      "valor_total": 2636.18,
+      "preco_unitario": 1.48,
+      "quantidade": 1776.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-11-30",
+      "tipo": "APORTE",
+      "valor_total": 1635.44,
+      "preco_unitario": 1.49,
+      "quantidade": 1099.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-11-30",
+      "tipo": "APORTE",
+      "valor_total": 16.18,
+      "preco_unitario": 1.49,
+      "quantidade": 10.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-11-30",
+      "tipo": "APORTE",
+      "valor_total": 1818.46,
+      "preco_unitario": 1.49,
+      "quantidade": 1222.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2020-12-31",
+      "tipo": "APORTE",
+      "valor_total": 1635.44,
+      "preco_unitario": 1.49,
+      "quantidade": 1096.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-01-31",
+      "tipo": "APORTE",
+      "valor_total": 2453.16,
+      "preco_unitario": 1.5,
+      "quantidade": 1636.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-02-28",
+      "tipo": "APORTE",
+      "valor_total": 1840.0,
+      "preco_unitario": 1.5,
+      "quantidade": 1227.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-03-31",
+      "tipo": "APORTE",
+      "valor_total": 1840.0,
+      "preco_unitario": 1.5,
+      "quantidade": 1224.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-04-30",
+      "tipo": "APORTE",
+      "valor_total": 1840.0,
+      "preco_unitario": 1.51,
+      "quantidade": 1221.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-05-31",
+      "tipo": "APORTE",
+      "valor_total": 1840.0,
+      "preco_unitario": 1.51,
+      "quantidade": 1215.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-06-30",
+      "tipo": "APORTE",
+      "valor_total": 1840.0,
+      "preco_unitario": 1.52,
+      "quantidade": 1212.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-07-31",
+      "tipo": "APORTE",
+      "valor_total": 1840.0,
+      "preco_unitario": 1.52,
+      "quantidade": 1209.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-08-31",
+      "tipo": "APORTE",
+      "valor_total": 1840.0,
+      "preco_unitario": 1.52,
+      "quantidade": 1206.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-09-30",
+      "tipo": "APORTE",
+      "valor_total": 3227.2,
+      "preco_unitario": 1.55,
+      "quantidade": 2081.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-10-31",
+      "tipo": "APORTE",
+      "valor_total": 2065.46,
+      "preco_unitario": 1.56,
+      "quantidade": 1323.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-11-30",
+      "tipo": "APORTE",
+      "valor_total": 1999.54,
+      "preco_unitario": 1.56,
+      "quantidade": 1280.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2021-12-31",
+      "tipo": "APORTE",
+      "valor_total": 1977.6,
+      "preco_unitario": 1.57,
+      "quantidade": 1263.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-01-31",
+      "tipo": "APORTE",
+      "valor_total": 3035.2,
+      "preco_unitario": 1.57,
+      "quantidade": 1929.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-02-28",
+      "tipo": "APORTE",
+      "valor_total": 3296.0,
+      "preco_unitario": 1.58,
+      "quantidade": 2088.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-03-31",
+      "tipo": "APORTE",
+      "valor_total": 1977.6,
+      "preco_unitario": 1.58,
+      "quantidade": 1249.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-04-30",
+      "tipo": "APORTE",
+      "valor_total": 1977.6,
+      "preco_unitario": 1.59,
+      "quantidade": 1245.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-05-31",
+      "tipo": "APORTE",
+      "valor_total": 1977.6,
+      "preco_unitario": 1.59,
+      "quantidade": 1241.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-06-30",
+      "tipo": "RETIRADA",
+      "valor_total": 1000.0,
+      "preco_unitario": 1.59,
+      "quantidade": 628.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-06-30",
+      "tipo": "APORTE",
+      "valor_total": 1977.6,
+      "preco_unitario": 1.6,
+      "quantidade": 1236.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-07-31",
+      "tipo": "APORTE",
+      "valor_total": 1977.6,
+      "preco_unitario": 1.61,
+      "quantidade": 1231.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-08-31",
+      "tipo": "APORTE",
+      "valor_total": 1977.6,
+      "preco_unitario": 1.65,
+      "quantidade": 1196.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-09-30",
+      "tipo": "APORTE",
+      "valor_total": 2964.02,
+      "preco_unitario": 1.66,
+      "quantidade": 1784.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-10-30",
+      "tipo": "RETIRADA",
+      "valor_total": 15823.47,
+      "preco_unitario": 1.66,
+      "quantidade": 9528.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-10-30",
+      "tipo": "APORTE",
+      "valor_total": 2224.2,
+      "preco_unitario": 1.67,
+      "quantidade": 1333.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-11-30",
+      "tipo": "APORTE",
+      "valor_total": 2347.81,
+      "preco_unitario": 1.67,
+      "quantidade": 1402.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2022-12-30",
+      "tipo": "APORTE",
+      "valor_total": 2880.0,
+      "preco_unitario": 1.68,
+      "quantidade": 1713.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-01-30",
+      "tipo": "APORTE",
+      "valor_total": 4771.2,
+      "preco_unitario": 1.69,
+      "quantidade": 2825.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-02-28",
+      "tipo": "RETIRADA",
+      "valor_total": 259021.0,
+      "preco_unitario": 1.69,
+      "quantidade": 153395.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-02-28",
+      "tipo": "APORTE",
+      "valor_total": 2880.0,
+      "preco_unitario": 1.69,
+      "quantidade": 1705.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-03-30",
+      "tipo": "APORTE",
+      "valor_total": 2880.0,
+      "preco_unitario": 1.69,
+      "quantidade": 1700.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-04-30",
+      "tipo": "APORTE",
+      "valor_total": 2880.0,
+      "preco_unitario": 1.7,
+      "quantidade": 1691.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-05-30",
+      "tipo": "APORTE",
+      "valor_total": 2880.0,
+      "preco_unitario": 1.71,
+      "quantidade": 1686.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-06-30",
+      "tipo": "APORTE",
+      "valor_total": 2880.0,
+      "preco_unitario": 1.72,
+      "quantidade": 1678.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-07-30",
+      "tipo": "APORTE",
+      "valor_total": 4800.0,
+      "preco_unitario": 1.72,
+      "quantidade": 2785.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-08-30",
+      "tipo": "APORTE",
+      "valor_total": 3081.6,
+      "preco_unitario": 2.29,
+      "quantidade": 1347.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-09-30",
+      "tipo": "APORTE",
+      "valor_total": 3081.6,
+      "preco_unitario": 2.3,
+      "quantidade": 1341.6
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-10-30",
+      "tipo": "RETIRADA",
+      "valor_total": 4500.64,
+      "preco_unitario": 2.3,
+      "quantidade": 1959.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-10-30",
+      "tipo": "APORTE",
+      "valor_total": 3081.6,
+      "preco_unitario": 2.31,
+      "quantidade": 1336.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-11-30",
+      "tipo": "APORTE",
+      "valor_total": 3971.3,
+      "preco_unitario": 2.31,
+      "quantidade": 1716.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2023-12-30",
+      "tipo": "APORTE",
+      "valor_total": 3199.76,
+      "preco_unitario": 2.32,
+      "quantidade": 1378.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-01-30",
+      "tipo": "APORTE",
+      "valor_total": 4959.52,
+      "preco_unitario": 2.33,
+      "quantidade": 2130.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-02-29",
+      "tipo": "APORTE",
+      "valor_total": 4977.45,
+      "preco_unitario": 2.34,
+      "quantidade": 2130.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-03-30",
+      "tipo": "APORTE",
+      "valor_total": 3199.76,
+      "preco_unitario": 2.34,
+      "quantidade": 1366.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-04-30",
+      "tipo": "APORTE",
+      "valor_total": 3199.76,
+      "preco_unitario": 2.35,
+      "quantidade": 1362.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-05-30",
+      "tipo": "APORTE",
+      "valor_total": 3199.76,
+      "preco_unitario": 2.36,
+      "quantidade": 1356.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-06-30",
+      "tipo": "APORTE",
+      "valor_total": 3520.0,
+      "preco_unitario": 2.37,
+      "quantidade": 1487.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-07-30",
+      "tipo": "APORTE",
+      "valor_total": 4106.66,
+      "preco_unitario": 2.37,
+      "quantidade": 1730.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-08-30",
+      "tipo": "APORTE",
+      "valor_total": 3520.0,
+      "preco_unitario": 2.42,
+      "quantidade": 1455.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-09-30",
+      "tipo": "APORTE",
+      "valor_total": 3520.0,
+      "preco_unitario": 2.43,
+      "quantidade": 1451.2
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-10-30",
+      "tipo": "APORTE",
+      "valor_total": 4107.42,
+      "preco_unitario": 2.43,
+      "quantidade": 1688.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-11-30",
+      "tipo": "APORTE",
+      "valor_total": 3633.69,
+      "preco_unitario": 2.44,
+      "quantidade": 1488.3
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2024-12-30",
+      "tipo": "APORTE",
+      "valor_total": 3633.69,
+      "preco_unitario": 2.45,
+      "quantidade": 1483.7
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-01-30",
+      "tipo": "APORTE",
+      "valor_total": 5667.5,
+      "preco_unitario": 2.46,
+      "quantidade": 2306.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-02-28",
+      "tipo": "APORTE",
+      "valor_total": 5652.46,
+      "preco_unitario": 2.47,
+      "quantidade": 2290.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-03-30",
+      "tipo": "APORTE",
+      "valor_total": 3633.69,
+      "preco_unitario": 2.48,
+      "quantidade": 1467.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-04-30",
+      "tipo": "APORTE",
+      "valor_total": 3633.69,
+      "preco_unitario": 2.49,
+      "quantidade": 1461.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-05-30",
+      "tipo": "APORTE",
+      "valor_total": 3633.69,
+      "preco_unitario": 2.5,
+      "quantidade": 1455.9
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-06-30",
+      "tipo": "APORTE",
+      "valor_total": 5086.3,
+      "preco_unitario": 2.51,
+      "quantidade": 2029.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-07-30",
+      "tipo": "APORTE",
+      "valor_total": 4360.0,
+      "preco_unitario": 2.56,
+      "quantidade": 1706.5
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-08-30",
+      "tipo": "APORTE",
+      "valor_total": 4553.7,
+      "preco_unitario": 2.57,
+      "quantidade": 1774.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-09-30",
+      "tipo": "APORTE",
+      "valor_total": 4892.96,
+      "preco_unitario": 2.58,
+      "quantidade": 1899.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-10-30",
+      "tipo": "APORTE",
+      "valor_total": 4360.0,
+      "preco_unitario": 2.59,
+      "quantidade": 1685.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-11-30",
+      "tipo": "APORTE",
+      "valor_total": 5330.25,
+      "preco_unitario": 2.6,
+      "quantidade": 2051.4
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2025-12-30",
+      "tipo": "APORTE",
+      "valor_total": 4513.2,
+      "preco_unitario": 2.61,
+      "quantidade": 1729.8
+    }
+  ]
+}
