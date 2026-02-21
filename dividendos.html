@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>📊 Dashboard de Dividendos</title>
-  <meta name="version" content="v1.4">
+  <meta name="version" content="v1.5">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
   <style>
@@ -87,27 +87,30 @@
       padding: 12px 8px;
       text-align: center;
       box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
     .kpi-label {
       font-size: 0.6rem;
       font-weight: 800;
       color: var(--subtext);
       text-transform: uppercase;
-      margin-bottom: 4px;
-      display: block;
       letter-spacing: 0.05em;
+      order: 1;
     }
     .kpi-value {
       font-size: 1.05rem;
       font-weight: 800;
       color: var(--text);
       line-height: 1.2;
+      order: 2;
     }
     .kpi-sub {
       font-size: 0.65rem;
       color: var(--text-muted);
-      margin-top: 2px;
       font-weight: 600;
+      order: 3;
     }
 
     /* Cards */
@@ -126,12 +129,22 @@
       color: var(--text);
       margin-bottom: 14px;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      flex-wrap: wrap;
       gap: 8px;
     }
-    .card-title { display: flex; align-items: center; gap: 6px; }
+    .card-title { 
+      display: flex; 
+      align-items: center; 
+      gap: 6px;
+      text-align: center;
+      width: 100%;
+      justify-content: center;
+    }
+    .card-header .controls {
+      width: 100%;
+      justify-content: center;
+    }
 
     /* Chart */
     .chart-container {
@@ -298,6 +311,11 @@
   <div class="card">
     <div class="card-header">
       <div class="card-title"><span>🏆</span> Top Pagadores (12M)</div>
+      <div class="controls">
+        <select id="filterTopClass" class="filter-select" onchange="renderTop()">
+          <option value="all">Todas as Classes</option>
+        </select>
+      </div>
     </div>
     <div class="chart-container">
       <canvas id="chartTop"></canvas>
@@ -452,6 +470,7 @@ async function init() {
     const uniqueClasses = [...new Set(rawData.map(d => d.class))].sort();
     const select1 = document.getElementById('filterClass');
     const select2 = document.getElementById('filterDYClass');
+    const select3 = document.getElementById('filterTopClass');
     
     uniqueClasses.forEach(c => {
       const opt1 = document.createElement('option');
@@ -463,6 +482,11 @@ async function init() {
       opt2.value = c;
       opt2.textContent = LABELS[c] || c;
       select2.appendChild(opt2);
+      
+      const opt3 = document.createElement('option');
+      opt3.value = c;
+      opt3.textContent = LABELS[c] || c;
+      select3.appendChild(opt3);
     });
 
     renderAll();
@@ -731,8 +755,13 @@ function renderTop() {
   const oneYearAgo = new Date();
   oneYearAgo.setMonth(new Date().getMonth() - 12);
   
+  const selectedClass = document.getElementById('filterTopClass').value;
+  
   const grouped = {};
   rawData.filter(d => d.date >= oneYearAgo).forEach(d => {
+    // Filtrar por classe se selecionada
+    if (selectedClass !== 'all' && d.class !== selectedClass) return;
+    
     if (!grouped[d.ticker]) {
       grouped[d.ticker] = { total: 0, class: d.class };
     }
@@ -772,23 +801,7 @@ function renderTop() {
         padding: { right: 45 }
       },
       plugins: { 
-        legend: { 
-          display: true,
-          position: 'bottom',
-          labels: {
-            generateLabels: () => {
-              const classes = [...new Set(sorted.map(s => s[1].class))];
-              return classes.map(c => ({
-                text: LABELS[c] || c,
-                fillStyle: COLORS[c] || '#95a5a6',
-                hidden: false
-              }));
-            },
-            boxWidth: 12,
-            font: { size: 10 },
-            color: getComputedStyle(document.body).getPropertyValue('--text').trim()
-          }
-        },
+        legend: { display: false },
         tooltip: {
           callbacks: {
             label: ctx => fmt(ctx.raw)
@@ -816,10 +829,11 @@ function renderDYAtivo() {
   
   const sorted = filtered.sort((a, b) => b[1].dy - a[1].dy);
   
-  // Altura dinâmica
-  const barHeight = 25;
-  const chartHeight = Math.max(400, sorted.length * barHeight);
+  // Altura dinâmica para scroll
+  const barHeight = 30;
+  const chartHeight = Math.max(1200, sorted.length * barHeight);
   const canvas = document.getElementById('chartDYAtivo');
+  canvas.style.height = chartHeight + 'px';
   canvas.height = chartHeight;
   
   if (charts.dyAtivo) charts.dyAtivo.destroy();
@@ -832,7 +846,7 @@ function renderDYAtivo() {
         data: sorted.map(([ativo, d]) => d.dy),
         backgroundColor: sorted.map(([ativo, d]) => COLORS[d.class] || '#95a5a6'),
         borderRadius: 3,
-        barThickness: 18,
+        barThickness: 20,
         datalabels: {
           display: true,
           anchor: 'end',
@@ -852,23 +866,7 @@ function renderDYAtivo() {
         padding: { right: 50 }
       },
       plugins: { 
-        legend: { 
-          display: true,
-          position: 'bottom',
-          labels: {
-            generateLabels: () => {
-              const classes = [...new Set(sorted.map(s => s[1].class))];
-              return classes.map(c => ({
-                text: LABELS[c] || c,
-                fillStyle: COLORS[c] || '#95a5a6',
-                hidden: false
-              }));
-            },
-            boxWidth: 12,
-            font: { size: 10 },
-            color: getComputedStyle(document.body).getPropertyValue('--text').trim()
-          }
-        },
+        legend: { display: false },
         tooltip: {
           callbacks: {
             label: ctx => `DY: ${ctx.raw.toFixed(2)}%`
