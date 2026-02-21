@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>📊 Dashboard de Dividendos</title>
-  <meta name="version" content="v1.1">
+  <meta name="version" content="v1.2">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
@@ -219,9 +219,9 @@
       <span class="kpi-sub">Últimos 12M</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-label">🚀 CAGR</span>
-      <span class="kpi-value" id="kpiCAGR">—</span>
-      <span class="kpi-sub">5 anos</span>
+      <span class="kpi-label">🎯 DY Geral</span>
+      <span class="kpi-value" id="kpiDY">—</span>
+      <span class="kpi-sub">Dividend Yield 12M</span>
     </div>
   </div>
 
@@ -275,6 +275,16 @@
     </div>
   </div>
 
+  <!-- Chart: DY por Categoria -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span>🎯</span> Dividend Yield por Categoria (12M)</div>
+    </div>
+    <div class="chart-container">
+      <canvas id="chartDYCategoria"></canvas>
+    </div>
+  </div>
+
   <!-- Chart: Top Pagadores -->
   <div class="card">
     <div class="card-header">
@@ -282,6 +292,16 @@
     </div>
     <div class="chart-container">
       <canvas id="chartTop"></canvas>
+    </div>
+  </div>
+
+  <!-- Chart: DY por Ativo -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span>📈</span> Dividend Yield por Ativo (12M)</div>
+    </div>
+    <div class="chart-container">
+      <canvas id="chartDYAtivo"></canvas>
     </div>
   </div>
 </main>
@@ -314,26 +334,32 @@ let rawData = [];
 let monthLimit = 12;
 let donutLimit = 12;
 let charts = {};
+let portfolioValue = {}; // { ativo: valor_atual }
+let tickerClassMap = {};
+let dyData = {}; // { ativo: { divs12m, value, dy, class } }
 
 // === INIT ===
 async function init() {
   try {
-    const [divReq, ativosReq] = await Promise.all([
+    const [divReq, ativosReq, movReq, cotReq] = await Promise.all([
       fetch('data/dividendos_historico.json'),
-      fetch('data/ativos_financeiros.json')
+      fetch('data/ativos_financeiros.json'),
+      fetch('data/movimentacoes_financeiras.json'),
+      fetch('data/invest_cotacoes_mensais.json')
     ]);
     
     const divData = await divReq.json();
     const ativosData = await ativosReq.json();
+    const movData = await movReq.json();
+    const cotData = await cotReq.json();
     
     // Mapear Ticker -> Classe
-    const tickerMap = {};
     ativosData.ativos.forEach(a => {
       const t = a.nome.split('_')[0];
-      tickerMap[t] = a.macro_classe;
+      tickerClassMap[t] = a.macro_classe;
     });
 
-    // Processar Dados
+    // Processar Dividendos
     rawData = divData.movimentacoes.map(m => {
       const ticker = m.ativo.split('_')[0];
       return {
@@ -341,10 +367,68 @@ async function init() {
         year: m.data.substring(0, 4),
         month: m.data.substring(0, 7),
         val: m.valor_total || 0,
-        class: tickerMap[ticker] || 'Outros',
-        ticker: ticker
+        class: tickerClassMap[ticker] || 'Outros',
+        ticker: ticker,
+        ativo: m.ativo
       };
     }).sort((a,b) => a.date - b.date);
+
+    // Calcular Saldo Atual de Cada Ativo
+    const saldos = {}; // { ativo: quantidade }
+    movData.movimentacoes.forEach(m => {
+      const ativo = m.ativo;
+      if (!saldos[ativo]) saldos[ativo] = 0;
+      
+      if (m.tipo === 'APORTE' || m.tipo === 'PROVENTO_DIVIDENDO' || m.tipo === 'PROVENTO_JCP') {
+        saldos[ativo] += m.quantidade || 0;
+      } else if (m.tipo === 'RESGATE' || m.tipo === 'VENDA') {
+        saldos[ativo] -= m.quantidade || 0;
+      }
+    });
+
+    // Pegar Cotação Mais Recente (jan/2026 ou fev/2026)
+    const recentMonths = ['fev/2026', 'jan/2026', 'dez/2025', 'nov/2025'];
+    
+    Object.keys(saldos).forEach(ativo => {
+      const qty = saldos[ativo];
+      if (qty <= 0) return; // Skip ativos zerados
+      
+      // Buscar cotação mais recente
+      let price = 0;
+      for (const month of recentMonths) {
+        if (cotData[ativo] && cotData[ativo][month]) {
+          price = cotData[ativo][month];
+          break;
+        }
+      }
+      
+      portfolioValue[ativo] = qty * price;
+    });
+
+    // Calcular DY por Ativo (últimos 12 meses)
+    const oneYearAgo = new Date();
+    oneYearAgo.setMonth(oneYearAgo.getMonth() - 12);
+    
+    const divs12m = {}; // { ativo: total_dividendos }
+    rawData.filter(d => d.date >= oneYearAgo).forEach(d => {
+      if (!divs12m[d.ativo]) divs12m[d.ativo] = 0;
+      divs12m[d.ativo] += d.val;
+    });
+
+    Object.keys(portfolioValue).forEach(ativo => {
+      const ticker = ativo.split('_')[0];
+      const value = portfolioValue[ativo];
+      const divs = divs12m[ativo] || 0;
+      const dy = value > 0 ? (divs / value) * 100 : 0;
+      
+      dyData[ativo] = {
+        ticker,
+        divs12m: divs,
+        value,
+        dy,
+        class: tickerClassMap[ticker] || 'Outros'
+      };
+    });
 
     // Popular Filtro de Classes
     const uniqueClasses = [...new Set(rawData.map(d => d.class))].sort();
@@ -370,7 +454,9 @@ function renderAll() {
   renderAnual();
   renderMensal();
   renderDonut();
+  renderDYCategoria();
   renderTop();
+  renderDYAtivo();
 }
 
 // === KPIS ===
@@ -384,6 +470,10 @@ function updateKPIs() {
   const oneYearAgo = new Date();
   oneYearAgo.setMonth(now.getMonth() - 12);
   const l12mTotal = rawData.filter(d => d.date >= oneYearAgo).reduce((s, d) => s + d.val, 0);
+  
+  // DY Geral
+  const totalValue = Object.values(portfolioValue).reduce((s, v) => s + v, 0);
+  const dyGeral = totalValue > 0 ? (l12mTotal / totalValue) * 100 : 0;
   
   // CAGR: ano completo anterior vs 5 anos atrás
   const lastFullYear = currentYear - 1;
@@ -400,7 +490,7 @@ function updateKPIs() {
   setTxt('kpiTotal', fmt(total));
   setTxt('kpiYTD', fmt(ytd));
   setTxt('kpiAvg', fmt(l12mTotal / 12));
-  setTxt('kpiCAGR', cagr.toFixed(1) + '%');
+  setTxt('kpiDY', dyGeral.toFixed(2) + '%');
   setTxt('kpiYTDLabel', `Em ${currentYear}`);
 }
 
@@ -525,6 +615,63 @@ function renderDonut() {
   });
 }
 
+function renderDYCategoria() {
+  const ctx = getCtx('chartDYCategoria');
+  
+  // Agrupar por categoria
+  const catData = {};
+  Object.values(dyData).forEach(d => {
+    if (!catData[d.class]) {
+      catData[d.class] = { divs: 0, value: 0 };
+    }
+    catData[d.class].divs += d.divs12m;
+    catData[d.class].value += d.value;
+  });
+
+  const classes = Object.keys(catData).sort();
+  const dyValues = classes.map(c => {
+    const dy = catData[c].value > 0 ? (catData[c].divs / catData[c].value) * 100 : 0;
+    return dy;
+  });
+
+  // DY Geral
+  const totalDivs = Object.values(catData).reduce((s, v) => s + v.divs, 0);
+  const totalValue = Object.values(catData).reduce((s, v) => s + v.value, 0);
+  const dyGeral = totalValue > 0 ? (totalDivs / totalValue) * 100 : 0;
+
+  if (charts.dyCategoria) charts.dyCategoria.destroy();
+  charts.dyCategoria = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [...classes.map(c => LABELS[c] || c), 'GERAL'],
+      datasets: [{
+        label: 'DY (%)',
+        data: [...dyValues, dyGeral],
+        backgroundColor: [...classes.map(c => COLORS[c] || '#95a5a6'), '#34495e'],
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { 
+          beginAtZero: true,
+          ticks: { callback: v => v.toFixed(1) + '%' }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => `DY: ${ctx.raw.toFixed(2)}%`
+          }
+        }
+      }
+    }
+  });
+}
+
 function renderTop() {
   const ctx = getCtx('chartTop');
   const oneYearAgo = new Date();
@@ -535,7 +682,7 @@ function renderTop() {
     grouped[d.ticker] = (grouped[d.ticker] || 0) + d.val;
   });
 
-  const sorted = Object.entries(grouped).sort((a,b) => b[1] - a[1]).slice(0, 7);
+  const sorted = Object.entries(grouped).sort((a,b) => b[1] - a[1]).slice(0, 10);
   
   if (charts.top) charts.top.destroy();
   charts.top = new Chart(ctx, {
@@ -545,7 +692,7 @@ function renderTop() {
       datasets: [{
         label: 'Total 12M',
         data: sorted.map(s => s[1]),
-        backgroundColor: '#34495e',
+        backgroundColor: '#667eea',
         borderRadius: 4
       }]
     },
@@ -553,9 +700,58 @@ function renderTop() {
       indexAxis: 'y',
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
+      plugins: { 
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => fmt(ctx.raw)
+          }
+        }
+      },
       scales: {
         x: { ticks: { callback: v => compactFmt(v) } }
+      }
+    }
+  });
+}
+
+function renderDYAtivo() {
+  const ctx = getCtx('chartDYAtivo');
+  
+  // Ranquear por DY
+  const sorted = Object.entries(dyData)
+    .filter(([ativo, d]) => d.dy > 0)
+    .sort((a, b) => b[1].dy - a[1].dy)
+    .slice(0, 15);
+  
+  if (charts.dyAtivo) charts.dyAtivo.destroy();
+  charts.dyAtivo = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: sorted.map(([ativo, d]) => d.ticker),
+      datasets: [{
+        label: 'DY (%)',
+        data: sorted.map(([ativo, d]) => d.dy),
+        backgroundColor: sorted.map(([ativo, d]) => COLORS[d.class] || '#95a5a6'),
+        borderRadius: 4
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { 
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => `DY: ${ctx.raw.toFixed(2)}%`
+          }
+        }
+      },
+      scales: {
+        x: { 
+          ticks: { callback: v => v.toFixed(1) + '%' }
+        }
       }
     }
   });
