@@ -129,9 +129,9 @@
       <span class="kpi-sub" id="lastUpdate">Sincronizando...</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-label">📖 Total Investido</span>
-      <span class="kpi-value" id="kpiInvestido">—</span>
-      <span class="kpi-sub">Book Value</span>
+      <span class="kpi-label">💰 Aportes Líquidos</span>
+      <span class="kpi-value" id="kpiAportesLiquidos">—</span>
+      <span class="kpi-sub">Total Investido</span>
     </div>
     <div class="kpi-card">
       <span class="kpi-label">📈 Rentabilidade</span>
@@ -148,11 +148,25 @@
   <!-- Evolução 12m e Anual -->
   <div class="grid-2">
     <div class="card">
-      <div class="card-header"><div class="card-title">📊 Evolução (24 Meses)</div></div>
+      <div class="card-header">
+        <div class="card-title">📊 Evolução (24 Meses)</div>
+        <div class="controls">
+          <select id="filterEvolMes" class="filter-btn" style="padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer;">
+            <option value="todas">Todas as Classes</option>
+          </select>
+        </div>
+      </div>
       <div class="chart-container"><canvas id="chartEvolMes"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-header"><div class="card-title">🗓️ Evolução Histórica (Anual)</div></div>
+      <div class="card-header">
+        <div class="card-title">🗓️ Evolução Histórica (Anual)</div>
+        <div class="controls">
+          <select id="filterEvolAno" class="filter-btn" style="padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer;">
+            <option value="todas">Todas as Classes</option>
+          </select>
+        </div>
+      </div>
       <div class="chart-container"><canvas id="chartEvolAno"></canvas></div>
     </div>
   </div>
@@ -216,7 +230,9 @@
       rawData = await resp.json();
       
       updateKPIs();
-      renderEvolucao();
+      populateCategoryFilters();
+      renderEvolucaoMensal();
+      renderEvolucaoAnual();
       renderAportes();
       renderRentabilidade();
       renderBenchmarks('12m');
@@ -235,37 +251,84 @@
   function updateKPIs() {
     const k = rawData.kpis;
     document.getElementById('kpiPatrimonio').textContent = fmt(k.patrimonio_total);
-    document.getElementById('kpiInvestido').textContent = fmt(k.total_investido);
+    document.getElementById('kpiAportesLiquidos').textContent = fmt(k.aportes_liquido_total);
     document.getElementById('kpiRent').textContent = k.rentabilidade_nominal.toFixed(2) + '%';
     document.getElementById('kpiCAGR').textContent = k.cagr_5anos.toFixed(2) + '%';
     document.getElementById('lastUpdate').textContent = 'Último processamento: ' + rawData.last_update;
   }
 
-  function renderEvolucao() {
-    // Mensal
+  function populateCategoryFilters() {
+    // Popular dropdowns com categorias disponíveis
+    const categorias = Object.keys(rawData.evolucao_mensal_por_categoria || {}).sort();
+    const NOMES_CAT = {
+      '1_renda_fixa_soberana': 'Renda Fixa Soberana',
+      '2_credito_privado': 'Crédito Privado',
+      '3_acoes_brasil': 'Ações Brasil',
+      '4_ativos_reais': 'Ativos Reais (FIIs)',
+      '5_internacional': 'Internacional',
+      '6_criptoativos': 'Criptoativos',
+      '7_alternativos_estratega': 'Alternativos'
+    };
+    
+    const filterMes = document.getElementById('filterEvolMes');
+    const filterAno = document.getElementById('filterEvolAno');
+    
+    categorias.forEach(cat => {
+      const opt1 = document.createElement('option');
+      opt1.value = cat;
+      opt1.textContent = NOMES_CAT[cat] || cat;
+      filterMes.appendChild(opt1);
+      
+      const opt2 = document.createElement('option');
+      opt2.value = cat;
+      opt2.textContent = NOMES_CAT[cat] || cat;
+      filterAno.appendChild(opt2);
+    });
+    
+    // Event listeners
+    filterMes.addEventListener('change', renderEvolucaoMensal);
+    filterAno.addEventListener('change', renderEvolucaoAnual);
+  }
+
+  function renderEvolucaoMensal() {
+    const categoria = document.getElementById('filterEvolMes').value;
+    const data = categoria === 'todas' 
+      ? rawData.evolucao_mensal 
+      : rawData.evolucao_mensal_por_categoria[categoria];
+    
+    if (charts.evolMes) charts.evolMes.destroy();
+    
     const ctxM = document.getElementById('chartEvolMes').getContext('2d');
     charts.evolMes = new Chart(ctxM, {
       type: 'bar',
       data: {
-        labels: rawData.evolucao_mensal.map(d => d.mes.split('-').reverse().join('/')),
+        labels: data.map(d => d.mes.split('-').reverse().join('/')),
         datasets: [{
           label: 'Patrimônio',
-          data: rawData.evolucao_mensal.map(d => d.patrimonio),
+          data: data.map(d => d.patrimonio),
           backgroundColor: '#667eea', borderRadius: 4
         }]
       },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
     });
+  }
 
-    // Anual
+  function renderEvolucaoAnual() {
+    const categoria = document.getElementById('filterEvolAno').value;
+    const data = categoria === 'todas' 
+      ? rawData.evolucao_anual 
+      : rawData.evolucao_anual_por_categoria[categoria];
+    
+    if (charts.evolAno) charts.evolAno.destroy();
+    
     const ctxA = document.getElementById('chartEvolAno').getContext('2d');
     charts.evolAno = new Chart(ctxA, {
       type: 'bar',
       data: {
-        labels: rawData.evolucao_anual.map(d => d.ano),
+        labels: data.map(d => d.ano),
         datasets: [{
           label: 'Patrimônio',
-          data: rawData.evolucao_anual.map(d => d.patrimonio),
+          data: data.map(d => d.patrimonio),
           backgroundColor: '#48bb78', borderRadius: 4
         }]
       },

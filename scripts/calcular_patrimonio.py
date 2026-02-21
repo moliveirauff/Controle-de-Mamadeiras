@@ -59,7 +59,7 @@ def run():
         current += relativedelta(months=1)
 
     positions = defaultdict(float) 
-    total_invested_per_asset = defaultdict(float) 
+    aportes_liquidos_per_asset = defaultdict(float)  # Renomeado: usar valor_total direto
     total_qty_bought_per_asset = defaultdict(float)
     total_divs_accumulated = 0.0
     total_divs_per_year = defaultdict(float)
@@ -88,14 +88,16 @@ def run():
             taxas = float(m.get("taxas", 0))
             if m["tipo"] in TIPOS_SOMA:
                 positions[asset_full] += qty
-                total_invested_per_asset[asset_full] += (qty * price) + taxas
+                valor_mov = m.get("valor_total", (qty * price) + taxas)
+                aportes_liquidos_per_asset[asset_full] += valor_mov
                 total_qty_bought_per_asset[asset_full] += qty
-                aportes_anuais[year_val] += (qty * price) + taxas
+                aportes_anuais[year_val] += valor_mov
             elif m["tipo"] in TIPOS_SUBTRAI:
-                # Total Investido = Aportes - Retiradas (valores diretos, sem preço médio)
-                total_invested_per_asset[asset_full] -= (qty * price)
+                # Aportes Líquidos = Aportes - Retiradas (usar valor_total direto)
+                valor_mov = m.get("valor_total", qty * price)
+                aportes_liquidos_per_asset[asset_full] -= valor_mov
                 positions[asset_full] -= qty
-                aportes_anuais[year_val] -= (qty * price)
+                aportes_anuais[year_val] -= valor_mov
             mov_idx += 1
 
         while div_idx < len(divs):
@@ -135,10 +137,10 @@ def run():
         # Gráfico 4: Rentabilidade Anual (Series A e B)
         if month_val == 12 or month_key == months[-1]:
             evolucao_anual.append({"ano": year_val, "patrimonio": round(pat_mes, 2)})
-            investido_liquido = sum(v for v in total_invested_per_asset.values() if v > 0)
-            rent_sem_div = ((pat_mes - investido_liquido) / investido_liquido * 100) if investido_liquido > 0 else 0
-            investido_ajustado = investido_liquido - total_divs_accumulated
-            rent_com_div = ((pat_mes - investido_ajustado) / investido_ajustado * 100) if investido_ajustado > 0 else 0
+            aportes_total = sum(v for v in aportes_liquidos_per_asset.values() if v > 0)
+            rent_sem_div = ((pat_mes - aportes_total) / aportes_total * 100) if aportes_total > 0 else 0
+            aportes_ajustado = aportes_total - total_divs_accumulated
+            rent_com_div = ((pat_mes - aportes_ajustado) / aportes_ajustado * 100) if aportes_ajustado > 0 else 0
             rentabilidade_anual_data.append({
                 "ano": year_val,
                 "sem_dividendos": round(rent_sem_div, 2),
@@ -234,9 +236,67 @@ def run():
         "total": get_benchmark_series(len(months))
     }
 
+    # --- EVOLUÇÃO POR CATEGORIA (para filtros dos gráficos 1 e 2) ---
+    categorias_unicas = set(base_class_map.values())
+    evolucao_mensal_por_cat = {cat: [] for cat in categorias_unicas}
+    evolucao_anual_por_cat = {cat: [] for cat in categorias_unicas}
+    
+    # Processar novamente para gerar séries filtradas
+    positions_temp = defaultdict(float)
+    mov_idx_temp = 0
+    
+    for month_key in months:
+        year_val, month_val = map(int, month_key.split("-"))
+        last_day = (datetime(year_val, month_val, 1) + relativedelta(months=1, days=-1)).date()
+        
+        # Atualizar posições
+        while mov_idx_temp < len(movs):
+            m = movs[mov_idx_temp]
+            m_date = datetime.strptime(m["data"], "%Y-%m-%d").date()
+            if m_date > last_day: break
+            asset_full = m["ativo"]
+            qty = float(m.get("quantidade", 0))
+            if m["tipo"] in TIPOS_SOMA:
+                positions_temp[asset_full] += qty
+            elif m["tipo"] in TIPOS_SUBTRAI:
+                positions_temp[asset_full] -= qty
+            mov_idx_temp += 1
+        
+        # Calcular patrimônio por categoria
+        pat_por_cat = {cat: 0.0 for cat in categorias_unicas}
+        for asset_full, qty in positions_temp.items():
+            if qty <= 0.0001: continue
+            asset_cots = cotacoes_data.get(asset_full, {})
+            base_name = get_base_name(asset_full)
+            if not asset_cots:
+                asset_cots = cotacoes_data.get(base_name, {})
+            cat = base_class_map.get(base_name, "7_alternativos_estratega")
+            cot_key = f"{MESES_PT[month_val]}/{year_val}"
+            price = asset_cots.get(cot_key, 0.0)
+            if price is None or price == 0.0:
+                try:
+                    def cot_to_date(k):
+                        m_pt, y = k.split('/')
+                        return date(int(y), next(n for n, v in MESES_PT.items() if v == m_pt), 1)
+                    valid = {cot_to_date(k): v for k, v in asset_cots.items() if v is not None and v > 0}
+                    past = [d for d in valid.keys() if d <= last_day]
+                    price = valid[max(past)] if past else 0.0
+                except Exception:
+                    price = 0.0
+            pat_por_cat[cat] += qty * price
+        
+        # Salvar evolução mensal por categoria
+        for cat in categorias_unicas:
+            evolucao_mensal_por_cat[cat].append({"mes": month_key, "patrimonio": round(pat_por_cat[cat], 2)})
+        
+        # Salvar evolução anual por categoria
+        if month_val == 12 or month_key == months[-1]:
+            for cat in categorias_unicas:
+                evolucao_anual_por_cat[cat].append({"ano": year_val, "patrimonio": round(pat_por_cat[cat], 2)})
+
     # --- FINAL EXPORT ---
     pat_atual = evolucao_mensal[-1]["patrimonio"]
-    invest_total = sum(v for v in total_invested_per_asset.values() if v > 0)
+    aportes_total_geral = sum(v for v in aportes_liquidos_per_asset.values() if v > 0)
     
     # Reuso da lógica de Alocação e Ranking do script anterior
     pat_cat_atual = defaultdict(float)
@@ -252,10 +312,10 @@ def run():
         price = cot_data.get(f"{MESES_PT[int(months[-1].split('-')[1])]}/{months[-1].split('-')[0]}", 0) or 0
         val_atual = qty * price
         pat_cat_atual[cat] += val_atual
-        investido = total_invested_per_asset[asset_full]
+        aporte_ativo = aportes_liquidos_per_asset[asset_full]
         ranking.append({
-            "ticker": base_name, "investido": round(investido, 2), "atual": round(val_atual, 2),
-            "rent_pct": round(((val_atual - investido)/investido*100), 2) if investido > 0 else 0,
+            "ticker": base_name, "investido": round(aporte_ativo, 2), "atual": round(val_atual, 2),
+            "rent_pct": round(((val_atual - aporte_ativo)/aporte_ativo*100), 2) if aporte_ativo > 0 else 0,
             "categoria": cat
         })
     ranking.sort(key=lambda x: x["investido"], reverse=True)
@@ -269,12 +329,14 @@ def run():
     output = {
         "kpis": {
             "patrimonio_total": round(pat_atual, 2),
-            "total_investido": round(invest_total, 2),
-            "rentabilidade_nominal": round(((pat_atual - invest_total)/invest_total*100), 2) if invest_total > 0 else 0,
+            "aportes_liquido_total": round(aportes_total_geral, 2),
+            "rentabilidade_nominal": round(((pat_atual - aportes_total_geral)/aportes_total_geral*100), 2) if aportes_total_geral > 0 else 0,
             "cagr_5anos": round((((pat_atual / evolucao_mensal[-61]["patrimonio"])**(1/5))-1)*100, 2) if len(evolucao_mensal) >= 61 and evolucao_mensal[-61]["patrimonio"] > 0 else 0
         },
         "evolucao_mensal": evolucao_mensal[-24:],
+        "evolucao_mensal_por_categoria": {cat: data[-24:] for cat, data in evolucao_mensal_por_cat.items()},
         "evolucao_anual": evolucao_anual,
+        "evolucao_anual_por_categoria": evolucao_anual_por_cat,
         "aportes_liquidos": [{"ano": y, "aporte": round(v, 2)} for y, v in sorted(aportes_anuais.items())],
         "rentabilidade_anual": rentabilidade_anual_data,
         "alocacao": alocacao_output,
