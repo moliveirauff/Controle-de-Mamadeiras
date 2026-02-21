@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>📊 Dashboard de Dividendos</title>
-  <meta name="version" content="v1.3">
+  <meta name="version" content="v1.4">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
   <style>
@@ -139,6 +139,13 @@
       height: 300px;
       width: 100%;
     }
+    .chart-scroll {
+      position: relative;
+      height: 380px;
+      width: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
 
     /* Controls */
     .controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
@@ -188,6 +195,7 @@
       h1 { font-size: 1.75rem; }
       .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
       .chart-container { height: 380px; }
+      .chart-scroll { height: 380px; }
       .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     }
   </style>
@@ -296,12 +304,17 @@
     </div>
   </div>
 
-  <!-- Chart: DY por Ativo (com scroll) -->
+  <!-- Chart: DY por Ativo (com scroll e filtro) -->
   <div class="card">
     <div class="card-header">
       <div class="card-title"><span>📈</span> Dividend Yield por Ativo (12M)</div>
+      <div class="controls">
+        <select id="filterDYClass" class="filter-select" onchange="renderDYAtivo()">
+          <option value="all">Todas as Classes</option>
+        </select>
+      </div>
     </div>
-    <div style="position: relative; height: 800px; overflow-y: auto;">
+    <div class="chart-scroll">
       <canvas id="chartDYAtivo"></canvas>
     </div>
   </div>
@@ -392,14 +405,13 @@ async function init() {
       }
     });
 
-    // Pegar Cotação Mais Recente (jan/2026 ou fev/2026)
+    // Pegar Cotação Mais Recente
     const recentMonths = ['fev/2026', 'jan/2026', 'dez/2025', 'nov/2025'];
     
     Object.keys(saldos).forEach(ativo => {
       const qty = saldos[ativo];
-      if (qty <= 0) return; // Skip ativos zerados
+      if (qty <= 0) return;
       
-      // Buscar cotação mais recente
       let price = 0;
       for (const month of recentMonths) {
         if (cotData[ativo] && cotData[ativo][month]) {
@@ -415,7 +427,7 @@ async function init() {
     const oneYearAgo = new Date();
     oneYearAgo.setMonth(oneYearAgo.getMonth() - 12);
     
-    const divs12m = {}; // { ativo: total_dividendos }
+    const divs12m = {};
     rawData.filter(d => d.date >= oneYearAgo).forEach(d => {
       if (!divs12m[d.ativo]) divs12m[d.ativo] = 0;
       divs12m[d.ativo] += d.val;
@@ -438,12 +450,19 @@ async function init() {
 
     // Popular Filtro de Classes
     const uniqueClasses = [...new Set(rawData.map(d => d.class))].sort();
-    const select = document.getElementById('filterClass');
+    const select1 = document.getElementById('filterClass');
+    const select2 = document.getElementById('filterDYClass');
+    
     uniqueClasses.forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = c;
-      opt.textContent = LABELS[c] || c;
-      select.appendChild(opt);
+      const opt1 = document.createElement('option');
+      opt1.value = c;
+      opt1.textContent = LABELS[c] || c;
+      select1.appendChild(opt1);
+      
+      const opt2 = document.createElement('option');
+      opt2.value = c;
+      opt2.textContent = LABELS[c] || c;
+      select2.appendChild(opt2);
     });
 
     renderAll();
@@ -480,18 +499,6 @@ function updateKPIs() {
   // DY Geral
   const totalValue = Object.values(portfolioValue).reduce((s, v) => s + v, 0);
   const dyGeral = totalValue > 0 ? (l12mTotal / totalValue) * 100 : 0;
-  
-  // CAGR: ano completo anterior vs 5 anos atrás
-  const lastFullYear = currentYear - 1;
-  const startYear = lastFullYear - 4;
-  
-  const endVal = rawData.filter(d => d.year == lastFullYear).reduce((s,d) => s+d.val, 0);
-  const startVal = rawData.filter(d => d.year == startYear).reduce((s,d) => s+d.val, 0);
-  
-  let cagr = 0;
-  if (startVal > 0 && endVal > 0) {
-    cagr = (Math.pow(endVal / startVal, 1/4) - 1) * 100;
-  }
 
   setTxt('kpiTotal', fmt(total));
   setTxt('kpiYTD', fmt(ytd));
@@ -528,7 +535,14 @@ function renderAnual() {
         y: { stacked: true, ticks: { callback: v => compactFmt(v) } }
       },
       plugins: {
-        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } },
+        legend: { 
+          position: 'bottom', 
+          labels: { 
+            boxWidth: 12, 
+            font: { size: 10 },
+            color: getComputedStyle(document.body).getPropertyValue('--text').trim()
+          } 
+        },
         tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + fmt(ctx.raw) } }
       }
     }
@@ -579,7 +593,14 @@ function renderMensal() {
         y: { stacked: true, ticks: { callback: v => compactFmt(v) } }
       },
       plugins: {
-        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+        legend: { 
+          position: 'bottom', 
+          labels: { 
+            boxWidth: 12, 
+            font: { size: 10 },
+            color: getComputedStyle(document.body).getPropertyValue('--text').trim()
+          } 
+        }
       }
     }
   });
@@ -615,7 +636,14 @@ function renderDonut() {
       maintainAspectRatio: false,
       cutout: '65%',
       plugins: {
-        legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10 } } }
+        legend: { 
+          position: 'right', 
+          labels: { 
+            boxWidth: 12, 
+            font: { size: 10 },
+            color: getComputedStyle(document.body).getPropertyValue('--text').trim()
+          } 
+        }
       }
     }
   });
@@ -634,8 +662,14 @@ function renderDYCategoria() {
     catData[d.class].value += d.value;
   });
 
-  // Filtrar categorias vazias (sem valor)
-  const classes = Object.keys(catData).filter(c => catData[c].value > 0).sort();
+  // Filtrar categorias com DY = 0
+  const classes = Object.keys(catData)
+    .filter(c => {
+      const dy = catData[c].value > 0 ? (catData[c].divs / catData[c].value) * 100 : 0;
+      return dy > 0;
+    })
+    .sort();
+    
   const dyValues = classes.map(c => {
     const dy = catData[c].value > 0 ? (catData[c].divs / catData[c].value) * 100 : 0;
     return dy;
@@ -660,15 +694,19 @@ function renderDYCategoria() {
           display: true,
           anchor: 'end',
           align: 'top',
+          offset: 4,
           formatter: (value) => value.toFixed(2) + '%',
           font: { weight: 'bold', size: 10 },
-          color: '#2d3748'
+          color: getComputedStyle(document.body).getPropertyValue('--text').trim()
         }
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      layout: {
+        padding: { top: 25 }
+      },
       scales: {
         y: { 
           beginAtZero: true,
@@ -693,7 +731,7 @@ function renderTop() {
   const oneYearAgo = new Date();
   oneYearAgo.setMonth(new Date().getMonth() - 12);
   
-  const grouped = {}; // { ticker: { total, class } }
+  const grouped = {};
   rawData.filter(d => d.date >= oneYearAgo).forEach(d => {
     if (!grouped[d.ticker]) {
       grouped[d.ticker] = { total: 0, class: d.class };
@@ -718,10 +756,11 @@ function renderTop() {
         datalabels: {
           display: true,
           anchor: 'end',
-          align: 'right',
+          align: 'end',
+          offset: 4,
           formatter: (value) => compactFmt(value),
-          font: { weight: 'bold', size: 10 },
-          color: '#2d3748'
+          font: { weight: 'bold', size: 9 },
+          color: getComputedStyle(document.body).getPropertyValue('--text').trim()
         }
       }]
     },
@@ -729,6 +768,9 @@ function renderTop() {
       indexAxis: 'y',
       responsive: true,
       maintainAspectRatio: false,
+      layout: {
+        padding: { right: 45 }
+      },
       plugins: { 
         legend: { 
           display: true,
@@ -743,7 +785,8 @@ function renderTop() {
               }));
             },
             boxWidth: 12,
-            font: { size: 10 }
+            font: { size: 10 },
+            color: getComputedStyle(document.body).getPropertyValue('--text').trim()
           }
         },
         tooltip: {
@@ -763,13 +806,19 @@ function renderTop() {
 function renderDYAtivo() {
   const ctx = getCtx('chartDYAtivo');
   
-  // Ranquear por DY - TODOS os ativos com dividendos
-  const sorted = Object.entries(dyData)
-    .filter(([ativo, d]) => d.divs12m > 0) // Filtrar apenas ativos que pagaram dividendos
-    .sort((a, b) => b[1].dy - a[1].dy);
+  // Filtrar por classe selecionada
+  const selectedClass = document.getElementById('filterDYClass').value;
+  let filtered = Object.entries(dyData).filter(([ativo, d]) => d.divs12m > 0);
   
-  // Altura dinâmica baseada no número de ativos
-  const chartHeight = Math.max(800, sorted.length * 25);
+  if (selectedClass !== 'all') {
+    filtered = filtered.filter(([ativo, d]) => d.class === selectedClass);
+  }
+  
+  const sorted = filtered.sort((a, b) => b[1].dy - a[1].dy);
+  
+  // Altura dinâmica
+  const barHeight = 25;
+  const chartHeight = Math.max(400, sorted.length * barHeight);
   const canvas = document.getElementById('chartDYAtivo');
   canvas.height = chartHeight;
   
@@ -782,14 +831,16 @@ function renderDYAtivo() {
         label: 'DY (%)',
         data: sorted.map(([ativo, d]) => d.dy),
         backgroundColor: sorted.map(([ativo, d]) => COLORS[d.class] || '#95a5a6'),
-        borderRadius: 4,
+        borderRadius: 3,
+        barThickness: 18,
         datalabels: {
           display: true,
           anchor: 'end',
-          align: 'right',
+          align: 'end',
+          offset: 4,
           formatter: (value) => value.toFixed(2) + '%',
           font: { weight: 'bold', size: 9 },
-          color: '#2d3748'
+          color: getComputedStyle(document.body).getPropertyValue('--text').trim()
         }
       }]
     },
@@ -797,6 +848,9 @@ function renderDYAtivo() {
       indexAxis: 'y',
       responsive: true,
       maintainAspectRatio: false,
+      layout: {
+        padding: { right: 50 }
+      },
       plugins: { 
         legend: { 
           display: true,
@@ -811,7 +865,8 @@ function renderDYAtivo() {
               }));
             },
             boxWidth: 12,
-            font: { size: 10 }
+            font: { size: 10 },
+            color: getComputedStyle(document.body).getPropertyValue('--text').trim()
           }
         },
         tooltip: {
@@ -823,6 +878,12 @@ function renderDYAtivo() {
       scales: {
         x: { 
           ticks: { callback: v => v.toFixed(1) + '%' }
+        },
+        y: {
+          ticks: {
+            autoSkip: false,
+            font: { size: 10 }
+          }
         }
       }
     },
@@ -870,9 +931,14 @@ function toggleTheme() {
   const isDark = document.body.classList.contains('dark-mode');
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
   document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+  // Re-render charts para atualizar cores de legenda
+  renderAll();
 }
 
-if (localStorage.getItem('theme') === 'dark') toggleTheme();
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark-mode');
+  document.getElementById('theme-toggle').textContent = '☀️';
+}
 
 init();
 </script>
