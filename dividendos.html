@@ -764,15 +764,27 @@ function renderDonut() {
 
 function renderDYCategoria() {
   const ctx = getCtx('chartDYCategoria');
+  const oneYearAgo = new Date();
+  oneYearAgo.setMonth(oneYearAgo.getMonth() - 12);
   
-  // Agrupar por categoria
   const catData = {};
-  Object.values(dyData).forEach(d => {
+  
+  // 1. Somar TODOS os dividendos dos últimos 12M por categoria (incluindo ativos vendidos)
+  rawData.filter(d => d.date >= oneYearAgo).forEach(d => {
     if (!catData[d.class]) {
       catData[d.class] = { divs: 0, value: 0 };
     }
-    catData[d.class].divs += d.divs12m;
-    catData[d.class].value += d.value;
+    catData[d.class].divs += d.val;
+  });
+  
+  // 2. Somar valor ATUAL da carteira por categoria (apenas ativos com saldo > 0)
+  Object.keys(portfolioValue).forEach(ativo => {
+    const ticker = ativo.split('_')[0];
+    const cls = tickerClassMap[ticker] || 'Outros';
+    if (!catData[cls]) {
+      catData[cls] = { divs: 0, value: 0 };
+    }
+    catData[cls].value += portfolioValue[ativo];
   });
 
   // Filtrar categorias com DY = 0
