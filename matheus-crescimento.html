@@ -129,6 +129,19 @@
         order: 3;
     }
 
+    /* Filters Style similar to Dividendos */
+    .filter-select {
+      background: var(--border);
+      border: none;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+    }
+
     /* === CARDS === */
     .card {
       background: var(--surface);
@@ -167,41 +180,7 @@
       width: 100%;
     }
 
-    /* === TIME FILTERS === */
-    .time-filters {
-      display: flex;
-      gap: 0.5rem;
-      background: var(--bg);
-      padding: 0.25rem;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      justify-content: center;
-    }
-
-    .time-filter-btn {
-      padding: 0.4rem 0.8rem;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-
-    .time-filter-btn:hover {
-      background: rgba(102, 126, 234, 0.1);
-      color: var(--primary);
-    }
-
-    .time-filter-btn.active {
-      background: var(--primary);
-      color: white;
-    }
-
-    /* === LOADING === */
+    /* === CARDS === */
     .loading {
       text-align: center;
       padding: 3rem;
@@ -263,11 +242,11 @@
     <div class="card">
       <div class="chart-header">
         <div class="chart-title">⚖️ Peso por Idade (Curvas OMS)</div>
-        <div class="time-filters">
-          <button class="time-filter-btn" data-chart="peso" data-period="3">3M</button>
-          <button class="time-filter-btn" data-chart="peso" data-period="6">6M</button>
-          <button class="time-filter-btn active" data-chart="peso" data-period="all">Tudo</button>
-        </div>
+        <select class="filter-select" onchange="updateChartFilter('peso', this.value)">
+          <option value="3">3 Meses</option>
+          <option value="6">6 Meses</option>
+          <option value="all" selected>Tudo</option>
+        </select>
       </div>
       <div class="chart-container">
         <canvas id="chartPeso"></canvas>
@@ -278,11 +257,11 @@
     <div class="card">
       <div class="chart-header">
         <div class="chart-title">📏 Altura por Idade (Curvas OMS)</div>
-        <div class="time-filters">
-          <button class="time-filter-btn" data-chart="altura" data-period="3">3M</button>
-          <button class="time-filter-btn" data-chart="altura" data-period="6">6M</button>
-          <button class="time-filter-btn active" data-chart="altura" data-period="all">Tudo</button>
-        </div>
+        <select class="filter-select" onchange="updateChartFilter('altura', this.value)">
+          <option value="3">3 Meses</option>
+          <option value="6">6 Meses</option>
+          <option value="all" selected>Tudo</option>
+        </select>
       </div>
       <div class="chart-container">
         <canvas id="chartAltura"></canvas>
@@ -452,16 +431,11 @@
       renderPeso(data, 'all');
       renderAltura(data, 'all');
       
-      // Filters
-      document.querySelectorAll('.time-filter-btn').forEach(btn => {
-        btn.onclick = () => {
-          btn.parentElement.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const p = btn.dataset.period === 'all' ? 'all' : parseInt(btn.dataset.period);
-          if(btn.dataset.chart === 'peso') renderPeso(data, p);
-          else renderAltura(data, p);
-        };
-      });
+      window.updateChartFilter = (type, val) => {
+        const p = val === 'all' ? 'all' : parseInt(val);
+        if(type === 'peso') renderPeso(data, p);
+        else renderAltura(data, p);
+      };
     });
   </script>
 </body>
