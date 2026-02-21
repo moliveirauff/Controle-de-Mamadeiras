@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛒 Lista de Compras</title>
+    <style>
+        :root {
+            --bg: #f3f4f6;
+            --text: #1f2937;
+            --card-bg: #ffffff;
+            --primary: #2563eb;
+            --accent: #3b82f6;
+            --success: #059669;
+            --danger: #dc2626;
+            --gray: #6b7280;
+            --border: #e5e7eb;
+        }
+        body.dark-mode {
+            --bg: #111827;
+            --text: #f3f4f6;
+            --card-bg: #1f2937;
+            --primary: #3b82f6;
+            --border: #374151;
+        }
+        * { box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--bg); 
+            margin: 0; 
+            padding: 10px; 
+            padding-bottom: 60px; 
+            color: var(--text); 
+            transition: background-color 0.3s, color 0.3s; 
+        }
+        
+        #theme-toggle {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
+            padding: 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            z-index: 10;
+        }
+        body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+
+        .nav-link { text-decoration: none; color: var(--primary); font-size: 0.9rem; margin: 10px 0 0 10px; display: inline-block; }
+        
+        h1 { 
+            text-align: center; 
+            font-size: 1.8rem; 
+            margin: 15px 0 20px 0; 
+            font-weight: 800; 
+        }
+        
+        .view-toggle { 
+            display: flex; 
+            justify-content: center; 
+            gap: 8px; 
+            margin-bottom: 20px; 
+            padding: 0 10px;
+        }
+        
+        .btn-view { 
+            flex: 1;
+            max-width: 200px;
+            background: #e5e7eb; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 10px; 
+            font-size: 14px; 
+            font-weight: 600; 
+            color: #4b5563; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        body.dark-mode .btn-view { background: #374151; color: #d1d5db; }
+        .btn-view.active { background: var(--primary); color: white; }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            padding: 0 10px;
+        }
+        
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--card-bg);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        
+        .btn-conclude, .btn-sync {
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+        .btn-conclude { background: var(--success); }
+        .btn-sync { background: var(--primary); }
+        .btn-conclude:active, .btn-sync:active { transform: scale(0.98); }
+
+        .total-card {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 0 10px 20px 10px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+        .total-value { font-size: 2rem; font-weight: 800; }
+        .total-label { font-size: 0.8rem; text-transform: uppercase; opacity: 0.9; letter-spacing: 1px; }
+
+        .card { 
+            background: var(--card-bg); 
+            border-radius: 15px; 
+            padding: 15px; 
+            margin: 0 10px 15px 10px; 
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .category-header { 
+            font-size: 14px; 
+            font-weight: 800; 
+            color: var(--primary); 
+            margin-bottom: 12px; 
+            padding-bottom: 8px; 
+            border-bottom: 2px solid rgba(37, 99, 235, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item-row { 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 12px; 
+            padding: 12px 0; 
+            border-bottom: 1px solid var(--border);
+        }
+        .item-row:last-child { border-bottom: none; }
+        
+        .item-checkbox { 
+            width: 22px; height: 22px; margin-top: 2px; flex-shrink: 0;
+        }
+        
+        .item-name-wrapper { flex-grow: 1; min-width: 0; }
+        .item-name { font-size: 1rem; font-weight: 600; line-height: 1.3; }
+        .item-name.checked { text-decoration: line-through; opacity: 0.5; }
+        
+        .recipe-tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #4338ca;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+            font-weight: 700;
+            vertical-align: middle;
+        }
+        body.dark-mode .recipe-tag { background: #312e81; color: #c7d2fe; }
+
+        .item-obs { font-size: 0.8rem; color: var(--gray); margin-top: 4px; }
+        
+        .item-info { 
+            display: flex; 
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px; 
+            flex-shrink: 0;
+        }
+        
+        .price-tag { display: flex; gap: 4px; align-items: center; }
+        .item-qty { font-size: 0.8rem; font-weight: 700; color: var(--gray); }
+        .item-price { 
+            font-size: 0.9rem; 
+            font-weight: 700; 
+            color: var(--text);
+            background: rgba(0,0,0,0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        body.dark-mode .item-price { background: rgba(255,255,255,0.05); }
+
+        .item-actions { display: flex; gap: 8px; margin-top: 4px; }
+        .btn-icon {
+            background: none; border: 1px solid var(--border); padding: 6px; border-radius: 6px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-size: 1rem;
+        }
+        
+        /* Modal */
+        .modal { 
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; 
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); 
+        }
+        .modal-content { 
+            background-color: var(--card-bg); 
+            margin: 10% auto; 
+            padding: 25px; 
+            border-radius: 20px; 
+            width: 90%; 
+            max-width: 450px; 
+        }
+        @media (max-width: 480px) {
+            .modal-content { margin: 20% auto; }
+        }
+        .modal-header { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; }
+        .modal-field { margin-bottom: 15px; }
+        .modal-field label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; opacity: 0.8; }
+        .modal-field input { 
+            width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; 
+            font-size: 16px; background: var(--bg); color: var(--text);
+        }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 25px; }
+        .modal-btn { flex: 1; padding: 14px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+        .modal-btn-cancel { background: #e5e7eb; color: #4b5563; }
+        body.dark-mode .modal-btn-cancel { background: #374151; color: #d1d5db; }
+        .modal-btn-save { background: var(--primary); color: white; }
+
+        .hidden { display: none !important; }
+        @media (min-width: 768px) { body { max-width: 800px; margin: 0 auto; } }
+    </style>
+</head>
+<body>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <a href="index.html" class="nav-link">← Voltar para Início</a>
+    <h1>🛒 Lista de Compras</h1>
+    
+    <div class="view-toggle">
+        <button class="btn-view active" id="tab-proxima" onclick="switchView('proxima')">📝 Próxima</button>
+        <button class="btn-view" id="tab-mestre" onclick="switchView('mestre')">📋 Mestre</button>
+    </div>
+    
+    <div id="filters-proxima" class="filters">
+        <label class="filter-checkbox">
+            <input type="checkbox" id="hide-checked" onchange="render()">
+            <span>Ocultar riscados</span>
+        </label>
+        <button class="btn-conclude" onclick="concludeShoppingConfirm()">✅ Concluir</button>
+        <button class="btn-sync" onclick="syncWithBot()" id="syncBtn">☁️ Sincronizar</button>
+    </div>
+    
+    <div id="filters-mestre" class="filters hidden">
+        <label class="filter-checkbox">
+            <input type="checkbox" id="hide-in-list" checked onchange="render()">
+            <span>Ocultar itens da lista</span>
+        </label>
+        <button class="btn-sync" onclick="syncWithBot()" id="syncBtnMestre">☁️ Sincronizar</button>
+    </div>
+    
+    <div id="total-proxima"></div>
+    <div id="view-proxima"></div>
+    <div id="view-mestre" class="hidden"></div>
+    
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Editar Item</div>
+            <div class="modal-field">
+                <label>Nome</label>
+                <input type="text" id="edit-name" readonly>
+            </div>
+            <div class="modal-field">
+                <label>Quantidade</label>
+                <input type="number" id="edit-qty" step="1">
+            </div>
+            <div class="modal-field">
+                <label>Preço (R$)</label>
+                <input type="number" id="edit-price" step="0.01">
+            </div>
+            <div class="modal-field">
+                <label>Observações</label>
+                <input type="text" id="edit-obs">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="closeModal()">Cancelar</button>
+                <button class="modal-btn modal-btn-save" onclick="saveEdit()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let masterData = []; 
+        let shoppingList = []; 
+        let currentView = 'proxima';
+        let editingItem = null;
+        const DATA_VERSION = '2026-02-07-v3'; 
+        
+        Promise.all([
+            fetch('data/compras.json?v=' + Date.now()).then(r => r.json()),
+            fetch('data/compras-proxima.json?v=' + Date.now()).then(r => r.json()).catch(() => [])
+        ]).then(([master, initial]) => {
+            masterData = master;
+            const savedVersion = localStorage.getItem('compras-data-version');
+            if (savedVersion !== DATA_VERSION) {
+                localStorage.removeItem('compras-shopping-list');
+                localStorage.setItem('compras-data-version', DATA_VERSION);
+            }
+            const saved = localStorage.getItem('compras-shopping-list');
+            if (saved) {
+                shoppingList = JSON.parse(saved);
+                saveState();
+            } else if (initial.length > 0) {
+                shoppingList = initial;
+                saveState();
+            }
+            render();
+        });
+        
+        function saveState() { localStorage.setItem('compras-shopping-list', JSON.stringify(shoppingList)); }
+        
+        function switchView(view) {
+            currentView = view;
+            document.querySelectorAll('.btn-view').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab-' + view).classList.add('active');
+            
+            const pElements = ['view-proxima', 'filters-proxima', 'total-proxima'];
+            const mElements = ['view-mestre', 'filters-mestre'];
+            
+            pElements.forEach(id => document.getElementById(id).classList.toggle('hidden', view !== 'proxima'));
+            mElements.forEach(id => document.getElementById(id).classList.toggle('hidden', view !== 'mestre'));
+            render();
+        }
+        
+        function addToList(itemName) {
+            const m = masterData.find(i => i.Item === itemName);
+            if (!m || shoppingList.find(i => i.Item === itemName)) return;
+            shoppingList.push({ Item: m.Item, Categoria: m.Categoria, qty: m["Quantidade Típica"], price: m["Valor Esperado (Un)"].replace(',','.'), checked: false });
+            saveState(); render();
+        }
+        
+        function removeFromList(itemName) {
+            shoppingList = shoppingList.filter(i => i.Item !== itemName);
+            saveState(); render();
+        }
+        
+        function render() {
+            const groupByCategory = (items) => items.reduce((acc, i) => { (acc[i.Categoria || 'Outros'] = acc[i.Categoria || 'Outros'] || []).push(i); return acc; }, {});
+            
+            // Render Proxima
+            const pCont = document.getElementById('view-proxima');
+            const hideChecked = document.getElementById('hide-checked').checked;
+            const total = shoppingList.reduce((s, i) => s + (i.checked && hideChecked ? 0 : parseFloat(i.qty)*parseFloat(i.price)), 0);
+            document.getElementById('total-proxima').innerHTML = `<div class="total-card"><div class="total-value">R$ ${total.toFixed(2)}</div><div class="total-label">Total estimado</div></div>`;
+            
+            const pGrouped = groupByCategory(shoppingList.filter(i => !hideChecked || !i.checked));
+            pCont.innerHTML = Object.keys(pGrouped).length ? '' : '<div class="card" style="text-align:center; padding:40px; opacity:0.6">🛒 Lista vazia!</div>';
+            
+            for(const cat in pGrouped) {
+                const card = document.createElement('div'); card.className = 'card';
+                card.innerHTML = `<div class="category-header"><span>${cat}</span><span>R$ ${pGrouped[cat].reduce((s,i)=>s+(parseFloat(i.qty)*parseFloat(i.price)),0).toFixed(2)}</span></div>`;
+                pGrouped[cat].forEach(item => {
+                    const row = document.createElement('div'); row.className = 'item-row';
+                    row.innerHTML = `
+                        <input type="checkbox" class="item-checkbox" ${item.checked?'checked':''} onchange="item.checked=!item.checked;saveState();render()">
+                        <div class="item-name-wrapper">
+                            <div class="item-name ${item.checked?'checked':''}">${item.Item}${item.from_recipe?`<span class="recipe-tag">${item.from_recipe}</span>`:''}</div>
+                            ${item.obs?`<div class="item-obs">${item.obs}</div>`:''}
+                        </div>
+                        <div class="item-info">
+                            <div class="price-tag"><span class="item-qty">${item.qty}x</span><span class="item-price">R$ ${parseFloat(item.price).toFixed(2)}</span></div>
+                            <div class="item-actions">
+                                <button class="btn-icon" onclick="openEditModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">✏️</button>
+                                <button class="btn-icon" style="color:var(--danger)" onclick="removeFromList('${item.Item}')">🗑️</button>
+                            </div>
+                        </div>`;
+                    card.appendChild(row);
+                });
+                pCont.appendChild(card);
+            }
+
+            // Render Mestre
+            const mCont = document.getElementById('view-mestre');
+            const hideInList = document.getElementById('hide-in-list').checked;
+            const mItems = masterData.filter(i => !hideInList || !shoppingList.find(s => s.Item === i.Item));
+            const mGrouped = groupByCategory(mItems);
+            mCont.innerHTML = '';
+            for(const cat in mGrouped) {
+                const card = document.createElement('div'); card.className = 'card';
+                card.innerHTML = `<div class="category-header">${cat}</div>`;
+                mGrouped[cat].forEach(item => {
+                    const row = document.createElement('div'); row.className = 'item-row';
+                    row.innerHTML = `
+                        <div class="item-name-wrapper"><div class="item-name">${item.Item}</div>${item.Observações?`<div class="item-obs">${item.Observações}</div>`:''}</div>
+                        <div class="item-info">
+                            <span class="item-price">R$ ${parseFloat(item["Valor Esperado (Un)"].replace(',','.')).toFixed(2)}</span>
+                            <div class="item-actions">
+                                <button class="btn-icon" onclick="addToList('${item.Item}')">➕</button>
+                                <button class="btn-icon" onclick="openEditModal(${JSON.stringify({Item:item.Item, qty:item["Quantidade Típica"], price:item["Valor Esperado (Un)"].replace(',','.'), obs:item.Observações}).replace(/"/g, '&quot;')})">✏️</button>
+                            </div>
+                        </div>`;
+                    card.appendChild(row);
+                });
+                mCont.appendChild(card);
+            }
+        }
+
+        function openEditModal(item) {
+            editingItem = item;
+            document.getElementById('edit-name').value = item.Item;
+            document.getElementById('edit-qty').value = item.qty;
+            document.getElementById('edit-price').value = item.price;
+            document.getElementById('edit-obs').value = item.obs || "";
+            document.getElementById('edit-modal').style.display = 'block';
+        }
+        function closeModal() { document.getElementById('edit-modal').style.display = 'none'; }
+        function saveEdit() {
+            const qty = document.getElementById('edit-qty').value;
+            const price = document.getElementById('edit-price').value;
+            const obs = document.getElementById('edit-obs').value;
+            
+            let sItem = shoppingList.find(i => i.Item === editingItem.Item);
+            if(sItem) { sItem.qty = qty; sItem.price = price; sItem.obs = obs; }
+            
+            if (currentView === 'mestre') {
+                let mItem = masterData.find(i => i.Item === editingItem.Item);
+                if(mItem) { mItem["Observações"] = obs; mItem["Quantidade Típica"] = qty; mItem["Valor Esperado (Un)"] = price.replace('.', ','); }
+            }
+            saveState(); render(); closeModal();
+        }
+
+        function concludeShoppingConfirm() {
+            const count = shoppingList.filter(i => i.checked).length;
+            if(!count) return alert('Marque itens comprados!');
+            if(confirm(`Remover ${count} itens da lista?`)) {
+                shoppingList = shoppingList.filter(i => !i.checked);
+                saveState(); render();
+            }
+        }
+
+        const API_CONFIG = {
+            baseUrl: 'https://attempted-uncertainty-currencies-camps.trycloudflare.com',
+            apiKey: 'argos-secret-2026'
+        };
+
+        async function syncToApi(module, data) {
+            const res = await fetch(`${API_CONFIG.baseUrl}/sync/${module}`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'X-API-Key': API_CONFIG.apiKey
+                },
+                body: JSON.stringify(data)
+            });
+            if (!res.ok) throw new Error('Falha na resposta da API');
+            return res.json();
+        }
+
+        async function syncWithBot() {
+            const btn = document.getElementById('syncBtn') || event.target; 
+            const oldText = btn.innerText;
+            btn.innerText = "⏳..."; btn.disabled = true;
+            try {
+                await syncToApi('compras', {shoppingList, masterData});
+                btn.innerText = "✅";
+                setTimeout(() => { btn.innerText = oldText; btn.disabled = false; }, 2000);
+            } catch (e) { 
+                console.error(e);
+                alert("Erro na sincronização!"); 
+                btn.innerText = oldText; btn.disabled = false; 
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+        if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('theme-toggle').textContent = '☀️'; }
+    </script>
+</body>
+</html>
