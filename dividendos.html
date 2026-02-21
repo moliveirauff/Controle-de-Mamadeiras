@@ -44,57 +44,47 @@
       color: var(--text);
       transition: background 0.3s, color 0.3s;
       min-height: 100vh;
+      position: relative;
+      padding: 10px 10px 60px 10px;
     }
 
     /* === NAVBAR === */
-    nav {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0.75rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: var(--shadow);
+    #theme-toggle {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
+      padding: 8px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10; transition: background 0.2s;
     }
-    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
-    .btn-back {
-      background: none;
-      border: 1.5px solid var(--border);
-      color: var(--text);
-      padding: 0.4rem 0.85rem;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: all 0.2s;
+    body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+    .nav-link {
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      margin: 10px 0 0 4px;
+      display: inline-block;
+      font-weight: 500;
     }
-    .btn-back:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .nav-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); }
-    .nav-title span { font-weight: 300; }
-    #themeToggle {
-      background: var(--badge-bg);
-      border: none;
-      font-size: 1.1rem;
-      cursor: pointer;
-      padding: 0.4rem 0.6rem;
-      border-radius: 50%;
-      line-height: 1;
-      transition: background 0.2s;
+    .nav-link:hover { text-decoration: underline; }
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 10px 44px 4px 44px;
+      color: var(--text);
     }
-    #themeToggle:hover { background: var(--border); }
+    .page-subtitle {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
 
     /* === MAIN LAYOUT === */
     main {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 1.5rem 1.25rem 3rem;
+      padding: 0.75rem 1.25rem 3rem;
     }
 
     /* === LOADING OVERLAY === */
@@ -194,18 +184,18 @@
     .chart-wrap {
       position: relative;
       width: 100%;
-      min-height: 240px;
-      max-height: 420px;
+      min-height: 280px;
+      max-height: 440px;
       overflow-x: auto;
     }
     .chart-wrap canvas {
-      max-height: 400px;
+      max-height: 420px;
       min-width: 0;
       width: 100% !important;
     }
     @media (max-width: 600px) {
-      .chart-wrap { min-height: 200px; max-height: 300px; }
-      .chart-wrap canvas { max-height: 280px; }
+      .chart-wrap { min-height: 260px; max-height: 340px; }
+      .chart-wrap canvas { max-height: 320px; }
     }
 
     /* Monthly chart filter tabs */
@@ -233,9 +223,8 @@
 
     /* === RESPONSIVE FIXES === */
     @media (max-width: 600px) {
-      main { padding: 1rem 0.75rem 2.5rem; }
-      nav { padding: 0.6rem 1rem; }
-      .nav-title { font-size: 0.95rem; }
+      main { padding: 0.5rem 0.75rem 2.5rem; }
+      h1 { font-size: 1.25rem; }
     }
   </style>
 </head>
@@ -247,14 +236,11 @@
   <p>Carregando proventos…</p>
 </div>
 
-<!-- Navbar -->
-<nav>
-  <div class="nav-left">
-    <a href="index.html" class="btn-back">← Hub</a>
-    <span class="nav-title">📊 <span>Dividendos &amp;</span> Proventos</span>
-  </div>
-  <button id="themeToggle" onclick="toggleTheme()">🌙</button>
-</nav>
+<!-- Header — padrão Hub -->
+<button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+<a href="index.html" class="nav-link">← Voltar para Início</a>
+<h1>📊 Dividendos &amp; Proventos</h1>
+<p class="page-subtitle">Histórico completo de dividendos, JCP e rendimentos</p>
 
 <main>
   <!-- KPI Row: 2 per row mobile, 4 per row desktop -->
@@ -263,7 +249,7 @@
       <span class="kpi-icon">💰</span>
       <span class="kpi-label">Total Acumulado</span>
       <span class="kpi-value" id="kpiTotal">—</span>
-      <span class="kpi-sub">histórico completo</span>
+      <span class="kpi-sub">Desde o início</span>
     </div>
     <div class="kpi-card">
       <span class="kpi-icon">📅</span>
@@ -273,7 +259,7 @@
     </div>
     <div class="kpi-card">
       <span class="kpi-icon">📈</span>
-      <span class="kpi-label">Média Mensal L12M</span>
+      <span class="kpi-label">Média Mensal</span>
       <span class="kpi-value" id="kpiL12M">—</span>
       <span class="kpi-sub">últimos 12 meses</span>
     </div>
@@ -332,13 +318,13 @@
 function toggleTheme() {
   document.body.classList.toggle('dark-mode');
   const isDark = document.body.classList.contains('dark-mode');
-  document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+  document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
   refreshChartThemes();
 }
 if (localStorage.getItem('theme') === 'dark') {
   document.body.classList.add('dark-mode');
-  document.getElementById('themeToggle').textContent = '☀️';
+  document.getElementById('theme-toggle').textContent = '☀️';
 }
 
 // === SECTION: COLOR PALETTE PER CLASS ===
@@ -429,17 +415,30 @@ function calcKPIs(movs) {
     .reduce((s, m) => s + m.valor, 0);
   const l12mAvg = l12mTotal / 12;
 
-  // CAGR 5 years: compare total of last year vs 5 years prior
-  const latestYear = Math.max(...movs.map(m => m.year));
+  // CAGR 5 anos: usa o ano mais completo (ignora ano atual se parcial)
+  // Usa ano anterior como referência "final" para evitar distorção de ano incompleto
+  const allYears = [...new Set(movs.map(m => m.year))].sort();
   const byYear = {};
   movs.forEach(m => { byYear[m.year] = (byYear[m.year] || 0) + m.valor; });
-  const v5 = byYear[latestYear - 5] || null;
-  const vN = byYear[latestYear]     || null;
-  let cagrStr = '—';
-  if (v5 && vN && v5 > 0) {
-    const cagr = Math.pow(vN / v5, 1 / 5) - 1;
-    cagrStr = (cagr * 100).toFixed(1) + '%';
+  // Prioriza ano anterior ao atual (ano completo) como ano final do CAGR
+  const finalYear = allYears.includes(currentYear - 1) ? currentYear - 1 : Math.max(...allYears);
+  const vN = byYear[finalYear] || null;
+  // Tenta 5, 4, 3 anos atrás (fallback graceful)
+  let cagrStr = 'N/A';
+  let cagrFound = false;
+  for (const nYears of [5, 4, 3]) {
+    const startYear = finalYear - nYears;
+    const v0 = byYear[startYear] || null;
+    if (v0 && vN && v0 > 0) {
+      const cagr = Math.pow(vN / v0, 1 / nYears) - 1;
+      const sign = cagr >= 0 ? '+' : '';
+      cagrStr = `${sign}${(cagr * 100).toFixed(1)}%`;
+      if (nYears < 5) cagrStr += ` (${nYears}a)`;
+      cagrFound = true;
+      break;
+    }
   }
+  if (!cagrFound) cagrStr = 'N/A';
 
   return { total, ytd, l12mAvg, cagrStr, currentYear };
 }
@@ -509,16 +508,24 @@ function aggregateByKeyAndClass(movs, keyFn) {
 
 // === SECTION: CHART — ANUAL ===
 function buildAnualChart(movs) {
+  if (!movs || movs.length === 0) { console.warn('buildAnualChart: sem dados'); return; }
+
   const years = [];
   const minYear = Math.min(...movs.map(m => m.year));
   const maxYear = Math.max(...movs.map(m => m.year));
   for (let y = minYear; y <= maxYear; y++) years.push(y);
 
-  const agg = aggregateByKeyAndClass(movs, m => m.year);
+  // aggregate: chave é STRING do ano para compatibilidade com JS object keys
+  const agg = {};
+  movs.forEach(m => {
+    const k = String(m.year);
+    if (!agg[k]) agg[k] = {};
+    agg[k][m.macroClasse] = (agg[k][m.macroClasse] || 0) + m.valor;
+  });
 
   const datasets = allClasses.map(cls => ({
     label: classLabel(cls),
-    data: years.map(y => agg[y]?.[cls] || 0),
+    data: years.map(y => agg[String(y)]?.[cls] || 0),
     backgroundColor: classColor(cls),
     borderRadius: 3,
   }));
@@ -559,7 +566,12 @@ function buildMensalChart(movs) {
   }
 
   const movsInRange = movs.filter(m => months.includes(m.yearMonth));
-  const agg = aggregateByKeyAndClass(movsInRange, m => m.yearMonth);
+  // aggregate manual (string keys garantidos)
+  const agg = {};
+  movsInRange.forEach(m => {
+    if (!agg[m.yearMonth]) agg[m.yearMonth] = {};
+    agg[m.yearMonth][m.macroClasse] = (agg[m.yearMonth][m.macroClasse] || 0) + m.valor;
+  });
 
   const datasets = allClasses.map(cls => ({
     label: classLabel(cls),
