@@ -413,7 +413,9 @@ let monthLimit = 12;
 let donutLimit = 12;
 let charts = {};
 let portfolioValue = {}; // { ativo: valor_atual }
+let portfolioValueDY = {}; // { ativo: valor_atual } SEM previdência (para cálculo DY)
 let tickerClassMap = {};
+let ativoSubclassMap = {}; // { ativo: subclasse }
 let dyData = {}; // { ativo: { divs12m, value, dy, class } }
 
 // === INIT ===
@@ -431,10 +433,11 @@ async function init() {
     const movData = await movReq.json();
     const cotData = await cotReq.json();
     
-    // Mapear Ticker -> Classe
+    // Mapear Ticker -> Classe e Ativo -> Subclasse
     ativosData.ativos.forEach(a => {
       const t = a.nome.split('_')[0];
       tickerClassMap[t] = a.macro_classe;
+      ativoSubclassMap[a.nome] = a.subclasse;
     });
 
     // Processar Dividendos
@@ -453,13 +456,16 @@ async function init() {
 
     // Calcular Saldo Atual de Cada Ativo
     const saldos = {}; // { ativo: quantidade }
+    const tiposSoma = ['APORTE', 'APORTE (Ajuste Zeramento)', 'COMPRA'];
+    const tiposSubtracao = ['RETIRADA', 'RETIRADA (Ajuste Zeramento)', 'RESGATE', 'VENDA'];
+    
     movData.movimentacoes.forEach(m => {
       const ativo = m.ativo;
       if (!saldos[ativo]) saldos[ativo] = 0;
       
-      if (m.tipo === 'APORTE' || m.tipo === 'PROVENTO_DIVIDENDO' || m.tipo === 'PROVENTO_JCP') {
+      if (tiposSoma.includes(m.tipo)) {
         saldos[ativo] += m.quantidade || 0;
-      } else if (m.tipo === 'RESGATE' || m.tipo === 'VENDA') {
+      } else if (tiposSubtracao.includes(m.tipo)) {
         saldos[ativo] -= m.quantidade || 0;
       }
     });
@@ -469,17 +475,26 @@ async function init() {
     
     Object.keys(saldos).forEach(ativo => {
       const qty = saldos[ativo];
-      if (qty <= 0) return;
+      if (qty <= 0.001) return;
       
       let price = 0;
       for (const month of recentMonths) {
         if (cotData[ativo] && cotData[ativo][month]) {
-          price = cotData[ativo][month];
-          break;
+          price = cotData[ativo][month] || 0;
+          if (price > 0) break;
         }
       }
       
-      portfolioValue[ativo] = qty * price;
+      if (price <= 0) return;
+      
+      const value = qty * price;
+      portfolioValue[ativo] = value;
+      
+      // portfolioValueDY: excluir previdência privada (subclasse 2.3_prev_rf)
+      const subclasse = ativoSubclassMap[ativo];
+      if (subclasse !== '2.3_prev_rf') {
+        portfolioValueDY[ativo] = value;
+      }
     });
 
     // Calcular DY por Ativo (últimos 12 meses)
@@ -569,9 +584,9 @@ function updateKPIs() {
   oneYearAgo.setMonth(now.getMonth() - 12);
   const l12mTotal = rawData.filter(d => d.date >= oneYearAgo).reduce((s, d) => s + d.val, 0);
   
-  // DY Geral
-  const totalValue = Object.values(portfolioValue).reduce((s, v) => s + v, 0);
-  const dyGeral = totalValue > 0 ? (l12mTotal / totalValue) * 100 : 0;
+  // DY Geral (SEM previdência privada)
+  const totalValueDY = Object.values(portfolioValueDY).reduce((s, v) => s + v, 0);
+  const dyGeral = totalValueDY > 0 ? (l12mTotal / totalValueDY) * 100 : 0;
 
   setTxt('kpiTotal', fmt(total));
   setTxt('kpiYTD', fmt(ytd));
@@ -777,14 +792,14 @@ function renderDYCategoria() {
     catData[d.class].divs += d.val;
   });
   
-  // 2. Somar valor ATUAL da carteira por categoria (apenas ativos com saldo > 0)
-  Object.keys(portfolioValue).forEach(ativo => {
+  // 2. Somar valor ATUAL da carteira por categoria (SEM previdência privada)
+  Object.keys(portfolioValueDY).forEach(ativo => {
     const ticker = ativo.split('_')[0];
     const cls = tickerClassMap[ticker] || 'Outros';
     if (!catData[cls]) {
       catData[cls] = { divs: 0, value: 0 };
     }
-    catData[cls].value += portfolioValue[ativo];
+    catData[cls].value += portfolioValueDY[ativo];
   });
 
   // Filtrar categorias com DY = 0
