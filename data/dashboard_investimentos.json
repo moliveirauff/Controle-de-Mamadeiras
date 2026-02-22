@@ -1564,58 +1564,58 @@
     },
     {
       "ano": 2016,
-      "sem_dividendos": 8.12,
-      "com_dividendos": 8.12
+      "sem_dividendos": 21.02,
+      "com_dividendos": 21.02
     },
     {
       "ano": 2017,
-      "sem_dividendos": 14.55,
-      "com_dividendos": 15.54
+      "sem_dividendos": 27.1,
+      "com_dividendos": 28.32
     },
     {
       "ano": 2018,
-      "sem_dividendos": 12.25,
-      "com_dividendos": 14.96
+      "sem_dividendos": 30.71,
+      "com_dividendos": 34.4
     },
     {
       "ano": 2019,
-      "sem_dividendos": 19.63,
-      "com_dividendos": 25.24
+      "sem_dividendos": 46.78,
+      "com_dividendos": 55.31
     },
     {
       "ano": 2020,
-      "sem_dividendos": 12.1,
-      "com_dividendos": 19.37
+      "sem_dividendos": 36.88,
+      "com_dividendos": 47.89
     },
     {
       "ano": 2021,
-      "sem_dividendos": 7.68,
-      "com_dividendos": 18.89
+      "sem_dividendos": 32.15,
+      "com_dividendos": 49.45
     },
     {
       "ano": 2022,
-      "sem_dividendos": -6.46,
-      "com_dividendos": 5.88
+      "sem_dividendos": 13.04,
+      "com_dividendos": 31.57
     },
     {
       "ano": 2023,
-      "sem_dividendos": 5.33,
-      "com_dividendos": 22.45
+      "sem_dividendos": 25.83,
+      "com_dividendos": 51.06
     },
     {
       "ano": 2024,
-      "sem_dividendos": 11.22,
-      "com_dividendos": 28.49
+      "sem_dividendos": 30.94,
+      "com_dividendos": 55.55
     },
     {
       "ano": 2025,
-      "sem_dividendos": 8.62,
-      "com_dividendos": 26.0
+      "sem_dividendos": 34.54,
+      "com_dividendos": 62.24
     },
     {
       "ano": 2026,
-      "sem_dividendos": 8.2,
-      "com_dividendos": 25.5
+      "sem_dividendos": 34.01,
+      "com_dividendos": 61.6
     }
   ],
   "alocacao": [
@@ -3047,5 +3047,5 @@
       "categoria": "3_acoes_brasil"
     }
   ],
-  "last_update": "2026-02-21 21:17"
+  "last_update": "2026-02-21 21:22"
 }

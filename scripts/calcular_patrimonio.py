@@ -171,11 +171,14 @@ def run():
                 if cat not in evolucao_anual_por_cat: evolucao_anual_por_cat[cat] = []
                 evolucao_anual_por_cat[cat].append({"ano": year_val, "patrimonio": round(val, 2)})
             
-            # Rentabilidade Anual
-            aportes_total = sum(v for v in aportes_liquidos_per_asset.values() if v > 0)
-            rent_sem_div = ((pat_mes_total - aportes_total) / aportes_total * 100) if aportes_total > 0 else 0
-            aportes_ajustado = aportes_total - total_divs_accumulated
+            # Rentabilidade Anual (Consistente com KPI)
+            aportes_liquido_periodo = total_aportes_geral - total_retiradas_geral
+            rent_sem_div = ((pat_mes_total - aportes_liquido_periodo) / aportes_liquido_periodo * 100) if aportes_liquido_periodo > 0 else 0
+            
+            # Rentabilidade com Dividendos (reduzindo o aporte líquido)
+            aportes_ajustado = aportes_liquido_periodo - total_divs_accumulated
             rent_com_div = ((pat_mes_total - aportes_ajustado) / aportes_ajustado * 100) if aportes_ajustado > 0 else 0
+            
             rentabilidade_anual_data.append({
                 "ano": year_val,
                 "sem_dividendos": round(rent_sem_div, 2),
