@@ -328,6 +328,7 @@
   function renderPerformanceAnual() {
     const cat = document.getElementById('filterPerfAno').value;
     const data = cat === 'todas' ? rawData.anual.rentabilidade_pct : rawData.anual.rentabilidade_por_cat[cat];
+    const globalData = rawData.anual.rentabilidade_pct;
     if (charts.perfAno) charts.perfAno.destroy();
     charts.perfAno = new Chart(document.getElementById('chartPerformanceAno'), {
       type: 'bar',
@@ -336,7 +337,11 @@
         datasets: [
           { label: 'Carteira (%)', data: data.map(d => d.sem_dividendos), backgroundColor: COLORS.carteira, borderRadius: 4 },
           { label: 'Com Dividendos (%)', data: data.map(d => d.com_dividendos), backgroundColor: COLORS.success, borderRadius: 4 },
-          { label: 'CDI', data: data.map(d => d.cdi || 0), borderColor: COLORS.cdi, type: 'line', tension: 0.3, pointRadius: 4, borderDash: [5,5] }
+          { label: 'CDI', data: data.map(d => {
+            const ano = d.ano;
+            const global = globalData.find(g => g.ano === ano);
+            return global ? global.cdi : 0;
+          }), borderColor: COLORS.cdi, type: 'line', tension: 0.3, pointRadius: 4, borderDash: [5,5] }
         ]
       },
       options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => v + '%' } } } }
