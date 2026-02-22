@@ -336,10 +336,7 @@
         datasets: [
           { label: 'Carteira (%)', data: data.map(d => d.sem_dividendos), backgroundColor: COLORS.carteira, borderRadius: 4 },
           { label: 'Com Dividendos (%)', data: data.map(d => d.com_dividendos), backgroundColor: COLORS.success, borderRadius: 4 },
-          { label: 'CDI', data: data.map(d => d.cdi || 0), borderColor: COLORS.cdi, type: 'line', tension: 0.3, pointRadius: 4, borderDash: [5,5] },
-          { label: 'IFIX', data: data.map(d => d.ifix || 0), borderColor: COLORS.ifix, type: 'line', tension: 0.3, pointRadius: 0 },
-          { label: 'Dólar', data: data.map(d => d.dolar || 0), borderColor: COLORS.dolar, type: 'line', tension: 0.3, pointRadius: 0 },
-          { label: 'Imóvel', data: data.map(d => d.imovel || 0), borderColor: COLORS.imovel, type: 'line', tension: 0.3, pointRadius: 0 }
+          { label: 'CDI', data: data.map(d => d.cdi || 0), borderColor: COLORS.cdi, type: 'line', tension: 0.3, pointRadius: 4, borderDash: [5,5] }
         ]
       },
       options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => v + '%' } } } }
