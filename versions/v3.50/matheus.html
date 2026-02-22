@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="only light">
+    <meta name="supported-color-schemes" content="light">
+    <title>🍼 Mamadas do Matheus</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+        /* Force Light Mode variables as default, override if class is present */
+        :root {
+            color-scheme: only light !important;
+            isolation: isolate;
+            --bg: #f7fafc;
+            --text: #2d3748;
+            --surface: #ffffff;
+            --card-bg: var(--surface);
+            --border: #e2e8f0;
+            --text-muted: #718096;
+            --subtext: var(--text-muted);
+            --primary: #667eea;
+            --accent: var(--primary);
+            --success: #48bb78;
+            --warning: #ed8936;
+            --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+        }
+        
+        /* Apply Dark Mode only when class is present */
+        body.dark-mode {
+            color-scheme: only dark !important;
+            --bg: #1a202c;
+            --text: #f7fafc;
+            --surface: #2d3748;
+            --card-bg: var(--surface);
+            --border: #4a5568;
+            --text-muted: #cbd5e0;
+            --subtext: var(--text-muted);
+            --primary: #7f9cf5;
+            --accent: var(--primary);
+            background-image: none;
+            background-color: var(--bg);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html {
+            background-color: var(--bg);
+            min-height: 100vh;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=');
+            background-repeat: repeat;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background-color 0.3s, color 0.3s;
+            padding: 10px 10px 60px 10px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        #theme-toggle {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.05);
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.2s;
+        }
+        body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+        body:not(.dark-mode) #theme-toggle { background: rgba(0,0,0,0.05); }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin: 10px 0 0 4px;
+            display: inline-block;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 10px 44px 12px 44px;
+            color: var(--text);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* KPIs Style similar to Dividendos */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .kpi-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .kpi-label {
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: var(--subtext);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            order: 1;
+        }
+        .kpi-value {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.2;
+            order: 2;
+        }
+        .kpi-sub {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            order: 3;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .card-header {
+            margin-bottom: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            text-align: center;
+        }
+
+        /* Filters */
+        .filter-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-filter {
+            background: var(--border);
+            border: none;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-filter.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-filter:hover {
+            opacity: 0.8;
+        }
+
+        /* Charts */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 50px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Desktop */
+        @media (min-width: 768px) {
+            body {
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 16px 16px 60px 16px;
+            }
+            h1 { font-size: 1.75rem; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .chart-container { height: 380px; }
+        }
+    </style>
+</head>
+<body>
+
+<button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+<a href="index.html" class="nav-link">← Voltar</a>
+<h1>🍼 Mamadas do Matheus</h1>
+<div class="subtitle" id="last-update">Carregando dados...</div>
+
+<div id="loading">⏳ Conectando aos dados...</div>
+
+<div id="dashboard" style="display:none;">
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <span class="kpi-label" id="lbl-vol">Vol. Ontem</span>
+            <span class="kpi-value" id="kpi-vol">--</span>
+            <span class="kpi-sub" id="lbl-vol-sub">Fechado</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">Média Diária</span>
+            <span class="kpi-value" id="kpi-avg">--</span>
+            <span class="kpi-sub">Últimos 14 dias</span>
+        </div>
+    </div>
+
+    <!-- 1. Volume Total -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">📊 Volume Diário (ml)</div>
+            <div class="filter-group">
+                <button class="btn-filter" onclick="updateFilter('total', 14, this)">14D</button>
+                <button class="btn-filter" onclick="updateFilter('total', 30, this)">30D</button>
+                <button class="btn-filter active" onclick="updateFilter('total', 999, this)">Tudo</button>
+            </div>
+        </div>
+        <div class="chart-container"><canvas id="cTotal"></canvas></div>
+    </div>
+
+    <!-- 2a. Média por Mamada com Dispersão -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">📈 Média/Mamada vs Individual</div>
+            <div class="filter-group">
+                <button class="btn-filter" onclick="updateFilter('avgOnly', 14, this)">14D</button>
+                <button class="btn-filter" onclick="updateFilter('avgOnly', 30, this)">30D</button>
+                <button class="btn-filter active" onclick="updateFilter('avgOnly', 999, this)">Tudo</button>
+            </div>
+        </div>
+        <div class="chart-container"><canvas id="cAvgOnly"></canvas></div>
+    </div>
+
+    <!-- 2b. Quantidade de Mamadas -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">🔢 Qtd de Mamadas no Dia</div>
+            <div class="filter-group">
+                <button class="btn-filter" onclick="updateFilter('countOnly', 14, this)">14D</button>
+                <button class="btn-filter" onclick="updateFilter('countOnly', 30, this)">30D</button>
+                <button class="btn-filter active" onclick="updateFilter('countOnly', 999, this)">Tudo</button>
+            </div>
+        </div>
+        <div class="chart-container"><canvas id="cCountOnly"></canvas></div>
+    </div>
+
+    <!-- 3. Histograma -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">🔔 Frequência de Volume</div>
+            <div class="filter-group">
+                <button class="btn-filter" onclick="updateFilter('hist', 14, this)">14D</button>
+                <button class="btn-filter" onclick="updateFilter('hist', 30, this)">30D</button>
+                <button class="btn-filter active" onclick="updateFilter('hist', 999, this)">Tudo</button>
+            </div>
+        </div>
+        <div class="chart-container"><canvas id="cHist"></canvas></div>
+    </div>
+
+    <!-- 4. Tendência Horária -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">🕐 Tendência Horária (2h)</div>
+            <div class="filter-group">
+                <button class="btn-filter" onclick="updateFilter('hourly', 14, this)">14D</button>
+                <button class="btn-filter" onclick="updateFilter('hourly', 30, this)">30D</button>
+                <button class="btn-filter active" onclick="updateFilter('hourly', 999, this)">Tudo</button>
+            </div>
+        </div>
+        <div class="chart-container"><canvas id="cHourly"></canvas></div>
+    </div>
+
+    <!-- 5. Intervalo -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">⏳ Intervalo vs Volume</div>
+            <div class="filter-group">
+                <button class="btn-filter" onclick="updateFilter('interval', 14, this)">14D</button>
+                <button class="btn-filter" onclick="updateFilter('interval', 30, this)">30D</button>
+                <button class="btn-filter active" onclick="updateFilter('interval', 999, this)">Tudo</button>
+            </div>
+        </div>
+        <div class="chart-container"><canvas id="cInterval"></canvas></div>
+    </div>
+</div>
+
+<script>
+const LOCAL_DATA_URL = './data/mamadas.json';
+
+// === THEME HANDLING ===
+function updateMetaThemeColor(isDark) {
+    const color = isDark ? '#1a202c' : '#f7fafc';
+    const scheme = isDark ? 'only dark' : 'only light';
+    
+    let metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (!metaTheme) {
+        metaTheme = document.createElement('meta');
+        metaTheme.name = 'theme-color';
+        document.head.appendChild(metaTheme);
+    }
+    metaTheme.content = color;
+
+    let metaScheme = document.querySelector('meta[name="color-scheme"]');
+    if (!metaScheme) {
+        metaScheme = document.createElement('meta');
+        metaScheme.name = 'color-scheme';
+        document.head.appendChild(metaScheme);
+    }
+    metaScheme.content = scheme;
+}
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    let isDark = false;
+    if (savedTheme === 'dark') {
+        isDark = true;
+    } else if (savedTheme === 'light') {
+        isDark = false;
+    } else if (prefersDark) {
+        isDark = true;
+    }
+    
+    if (isDark) {
+        document.body.classList.add('dark-mode');
+        document.getElementById('theme-toggle').textContent = '☀️';
+        Chart.defaults.color = '#e5e7eb';
+        Chart.defaults.borderColor = '#4a5568';
+    } else {
+        document.body.classList.remove('dark-mode');
+        document.getElementById('theme-toggle').textContent = '🌙';
+        Chart.defaults.color = '#666';
+        Chart.defaults.borderColor = '#e2e8f0';
+    }
+    updateMetaThemeColor(isDark);
+}
+
+function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+    updateMetaThemeColor(isDark);
+    
+    if (isDark) {
+        Chart.defaults.color = '#e5e7eb';
+        Chart.defaults.borderColor = '#4a5568';
+    } else {
+        Chart.defaults.color = '#666';
+        Chart.defaults.borderColor = '#e2e8f0';
+    }
+    
+    if(chartTotal) chartTotal.update();
+    if(chartAvgOnly) chartAvgOnly.update();
+    if(chartCountOnly) chartCountOnly.update();
+    if(chartHist) chartHist.update();
+    if(chartHourly) chartHourly.update();
+    if(chartInterval) chartInterval.update();
+}
+
+// === DATA PROCESSING ===
+let processedData = [];
+let dailyMap = {};
+let lastDataDate;
+
+fetch(LOCAL_DATA_URL + '?v=' + Date.now())
+    .then(response => response.json())
+    .then(data => {
+        processAndRender(data);
+    })
+    .catch(err => {
+        document.getElementById('loading').innerHTML = "❌ Erro ao carregar dados locais.<br>Verifique se o arquivo existe.";
+        console.error(err);
+    });
+
+function processAndRender(jsonData) {
+    processedData = jsonData
+        .filter(row => row.Data && row.Hora && row['Volume (ml)'])
+        .map(row => {
+            let dStr = row.Data;
+            if(dStr.includes('/')) {
+                const parts = dStr.split('/');
+                dStr = `${parts[2]}-${parts[1]}-${parts[0]}`;
+            }
+            return {
+                d: dStr, 
+                t: row.Hora, 
+                v: parseInt(row['Volume (ml)'])
+            };
+        });
+
+    processedData = processedData
+        .map(r => ({ ...r, dateObj: new Date(r.d + "T" + r.t), dayStr: r.d.split('-').reverse().slice(0,2).join('/') }))
+        .sort((a,b) => a.dateObj - b.dateObj);
+
+    if (processedData.length > 0) {
+        lastDataDate = processedData[processedData.length-1].dateObj;
+        document.getElementById('last-update').innerText = "Dados até: " + processedData[processedData.length-1].d.split('-').reverse().join('/');
+    }
+    
+    dailyMap = {};
+    processedData.forEach(r => {
+        if(!dailyMap[r.d]) dailyMap[r.d] = { vol:0, count:0, list: [] };
+        dailyMap[r.d].vol += r.v;
+        dailyMap[r.d].count++;
+        dailyMap[r.d].list.push(r.v);
+    });
+
+    for(let i=1; i<processedData.length; i++) {
+        const diffMs = processedData[i].dateObj - processedData[i-1].dateObj;
+        processedData[i].intervalHours = (diffMs / 60000) / 60;
+    }
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    
+    initCharts();
+}
+
+function getFilteredData(daysLimit) {
+    if (daysLimit > 100) return processedData;
+    const limitTime = new Date(lastDataDate);
+    limitTime.setDate(limitTime.getDate() - daysLimit);
+    limitTime.setHours(0,0,0,0);
+    return processedData.filter(d => d.dateObj >= limitTime);
+}
+
+function calculateMovingAverage(data, windowSize) {
+    let result = [];
+    for (let i = 0; i < data.length; i++) {
+        let start = Math.max(0, i - windowSize + 1);
+        let subset = data.slice(start, i + 1);
+        let sum = subset.reduce((a, b) => a + b, 0);
+        result.push(Math.round(sum / subset.length));
+    }
+    return result;
+}
+
+function calculatePeriodDailyAvg(data) {
+    const dMap = {};
+    data.forEach(r => {
+        if(!dMap[r.d]) dMap[r.d] = 0;
+        dMap[r.d] += r.v;
+    });
+    const days = Object.keys(dMap).length;
+    const total = Object.values(dMap).reduce((a,b) => a+b, 0);
+    return days ? (total/days) : 0;
+}
+
+let chartTotal, chartAvgOnly, chartCountOnly, chartHist, chartHourly, chartInterval;
+
+function initCharts() {
+    const lastDataObj = processedData[processedData.length-1];
+    const lastDataDateStr = lastDataObj.d;
+    const now = new Date();
+    const last = new Date(lastDataDateStr + "T12:00:00");
+    const isSameDay = (now.getDate() === last.getDate() && now.getMonth() === last.getMonth());
+
+    document.getElementById('kpi-vol').innerText = dailyMap[lastDataDateStr].vol + " ml";
+    const kpiLabel = document.getElementById('lbl-vol');
+    const kpiSub = document.getElementById('lbl-vol-sub');
+    if(isSameDay) {
+        kpiLabel.innerText = "Vol. Hoje";
+        kpiSub.innerText = "Parcial";
+        kpiLabel.style.color = "var(--primary)";
+    } else {
+        kpiLabel.innerText = "Vol. Ontem";
+        kpiSub.innerText = "Fechado";
+    }
+
+    const avg14d = Math.round(calculatePeriodDailyAvg(getFilteredData(14)));
+    document.getElementById('kpi-avg').innerText = avg14d + " ml";
+
+    renderTotal(999);
+    renderAvgOnly(999);
+    renderCountOnly(999);
+    renderHist(999);
+    renderHourly(999);
+    renderInterval(999);
+}
+
+function renderTotal(limit) {
+    const data = getFilteredData(limit);
+    const dMap = {};
+    data.forEach(r => {
+        if(!dMap[r.d]) dMap[r.d] = 0;
+        dMap[r.d] += r.v;
+    });
+    const keys = Object.keys(dMap).sort();
+    const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+    const values = keys.map(k => dMap[k]);
+    const movingAvg = calculateMovingAverage(values, 5);
+
+    if(chartTotal) chartTotal.destroy();
+    chartTotal = new Chart(document.getElementById('cTotal'), {
+        type: 'bar',
+        data: { 
+            labels: labels, 
+            datasets: [
+                { label: 'Total', data: values, backgroundColor: '#3b82f6', borderRadius: 4, order: 2 },
+                { label: 'Tendência (5d)', data: movingAvg, borderColor: '#ef4444', borderWidth: 2, type: 'line', pointRadius: 0, tension: 0.3, order: 1 }
+            ] 
+        },
+        options: { maintainAspectRatio: false, plugins: {legend:{display:false}}, scales: { x: {grid:{display:false}} } }
+    });
+}
+
+function renderAvgOnly(limit) {
+    const data = getFilteredData(limit);
+    const dMap = {};
+    data.forEach(r => {
+        if(!dMap[r.d]) dMap[r.d] = {vol:0, count:0};
+        dMap[r.d].vol += r.v;
+        dMap[r.d].count++;
+    });
+    const keys = Object.keys(dMap).sort();
+    const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+    const avgs = keys.map(k => Math.round(dMap[k].vol / dMap[k].count));
+
+    const scatterPts = data.map(r => ({
+        x: r.dayStr,
+        y: r.v
+    }));
+
+    if(chartAvgOnly) chartAvgOnly.destroy();
+    chartAvgOnly = new Chart(document.getElementById('cAvgOnly'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                { label: 'Média (ml)', data: avgs, borderColor: '#10b981', backgroundColor: '#10b981', borderWidth: 3, pointRadius: 0, tension: 0.4, fill: false, order: 1 },
+                { label: 'Individual', data: scatterPts, backgroundColor: 'rgba(156, 163, 175, 0.4)', pointRadius: 3, type: 'scatter', order: 2 }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: { 
+                x: { type: 'category', labels: labels, grid:{display:false} }, 
+                y: { title: {display:true, text:'Volume ml'} } 
+            },
+            plugins: { legend: {display: false} }
+        }
+    });
+}
+
+function renderCountOnly(limit) {
+    const data = getFilteredData(limit);
+    const dMap = {};
+    data.forEach(r => {
+        if(!dMap[r.d]) dMap[r.d] = 0;
+        dMap[r.d]++;
+    });
+    const keys = Object.keys(dMap).sort();
+    const labels = keys.map(k => k.split('-').reverse().slice(0,2).join('/'));
+    const values = keys.map(k => dMap[k]);
+
+    if(chartCountOnly) chartCountOnly.destroy();
+    chartCountOnly = new Chart(document.getElementById('cCountOnly'), {
+        type: 'bar',
+        data: { 
+            labels: labels, 
+            datasets: [{ label: 'Qtd Mamadas', data: values, backgroundColor: '#f59e0b', borderRadius: 4 }] 
+        },
+        options: { maintainAspectRatio: false, plugins: {legend:{display:false}}, scales: { x: {grid:{display:false}}, y: {beginAtZero: true, ticks: {stepSize: 1}} } }
+    });
+}
+
+function renderHist(limit) {
+    const data = getFilteredData(limit).filter(r => r.v >= 10);
+    const bins = {};
+    data.forEach(r => {
+        let binFloor = Math.floor((Math.min(r.v, 150) - 0.1 - 10) / 20) * 20 + 10;
+        const label = `${binFloor}-${binFloor+20}`;
+        bins[label] = (bins[label] || 0) + 1;
+    });
+    const sortedKeys = Object.keys(bins).sort((a,b) => parseInt(a) - parseInt(b));
+    
+    if(chartHist) chartHist.destroy();
+    chartHist = new Chart(document.getElementById('cHist'), {
+        type: 'bar',
+        data: {
+            labels: sortedKeys,
+            datasets: [{ label: 'Frequência', data: sortedKeys.map(k => bins[k]), backgroundColor: '#8b5cf6', borderRadius: 4 }]
+        },
+        options: { maintainAspectRatio: false, plugins: {legend:{display:false}}, scales: {x:{grid:{display:false}}, y:{beginAtZero:true}} }
+    });
+}
+
+function renderHourly(limit) {
+    const data = getFilteredData(limit);
+    const bins = {};
+    for(let i=0; i<24; i+=2) bins[`${i}h-${i+2}h`] = [];
+
+    data.forEach(r => {
+        const h = r.dateObj.getHours();
+        const binFloor = Math.floor(h / 2) * 2;
+        bins[`${binFloor}h-${binFloor+2}h`].push(r.v);
+    });
+
+    const labels = Object.keys(bins);
+    const avgs = labels.map(k => {
+        const vols = bins[k];
+        return vols.length === 0 ? 0 : Math.round(vols.reduce((a,b)=>a+b,0) / vols.length);
+    });
+
+    const scatterPts = data.map(r => ({
+        x: r.dateObj.getHours() + (r.dateObj.getMinutes()/60),
+        y: r.v
+    }));
+
+    if(chartHourly) chartHourly.destroy();
+    chartHourly = new Chart(document.getElementById('cHourly'), {
+        type: 'scatter',
+        data: {
+            datasets: [
+                { type: 'line', label: 'Média', data: avgs.map((v, i) => ({x: i*2 + 1, y: v})), borderColor: '#ec4899', borderWidth: 3, pointRadius: 0, tension: 0.4 },
+                { label: 'Mamada', data: scatterPts, backgroundColor: 'rgba(156, 163, 175, 0.4)', pointRadius: 3 }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                x: { type: 'linear', min: 0, max: 24, title: {display:true, text:'Hora do Dia'}, ticks: {stepSize: 2} },
+                y: { title: {display:true, text:'Volume'} }
+            },
+            plugins: { legend: {display: false} }
+        }
+    });
+}
+
+function renderInterval(limit) {
+    const data = getFilteredData(limit).filter(r => r.intervalHours);
+    
+    const bins = {};
+    data.forEach(r => {
+        const bin = Math.round(r.intervalHours * 2) / 2;
+        if(!bins[bin]) bins[bin] = {sum:0, count:0};
+        bins[bin].sum += r.v;
+        bins[bin].count++;
+    });
+
+    const avgData = Object.keys(bins).sort((a,b)=>parseFloat(a)-parseFloat(b)).map(k => ({
+        x: parseFloat(k),
+        y: Math.round(bins[k].sum / bins[k].count)
+    }));
+
+    const scatterPts = data.map(r => ({ x: r.intervalHours, y: r.v }));
+
+    if(chartInterval) chartInterval.destroy();
+    chartInterval = new Chart(document.getElementById('cInterval'), {
+        type: 'scatter',
+        data: {
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'Média (30min)',
+                    data: avgData,
+                    borderColor: '#3b82f6',
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    tension: 0.4,
+                    order: 1
+                },
+                {
+                    label: 'Mamada',
+                    data: scatterPts,
+                    backgroundColor: 'rgba(156, 163, 175, 0.4)',
+                    pointRadius: 3,
+                    order: 2
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                x: { type: 'linear', title: {display:true, text:'Intervalo (Horas)'}, ticks: {stepSize: 0.5} },
+                y: { title: {display:true, text:'Volume (ml)'} }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            if(ctx.dataset.type === 'line') return `Média: ${ctx.raw.y}ml`;
+                            return `${ctx.raw.y}ml`;
+                        }
+                    }
+                },
+                legend: { display: false }
+            }
+        }
+    });
+}
+
+window.updateFilter = function(chartName, days, btn) {
+    const parent = btn.parentNode;
+    parent.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if(chartName === 'total') renderTotal(days);
+    if(chartName === 'avgOnly') renderAvgOnly(days);
+    if(chartName === 'countOnly') renderCountOnly(days);
+    if(chartName === 'hist') renderHist(days);
+    if(chartName === 'hourly') renderHourly(days);
+    if(chartName === 'interval') renderInterval(days);
+};
+
+initTheme();
+</script>
+</body>
+</html>
