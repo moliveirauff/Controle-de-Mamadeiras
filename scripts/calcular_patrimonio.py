@@ -32,7 +32,7 @@ def load_json(filename):
     with open(path, 'r', encoding='utf-8') as f: return json.load(f)
 
 def run():
-    print("🚀 Iniciando processamento patrimonial v3.53...")
+    print("🚀 Iniciando processamento patrimonial v3.55...")
     
     movimentacoes_data = load_json("movimentacoes_financeiras.json")
     cotacoes_data = load_json("invest_cotacoes_mensais.json")
@@ -62,8 +62,6 @@ def run():
 
     positions = defaultdict(float) 
     aportes_liquidos_per_asset = defaultdict(float) 
-    total_divs_acumulados = 0.0
-    total_divs_por_cat_accum = defaultdict(float)
     
     evolucao_anual = []
     evolucao_mensal_full = []
@@ -73,13 +71,13 @@ def run():
     lucro_mensal_reais = []
     aportes_mensais_detalhe = []
     
+    # NOVO: Rastreamento mensal por categoria
+    aportes_mensais_por_cat = defaultdict(lambda: defaultdict(float))  # {categoria: {mes: valor}}
+    divs_mensais_por_cat = defaultdict(lambda: defaultdict(float))     # {categoria: {mes: valor}}
+    
     mov_idx = 0
     div_idx = 0
     pat_anterior_mes = 0.0
-    
-    # Acumuladores de aportes por categoria
-    total_aportes_por_cat = defaultdict(float)
-    total_retiradas_por_cat = defaultdict(float)
 
     print(f"📊 Processando {len(months)} meses...")
 
@@ -90,6 +88,9 @@ def run():
         aportes_mes = 0.0
         retiradas_mes = 0.0
         divs_mes = 0.0
+        
+        aportes_mes_por_cat = defaultdict(float)
+        retiradas_mes_por_cat = defaultdict(float)
         
         # 1. Movimentações
         while mov_idx < len(movs):
@@ -104,13 +105,17 @@ def run():
                 positions[asset_full] += qty
                 aportes_liquidos_per_asset[asset_full] += valor_mov
                 aportes_mes += valor_mov
-                total_aportes_por_cat[cat] += valor_mov
+                aportes_mes_por_cat[cat] += valor_mov
             elif m["tipo"] in TIPOS_SUBTRAI:
                 positions[asset_full] -= qty
                 aportes_liquidos_per_asset[asset_full] -= valor_mov
                 retiradas_mes += valor_mov
-                total_retiradas_por_cat[cat] += valor_mov
+                retiradas_mes_por_cat[cat] += valor_mov
             mov_idx += 1
+
+        # Atualizar rastreamento de aportes líquidos por categoria
+        for cat in categorias_unicas:
+            aportes_mensais_por_cat[cat][month_key] = aportes_mes_por_cat[cat] - retiradas_mes_por_cat[cat]
 
         # 2. Dividendos
         while div_idx < len(divs):
@@ -120,8 +125,7 @@ def run():
             ticker = get_base_name(d["ativo"])
             cat = base_class_map.get(d["ativo"]) or base_class_map.get(ticker, "9_uncategorized")
             divs_mes += val
-            total_divs_acumulados += val
-            total_divs_por_cat_accum[cat] += val
+            divs_mensais_por_cat[cat][month_key] += val
             div_idx += 1
 
         # 3. Valuation
@@ -192,6 +196,7 @@ def run():
         lucro_anual_reais.append({"ano": ano, "valorizacao": round(val_ano, 2), "dividendos": round(div_ano, 2), "total": round(val_ano + div_ano, 2)})
         aportes_anuais_detalhe.append({"ano": ano, "aporte_real": round(new_ano, 2), "dividendos": round(div_ano, 2), "total": round(tot_ano, 2)})
         
+        # Rentabilidade global
         pat_ini = next((d["patrimonio"] for d in evolucao_anual if d["ano"] == ano - 1), 0.0)
         pat_fim = next((d["patrimonio"] for d in evolucao_anual if d["ano"] == ano), 0.0)
         denominador = (pat_ini + tot_ano)
@@ -204,14 +209,33 @@ def run():
             "dolar": BENCHMARKS["dolar"].get(ano, 0.0), "imovel": BENCHMARKS["imovel"].get(ano, 0.0)
         })
 
+        # NOVO: Rentabilidade POR CATEGORIA
         for cat in categorias_unicas:
-            # Rentabilidade por categoria (aproximada para série histórica discreta)
-            # Para simplificar, calculamos os aportes da categoria no ano
-            cat_movs = [m for m in movs if (m["ativo"] == cat or get_base_name(m["ativo"]) == get_base_name(cat) or base_class_map.get(m["ativo"]) == cat) and m["data"].startswith(str(ano))]
-            # Refined category filtering logic needed for precision, but using global class map for now.
-            # Here we just reuse the structure for frontend consistency.
-            rentabilidade_anual_por_cat[cat].append({"ano": ano, "sem_dividendos": round(r_sem, 2), "com_dividendos": round(r_com, 2)})
-            aportes_anual_por_cat[cat].append({"ano": ano, "aporte_real": round(new_ano, 2), "dividendos": round(div_ano, 2)})
+            # Patrimônio inicial e final da categoria
+            pat_ini_cat = next((d["patrimonio"] for d in evolucao_anual_por_cat[cat] if d["ano"] == ano - 1), 0.0)
+            pat_fim_cat = next((d["patrimonio"] for d in evolucao_anual_por_cat[cat] if d["ano"] == ano), 0.0)
+            
+            # Aportes líquidos da categoria no ano
+            meses_ano = [m for m in months if m.startswith(str(ano))]
+            aportes_cat_ano = sum(aportes_mensais_por_cat[cat].get(mes, 0.0) for mes in meses_ano)
+            divs_cat_ano = sum(divs_mensais_por_cat[cat].get(mes, 0.0) for mes in meses_ano)
+            
+            # Calcular rentabilidade da categoria
+            denominador_cat = (pat_ini_cat + aportes_cat_ano)
+            r_sem_cat = ((pat_fim_cat - divs_cat_ano - denominador_cat) / denominador_cat * 100) if denominador_cat > 0 else 0
+            r_com_cat = ((pat_fim_cat - denominador_cat) / denominador_cat * 100) if denominador_cat > 0 else 0
+            
+            rentabilidade_anual_por_cat[cat].append({
+                "ano": ano, 
+                "sem_dividendos": round(r_sem_cat, 2), 
+                "com_dividendos": round(r_com_cat, 2)
+            })
+            
+            aportes_anual_por_cat[cat].append({
+                "ano": ano, 
+                "aporte_real": round(aportes_cat_ano - divs_cat_ano, 2), 
+                "dividendos": round(divs_cat_ano, 2)
+            })
 
     # --- FINAL EXPORT ---
     pat_atual = evolucao_mensal_full[-1]["patrimonio"]
@@ -269,6 +293,6 @@ def run():
 
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
-    print(f"✅ Dashboard JSON v3.53 gerado!")
+    print(f"✅ Dashboard JSON v3.55 gerado!")
 
 if __name__ == "__main__": run()
