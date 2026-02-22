@@ -74,6 +74,7 @@
 <a href="index.html" class="nav-link">← Voltar</a>
 <h1>📈 Gestão Patrimonial</h1>
 <main>
+  <!-- KPIs -->
   <div class="kpi-grid">
     <div class="kpi-card">
       <span class="kpi-label">💰 Patrimônio Total</span>
@@ -81,69 +82,84 @@
       <span class="kpi-sub" id="lastUpdate">Sincronizando...</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-label">💰 Aportes Líquidos</span>
+      <span class="kpi-label">💰 Aporte Líquido Total</span>
       <span class="kpi-value" id="kpiAportesLiquidos">—</span>
-      <span class="kpi-sub">Total Investido</span>
+      <span class="kpi-sub">Soma acumulada</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-label">📈 Rentabilidade</span>
+      <span class="kpi-label">📈 Rentabilidade Total</span>
       <span class="kpi-value" id="kpiRent">—</span>
-      <span class="kpi-sub">Nominal Total</span>
+      <span class="kpi-sub">Nominal acumulada</span>
     </div>
     <div class="kpi-card">
       <span class="kpi-label">🚀 CAGR (5 anos)</span>
       <span class="kpi-value" id="kpiCAGR">—</span>
-      <span class="kpi-sub">Retorno Composto</span>
+      <span class="kpi-sub">Crescimento anual</span>
     </div>
+  </div>
+
+  <!-- SEÇÃO 1: VISÃO ANUAL (ESTRATÉGICA) -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🗓️ Evolução Histórica (Anual)</div>
+      <div class="controls"><select id="filterEvolAno" class="filter-btn"><option value="todas">Todas as Classes</option></select></div>
+    </div>
+    <div class="chart-container"><canvas id="chartEvolAno"></canvas></div>
   </div>
 
   <div class="grid-2">
     <div class="card">
       <div class="card-header">
+        <div class="card-title">💸 Aporte Líquido Anual</div>
+        <div class="controls"><select id="filterAportesAno" class="filter-btn"><option value="todas">Todas as Classes</option></select></div>
+      </div>
+      <div class="chart-container"><canvas id="chartAportesAno"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🎯 Lucro Nominal Anual (R$)</div>
+      </div>
+      <div class="chart-container"><canvas id="chartLucroAno"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📊 Performance Anual (%) vs CDI</div>
+      <div class="controls"><select id="filterRentAno" class="filter-btn"><option value="todas">Todas as Classes</option></select></div>
+    </div>
+    <div class="chart-container"><canvas id="chartRentAno"></canvas></div>
+  </div>
+
+  <hr style="margin: 30px 0; border: 0; border-top: 1px solid var(--border);">
+
+  <!-- SEÇÃO 2: VISÃO MENSAL (TÁTICA) -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
         <div class="card-title">📊 Evolução Mensal</div>
-        <div class="controls"><select id="filterEvolMes" class="filter-btn"><option value="todas">Todas as Classes</option></select></div>
+        <div class="controls">
+          <select id="filterYearEvol" class="filter-btn"></select>
+          <select id="filterEvolMes" class="filter-btn"><option value="todas">Todas as Classes</option></select>
+        </div>
       </div>
       <div class="chart-container"><canvas id="chartEvolMes"></canvas></div>
     </div>
     <div class="card">
       <div class="card-header">
-        <div class="card-title">🗓️ Evolução Anual</div>
-        <div class="controls"><select id="filterEvolAno" class="filter-btn"><option value="todas">Todas as Classes</option></select></div>
+        <div class="card-title">💸 Aporte Líquido Mensal</div>
+        <div class="controls">
+          <select id="filterYearAportes" class="filter-btn"></select>
+          <select id="filterAportesMes" class="filter-btn"><option value="todas">Todas as Classes</option></select>
+        </div>
       </div>
-      <div class="chart-container"><canvas id="chartEvolAno"></canvas></div>
+      <div class="chart-container"><canvas id="chartAportesMes"></canvas></div>
     </div>
   </div>
 
+  <!-- SEÇÃO 3: ALOCAÇÃO E TABELA -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-title">💸 Aportes Líquidos</div>
-      <div class="controls"><select id="filterAportes" class="filter-btn"><option value="todas">Todas as Classes</option></select></div>
-    </div>
-    <div class="chart-container"><canvas id="chartAportes"></canvas></div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">🎯 Rentabilidade</div>
-      <div class="controls"><select id="filterRent" class="filter-btn"><option value="todas">Todas as Classes</option></select></div>
-    </div>
-    <div class="chart-container"><canvas id="chartRentabilidade"></canvas></div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">🏆 Benchmarks</div>
-      <div class="controls">
-        <button class="filter-btn active" onclick="setBenchRange('12m', this)">12M</button>
-        <button class="filter-btn" onclick="setBenchRange('24m', this)">24M</button>
-        <button class="filter-btn" onclick="setBenchRange('total', this)">Total</button>
-      </div>
-    </div>
-    <div class="chart-container"><canvas id="chartBenchmarks"></canvas></div>
-  </div>
-
-  <div class="card">
-    <div class="card-header"><div class="card-title">⚖️ Alocação Tática</div></div>
+    <div class="card-header"><div class="card-title">⚖️ Alocação Tática (Meta vs Real)</div></div>
     <div class="chart-container" style="height: 450px;"><canvas id="chartAlocacao"></canvas></div>
   </div>
 
@@ -173,7 +189,7 @@
   let charts = {};
   const COLORS = { 
     carteira: '#667eea', cdi: '#4299e1', ibov: '#f56565', meta: '#48bb78', meta_bg: 'rgba(160, 174, 192, 0.4)',
-    success: '#48bb78', danger: '#f56565', warning: '#ed8936'
+    success: '#48bb78', danger: '#f56565', warning: '#ed8936', dividend: '#f6e05e'
   };
   const NOMES_CAT = {
     '1_renda_fixa_soberana': 'Renda Fixa Soberana', '2_credito_privado': 'Crédito Privado',
@@ -189,14 +205,8 @@
       const resp = await fetch('data/dashboard_investimentos.json?v=' + Date.now());
       rawData = await resp.json();
       updateKPIs();
-      populateCategoryFilters();
-      renderEvolucaoMensal();
-      renderEvolucaoAnual();
-      renderAportes();
-      renderRentabilidade();
-      renderBenchmarks('12m');
-      renderAlocacao();
-      renderRanking();
+      populateFilters();
+      renderAll();
       document.getElementById('loading').style.display = 'none';
     } catch (e) {
       console.error(e);
@@ -215,104 +225,147 @@
     document.getElementById('lastUpdate').textContent = 'Sync: ' + rawData.last_update;
   }
 
-  function populateCategoryFilters() {
-    const categorias = Object.keys(rawData.evolucao_mensal_por_categoria || {}).sort();
-    const dropdowns = ['filterEvolMes', 'filterEvolAno', 'filterAportes', 'filterRent', 'filterRanking'];
+  function populateFilters() {
+    // Categorias
+    const categorias = Object.keys(rawData.mensal.evolucao_por_cat || {}).sort();
+    const catDropdowns = ['filterEvolAno', 'filterAportesAno', 'filterRentAno', 'filterEvolMes', 'filterAportesMes', 'filterRanking'];
     
     categorias.forEach(cat => {
-      const hasValue = rawData.evolucao_mensal_por_categoria[cat].some(d => d.patrimonio > 0);
+      const hasValue = rawData.mensal.evolucao_por_cat[cat].some(d => d.patrimonio > 0);
       if (!hasValue) return;
-      dropdowns.forEach(id => {
+      catDropdowns.forEach(id => {
         const opt = document.createElement('option');
         opt.value = cat; opt.textContent = NOMES_CAT[cat] || cat;
         document.getElementById(id).appendChild(opt);
       });
     });
-    
-    document.getElementById('filterEvolMes').addEventListener('change', renderEvolucaoMensal);
+
+    // Anos
+    const anos = [...new Set(rawData.mensal.evolucao.map(d => d.mes.split('-')[0]))].sort().reverse();
+    const yearDropdowns = ['filterYearEvol', 'filterYearAportes'];
+    anos.forEach(ano => {
+      yearDropdowns.forEach(id => {
+        const opt = document.createElement('option');
+        opt.value = ano; opt.textContent = ano;
+        document.getElementById(id).appendChild(opt);
+      });
+    });
+
+    // Event Listeners
     document.getElementById('filterEvolAno').addEventListener('change', renderEvolucaoAnual);
-    document.getElementById('filterAportes').addEventListener('change', renderAportes);
-    document.getElementById('filterRent').addEventListener('change', renderRentabilidade);
+    document.getElementById('filterAportesAno').addEventListener('change', renderAportesAnual);
+    document.getElementById('filterRentAno').addEventListener('change', renderRentabilidadeAnual);
+    document.getElementById('filterYearEvol').addEventListener('change', renderEvolucaoMensal);
+    document.getElementById('filterEvolMes').addEventListener('change', renderEvolucaoMensal);
+    document.getElementById('filterYearAportes').addEventListener('change', renderAportesMensal);
+    document.getElementById('filterAportesMes').addEventListener('change', renderAportesMensal);
     document.getElementById('filterRanking').addEventListener('change', renderRanking);
   }
 
-  function renderEvolucaoMensal() {
-    const cat = document.getElementById('filterEvolMes').value;
-    const data = cat === 'todas' ? rawData.evolucao_mensal : rawData.evolucao_mensal_por_categoria[cat];
-    if (charts.evolMes) charts.evolMes.destroy();
-    charts.evolMes = new Chart(document.getElementById('chartEvolMes'), {
-      type: 'bar',
-      data: { labels: data.map(d => d.mes.split('-').reverse().join('/')), datasets: [{ label: 'Patrimônio', data: data.map(d => d.patrimonio), backgroundColor: COLORS.carteira, borderRadius: 4 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-    });
+  function renderAll() {
+    renderEvolucaoAnual();
+    renderAportesAnual();
+    renderLucroAnual();
+    renderRentabilidadeAnual();
+    renderEvolucaoMensal();
+    renderAportesMensal();
+    renderAlocacao();
+    renderRanking();
   }
 
+  // ANUAL
   function renderEvolucaoAnual() {
     const cat = document.getElementById('filterEvolAno').value;
-    const data = cat === 'todas' ? rawData.evolucao_anual : rawData.evolucao_anual_por_categoria[cat];
+    const data = cat === 'todas' ? rawData.anual.evolucao : rawData.anual.evolucao_por_cat[cat];
     if (charts.evolAno) charts.evolAno.destroy();
     charts.evolAno = new Chart(document.getElementById('chartEvolAno'), {
       type: 'bar',
-      data: { labels: data.map(d => d.ano), datasets: [{ label: 'Patrimônio', data: data.map(d => d.patrimonio), backgroundColor: COLORS.success, borderRadius: 4 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+      data: { labels: data.map(d => d.ano), datasets: [{ label: 'Patrimônio 31/Dez', data: data.map(d => d.patrimonio), backgroundColor: COLORS.success, borderRadius: 4 }] },
+      options: { responsive: true, maintainAspectRatio: false }
     });
   }
 
-  function renderAportes() {
-    const cat = document.getElementById('filterAportes').value;
-    const data = cat === 'todas' ? rawData.aportes_liquidos : rawData.aportes_liquidos_por_categoria[cat];
-    if (charts.aportes) charts.aportes.destroy();
-    charts.aportes = new Chart(document.getElementById('chartAportes'), {
+  function renderAportesAnual() {
+    const cat = document.getElementById('filterAportesAno').value;
+    const data = rawData.anual.aportes;
+    if (charts.aportesAno) charts.aportesAno.destroy();
+    charts.aportesAno = new Chart(document.getElementById('chartAportesAno'), {
       type: 'bar',
       data: {
         labels: data.map(d => d.ano),
         datasets: [
-          { label: 'Aporte Real', data: data.map(d => d.aporte_real), backgroundColor: COLORS.success, borderRadius: 4 },
-          { label: 'Dividendos Reinvestidos', data: data.map(d => d.dividendos_reinvestidos), backgroundColor: '#f6e05e', borderRadius: 4 }
+          { label: 'Aporte Real', data: data.map(d => cat === 'todas' ? d.aporte_real : d.categorias[cat].aporte_real), backgroundColor: COLORS.success, borderRadius: 4 },
+          { label: 'Dividendos Reinv.', data: data.map(d => cat === 'todas' ? d.dividendos : d.categorias[cat].dividendos), backgroundColor: COLORS.dividend, borderRadius: 4 }
         ]
       },
       options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true } } }
     });
   }
 
-  function renderRentabilidade() {
-    const cat = document.getElementById('filterRent').value;
-    const data = cat === 'todas' ? rawData.rentabilidade_anual : rawData.rentabilidade_anual_por_categoria[cat];
-    if (charts.rent) charts.rent.destroy();
-    charts.rent = new Chart(document.getElementById('chartRentabilidade'), {
+  function renderLucroAnual() {
+    const data = rawData.anual.lucro_reais;
+    if (charts.lucroAno) charts.lucroAno.destroy();
+    charts.lucroAno = new Chart(document.getElementById('chartLucroAno'), {
+      type: 'bar',
+      data: {
+        labels: data.map(d => d.ano),
+        datasets: [
+          { label: 'Valorização (R$)', data: data.map(d => d.valorizacao), backgroundColor: COLORS.carteira, borderRadius: 4 },
+          { label: 'Dividendos (R$)', data: data.map(d => d.dividendos), backgroundColor: COLORS.dividend, borderRadius: 4 }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true } } }
+    });
+  }
+
+  function renderRentabilidadeAnual() {
+    const cat = document.getElementById('filterRentAno').value;
+    const data = cat === 'todas' ? rawData.anual.rentabilidade_pct : rawData.anual.rentabilidade_anual_por_categoria[cat];
+    if (charts.rentAno) charts.rentAno.destroy();
+    charts.rentAno = new Chart(document.getElementById('chartRentAno'), {
       type: 'line',
       data: {
         labels: data.map(d => d.ano),
         datasets: [
-          { label: 'Sem Dividendos', data: data.map(d => d.sem_dividendos), borderColor: COLORS.cdi, backgroundColor: COLORS.cdi, tension: 0.3, pointRadius: 4 },
-          { label: 'Com Dividendos', data: data.map(d => d.com_dividendos), borderColor: COLORS.success, backgroundColor: COLORS.success, tension: 0.3, pointRadius: 4 }
+          { label: 'Carteira (%)', data: data.map(d => d.carteira || d.com_dividendos), borderColor: COLORS.success, backgroundColor: COLORS.success, tension: 0.3 },
+          { label: 'CDI (%)', data: data.map(d => d.cdi || 0), borderColor: COLORS.cdi, borderDash: [5,5], tension: 0.3 }
         ]
       },
       options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { callback: v => v + '%' } } } }
     });
   }
 
-  function setBenchRange(range, btn) {
-    document.querySelectorAll('.controls .filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active'); renderBenchmarks(range);
+  // MENSAL
+  function renderEvolucaoMensal() {
+    const year = document.getElementById('filterYearEvol').value;
+    const cat = document.getElementById('filterEvolMes').value;
+    const fullData = cat === 'todas' ? rawData.mensal.evolucao : rawData.mensal.evolucao_por_cat[cat];
+    const data = fullData.filter(d => d.mes.startsWith(year));
+    
+    if (charts.evolMes) charts.evolMes.destroy();
+    charts.evolMes = new Chart(document.getElementById('chartEvolMes'), {
+      type: 'bar',
+      data: { labels: data.map(d => d.mes.split('-')[1]), datasets: [{ label: 'Patrimônio', data: data.map(d => d.patrimonio), backgroundColor: COLORS.carteira, borderRadius: 4 }] },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
   }
 
-  function renderBenchmarks(range) {
-    // Para simplificar, usamos uma lógica aproximada se o arquivo benchmark estiver vazio
-    const labels = ["2023", "2024", "2025"];
-    const ctx = document.getElementById('chartBenchmarks');
-    if (charts.bench) charts.bench.destroy();
-    charts.bench = new Chart(ctx, {
-      type: 'line',
+  function renderAportesMensal() {
+    const year = document.getElementById('filterYearAportes').value;
+    const cat = document.getElementById('filterAportesMes').value;
+    const data = rawData.mensal.aportes.filter(d => d.mes.startsWith(year));
+    
+    if (charts.aportesMes) charts.aportesMes.destroy();
+    charts.aportesMes = new Chart(document.getElementById('chartAportesMes'), {
+      type: 'bar',
       data: {
-        labels: labels,
+        labels: data.map(d => d.mes.split('-')[1]),
         datasets: [
-          { label: 'Carteira', data: [10, 25, 34], borderColor: COLORS.carteira, tension: 0.3 },
-          { label: 'CDI', data: [12, 23, 30], borderColor: COLORS.cdi, tension: 0.3 },
-          { label: 'Ibovespa', data: [5, 15, 20], borderColor: COLORS.ibov, tension: 0.3 }
+          { label: 'Aporte Real', data: data.map(d => cat === 'todas' ? d.aporte_real : d.categorias[cat].aporte_real), backgroundColor: COLORS.success, borderRadius: 4 },
+          { label: 'Dividendos', data: data.map(d => cat === 'todas' ? d.dividendos : d.categorias[cat].dividendos), backgroundColor: COLORS.dividend, borderRadius: 4 }
         ]
       },
-      options: { responsive: true, maintainAspectRatio: false }
+      options: { responsive: true, maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true } } }
     });
   }
 
@@ -344,7 +397,7 @@
         <td><div style="font-weight:700">${a.ticker}</div><div style="font-size:0.7rem; color:var(--text-muted)">${a.quantidade} cotas</div></td>
         <td class="text-right">${fmt(a.investido)}</td>
         <td class="text-right">${fmt(a.atual)}</td>
-        <td class="text-right ${diff >= 0 ? 'pos' : 'neg'}">${fmt(diff)}<br><small>${a.rent_pct}%</small></td>
+        <td class="text-right ${diff >= 0 ? 'pos' : 'neg'}">${fmt(diff)}<br><small>${((diff/a.investido)*100).toFixed(2)}%</small></td>
       `;
       tbody.appendChild(tr);
     });
