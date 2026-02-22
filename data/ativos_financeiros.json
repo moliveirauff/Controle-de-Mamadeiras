@@ -9,7 +9,7 @@
       "status": "aberto"
     },
     {
-      "nome": "TETHER_2024.03.30",
+      "nome": "TETHER (USDT)_2024.03.30",
       "macro_classe": "1_renda_fixa_soberana",
       "subclasse": "1.1_liquidez",
       "status": "fechado"
@@ -33,7 +33,7 @@
       "status": "fechado"
     },
     {
-      "nome": "CBD Agibank_2020.01.07",
+      "nome": "CBD Agibank (CDI)_2020.01.07",
       "macro_classe": "1_renda_fixa_soberana",
       "subclasse": "1.1_liquidez",
       "status": "fechado"
@@ -978,7 +978,7 @@
       "status": "fechado"
     },
     {
-      "nome": "BITCOIN_2025.02.02",
+      "nome": "BITCOIN (BTC)_2025.02.02",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.1_reserva_valor",
       "status": "fechado"
@@ -990,19 +990,19 @@
       "status": "aberto"
     },
     {
-      "nome": "CHAINLINK_2025.08.08",
+      "nome": "CHAINLINK (LINK)_2025.08.08",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "POLYGON_2025.08.10",
+      "nome": "POLYGON (POL)_2025.08.10",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "BNB_2025.08.08",
+      "nome": "BNB (BNB)_2025.08.08",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
@@ -1014,31 +1014,31 @@
       "status": "fechado"
     },
     {
-      "nome": "SOLANA_2025.05.11",
+      "nome": "SOLANA (SOL)_2025.05.11",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "ETHEREUM_2024.12.16",
+      "nome": "ETHEREUM (ETH)_2024.12.16",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "PENDLE",
+      "nome": "PENDLE (PENDLE)_2024.12.08",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "NEAR",
+      "nome": "NEAR PROTOCOL (NEAR)_2024.12.08",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "MKR_2024.12.08",
+      "nome": "MAKER (MKR)_2024.12.08",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
@@ -1050,19 +1050,19 @@
       "status": "fechado"
     },
     {
-      "nome": "OPTIMISM_2024.11.20",
+      "nome": "OPTIMISM (OP)_2024.11.20",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "GMX",
+      "nome": "GMX (GMX)_2024.11.22",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "DYDX_2024.11.22",
+      "nome": "DYDX (DYDX)_2024.11.20",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
@@ -1131,7 +1131,7 @@
       "nome_oficial": "PGBL INSTITUÍDO VITREO FOF SUPERPREVIDÊNCIA"
     },
     {
-      "nome": "Kapitalo K10 Previ_2024.01.15",
+      "nome": "Kapitalo K10 Prvi_2024.01.15",
       "macro_classe": "7_alternativos_estratega",
       "subclasse": "7.1_multimercado",
       "status": "fechado"
@@ -1155,49 +1155,49 @@
       "status": "fechado"
     },
     {
-      "nome": "DEB CMTR33_2033.01.01",
+      "nome": "DEB CMTR33_2020.02.27",
       "macro_classe": "2_credito_privado",
       "subclasse": "2.1_high_grade",
       "status": "fechado"
     },
     {
-      "nome": "DEB GASP15_2015.01.01",
+      "nome": "DEB GASP15_2020.02.27",
       "macro_classe": "2_credito_privado",
       "subclasse": "2.1_high_grade",
       "status": "fechado"
     },
     {
-      "nome": "LDO_2024.12.08",
+      "nome": "LIDO DAO (LDO)_2024.12.08",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "TIA_2024.11.22",
+      "nome": "CELESTIA (TIA)_2024.11.22",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "TON_2024.12.08",
+      "nome": "TONCOIN (TON)_2024.12.08",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "UNI_2024.12.08",
+      "nome": "UNISWAP (UNI)_2024.12.08",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "ZIL_2024.11.22",
+      "nome": "ZILLIQA (ZIL)_2024.11.22",
       "macro_classe": "6_criptoativos",
       "subclasse": "6.2_plataforma_utility",
       "status": "fechado"
     },
     {
-      "nome": "CDB Pine (IPCA)_2018.07.09",
+      "nome": "CDB Banco Pine (IPCA)_2018.07.09",
       "macro_classe": "2_credito_privado",
       "subclasse": "2.1_high_grade",
       "status": "fechado"
@@ -1221,7 +1221,7 @@
       "status": "fechado"
     },
     {
-      "nome": "CDB BMG (Pré)_2019.04.08",
+      "nome": "CDB BMG (Pré-Fixado)_2019.04.08",
       "macro_classe": "2_credito_privado",
       "subclasse": "2.1_high_grade",
       "status": "fechado"
@@ -1233,7 +1233,7 @@
       "status": "fechado"
     },
     {
-      "nome": "CDB Fibra (Pré)_2020.03.19",
+      "nome": "CDB Fibra (Pré-Fixado)_2020.03.19",
       "macro_classe": "2_credito_privado",
       "subclasse": "2.1_high_grade",
       "status": "fechado"
