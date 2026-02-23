@@ -1,427 +1,964 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💰 Dashboard de Orçamento</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <style>
-        :root {
-            --bg: #f7fafc;
-            --text: #2d3748;
-            --surface: #ffffff;
-            --card-bg: var(--surface);
-            --border: #e2e8f0;
-            --text-muted: #718096;
-            --subtext: var(--text-muted);
-            --primary: #667eea;
-            --primary-dark: #5568d3;
-            --accent: #48bb78;
-            --accent-dark: #38a169;
-            --accent-light: #f0fff4;
-            --success: #48bb78;
-            --warning: #ed8936;
-            --danger: #f56565;
-            --green: #48bb78;
-            --yellow: #ed8936;
-            --red: #f56565;
-            --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
-        }
-        body.dark-mode {
-            --bg: #1a202c;
-            --text: #f7fafc;
-            --surface: #2d3748;
-            --card-bg: var(--surface);
-            --border: #4a5568;
-            --text-muted: #cbd5e0;
-            --subtext: var(--text-muted);
-            --primary: #7f9cf5;
-            --accent: #68d391;
-            --accent-dark: #48bb78;
-            --accent-light: #1c3a2a;
-            --green: #68d391;
-            --yellow: #f6ad55;
-            --red: #fc8181;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            transition: background-color 0.3s, color 0.3s;
-            padding: 10px 10px 60px 10px;
-        }
-        #theme-toggle {
-            position: absolute; top: 12px; right: 12px;
-            background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
-            padding: 8px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 10; transition: background 0.2s;
-        }
-        body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
-        .nav-link {
-            text-decoration: none;
-            color: var(--primary);
-            font-size: 0.9rem;
-            margin: 10px 0 0 4px;
-            display: inline-block;
-        }
-        h1 {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin: 10px 44px 4px 44px;
-            color: var(--text);
-        }
-        .page-subtitle {
-            text-align: center;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-bottom: 18px;
-        }
-        .period-bar {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 10px 14px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .period-label { font-size: 0.75rem; font-weight: 700; color: var(--subtext); text-transform: uppercase; margin-right: 4px; }
-        .btn-period {
-            background: var(--border);
-            border: none;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-period:hover { opacity: 0.8; }
-        .btn-period.active { background: var(--accent); color: white; }
-        .card {
-            background: var(--surface);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border);
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-        .card-header {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .chart-container { position: relative; height: 300px; width: 100%; }
-        .loading-msg { text-align: center; padding: 40px; color: var(--subtext); font-size: 1rem; }
-        @media (min-width: 768px) {
-            body { max-width: 960px; margin: 0 auto; padding: 16px 16px 60px 16px; }
-            .chart-container { height: 380px; }
-            .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-            h1 { font-size: 1.75rem; }
-        }
-        @media (max-width: 400px) {
-            h1 { font-size: 1.2rem; }
-        }
-        /* ─── KPI Cards ─── */
-        .kpi-groups {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 20px;
-        }
-        @media (max-width: 599px) { .kpi-groups { grid-template-columns: 1fr; } }
-        .kpi-group {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 12px 10px 8px;
-        }
-        .kpi-group-title {
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--subtext);
-            margin-bottom: 10px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid var(--border);
-        }
-        .kpi-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .kpi-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 14px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .kpi-emoji { font-size: 1.4rem; }
-        .kpi-label { font-size: 0.7rem; font-weight: 700; color: var(--subtext); text-transform: uppercase; letter-spacing: 0.03em; }
-        .kpi-value { font-size: 1.1rem; font-weight: 800; color: var(--text); }
-        .kpi-sub { font-size: 0.72rem; color: var(--subtext); margin-top: 2px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="only light">
+  <meta name="supported-color-schemes" content="light">
+  <title>💰 Dashboard de Orçamento</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    /* Force Light Mode variables as default, override if class is present */
+    :root {
+      color-scheme: only light !important;
+      isolation: isolate;
+      --bg: #f7fafc;
+      --text: #2d3748;
+      --surface: #ffffff;
+      --card-bg: var(--surface);
+      --border: #e2e8f0;
+      --text-muted: #718096;
+      --subtext: var(--text-muted);
+      --primary: #667eea;
+      --accent: var(--primary);
+      --success: #48bb78;
+      --warning: #ed8936;
+      --danger: #f56565;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    }
+    
+    /* Apply Dark Mode only when class is present */
+    body.dark-mode {
+      color-scheme: only dark !important;
+      --bg: #1a202c;
+      --text: #f7fafc;
+      --surface: #2d3748;
+      --card-bg: var(--surface);
+      --border: #4a5568;
+      --text-muted: #cbd5e0;
+      --subtext: var(--text-muted);
+      --primary: #7f9cf5;
+      --accent: var(--primary);
+      background-image: none;
+      background-color: var(--bg);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      background-color: var(--bg);
+      min-height: 100vh;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=');
+      background-repeat: repeat;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.3s, color 0.3s;
+      padding: 10px 10px 60px 10px;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    #theme-toggle {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
+      padding: 8px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10; transition: background 0.2s;
+    }
+    body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+    body:not(.dark-mode) #theme-toggle { background: rgba(0,0,0,0.05); }
+    .nav-link {
+      text-decoration: none;
+      color: var(--primary);
+      font-size: 0.9rem;
+      margin: 10px 0 0 4px;
+      display: inline-block;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 10px 44px 20px 44px;
+      color: var(--text);
+    }
+
+    /* Period Filter */
+    .period-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .period-label { 
+      font-size: 0.75rem; 
+      font-weight: 700; 
+      color: var(--subtext); 
+      text-transform: uppercase; 
+      margin-right: 4px; 
+    }
+    .btn-period {
+      background: var(--border);
+      border: none;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-period:hover { opacity: 0.8; }
+    .btn-period.active { background: var(--accent); color: white; }
+
+    /* KPIs */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .kpi-label {
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: var(--subtext);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      order: 1;
+    }
+    .kpi-value {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+      order: 2;
+    }
+    .kpi-sub {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      order: 3;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    .card-header {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title { 
+      display: flex; 
+      align-items: center; 
+      gap: 6px;
+      text-align: center;
+      width: 100%;
+      justify-content: center;
+    }
+    .card-header .controls {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Chart */
+    .chart-container {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+
+    /* Controls */
+    .controls { 
+      display: flex; 
+      gap: 6px; 
+      align-items: center; 
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .filter-select {
+      background: var(--border);
+      border: none;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+    }
+    .multiselect-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .multiselect-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 4px;
+      padding: 8px;
+      min-width: 200px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .multiselect-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+    .multiselect-option:hover {
+      background: var(--border);
+    }
+    .multiselect-option input[type="checkbox"] {
+      cursor: pointer;
+    }
+
+    /* Loading */
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      color: white;
+      font-weight: bold;
+      backdrop-filter: blur(4px);
+    }
+    .hidden { display: none !important; }
+
+    /* Desktop */
+    @media (min-width: 768px) {
+      body { max-width: 960px; margin: 0 auto; padding: 16px 16px 60px 16px; }
+      h1 { font-size: 1.75rem; }
+      .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+      .chart-container { height: 380px; }
+    }
+  </style>
 </head>
 <body>
-    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
-    <a href="index.html" class="nav-link">← Voltar</a>
-    <h1>💰 Orçamento</h1>
-    <p id="last-update" class="page-subtitle" style="display:none;"></p>
 
-    <!-- ═══ Seção Consolidado ══════════════════════════════════════════════ -->
-    <div id="tab1">
-        <!-- Period Filter -->
-        <div class="period-bar" style="justify-content: center;">
-            <span class="period-label">Período:</span>
-            <button class="btn-period active" onclick="setPeriod('ano_atual', this)">Ano</button>
-            <button class="btn-period" onclick="setPeriod('12m', this)">12M</button>
-            <button class="btn-period" onclick="setPeriod('24m', this)">24M</button>
-            <button class="btn-period" onclick="setPeriod('36m', this)">36M</button>
-            <button class="btn-period" onclick="setPeriod('todos', this)">Todos</button>
-        </div>
+<div id="loading">Carregando dados...</div>
 
-        <div id="loading" class="loading-msg">⏳ Carregando dados...</div>
-        <div id="consolidado-content" style="display:none;">
-            <!-- KPIs em dois grupos -->
-            <div class="kpi-groups">
-                <div class="kpi-group">
-                    <div class="kpi-group-title">💰 Salário</div>
-                    <div class="kpi-grid" id="kpi-salario"></div>
-                </div>
-                <div class="kpi-group">
-                    <div class="kpi-group-title">🎁 Benefícios</div>
-                    <div class="kpi-grid" id="kpi-beneficios"></div>
-                </div>
-            </div>
+<button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+<a href="index.html" class="nav-link">← Voltar</a>
+<h1>💰 Orçamento</h1>
 
-            <!-- Gráfico A: Evolução Mensal de Salário -->
-            <div class="card">
-                <div class="card-header"><span>📈 Evolução Mensal — Salário</span></div>
-                <div class="chart-container"><canvas id="cBarSalario"></canvas></div>
-            </div>
+<main>
+  <!-- Period Filter -->
+  <div class="period-bar">
+    <span class="period-label">Período:</span>
+    <button class="btn-period active" onclick="setPeriod('ano_atual', this)">Ano</button>
+    <button class="btn-period" onclick="setPeriod('12m', this)">12M</button>
+    <button class="btn-period" onclick="setPeriod('24m', this)">24M</button>
+    <button class="btn-period" onclick="setPeriod('36m', this)">36M</button>
+    <button class="btn-period" onclick="setPeriod('todos', this)">Todos</button>
+  </div>
 
-            <!-- Gráfico B: Evolução Mensal de Benefícios (empilhado por origem) -->
-            <div class="card">
-                <div class="card-header"><span>📊 Evolução Mensal — Benefícios por Origem</span></div>
-                <div class="chart-container"><canvas id="cBarBeneficios"></canvas></div>
-            </div>
-
-            <!-- Pizza -->
-            <div class="card">
-                <div class="card-header"><span>🥧 % por Subcategoria no Período</span></div>
-                <div class="chart-container"><canvas id="cPie"></canvas></div>
-            </div>
-        </div>
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <span class="kpi-label">💰 Total de Entradas</span>
+      <span class="kpi-value" id="kpiTotal">—</span>
+      <span class="kpi-sub">No período selecionado</span>
     </div>
+    <div class="kpi-card">
+      <span class="kpi-label">📅 Média Mensal</span>
+      <span class="kpi-value" id="kpiMedia">—</span>
+      <span class="kpi-sub">Média por mês</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-label">🎯 Taxa de Poupança</span>
+      <span class="kpi-value" id="kpiTaxa">—</span>
+      <span class="kpi-sub">% do período</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-label">🎁 Média Passiva</span>
+      <span class="kpi-value" id="kpiPassiva">—</span>
+      <span class="kpi-sub">Sem salário/mês</span>
+    </div>
+  </div>
 
-    <script>
-        // ─── State ────────────────────────────────────────────────────────────
-        let allData = [];
-        let origens = {};
-        const SUBCATS = ['Salário', 'Benefícios', 'Outras Receitas'];
-        const SUBCAT_COLORS = ['#48bb78', '#667eea', '#ed8936'];
-        const ORIGEM_PALETTE = ['#667eea','#48bb78','#ed8936','#f56565','#9f7aea','#4299e1','#38b2ac','#d69e2e','#e53e3e','#805ad5'];
-        let currentPeriod = 'ano_atual';
-        let filteredData = [];
-        let charts = {};
-        let editingIndex = null;
-        let currentTab = 1;
+  <!-- Chart: Evolução Anual -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span>📊</span> Evolução Anual</div>
+      <div class="controls">
+        <div class="multiselect-wrapper">
+          <button id="filterAnualBtn" class="filter-select" onclick="toggleAnualFilter(event)">
+            <span id="filterAnualLabel">Todas as Fontes</span> ▾
+          </button>
+          <div id="filterAnualDropdown" class="multiselect-dropdown" style="display: none;">
+            <label class="multiselect-option">
+              <input type="checkbox" value="all" checked onchange="toggleAllAnual(this)"> Todas
+            </label>
+            <label class="multiselect-option">
+              <input type="checkbox" value="salario" checked onchange="updateAnualFilter()"> Salário
+            </label>
+            <label class="multiselect-option">
+              <input type="checkbox" value="outras" checked onchange="updateAnualFilter()"> Outras Receitas
+            </label>
+            <label class="multiselect-option">
+              <input type="checkbox" value="divAcoes" checked onchange="updateAnualFilter()"> Dividendos Ações
+            </label>
+            <label class="multiselect-option">
+              <input type="checkbox" value="divFIIs" checked onchange="updateAnualFilter()"> Dividendos FIIs
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-container"><canvas id="cAnual"></canvas></div>
+  </div>
 
-        // ─── Helpers ──────────────────────────────────────────────────────────
-        function brl(v) {
-            return 'R$ ' + Math.abs(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  <!-- Chart: Evolução Mensal -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span>📈</span> Evolução Mensal</div>
+      <div class="controls">
+        <div class="multiselect-wrapper">
+          <button id="filterMensalBtn" class="filter-select" onclick="toggleMensalFilter(event)">
+            <span id="filterMensalLabel">Todas as Fontes</span> ▾
+          </button>
+          <div id="filterMensalDropdown" class="multiselect-dropdown" style="display: none;">
+            <label class="multiselect-option">
+              <input type="checkbox" value="all" checked onchange="toggleAllMensal(this)"> Todas
+            </label>
+            <label class="multiselect-option">
+              <input type="checkbox" value="salario" checked onchange="updateMensalFilter()"> Salário
+            </label>
+            <label class="multiselect-option">
+              <input type="checkbox" value="outras" checked onchange="updateMensalFilter()"> Outras Receitas
+            </label>
+            <label class="multiselect-option">
+              <input type="checkbox" value="divAcoes" checked onchange="updateMensalFilter()"> Dividendos Ações
+            </label>
+            <label class="multiselect-option">
+              <input type="checkbox" value="divFIIs" checked onchange="updateMensalFilter()"> Dividendos FIIs
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-container"><canvas id="cMensal"></canvas></div>
+  </div>
+
+  <!-- Chart: Donut -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span>🥧</span> % por Subcategoria no Período</div>
+    </div>
+    <div class="chart-container"><canvas id="cDonut"></canvas></div>
+  </div>
+
+  <!-- Chart: Taxa de Poupança -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span>💰</span> Taxa de Poupança por Ano</div>
+    </div>
+    <div class="chart-container"><canvas id="cTaxaAnual"></canvas></div>
+  </div>
+</main>
+
+<script>
+// Desabilitar datalabels globalmente
+Chart.defaults.set('plugins.datalabels', { display: false });
+
+// ─── CONFIG ───
+const COLORS = {
+  salario: '#48bb78',
+  outras: '#667eea',
+  divAcoes: '#e74c3c',
+  divFIIs: '#f39c12'
+};
+
+const LABELS = {
+  salario: 'Salário',
+  outras: 'Outras Receitas',
+  divAcoes: 'Dividendos Ações',
+  divFIIs: 'Dividendos FIIs'
+};
+
+// ─── STATE ───
+let allData = {
+  salario: [],
+  outrasReceitas: [],
+  dividendosAcoes: [],
+  dividendosFIIs: [],
+  despesas: []
+};
+let filteredData = {};
+let currentPeriod = 'ano_atual';
+let charts = {};
+let tickerClassMap = {};
+
+// ─── HELPERS ───
+function brl(v) {
+  return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function compactFmt(n) {
+  return Intl.NumberFormat('pt-BR', { notation: "compact", compactDisplay: "short" }).format(n);
+}
+
+function monthLabel(key) {
+  const [y, m] = key.split('-');
+  return new Date(parseInt(y), parseInt(m) - 1, 1)
+    .toLocaleString('pt-BR', { month: 'short', year: '2-digit' })
+    .replace('.', '');
+}
+
+function somaValores(arr) {
+  return arr.reduce((sum, r) => sum + Math.abs(r.valor || r.valor_total || 0), 0);
+}
+
+function mesesUnicos(arr) {
+  return [...new Set(arr.map(r => r.data.substring(0, 7)))].length;
+}
+
+function anosUnicos(arr) {
+  return [...new Set(arr.map(r => r.data.substring(0, 4)))].sort();
+}
+
+// ─── THEME ───
+function updateMetaThemeColor(isDark) {
+  const color = isDark ? '#1a202c' : '#f7fafc';
+  const scheme = isDark ? 'only dark' : 'only light';
+  
+  let metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (!metaTheme) {
+    metaTheme = document.createElement('meta');
+    metaTheme.name = 'theme-color';
+    document.head.appendChild(metaTheme);
+  }
+  metaTheme.content = color;
+
+  let metaScheme = document.querySelector('meta[name="color-scheme"]');
+  if (!metaScheme) {
+    metaScheme = document.createElement('meta');
+    metaScheme.name = 'color-scheme';
+    document.head.appendChild(metaScheme);
+  }
+  metaScheme.content = scheme;
+}
+
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  let isDark = false;
+  if (savedTheme === 'dark') {
+    isDark = true;
+  } else if (savedTheme === 'light') {
+    isDark = false;
+  } else if (prefersDark) {
+    isDark = true;
+  }
+  
+  if (isDark) {
+    document.body.classList.add('dark-mode');
+    document.getElementById('theme-toggle').textContent = '☀️';
+  } else {
+    document.body.classList.remove('dark-mode');
+    document.getElementById('theme-toggle').textContent = '🌙';
+  }
+  updateMetaThemeColor(isDark);
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('dark-mode');
+  const isDark = document.body.classList.contains('dark-mode');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+  updateMetaThemeColor(isDark);
+  setTimeout(renderAll, 50);
+}
+
+// ─── FILTERS ───
+function setPeriod(period, btn) {
+  currentPeriod = period;
+  document.querySelectorAll('.btn-period').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  applyFilter();
+  renderAll();
+}
+
+function applyFilter() {
+  const combinedReceitas = [
+    ...allData.salario,
+    ...allData.outrasReceitas,
+    ...allData.dividendosAcoes,
+    ...allData.dividendosFIIs
+  ];
+  
+  if (!combinedReceitas.length) {
+    filteredData = { salario: [], outrasReceitas: [], dividendosAcoes: [], dividendosFIIs: [], despesas: [] };
+    return;
+  }
+
+  const lastKey = combinedReceitas.reduce((max, r) => r.data > max ? r.data : max, '');
+  const refDate = lastKey ? new Date(lastKey + 'T00:00') : new Date();
+  const curYear = refDate.getFullYear();
+
+  let cutKey = '';
+  if (currentPeriod === 'todos') {
+    cutKey = '0000-00';
+  } else if (currentPeriod === 'ano_atual') {
+    cutKey = `${curYear}-01`;
+  } else {
+    const months = parseInt(currentPeriod);
+    const cutoff = new Date(refDate.getFullYear(), refDate.getMonth() - months + 1, 1);
+    cutKey = `${cutoff.getFullYear()}-${String(cutoff.getMonth() + 1).padStart(2, '0')}`;
+  }
+
+  filteredData = {
+    salario: allData.salario.filter(r => r.data.substring(0, 7) >= cutKey),
+    outrasReceitas: allData.outrasReceitas.filter(r => r.data.substring(0, 7) >= cutKey),
+    dividendosAcoes: allData.dividendosAcoes.filter(r => r.data.substring(0, 7) >= cutKey),
+    dividendosFIIs: allData.dividendosFIIs.filter(r => r.data.substring(0, 7) >= cutKey),
+    despesas: allData.despesas.filter(r => r.data.substring(0, 7) >= cutKey)
+  };
+}
+
+// ─── MULTI-SELECT ANUAL ───
+function toggleAnualFilter(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById('filterAnualDropdown');
+  dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleAllAnual(checkbox) {
+  const checkboxes = document.querySelectorAll('#filterAnualDropdown input[type="checkbox"]:not([value="all"])');
+  checkboxes.forEach(cb => cb.checked = checkbox.checked);
+  updateAnualFilter();
+}
+
+function updateAnualFilter() {
+  const checkboxes = document.querySelectorAll('#filterAnualDropdown input[type="checkbox"]:not([value="all"])');
+  const allCheckbox = document.querySelector('#filterAnualDropdown input[value="all"]');
+  const selected = Array.from(checkboxes).filter(cb => cb.checked);
+  
+  allCheckbox.checked = selected.length === checkboxes.length;
+  
+  const label = document.getElementById('filterAnualLabel');
+  if (selected.length === 0 || selected.length === checkboxes.length) {
+    label.textContent = 'Todas as Fontes';
+  } else if (selected.length === 1) {
+    label.textContent = LABELS[selected[0].value];
+  } else {
+    label.textContent = `${selected.length} selecionadas`;
+  }
+  
+  renderAnual();
+}
+
+// ─── MULTI-SELECT MENSAL ───
+function toggleMensalFilter(event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById('filterMensalDropdown');
+  dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleAllMensal(checkbox) {
+  const checkboxes = document.querySelectorAll('#filterMensalDropdown input[type="checkbox"]:not([value="all"])');
+  checkboxes.forEach(cb => cb.checked = checkbox.checked);
+  updateMensalFilter();
+}
+
+function updateMensalFilter() {
+  const checkboxes = document.querySelectorAll('#filterMensalDropdown input[type="checkbox"]:not([value="all"])');
+  const allCheckbox = document.querySelector('#filterMensalDropdown input[value="all"]');
+  const selected = Array.from(checkboxes).filter(cb => cb.checked);
+  
+  allCheckbox.checked = selected.length === checkboxes.length;
+  
+  const label = document.getElementById('filterMensalLabel');
+  if (selected.length === 0 || selected.length === checkboxes.length) {
+    label.textContent = 'Todas as Fontes';
+  } else if (selected.length === 1) {
+    label.textContent = LABELS[selected[0].value];
+  } else {
+    label.textContent = `${selected.length} selecionadas`;
+  }
+  
+  renderMensal();
+}
+
+// Fechar dropdowns ao clicar fora
+document.addEventListener('click', () => {
+  document.querySelectorAll('.multiselect-dropdown').forEach(d => d.style.display = 'none');
+});
+
+// ─── RENDER ───
+function renderAll() {
+  updateKPIs();
+  renderAnual();
+  renderMensal();
+  renderDonut();
+  renderTaxaAnual();
+}
+
+function updateKPIs() {
+  const totalSalario = somaValores(filteredData.salario);
+  const totalOutras = somaValores(filteredData.outrasReceitas);
+  const totalDivAcoes = somaValores(filteredData.dividendosAcoes);
+  const totalDivFIIs = somaValores(filteredData.dividendosFIIs);
+  const totalReceitas = totalSalario + totalOutras + totalDivAcoes + totalDivFIIs;
+  const totalDespesas = somaValores(filteredData.despesas);
+  
+  const allReceitas = [
+    ...filteredData.salario,
+    ...filteredData.outrasReceitas,
+    ...filteredData.dividendosAcoes,
+    ...filteredData.dividendosFIIs
+  ];
+  const meses = mesesUnicos(allReceitas) || 1;
+  
+  const mediaTotal = totalReceitas / meses;
+  const mediaPassiva = (totalOutras + totalDivAcoes + totalDivFIIs) / meses;
+  const taxaPoupanca = totalReceitas > 0 ? ((totalReceitas - totalDespesas) / totalReceitas) * 100 : 0;
+  
+  document.getElementById('kpiTotal').textContent = brl(totalReceitas);
+  document.getElementById('kpiMedia').textContent = brl(mediaTotal);
+  document.getElementById('kpiTaxa').textContent = taxaPoupanca.toFixed(1) + '%';
+  document.getElementById('kpiPassiva').textContent = brl(mediaPassiva);
+}
+
+function renderAnual() {
+  const ctx = document.getElementById('cAnual').getContext('2d');
+  const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+  const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
+  
+  const checkboxes = document.querySelectorAll('#filterAnualDropdown input[type="checkbox"]:not([value="all"]):checked');
+  const active = Array.from(checkboxes).map(cb => cb.value);
+  
+  const allYears = anosUnicos([
+    ...filteredData.salario,
+    ...filteredData.outrasReceitas,
+    ...filteredData.dividendosAcoes,
+    ...filteredData.dividendosFIIs
+  ]);
+  
+  const datasets = [];
+  
+  if (active.includes('salario')) {
+    const data = allYears.map(y => somaValores(filteredData.salario.filter(r => r.data.substring(0, 4) === y)));
+    datasets.push({ label: LABELS.salario, data, backgroundColor: COLORS.salario, borderRadius: 4 });
+  }
+  if (active.includes('outras')) {
+    const data = allYears.map(y => somaValores(filteredData.outrasReceitas.filter(r => r.data.substring(0, 4) === y)));
+    datasets.push({ label: LABELS.outras, data, backgroundColor: COLORS.outras, borderRadius: 4 });
+  }
+  if (active.includes('divAcoes')) {
+    const data = allYears.map(y => somaValores(filteredData.dividendosAcoes.filter(r => r.data.substring(0, 4) === y)));
+    datasets.push({ label: LABELS.divAcoes, data, backgroundColor: COLORS.divAcoes, borderRadius: 4 });
+  }
+  if (active.includes('divFIIs')) {
+    const data = allYears.map(y => somaValores(filteredData.dividendosFIIs.filter(r => r.data.substring(0, 4) === y)));
+    datasets.push({ label: LABELS.divFIIs, data, backgroundColor: COLORS.divFIIs, borderRadius: 4 });
+  }
+  
+  if (charts.anual) charts.anual.destroy();
+  charts.anual = new Chart(ctx, {
+    type: 'bar',
+    data: { labels: allYears, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { color: textColor } },
+        y: { 
+          stacked: true, 
+          ticks: { callback: v => compactFmt(v), color: textColor },
+          grid: { color: gridColor }
         }
-
-        function fmtDate(dateStr) {
-            if (!dateStr) return '';
-            const [y, m, d] = dateStr.split('-');
-            return `${d}/${m}/${String(y).slice(-2)}`;
-        }
-
-        function monthLabel(key) {
-            const [y, m] = key.split('-');
-            return new Date(parseInt(y), parseInt(m) - 1, 1)
-                .toLocaleString('pt-BR', { month: 'short', year: '2-digit' })
-                .replace('.', '');
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            Chart.defaults.color = isDark ? '#cbd5e0' : '#666';
-            Chart.defaults.borderColor = isDark ? '#4a5568' : '#e2e8f0';
-            if (filteredData.length > 0) renderConsolidado();
-        }
-
-    // ─── Period Filter ───
-    function setPeriod(period, btn) {
-        currentPeriod = period;
-        document.querySelectorAll('.btn-period').forEach(b => b.classList.remove('active'));
-        if (btn) btn.classList.add('active');
-        applyFilter(period);
-        renderConsolidado();
+      },
+      plugins: {
+        legend: { 
+          position: 'bottom', 
+          labels: { boxWidth: 12, font: { size: 10 }, color: textColor } 
+        },
+        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + brl(ctx.raw) } }
+      }
     }
+  });
+}
 
-    function applyFilter(period) {
-        const receitas = allData.filter(r => r.categoria === 'receitas');
-        if (!receitas.length) { filteredData = []; return; }
-        const lastKey = receitas.reduce((max, r) => r.data > max ? r.data : max, '');
-        const refDate = lastKey ? new Date(lastKey + 'T00:00') : new Date();
-        const curYear = refDate.getFullYear();
-
-        let base;
-        if (period === 'todos') {
-            base = receitas;
-        } else if (period === 'ano_atual') {
-            base = receitas.filter(r => r.data.startsWith(String(curYear)));
-        } else {
-            const months = parseInt(period);
-            const cutoff = new Date(refDate.getFullYear(), refDate.getMonth() - months + 1, 1);
-            const cutKey = `${cutoff.getFullYear()}-${String(cutoff.getMonth() + 1).padStart(2, '0')}`;
-            base = receitas.filter(r => r.data.substring(0, 7) >= cutKey);
+function renderMensal() {
+  const ctx = document.getElementById('cMensal').getContext('2d');
+  const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+  const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
+  
+  const checkboxes = document.querySelectorAll('#filterMensalDropdown input[type="checkbox"]:not([value="all"]):checked');
+  const active = Array.from(checkboxes).map(cb => cb.value);
+  
+  const allMonths = [...new Set([
+    ...filteredData.salario.map(r => r.data.substring(0, 7)),
+    ...filteredData.outrasReceitas.map(r => r.data.substring(0, 7)),
+    ...filteredData.dividendosAcoes.map(r => r.data.substring(0, 7)),
+    ...filteredData.dividendosFIIs.map(r => r.data.substring(0, 7))
+  ])].sort();
+  
+  const datasets = [];
+  
+  if (active.includes('salario')) {
+    const data = allMonths.map(m => somaValores(filteredData.salario.filter(r => r.data.substring(0, 7) === m)));
+    datasets.push({ label: LABELS.salario, data, backgroundColor: COLORS.salario, borderRadius: 4, stack: 'Stack0' });
+  }
+  if (active.includes('outras')) {
+    const data = allMonths.map(m => somaValores(filteredData.outrasReceitas.filter(r => r.data.substring(0, 7) === m)));
+    datasets.push({ label: LABELS.outras, data, backgroundColor: COLORS.outras, borderRadius: 4, stack: 'Stack0' });
+  }
+  if (active.includes('divAcoes')) {
+    const data = allMonths.map(m => somaValores(filteredData.dividendosAcoes.filter(r => r.data.substring(0, 7) === m)));
+    datasets.push({ label: LABELS.divAcoes, data, backgroundColor: COLORS.divAcoes, borderRadius: 4, stack: 'Stack0' });
+  }
+  if (active.includes('divFIIs')) {
+    const data = allMonths.map(m => somaValores(filteredData.dividendosFIIs.filter(r => r.data.substring(0, 7) === m)));
+    datasets.push({ label: LABELS.divFIIs, data, backgroundColor: COLORS.divFIIs, borderRadius: 4, stack: 'Stack0' });
+  }
+  
+  const labels = allMonths.map(monthLabel);
+  
+  if (charts.mensal) charts.mensal.destroy();
+  charts.mensal = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { 
+          stacked: true, 
+          grid: { display: false }, 
+          ticks: { maxRotation: 45, font: { size: 10 }, color: textColor } 
+        },
+        y: { 
+          stacked: true, 
+          ticks: { callback: v => compactFmt(v), color: textColor },
+          grid: { color: gridColor }
         }
-        filteredData = base.filter(r => r.subcategoria !== 'Outras Receitas');
+      },
+      plugins: {
+        legend: { 
+          position: 'bottom', 
+          labels: { boxWidth: 12, font: { size: 10 }, color: textColor } 
+        }
+      }
     }
+  });
+}
 
-    // ─── Consolidado ───
-    function renderConsolidado() {
-        if (!filteredData.length) return;
-        const salData = filteredData.filter(r => r.subcategoria === 'Salário');
-        const benData = filteredData.filter(r => r.subcategoria === 'Benefícios');
-        const monthKeys = [...new Set(filteredData.map(r => r.data.substring(0, 7)))].sort();
-
-        function kpiSet(data) {
-            const total = data.reduce((s, r) => s + Math.abs(r.valor), 0);
-            const mKeys = [...new Set(data.map(r => r.data.substring(0, 7)))];
-            const avg = mKeys.length ? total / mKeys.length : 0;
-            const mTotals = {};
-            data.forEach(r => {
-                const k = r.data.substring(0, 7);
-                mTotals[k] = (mTotals[k] || 0) + Math.abs(r.valor);
-            });
-            const best = Object.entries(mTotals).sort((a, b) => b[1] - a[1])[0];
-            return { total, avg, bestLabel: best ? monthLabel(best[0]) : '—', bestVal: best ? best[1] : 0 };
-        }
-
-        const sal = kpiSet(salData);
-        const ben = kpiSet(benData);
-
-        function kpiCard(emoji, label, value, sub) {
-            return `<div class="kpi-card">
-                <span class="kpi-emoji">${emoji}</span>
-                <span class="kpi-label">${label}</span>
-                <span class="kpi-value">${value}</span>
-                <span class="kpi-sub">${sub}</span>
-            </div>`;
-        }
-
-        document.getElementById('kpi-salario').innerHTML =
-            kpiCard('💰', 'Total Salário', brl(sal.total), `${[...new Set(salData.map(r=>r.data.substring(0,7)))].length} mese(s)`) +
-            kpiCard('📅', 'Média Salário', brl(sal.avg), 'por mês') +
-            kpiCard('🏆', 'Mês Maior Salário', sal.bestLabel, brl(sal.bestVal));
-
-        document.getElementById('kpi-beneficios').innerHTML =
-            kpiCard('🎁', 'Total Benefícios', brl(ben.total), `${[...new Set(benData.map(r=>r.data.substring(0,7)))].length} mese(s)`) +
-            kpiCard('📅', 'Média Benefícios', brl(ben.avg), 'por mês') +
-            kpiCard('🏆', 'Mês Maior Benefício', ben.bestLabel, brl(ben.bestVal));
-
-        const barLabels = monthKeys.map(monthLabel);
-
-        // Gráfico A: Salário
-        const salOrigens = [...new Set(salData.map(r => r.origem).filter(Boolean))];
-        const salDatasets = salOrigens.length ? salOrigens.map((orig, i) => {
-            const monthly = {};
-            salData.filter(r => r.origem === orig).forEach(r => {
-                const k = r.data.substring(0, 7);
-                monthly[k] = (monthly[k] || 0) + Math.abs(r.valor);
-            });
-            return { label: origens[orig] || orig, data: monthKeys.map(k => monthly[k] || 0), backgroundColor: ORIGEM_PALETTE[i % ORIGEM_PALETTE.length], borderRadius: 4 };
-        }) : [{ label: 'Salário', data: monthKeys.map(k => { const m={}; salData.forEach(r=>{const k2=r.data.substring(0,7); m[k2]=(m[k2]||0)+Math.abs(r.valor);}); return m[k]||0; }), backgroundColor: '#48bb78', borderRadius: 4 }];
-
-        if (charts['cBarSalario']) charts['cBarSalario'].destroy();
-        charts['cBarSalario'] = new Chart(document.getElementById('cBarSalario'), {
-            type: 'bar', data: { labels: barLabels, datasets: salDatasets },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } } }, scales: { x: { ticks: { maxRotation: 45, font: { size: 10 } } }, y: { ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(1) + 'k' } } } }
-        });
-
-        // Gráfico B: Benefícios
-        const benOrigens = [...new Set(benData.map(r => r.origem).filter(Boolean))];
-        const benDatasets = benOrigens.map((orig, i) => {
-            const monthly = {};
-            benData.filter(r => r.origem === orig).forEach(r => {
-                const k = r.data.substring(0, 7);
-                monthly[k] = (monthly[k] || 0) + Math.abs(r.valor);
-            });
-            return { label: origens[orig] || orig, data: monthKeys.map(k => monthly[k] || 0), backgroundColor: ORIGEM_PALETTE[i % ORIGEM_PALETTE.length], borderRadius: 4, stack: 'ben' };
-        });
-
-        if (charts['cBarBeneficios']) charts['cBarBeneficios'].destroy();
-        charts['cBarBeneficios'] = new Chart(document.getElementById('cBarBeneficios'), {
-            type: 'bar', data: { labels: barLabels, datasets: benDatasets.length ? benDatasets : [{ label: 'Benefícios', data: monthKeys.map(() => 0), backgroundColor: '#667eea' }] },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } } }, scales: { x: { stacked: true, ticks: { maxRotation: 45, font: { size: 10 } } }, y: { stacked: true, ticks: { callback: v => 'R$ ' + (v / 1000).toFixed(1) + 'k' } } } }
-        });
-
-        // Pizza
-        const subcatTotals = {};
-        filteredData.forEach(r => { const sub = r.subcategoria || '—'; subcatTotals[sub] = (subcatTotals[sub] || 0) + Math.abs(r.valor); });
-        const pieEntries = Object.entries(subcatTotals).sort((a, b) => b[1] - a[1]);
-        const pieLabels = pieEntries.map(([k]) => k);
-        const pieValues = pieEntries.map(([, v]) => v);
-        const pieColors = pieLabels.map(l => { const i = SUBCATS.indexOf(l); return i >= 0 ? SUBCAT_COLORS[i] : '#a0aec0'; });
-        const pieTotal = pieValues.reduce((a, b) => a + b, 0);
-
-        if (charts['cPie']) charts['cPie'].destroy();
-        charts['cPie'] = new Chart(document.getElementById('cPie'), {
-            type: 'pie', data: { labels: pieLabels, datasets: [{ data: pieValues, backgroundColor: pieColors, borderWidth: 2 }] },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 8, boxWidth: 12 } }, tooltip: { callbacks: { label: ctx => { const pct = ((ctx.parsed / pieTotal) * 100).toFixed(1); return ` ${brl(ctx.parsed)} (${pct}%)`; } } } } }
-        });
-    }
-
-    async function init() {
-        const saved = localStorage.getItem('theme');
-        if (saved === 'dark') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('theme-toggle').textContent = '☀️';
-        }
-        try {
-            const [lancData, origData] = await Promise.all([
-                fetch('./data/lancamentos.json?v=' + Date.now()).then(r => r.json()),
-                fetch('./data/origens.json?v=' + Date.now()).then(r => r.json())
-            ]);
-            origData.origens.forEach(o => { origens[o.id] = o.nome; });
-            allData = Array.isArray(lancData) ? lancData : (lancData.lancamentos || []);
-            const lastDate = allData.reduce((max, r) => r.data > max ? r.data : max, '');
-            if (lastDate) {
-                const [y, m, d] = lastDate.split('-');
-                document.getElementById('last-update').textContent = `Última atualização: ${d}/${m}/${y}`;
-                document.getElementById('last-update').style.display = 'block';
+function renderDonut() {
+  const ctx = document.getElementById('cDonut').getContext('2d');
+  const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+  
+  const totals = {
+    salario: somaValores(filteredData.salario),
+    outras: somaValores(filteredData.outrasReceitas),
+    divAcoes: somaValores(filteredData.dividendosAcoes),
+    divFIIs: somaValores(filteredData.dividendosFIIs)
+  };
+  
+  const entries = Object.entries(totals).filter(([k, v]) => v > 0);
+  const labels = entries.map(([k]) => LABELS[k]);
+  const data = entries.map(([k, v]) => v);
+  const colors = entries.map(([k]) => COLORS[k]);
+  
+  const total = data.reduce((a, b) => a + b, 0);
+  
+  if (charts.donut) charts.donut.destroy();
+  charts.donut = new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '65%',
+      plugins: {
+        legend: { 
+          position: 'right', 
+          labels: { boxWidth: 12, font: { size: 10 }, color: textColor } 
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const pct = ((ctx.parsed / total) * 100).toFixed(1);
+              return ` ${brl(ctx.parsed)} (${pct}%)`;
             }
-            applyFilter(currentPeriod);
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('consolidado-content').style.display = 'block';
-            renderConsolidado();
-        } catch(err) { console.error(err); }
+          }
+        }
+      }
     }
-        init();
-    </script>
+  });
+}
+
+function renderTaxaAnual() {
+  const ctx = document.getElementById('cTaxaAnual').getContext('2d');
+  const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+  const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
+  
+  const allReceitas = [
+    ...filteredData.salario,
+    ...filteredData.outrasReceitas,
+    ...filteredData.dividendosAcoes,
+    ...filteredData.dividendosFIIs
+  ];
+  const years = anosUnicos([...allReceitas, ...filteredData.despesas]);
+  
+  const taxas = years.map(y => {
+    const receitasAno = somaValores([
+      ...filteredData.salario.filter(r => r.data.substring(0, 4) === y),
+      ...filteredData.outrasReceitas.filter(r => r.data.substring(0, 4) === y),
+      ...filteredData.dividendosAcoes.filter(r => r.data.substring(0, 4) === y),
+      ...filteredData.dividendosFIIs.filter(r => r.data.substring(0, 4) === y)
+    ]);
+    const despesasAno = somaValores(filteredData.despesas.filter(r => r.data.substring(0, 4) === y));
+    return receitasAno > 0 ? ((receitasAno - despesasAno) / receitasAno) * 100 : 0;
+  });
+  
+  if (charts.taxaAnual) charts.taxaAnual.destroy();
+  charts.taxaAnual = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Taxa de Poupança (%)',
+        data: taxas,
+        backgroundColor: taxas.map(v => v >= 0 ? '#48bb78' : '#f56565'),
+        borderRadius: 4,
+        datalabels: {
+          display: true,
+          anchor: 'end',
+          align: 'top',
+          offset: 4,
+          formatter: v => v.toFixed(1) + '%',
+          font: { weight: 'bold', size: 10 },
+          color: textColor
+        }
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 25 } },
+      scales: {
+        y: { 
+          ticks: { callback: v => v.toFixed(1) + '%', color: textColor },
+          grid: { color: gridColor }
+        },
+        x: {
+          ticks: { color: textColor },
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `Taxa: ${ctx.raw.toFixed(1)}%` } }
+      }
+    },
+    plugins: [ChartDataLabels]
+  });
+}
+
+// ─── INIT ───
+async function init() {
+  initTheme();
+  
+  try {
+    const [lancReq, divReq, ativosReq] = await Promise.all([
+      fetch('data/lancamentos.json?v=' + Date.now()),
+      fetch('data/dividendos_historico.json?v=' + Date.now()),
+      fetch('data/ativos_financeiros.json?v=' + Date.now())
+    ]);
+    
+    const lancData = await lancReq.json();
+    const divData = await divReq.json();
+    const ativosData = await ativosReq.json();
+    
+    // Mapear ticker → classe
+    ativosData.ativos.forEach(a => {
+      const ticker = a.nome.split('_')[0];
+      tickerClassMap[ticker] = a.macro_classe;
+    });
+    
+    // Processar lançamentos
+    const lancamentos = Array.isArray(lancData) ? lancData : (lancData.lancamentos || []);
+    const receitas = lancamentos.filter(r => r.categoria === 'receitas');
+    
+    allData.salario = receitas.filter(r => r.subcategoria === 'Salário');
+    allData.outrasReceitas = receitas.filter(r => r.subcategoria === 'Outras Receitas');
+    allData.despesas = lancamentos.filter(r => r.categoria !== 'receitas');
+    
+    // Processar dividendos
+    const dividendos = divData.movimentacoes || [];
+    dividendos.forEach(d => {
+      if (!['PROVENTO_DIVIDENDO', 'PROVENTO_JCP'].includes(d.tipo)) return;
+      
+      const ticker = d.ativo.split('_')[0];
+      const classe = tickerClassMap[ticker];
+      const item = { ...d, valor: d.valor_total };
+      
+      if (classe === '3_acoes_brasil') {
+        allData.dividendosAcoes.push(item);
+      } else if (classe === '4_ativos_reais') {
+        allData.dividendosFIIs.push(item);
+      }
+    });
+    
+    applyFilter();
+    renderAll();
+    document.getElementById('loading').classList.add('hidden');
+    
+  } catch(err) {
+    alert('Erro ao carregar dados: ' + err.message);
+    console.error(err);
+  }
+}
+
+init();
+</script>
 </body>
 </html>
