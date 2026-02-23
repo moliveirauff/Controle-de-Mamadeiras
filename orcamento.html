@@ -287,37 +287,27 @@
 <h1>💰 Orçamento</h1>
 
 <main>
-  <!-- Period Filter -->
-  <div class="period-bar">
-    <span class="period-label">Período:</span>
-    <button class="btn-period active" onclick="setPeriod('ano_atual', this)">Ano</button>
-    <button class="btn-period" onclick="setPeriod('12m', this)">12M</button>
-    <button class="btn-period" onclick="setPeriod('24m', this)">24M</button>
-    <button class="btn-period" onclick="setPeriod('36m', this)">36M</button>
-    <button class="btn-period" onclick="setPeriod('todos', this)">Todos</button>
-  </div>
-
   <!-- KPIs -->
   <div class="kpi-grid">
     <div class="kpi-card">
       <span class="kpi-label">💰 Total de Entradas</span>
       <span class="kpi-value" id="kpiTotal">—</span>
-      <span class="kpi-sub">No período selecionado</span>
+      <span class="kpi-sub">Últimos 12 meses</span>
     </div>
     <div class="kpi-card">
       <span class="kpi-label">📅 Média Mensal</span>
       <span class="kpi-value" id="kpiMedia">—</span>
-      <span class="kpi-sub">Média por mês</span>
+      <span class="kpi-sub">Últimos 12 meses</span>
     </div>
     <div class="kpi-card">
       <span class="kpi-label">🎯 Taxa de Poupança</span>
       <span class="kpi-value" id="kpiTaxa">—</span>
-      <span class="kpi-sub">% do período</span>
+      <span class="kpi-sub">Últimos 12 meses</span>
     </div>
     <div class="kpi-card">
       <span class="kpi-label">🎁 Média Passiva</span>
       <span class="kpi-value" id="kpiPassiva">—</span>
-      <span class="kpi-sub">Sem salário/mês</span>
+      <span class="kpi-sub">Sem salário (12M)</span>
     </div>
   </div>
 
@@ -380,6 +370,12 @@
             </label>
           </div>
         </div>
+        <div style="display: flex; gap: 4px;">
+          <button class="btn-period active" onclick="setPeriodMensal('12m', this)">12M</button>
+          <button class="btn-period" onclick="setPeriodMensal('24m', this)">24M</button>
+          <button class="btn-period" onclick="setPeriodMensal('36m', this)">36M</button>
+          <button class="btn-period" onclick="setPeriodMensal('todos', this)">Todos</button>
+        </div>
       </div>
     </div>
     <div class="chart-container"><canvas id="cMensal"></canvas></div>
@@ -388,7 +384,7 @@
   <!-- Chart: Donut -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title"><span>🥧</span> % por Subcategoria no Período</div>
+      <div class="card-title"><span>🥧</span> % por Subcategoria (12M)</div>
     </div>
     <div class="chart-container"><canvas id="cDonut"></canvas></div>
   </div>
@@ -429,8 +425,9 @@ let allData = {
   dividendosFIIs: [],
   despesas: []
 };
-let filteredData = {};
-let currentPeriod = 'ano_atual';
+let filteredData12M = {}; // Para KPIs e Donut (fixo 12M)
+let filteredDataMensal = {}; // Para gráfico mensal (variável)
+let currentPeriodMensal = '12m';
 let charts = {};
 let tickerClassMap = {};
 
@@ -517,15 +514,16 @@ function toggleTheme() {
 }
 
 // ─── FILTERS ───
-function setPeriod(period, btn) {
-  currentPeriod = period;
-  document.querySelectorAll('.btn-period').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  applyFilter();
-  renderAll();
+function setPeriodMensal(period, btn) {
+  currentPeriodMensal = period;
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.btn-period').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilterMensal();
+  renderMensal();
 }
 
-function applyFilter() {
+function applyFilter12M() {
   const combinedReceitas = [
     ...allData.salario,
     ...allData.outrasReceitas,
@@ -534,26 +532,52 @@ function applyFilter() {
   ];
   
   if (!combinedReceitas.length) {
-    filteredData = { salario: [], outrasReceitas: [], dividendosAcoes: [], dividendosFIIs: [], despesas: [] };
+    filteredData12M = { salario: [], outrasReceitas: [], dividendosAcoes: [], dividendosFIIs: [], despesas: [] };
     return;
   }
 
   const lastKey = combinedReceitas.reduce((max, r) => r.data > max ? r.data : max, '');
   const refDate = lastKey ? new Date(lastKey + 'T00:00') : new Date();
-  const curYear = refDate.getFullYear();
+  
+  // Sempre 12 meses para KPIs e Donut
+  const cutoff = new Date(refDate.getFullYear(), refDate.getMonth() - 11, 1);
+  const cutKey = `${cutoff.getFullYear()}-${String(cutoff.getMonth() + 1).padStart(2, '0')}`;
+
+  filteredData12M = {
+    salario: allData.salario.filter(r => r.data.substring(0, 7) >= cutKey),
+    outrasReceitas: allData.outrasReceitas.filter(r => r.data.substring(0, 7) >= cutKey),
+    dividendosAcoes: allData.dividendosAcoes.filter(r => r.data.substring(0, 7) >= cutKey),
+    dividendosFIIs: allData.dividendosFIIs.filter(r => r.data.substring(0, 7) >= cutKey),
+    despesas: allData.despesas.filter(r => r.data.substring(0, 7) >= cutKey)
+  };
+}
+
+function applyFilterMensal() {
+  const combinedReceitas = [
+    ...allData.salario,
+    ...allData.outrasReceitas,
+    ...allData.dividendosAcoes,
+    ...allData.dividendosFIIs
+  ];
+  
+  if (!combinedReceitas.length) {
+    filteredDataMensal = { salario: [], outrasReceitas: [], dividendosAcoes: [], dividendosFIIs: [], despesas: [] };
+    return;
+  }
+
+  const lastKey = combinedReceitas.reduce((max, r) => r.data > max ? r.data : max, '');
+  const refDate = lastKey ? new Date(lastKey + 'T00:00') : new Date();
 
   let cutKey = '';
-  if (currentPeriod === 'todos') {
+  if (currentPeriodMensal === 'todos') {
     cutKey = '0000-00';
-  } else if (currentPeriod === 'ano_atual') {
-    cutKey = `${curYear}-01`;
   } else {
-    const months = parseInt(currentPeriod);
+    const months = parseInt(currentPeriodMensal);
     const cutoff = new Date(refDate.getFullYear(), refDate.getMonth() - months + 1, 1);
     cutKey = `${cutoff.getFullYear()}-${String(cutoff.getMonth() + 1).padStart(2, '0')}`;
   }
 
-  filteredData = {
+  filteredDataMensal = {
     salario: allData.salario.filter(r => r.data.substring(0, 7) >= cutKey),
     outrasReceitas: allData.outrasReceitas.filter(r => r.data.substring(0, 7) >= cutKey),
     dividendosAcoes: allData.dividendosAcoes.filter(r => r.data.substring(0, 7) >= cutKey),
@@ -641,18 +665,19 @@ function renderAll() {
 }
 
 function updateKPIs() {
-  const totalSalario = somaValores(filteredData.salario);
-  const totalOutras = somaValores(filteredData.outrasReceitas);
-  const totalDivAcoes = somaValores(filteredData.dividendosAcoes);
-  const totalDivFIIs = somaValores(filteredData.dividendosFIIs);
+  // KPIs sempre baseados em 12M
+  const totalSalario = somaValores(filteredData12M.salario);
+  const totalOutras = somaValores(filteredData12M.outrasReceitas);
+  const totalDivAcoes = somaValores(filteredData12M.dividendosAcoes);
+  const totalDivFIIs = somaValores(filteredData12M.dividendosFIIs);
   const totalReceitas = totalSalario + totalOutras + totalDivAcoes + totalDivFIIs;
-  const totalDespesas = somaValores(filteredData.despesas);
+  const totalDespesas = somaValores(filteredData12M.despesas);
   
   const allReceitas = [
-    ...filteredData.salario,
-    ...filteredData.outrasReceitas,
-    ...filteredData.dividendosAcoes,
-    ...filteredData.dividendosFIIs
+    ...filteredData12M.salario,
+    ...filteredData12M.outrasReceitas,
+    ...filteredData12M.dividendosAcoes,
+    ...filteredData12M.dividendosFIIs
   ];
   const meses = mesesUnicos(allReceitas) || 1;
   
@@ -674,29 +699,30 @@ function renderAnual() {
   const checkboxes = document.querySelectorAll('#filterAnualDropdown input[type="checkbox"]:not([value="all"]):checked');
   const active = Array.from(checkboxes).map(cb => cb.value);
   
+  // Usar todos os dados (sem filtro temporal)
   const allYears = anosUnicos([
-    ...filteredData.salario,
-    ...filteredData.outrasReceitas,
-    ...filteredData.dividendosAcoes,
-    ...filteredData.dividendosFIIs
+    ...allData.salario,
+    ...allData.outrasReceitas,
+    ...allData.dividendosAcoes,
+    ...allData.dividendosFIIs
   ]);
   
   const datasets = [];
   
   if (active.includes('salario')) {
-    const data = allYears.map(y => somaValores(filteredData.salario.filter(r => r.data.substring(0, 4) === y)));
+    const data = allYears.map(y => somaValores(allData.salario.filter(r => r.data.substring(0, 4) === y)));
     datasets.push({ label: LABELS.salario, data, backgroundColor: COLORS.salario, borderRadius: 4 });
   }
   if (active.includes('outras')) {
-    const data = allYears.map(y => somaValores(filteredData.outrasReceitas.filter(r => r.data.substring(0, 4) === y)));
+    const data = allYears.map(y => somaValores(allData.outrasReceitas.filter(r => r.data.substring(0, 4) === y)));
     datasets.push({ label: LABELS.outras, data, backgroundColor: COLORS.outras, borderRadius: 4 });
   }
   if (active.includes('divAcoes')) {
-    const data = allYears.map(y => somaValores(filteredData.dividendosAcoes.filter(r => r.data.substring(0, 4) === y)));
+    const data = allYears.map(y => somaValores(allData.dividendosAcoes.filter(r => r.data.substring(0, 4) === y)));
     datasets.push({ label: LABELS.divAcoes, data, backgroundColor: COLORS.divAcoes, borderRadius: 4 });
   }
   if (active.includes('divFIIs')) {
-    const data = allYears.map(y => somaValores(filteredData.dividendosFIIs.filter(r => r.data.substring(0, 4) === y)));
+    const data = allYears.map(y => somaValores(allData.dividendosFIIs.filter(r => r.data.substring(0, 4) === y)));
     datasets.push({ label: LABELS.divFIIs, data, backgroundColor: COLORS.divFIIs, borderRadius: 4 });
   }
   
@@ -734,29 +760,30 @@ function renderMensal() {
   const checkboxes = document.querySelectorAll('#filterMensalDropdown input[type="checkbox"]:not([value="all"]):checked');
   const active = Array.from(checkboxes).map(cb => cb.value);
   
+  // Usar dados filtrados pelo período selecionado
   const allMonths = [...new Set([
-    ...filteredData.salario.map(r => r.data.substring(0, 7)),
-    ...filteredData.outrasReceitas.map(r => r.data.substring(0, 7)),
-    ...filteredData.dividendosAcoes.map(r => r.data.substring(0, 7)),
-    ...filteredData.dividendosFIIs.map(r => r.data.substring(0, 7))
+    ...filteredDataMensal.salario.map(r => r.data.substring(0, 7)),
+    ...filteredDataMensal.outrasReceitas.map(r => r.data.substring(0, 7)),
+    ...filteredDataMensal.dividendosAcoes.map(r => r.data.substring(0, 7)),
+    ...filteredDataMensal.dividendosFIIs.map(r => r.data.substring(0, 7))
   ])].sort();
   
   const datasets = [];
   
   if (active.includes('salario')) {
-    const data = allMonths.map(m => somaValores(filteredData.salario.filter(r => r.data.substring(0, 7) === m)));
+    const data = allMonths.map(m => somaValores(filteredDataMensal.salario.filter(r => r.data.substring(0, 7) === m)));
     datasets.push({ label: LABELS.salario, data, backgroundColor: COLORS.salario, borderRadius: 4, stack: 'Stack0' });
   }
   if (active.includes('outras')) {
-    const data = allMonths.map(m => somaValores(filteredData.outrasReceitas.filter(r => r.data.substring(0, 7) === m)));
+    const data = allMonths.map(m => somaValores(filteredDataMensal.outrasReceitas.filter(r => r.data.substring(0, 7) === m)));
     datasets.push({ label: LABELS.outras, data, backgroundColor: COLORS.outras, borderRadius: 4, stack: 'Stack0' });
   }
   if (active.includes('divAcoes')) {
-    const data = allMonths.map(m => somaValores(filteredData.dividendosAcoes.filter(r => r.data.substring(0, 7) === m)));
+    const data = allMonths.map(m => somaValores(filteredDataMensal.dividendosAcoes.filter(r => r.data.substring(0, 7) === m)));
     datasets.push({ label: LABELS.divAcoes, data, backgroundColor: COLORS.divAcoes, borderRadius: 4, stack: 'Stack0' });
   }
   if (active.includes('divFIIs')) {
-    const data = allMonths.map(m => somaValores(filteredData.dividendosFIIs.filter(r => r.data.substring(0, 7) === m)));
+    const data = allMonths.map(m => somaValores(filteredDataMensal.dividendosFIIs.filter(r => r.data.substring(0, 7) === m)));
     datasets.push({ label: LABELS.divFIIs, data, backgroundColor: COLORS.divFIIs, borderRadius: 4, stack: 'Stack0' });
   }
   
@@ -795,11 +822,12 @@ function renderDonut() {
   const ctx = document.getElementById('cDonut').getContext('2d');
   const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
   
+  // Usar dados de 12M (mesma base dos KPIs)
   const totals = {
-    salario: somaValores(filteredData.salario),
-    outras: somaValores(filteredData.outrasReceitas),
-    divAcoes: somaValores(filteredData.dividendosAcoes),
-    divFIIs: somaValores(filteredData.dividendosFIIs)
+    salario: somaValores(filteredData12M.salario),
+    outras: somaValores(filteredData12M.outrasReceitas),
+    divAcoes: somaValores(filteredData12M.dividendosAcoes),
+    divFIIs: somaValores(filteredData12M.dividendosFIIs)
   };
   
   const entries = Object.entries(totals).filter(([k, v]) => v > 0);
@@ -840,22 +868,23 @@ function renderTaxaAnual() {
   const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
   const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
   
+  // Usar todos os dados (sem filtro temporal)
   const allReceitas = [
-    ...filteredData.salario,
-    ...filteredData.outrasReceitas,
-    ...filteredData.dividendosAcoes,
-    ...filteredData.dividendosFIIs
+    ...allData.salario,
+    ...allData.outrasReceitas,
+    ...allData.dividendosAcoes,
+    ...allData.dividendosFIIs
   ];
-  const years = anosUnicos([...allReceitas, ...filteredData.despesas]);
+  const years = anosUnicos([...allReceitas, ...allData.despesas]);
   
   const taxas = years.map(y => {
     const receitasAno = somaValores([
-      ...filteredData.salario.filter(r => r.data.substring(0, 4) === y),
-      ...filteredData.outrasReceitas.filter(r => r.data.substring(0, 4) === y),
-      ...filteredData.dividendosAcoes.filter(r => r.data.substring(0, 4) === y),
-      ...filteredData.dividendosFIIs.filter(r => r.data.substring(0, 4) === y)
+      ...allData.salario.filter(r => r.data.substring(0, 4) === y),
+      ...allData.outrasReceitas.filter(r => r.data.substring(0, 4) === y),
+      ...allData.dividendosAcoes.filter(r => r.data.substring(0, 4) === y),
+      ...allData.dividendosFIIs.filter(r => r.data.substring(0, 4) === y)
     ]);
-    const despesasAno = somaValores(filteredData.despesas.filter(r => r.data.substring(0, 4) === y));
+    const despesasAno = somaValores(allData.despesas.filter(r => r.data.substring(0, 4) === y));
     return receitasAno > 0 ? ((receitasAno - despesasAno) / receitasAno) * 100 : 0;
   });
   
@@ -948,7 +977,8 @@ async function init() {
       }
     });
     
-    applyFilter();
+    applyFilter12M();
+    applyFilterMensal();
     renderAll();
     document.getElementById('loading').classList.add('hidden');
     
