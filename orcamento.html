@@ -708,7 +708,7 @@ function renderTaxaAnual() {
     ...allData.outrasReceitas,
     ...allData.proventos
   ];
-  const years = anosUnicos([...allReceitas, ...allData.despesas]);
+  const years = anosUnicos([...allReceitas, ...allData.despesas]).filter(y => parseInt(y) >= 2023);
   
   const taxas = years.map(y => {
     const receitasAno = somaValores([
