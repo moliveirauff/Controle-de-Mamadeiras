@@ -570,11 +570,12 @@
       const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
       const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
 
-      // Buscar saldo total de ações + exterior
-      const saldos = investData.saldos_por_classe || {};
-      const saldoAcoes = saldos['3_acoes_brasil'] || 0;
-      const saldoExterior = saldos['5_exterior'] || 0;
-      const saldoTotal = saldoAcoes + saldoExterior;
+      // Buscar saldo total de ações + internacional + cripto
+      const alocacao = investData.alocacao || [];
+      const saldoAcoes = alocacao.find(a => a.categoria === '3_acoes_brasil')?.real_rs || 0;
+      const saldoInternacional = alocacao.find(a => a.categoria === '5_internacional')?.real_rs || 0;
+      const saldoCripto = alocacao.find(a => a.categoria === '6_criptoativos')?.real_rs || 0;
+      const saldoTotal = saldoAcoes + saldoInternacional + saldoCripto;
 
       if (saldoTotal === 0) {
         // Criar gráfico vazio se não houver saldo
