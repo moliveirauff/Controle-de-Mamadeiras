@@ -73,56 +73,59 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 16px;
+      padding: 12px 8px;
+      text-align: center;
       box-shadow: var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .kpi-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
     .kpi-label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      font-weight: 600;
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: var(--subtext);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.05em;
+      order: 1;
     }
 
     .kpi-value {
-      font-size: 1.8rem;
-      font-weight: 700;
+      font-size: 1.05rem;
+      font-weight: 800;
       color: var(--text);
+      line-height: 1.2;
+      order: 2;
     }
 
     .kpi-value.positive { color: var(--green); }
     .kpi-value.negative { color: var(--red); }
     .kpi-value.warning { color: var(--yellow); }
 
-    /* Cards */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
+    .kpi-sub {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      order: 3;
     }
 
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      transition: background-color 0.3s, border-color 0.3s;
     }
 
     .card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 16px;
+      font-size: 1rem;
+      margin-bottom: 12px;
       color: var(--text);
       font-weight: 700;
+      text-align: center;
     }
 
     /* Charts */
@@ -135,15 +138,25 @@
 
     .chart-container {
       position: relative;
-      height: 320px;
+      height: 300px;
+    }
+
+    #chartFluxoAtivo {
+      height: auto !important;
     }
 
     @media (min-width: 768px) {
       .kpi-grid {
         grid-template-columns: repeat(4, 1fr);
       }
+      .kpi-value {
+        font-size: 1.3rem;
+      }
       .charts-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+      .chart-container {
+        height: 380px;
       }
     }
 
@@ -151,7 +164,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px;
+      font-size: 0.85rem;
     }
 
     thead {
@@ -160,9 +173,16 @@
     }
 
     th, td {
-      padding: 12px;
+      padding: 10px;
       text-align: left;
       border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
     }
 
     tr:hover {
@@ -214,15 +234,15 @@
         <div class="kpi-value" id="kpiFluxoTotal">--</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Fluxo Mês Atual</div>
+        <div class="kpi-label">Fluxo Mês</div>
         <div class="kpi-value" id="kpiFluxoMes">--</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Operações Abertas</div>
+        <div class="kpi-label">Ops Abertas</div>
         <div class="kpi-value" id="kpiAbertas">--</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Vencendo em 7 dias</div>
+        <div class="kpi-label">Venc. 7 Dias</div>
         <div class="kpi-value" id="kpiVencendo">--</div>
       </div>
     </div>
@@ -237,8 +257,8 @@
       </div>
 
       <div class="card">
-        <h3>🎯 Fluxo por Ativo (Top 10)</h3>
-        <div class="chart-container">
+        <h3>🎯 Resultado por Ativo</h3>
+        <div class="chart-container" id="containerFluxoAtivo">
           <canvas id="chartFluxoAtivo"></canvas>
         </div>
       </div>
@@ -252,11 +272,11 @@
           <thead>
             <tr>
               <th>Ativo</th>
-              <th>Ticker Opção</th>
+              <th>Ticker</th>
               <th>Tipo</th>
               <th>Vencimento</th>
               <th>Qtd</th>
-              <th>Preço Abertura</th>
+              <th>Preço</th>
               <th>Dias</th>
             </tr>
           </thead>
@@ -283,7 +303,9 @@
 
     function diasAteVencimento(dataVenc) {
       const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
       const venc = new Date(dataVenc);
+      venc.setHours(0, 0, 0, 0);
       const diff = Math.ceil((venc - hoje) / (1000*60*60*24));
       return diff;
     }
@@ -349,14 +371,14 @@
       const ops_br = brData.estatisticas.operacoes_abertas;
       const ops_us = usData.estatisticas.operacoes_abertas;
       const total_abertas = ops_br + ops_us;
-      document.getElementById('kpiAbertas').textContent = total_abertas + ' ops';
+      document.getElementById('kpiAbertas').textContent = total_abertas;
 
       // KPI 4: Vencendo em 7 dias
       const vencBR = contarVencimentos(brData.operacoes);
       const vencUS = contarVencimentos(usData.operacoes);
       const total_vencendo = vencBR + vencUS;
       const el4 = document.getElementById('kpiVencendo');
-      el4.textContent = total_vencendo + ' ops';
+      el4.textContent = total_vencendo;
       el4.className = 'kpi-value ' + (total_vencendo > 0 ? 'warning' : '');
     }
 
@@ -391,12 +413,18 @@
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            x: { stacked: true, grid: { display: false } },
+            x: { 
+              stacked: true, 
+              grid: { display: false },
+              ticks: { font: { size: 10 } }
+            },
             y: { 
               stacked: true,
               ticks: {
-                callback: (value) => brl(value)
-              }
+                callback: (value) => brl(value),
+                font: { size: 10 }
+              },
+              grid: { color: '#e2e8f0' }
             }
           },
           plugins: {
@@ -416,8 +444,6 @@
 
     // ─── RENDER GRÁFICO FLUXO POR ATIVO ───
     function renderFluxoAtivo(brData, usData) {
-      const ctx = document.getElementById('chartFluxoAtivo').getContext('2d');
-      
       const fluxoBR = calcularFluxoPorAtivo(brData.operacoes, 'acao');
       const fluxoUS = calcularFluxoPorAtivo(usData.operacoes, 'ticker');
 
@@ -433,23 +459,33 @@
         fluxoConsolidado[k] = (fluxoConsolidado[k] || 0) + fluxoUS[k];
       });
 
-      // Ordenar por valor absoluto (top 10)
+      // Ordenar do MAIOR para o MENOR (não por valor absoluto)
       const ativos = Object.entries(fluxoConsolidado)
-        .sort((a,b) => Math.abs(b[1]) - Math.abs(a[1]))
-        .slice(0, 10);
+        .sort((a,b) => b[1] - a[1]); // Maior primeiro
 
       const labels = ativos.map(a => a[0]);
       const valores = ativos.map(a => a[1]);
       const cores = valores.map(v => v >= 0 ? '#4CAF50' : '#f44336');
 
-      new Chart(ctx, {
+      // Altura dinâmica baseada no número de ativos
+      const container = document.getElementById('containerFluxoAtivo');
+      const alturaBase = 30; // px por ativo
+      const alturaPadding = 40;
+      const alturaTotal = (ativos.length * alturaBase) + alturaPadding;
+      container.style.height = alturaTotal + 'px';
+
+      const canvas = document.getElementById('chartFluxoAtivo');
+      canvas.style.height = alturaTotal + 'px';
+
+      new Chart(canvas.getContext('2d'), {
         type: 'bar',
         data: {
           labels,
           datasets: [{
             data: valores,
             backgroundColor: cores,
-            borderRadius: 4
+            borderRadius: 4,
+            barPercentage: 0.7
           }]
         },
         options: {
@@ -459,12 +495,23 @@
           scales: {
             x: {
               ticks: {
-                callback: (value) => brl(value)
-              }
+                callback: (value) => brl(value),
+                font: { size: 9 }
+              },
+              grid: { color: '#e2e8f0' }
+            },
+            y: {
+              ticks: { font: { size: 9 } },
+              grid: { display: false }
             }
           },
           plugins: {
-            legend: { display: false }
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => brl(ctx.parsed.x)
+              }
+            }
           }
         }
       });
