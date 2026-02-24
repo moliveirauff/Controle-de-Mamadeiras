@@ -85,40 +85,6 @@
       color: var(--text);
     }
 
-    /* Period Filter */
-    .period-bar {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 14px;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .period-label { 
-      font-size: 0.75rem; 
-      font-weight: 700; 
-      color: var(--subtext); 
-      text-transform: uppercase; 
-      margin-right: 4px; 
-    }
-    .btn-period {
-      background: var(--border);
-      border: none;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-period:hover { opacity: 0.8; }
-    .btn-period.active { background: var(--accent); color: white; }
-
     /* KPIs */
     .kpi-grid {
       display: grid;
@@ -207,52 +173,19 @@
       flex-wrap: wrap;
       justify-content: center;
     }
-    .filter-select {
+    .btn-period {
       background: var(--border);
       border: none;
-      padding: 4px 10px;
-      border-radius: 8px;
+      padding: 5px 12px;
+      border-radius: 20px;
       font-size: 0.8rem;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
-      outline: none;
+      transition: all 0.2s;
     }
-    .multiselect-wrapper {
-      position: relative;
-      display: inline-block;
-    }
-    .multiselect-dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-top: 4px;
-      padding: 8px;
-      min-width: 200px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 1000;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    .multiselect-option {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 8px;
-      cursor: pointer;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      transition: background 0.2s;
-    }
-    .multiselect-option:hover {
-      background: var(--border);
-    }
-    .multiselect-option input[type="checkbox"] {
-      cursor: pointer;
-    }
+    .btn-period:hover { opacity: 0.8; }
+    .btn-period.active { background: var(--accent); color: white; }
 
     /* Loading */
     #loading {
@@ -315,30 +248,6 @@
   <div class="card">
     <div class="card-header">
       <div class="card-title"><span>📊</span> Evolução Anual</div>
-      <div class="controls">
-        <div class="multiselect-wrapper">
-          <button id="filterAnualBtn" class="filter-select" onclick="toggleAnualFilter(event)">
-            <span id="filterAnualLabel">Todas as Fontes</span> ▾
-          </button>
-          <div id="filterAnualDropdown" class="multiselect-dropdown" style="display: none;">
-            <label class="multiselect-option">
-              <input type="checkbox" value="all" checked onchange="toggleAllAnual(this)"> Todas
-            </label>
-            <label class="multiselect-option">
-              <input type="checkbox" value="salario" checked onchange="updateAnualFilter()"> Salário
-            </label>
-            <label class="multiselect-option">
-              <input type="checkbox" value="outras" checked onchange="updateAnualFilter()"> Outras Receitas
-            </label>
-            <label class="multiselect-option">
-              <input type="checkbox" value="divAcoes" checked onchange="updateAnualFilter()"> Dividendos Ações
-            </label>
-            <label class="multiselect-option">
-              <input type="checkbox" value="divFIIs" checked onchange="updateAnualFilter()"> Dividendos FIIs
-            </label>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="chart-container"><canvas id="cAnual"></canvas></div>
   </div>
@@ -348,34 +257,10 @@
     <div class="card-header">
       <div class="card-title"><span>📈</span> Evolução Mensal</div>
       <div class="controls">
-        <div class="multiselect-wrapper">
-          <button id="filterMensalBtn" class="filter-select" onclick="toggleMensalFilter(event)">
-            <span id="filterMensalLabel">Todas as Fontes</span> ▾
-          </button>
-          <div id="filterMensalDropdown" class="multiselect-dropdown" style="display: none;">
-            <label class="multiselect-option">
-              <input type="checkbox" value="all" checked onchange="toggleAllMensal(this)"> Todas
-            </label>
-            <label class="multiselect-option">
-              <input type="checkbox" value="salario" checked onchange="updateMensalFilter()"> Salário
-            </label>
-            <label class="multiselect-option">
-              <input type="checkbox" value="outras" checked onchange="updateMensalFilter()"> Outras Receitas
-            </label>
-            <label class="multiselect-option">
-              <input type="checkbox" value="divAcoes" checked onchange="updateMensalFilter()"> Dividendos Ações
-            </label>
-            <label class="multiselect-option">
-              <input type="checkbox" value="divFIIs" checked onchange="updateMensalFilter()"> Dividendos FIIs
-            </label>
-          </div>
-        </div>
-        <div style="display: flex; gap: 4px;">
-          <button class="btn-period active" onclick="setPeriodMensal('12m', this)">12M</button>
-          <button class="btn-period" onclick="setPeriodMensal('24m', this)">24M</button>
-          <button class="btn-period" onclick="setPeriodMensal('36m', this)">36M</button>
-          <button class="btn-period" onclick="setPeriodMensal('todos', this)">Todos</button>
-        </div>
+        <button class="btn-period active" onclick="setPeriodMensal('12m', this)">12M</button>
+        <button class="btn-period" onclick="setPeriodMensal('24m', this)">24M</button>
+        <button class="btn-period" onclick="setPeriodMensal('36m', this)">36M</button>
+        <button class="btn-period" onclick="setPeriodMensal('todos', this)">Todos</button>
       </div>
     </div>
     <div class="chart-container"><canvas id="cMensal"></canvas></div>
@@ -404,32 +289,28 @@ Chart.defaults.set('plugins.datalabels', { display: false });
 
 // ─── CONFIG ───
 const COLORS = {
-  salario: '#48bb78',
-  outras: '#667eea',
-  divAcoes: '#e74c3c',
-  divFIIs: '#f39c12'
+  salario: '#48bb78',      // Verde
+  outras: '#667eea',       // Roxo
+  proventos: '#f39c12'     // Laranja
 };
 
 const LABELS = {
   salario: 'Salário',
   outras: 'Outras Receitas',
-  divAcoes: 'Dividendos Ações',
-  divFIIs: 'Dividendos FIIs'
+  proventos: 'Proventos'
 };
 
 // ─── STATE ───
 let allData = {
   salario: [],
   outrasReceitas: [],
-  dividendosAcoes: [],
-  dividendosFIIs: [],
+  proventos: [],
   despesas: []
 };
-let filteredData12M = {}; // Para KPIs e Donut (fixo 12M)
-let filteredDataMensal = {}; // Para gráfico mensal (variável)
+let filteredData12M = {};
+let filteredDataMensal = {};
 let currentPeriodMensal = '12m';
 let charts = {};
-let tickerClassMap = {};
 
 // ─── HELPERS ───
 function brl(v) {
@@ -457,6 +338,16 @@ function mesesUnicos(arr) {
 
 function anosUnicos(arr) {
   return [...new Set(arr.map(r => r.data.substring(0, 4)))].sort();
+}
+
+function parseMesReferencia(mesRef) {
+  if (!mesRef) return null;
+  const meses = {jan:1,fev:2,mar:3,abr:4,mai:5,jun:6,jul:7,ago:8,set:9,out:10,nov:11,dez:12};
+  const [mes, ano] = mesRef.split('/');
+  if (!mes || !ano) return null;
+  const anoCompleto = parseInt(ano) < 50 ? `20${ano}` : `19${ano}`;
+  const mesNum = String(meses[mes]).padStart(2, '0');
+  return `${anoCompleto}-${mesNum}-01`;
 }
 
 // ─── THEME ───
@@ -527,27 +418,24 @@ function applyFilter12M() {
   const combinedReceitas = [
     ...allData.salario,
     ...allData.outrasReceitas,
-    ...allData.dividendosAcoes,
-    ...allData.dividendosFIIs
+    ...allData.proventos
   ];
   
   if (!combinedReceitas.length) {
-    filteredData12M = { salario: [], outrasReceitas: [], dividendosAcoes: [], dividendosFIIs: [], despesas: [] };
+    filteredData12M = { salario: [], outrasReceitas: [], proventos: [], despesas: [] };
     return;
   }
 
   const lastKey = combinedReceitas.reduce((max, r) => r.data > max ? r.data : max, '');
   const refDate = lastKey ? new Date(lastKey + 'T00:00') : new Date();
   
-  // Sempre 12 meses para KPIs e Donut
   const cutoff = new Date(refDate.getFullYear(), refDate.getMonth() - 11, 1);
   const cutKey = `${cutoff.getFullYear()}-${String(cutoff.getMonth() + 1).padStart(2, '0')}`;
 
   filteredData12M = {
     salario: allData.salario.filter(r => r.data.substring(0, 7) >= cutKey),
     outrasReceitas: allData.outrasReceitas.filter(r => r.data.substring(0, 7) >= cutKey),
-    dividendosAcoes: allData.dividendosAcoes.filter(r => r.data.substring(0, 7) >= cutKey),
-    dividendosFIIs: allData.dividendosFIIs.filter(r => r.data.substring(0, 7) >= cutKey),
+    proventos: allData.proventos.filter(r => r.data.substring(0, 7) >= cutKey),
     despesas: allData.despesas.filter(r => r.data.substring(0, 7) >= cutKey)
   };
 }
@@ -556,12 +444,11 @@ function applyFilterMensal() {
   const combinedReceitas = [
     ...allData.salario,
     ...allData.outrasReceitas,
-    ...allData.dividendosAcoes,
-    ...allData.dividendosFIIs
+    ...allData.proventos
   ];
   
   if (!combinedReceitas.length) {
-    filteredDataMensal = { salario: [], outrasReceitas: [], dividendosAcoes: [], dividendosFIIs: [], despesas: [] };
+    filteredDataMensal = { salario: [], outrasReceitas: [], proventos: [], despesas: [] };
     return;
   }
 
@@ -580,80 +467,10 @@ function applyFilterMensal() {
   filteredDataMensal = {
     salario: allData.salario.filter(r => r.data.substring(0, 7) >= cutKey),
     outrasReceitas: allData.outrasReceitas.filter(r => r.data.substring(0, 7) >= cutKey),
-    dividendosAcoes: allData.dividendosAcoes.filter(r => r.data.substring(0, 7) >= cutKey),
-    dividendosFIIs: allData.dividendosFIIs.filter(r => r.data.substring(0, 7) >= cutKey),
+    proventos: allData.proventos.filter(r => r.data.substring(0, 7) >= cutKey),
     despesas: allData.despesas.filter(r => r.data.substring(0, 7) >= cutKey)
   };
 }
-
-// ─── MULTI-SELECT ANUAL ───
-function toggleAnualFilter(event) {
-  event.stopPropagation();
-  const dropdown = document.getElementById('filterAnualDropdown');
-  dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-}
-
-function toggleAllAnual(checkbox) {
-  const checkboxes = document.querySelectorAll('#filterAnualDropdown input[type="checkbox"]:not([value="all"])');
-  checkboxes.forEach(cb => cb.checked = checkbox.checked);
-  updateAnualFilter();
-}
-
-function updateAnualFilter() {
-  const checkboxes = document.querySelectorAll('#filterAnualDropdown input[type="checkbox"]:not([value="all"])');
-  const allCheckbox = document.querySelector('#filterAnualDropdown input[value="all"]');
-  const selected = Array.from(checkboxes).filter(cb => cb.checked);
-  
-  allCheckbox.checked = selected.length === checkboxes.length;
-  
-  const label = document.getElementById('filterAnualLabel');
-  if (selected.length === 0 || selected.length === checkboxes.length) {
-    label.textContent = 'Todas as Fontes';
-  } else if (selected.length === 1) {
-    label.textContent = LABELS[selected[0].value];
-  } else {
-    label.textContent = `${selected.length} selecionadas`;
-  }
-  
-  renderAnual();
-}
-
-// ─── MULTI-SELECT MENSAL ───
-function toggleMensalFilter(event) {
-  event.stopPropagation();
-  const dropdown = document.getElementById('filterMensalDropdown');
-  dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-}
-
-function toggleAllMensal(checkbox) {
-  const checkboxes = document.querySelectorAll('#filterMensalDropdown input[type="checkbox"]:not([value="all"])');
-  checkboxes.forEach(cb => cb.checked = checkbox.checked);
-  updateMensalFilter();
-}
-
-function updateMensalFilter() {
-  const checkboxes = document.querySelectorAll('#filterMensalDropdown input[type="checkbox"]:not([value="all"])');
-  const allCheckbox = document.querySelector('#filterMensalDropdown input[value="all"]');
-  const selected = Array.from(checkboxes).filter(cb => cb.checked);
-  
-  allCheckbox.checked = selected.length === checkboxes.length;
-  
-  const label = document.getElementById('filterMensalLabel');
-  if (selected.length === 0 || selected.length === checkboxes.length) {
-    label.textContent = 'Todas as Fontes';
-  } else if (selected.length === 1) {
-    label.textContent = LABELS[selected[0].value];
-  } else {
-    label.textContent = `${selected.length} selecionadas`;
-  }
-  
-  renderMensal();
-}
-
-// Fechar dropdowns ao clicar fora
-document.addEventListener('click', () => {
-  document.querySelectorAll('.multiselect-dropdown').forEach(d => d.style.display = 'none');
-});
 
 // ─── RENDER ───
 function renderAll() {
@@ -665,24 +482,21 @@ function renderAll() {
 }
 
 function updateKPIs() {
-  // KPIs sempre baseados em 12M
   const totalSalario = somaValores(filteredData12M.salario);
   const totalOutras = somaValores(filteredData12M.outrasReceitas);
-  const totalDivAcoes = somaValores(filteredData12M.dividendosAcoes);
-  const totalDivFIIs = somaValores(filteredData12M.dividendosFIIs);
-  const totalReceitas = totalSalario + totalOutras + totalDivAcoes + totalDivFIIs;
+  const totalProventos = somaValores(filteredData12M.proventos);
+  const totalReceitas = totalSalario + totalOutras + totalProventos;
   const totalDespesas = somaValores(filteredData12M.despesas);
   
   const allReceitas = [
     ...filteredData12M.salario,
     ...filteredData12M.outrasReceitas,
-    ...filteredData12M.dividendosAcoes,
-    ...filteredData12M.dividendosFIIs
+    ...filteredData12M.proventos
   ];
   const meses = mesesUnicos(allReceitas) || 1;
   
   const mediaTotal = totalReceitas / meses;
-  const mediaPassiva = (totalOutras + totalDivAcoes + totalDivFIIs) / meses;
+  const mediaPassiva = (totalOutras + totalProventos) / meses;
   const taxaPoupanca = totalReceitas > 0 ? ((totalReceitas - totalDespesas) / totalReceitas) * 100 : 0;
   
   document.getElementById('kpiTotal').textContent = brl(totalReceitas);
@@ -696,35 +510,32 @@ function renderAnual() {
   const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
   const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
   
-  const checkboxes = document.querySelectorAll('#filterAnualDropdown input[type="checkbox"]:not([value="all"]):checked');
-  const active = Array.from(checkboxes).map(cb => cb.value);
-  
-  // Usar todos os dados (sem filtro temporal)
   const allYears = anosUnicos([
     ...allData.salario,
     ...allData.outrasReceitas,
-    ...allData.dividendosAcoes,
-    ...allData.dividendosFIIs
+    ...allData.proventos
   ]);
   
-  const datasets = [];
-  
-  if (active.includes('salario')) {
-    const data = allYears.map(y => somaValores(allData.salario.filter(r => r.data.substring(0, 4) === y)));
-    datasets.push({ label: LABELS.salario, data, backgroundColor: COLORS.salario, borderRadius: 4 });
-  }
-  if (active.includes('outras')) {
-    const data = allYears.map(y => somaValores(allData.outrasReceitas.filter(r => r.data.substring(0, 4) === y)));
-    datasets.push({ label: LABELS.outras, data, backgroundColor: COLORS.outras, borderRadius: 4 });
-  }
-  if (active.includes('divAcoes')) {
-    const data = allYears.map(y => somaValores(allData.dividendosAcoes.filter(r => r.data.substring(0, 4) === y)));
-    datasets.push({ label: LABELS.divAcoes, data, backgroundColor: COLORS.divAcoes, borderRadius: 4 });
-  }
-  if (active.includes('divFIIs')) {
-    const data = allYears.map(y => somaValores(allData.dividendosFIIs.filter(r => r.data.substring(0, 4) === y)));
-    datasets.push({ label: LABELS.divFIIs, data, backgroundColor: COLORS.divFIIs, borderRadius: 4 });
-  }
+  const datasets = [
+    {
+      label: LABELS.salario,
+      data: allYears.map(y => somaValores(allData.salario.filter(r => r.data.substring(0, 4) === y))),
+      backgroundColor: COLORS.salario,
+      borderRadius: 4
+    },
+    {
+      label: LABELS.outras,
+      data: allYears.map(y => somaValores(allData.outrasReceitas.filter(r => r.data.substring(0, 4) === y))),
+      backgroundColor: COLORS.outras,
+      borderRadius: 4
+    },
+    {
+      label: LABELS.proventos,
+      data: allYears.map(y => somaValores(allData.proventos.filter(r => r.data.substring(0, 4) === y))),
+      backgroundColor: COLORS.proventos,
+      borderRadius: 4
+    }
+  ];
   
   if (charts.anual) charts.anual.destroy();
   charts.anual = new Chart(ctx, {
@@ -744,7 +555,7 @@ function renderAnual() {
       plugins: {
         legend: { 
           position: 'bottom', 
-          labels: { boxWidth: 12, font: { size: 10 }, color: textColor } 
+          labels: { boxWidth: 12, font: { size: 10 }, color: textColor }
         },
         tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + brl(ctx.raw) } }
       }
@@ -757,35 +568,35 @@ function renderMensal() {
   const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
   const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
   
-  const checkboxes = document.querySelectorAll('#filterMensalDropdown input[type="checkbox"]:not([value="all"]):checked');
-  const active = Array.from(checkboxes).map(cb => cb.value);
-  
-  // Usar dados filtrados pelo período selecionado
   const allMonths = [...new Set([
     ...filteredDataMensal.salario.map(r => r.data.substring(0, 7)),
     ...filteredDataMensal.outrasReceitas.map(r => r.data.substring(0, 7)),
-    ...filteredDataMensal.dividendosAcoes.map(r => r.data.substring(0, 7)),
-    ...filteredDataMensal.dividendosFIIs.map(r => r.data.substring(0, 7))
+    ...filteredDataMensal.proventos.map(r => r.data.substring(0, 7))
   ])].sort();
   
-  const datasets = [];
-  
-  if (active.includes('salario')) {
-    const data = allMonths.map(m => somaValores(filteredDataMensal.salario.filter(r => r.data.substring(0, 7) === m)));
-    datasets.push({ label: LABELS.salario, data, backgroundColor: COLORS.salario, borderRadius: 4, stack: 'Stack0' });
-  }
-  if (active.includes('outras')) {
-    const data = allMonths.map(m => somaValores(filteredDataMensal.outrasReceitas.filter(r => r.data.substring(0, 7) === m)));
-    datasets.push({ label: LABELS.outras, data, backgroundColor: COLORS.outras, borderRadius: 4, stack: 'Stack0' });
-  }
-  if (active.includes('divAcoes')) {
-    const data = allMonths.map(m => somaValores(filteredDataMensal.dividendosAcoes.filter(r => r.data.substring(0, 7) === m)));
-    datasets.push({ label: LABELS.divAcoes, data, backgroundColor: COLORS.divAcoes, borderRadius: 4, stack: 'Stack0' });
-  }
-  if (active.includes('divFIIs')) {
-    const data = allMonths.map(m => somaValores(filteredDataMensal.dividendosFIIs.filter(r => r.data.substring(0, 7) === m)));
-    datasets.push({ label: LABELS.divFIIs, data, backgroundColor: COLORS.divFIIs, borderRadius: 4, stack: 'Stack0' });
-  }
+  const datasets = [
+    {
+      label: LABELS.salario,
+      data: allMonths.map(m => somaValores(filteredDataMensal.salario.filter(r => r.data.substring(0, 7) === m))),
+      backgroundColor: COLORS.salario,
+      borderRadius: 4,
+      stack: 'Stack0'
+    },
+    {
+      label: LABELS.outras,
+      data: allMonths.map(m => somaValores(filteredDataMensal.outrasReceitas.filter(r => r.data.substring(0, 7) === m))),
+      backgroundColor: COLORS.outras,
+      borderRadius: 4,
+      stack: 'Stack0'
+    },
+    {
+      label: LABELS.proventos,
+      data: allMonths.map(m => somaValores(filteredDataMensal.proventos.filter(r => r.data.substring(0, 7) === m))),
+      backgroundColor: COLORS.proventos,
+      borderRadius: 4,
+      stack: 'Stack0'
+    }
+  ];
   
   const labels = allMonths.map(monthLabel);
   
@@ -822,12 +633,10 @@ function renderDonut() {
   const ctx = document.getElementById('cDonut').getContext('2d');
   const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
   
-  // Usar dados de 12M (mesma base dos KPIs)
   const totals = {
     salario: somaValores(filteredData12M.salario),
     outras: somaValores(filteredData12M.outrasReceitas),
-    divAcoes: somaValores(filteredData12M.dividendosAcoes),
-    divFIIs: somaValores(filteredData12M.dividendosFIIs)
+    proventos: somaValores(filteredData12M.proventos)
   };
   
   const entries = Object.entries(totals).filter(([k, v]) => v > 0);
@@ -868,12 +677,10 @@ function renderTaxaAnual() {
   const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
   const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
   
-  // Usar todos os dados (sem filtro temporal)
   const allReceitas = [
     ...allData.salario,
     ...allData.outrasReceitas,
-    ...allData.dividendosAcoes,
-    ...allData.dividendosFIIs
+    ...allData.proventos
   ];
   const years = anosUnicos([...allReceitas, ...allData.despesas]);
   
@@ -881,8 +688,7 @@ function renderTaxaAnual() {
     const receitasAno = somaValores([
       ...allData.salario.filter(r => r.data.substring(0, 4) === y),
       ...allData.outrasReceitas.filter(r => r.data.substring(0, 4) === y),
-      ...allData.dividendosAcoes.filter(r => r.data.substring(0, 4) === y),
-      ...allData.dividendosFIIs.filter(r => r.data.substring(0, 4) === y)
+      ...allData.proventos.filter(r => r.data.substring(0, 4) === y)
     ]);
     const despesasAno = somaValores(allData.despesas.filter(r => r.data.substring(0, 4) === y));
     return receitasAno > 0 ? ((receitasAno - despesasAno) / receitasAno) * 100 : 0;
@@ -937,23 +743,17 @@ async function init() {
   initTheme();
   
   try {
-    const [lancReq, divReq, ativosReq] = await Promise.all([
+    const [lancReq, divReq, contraReq] = await Promise.all([
       fetch('data/lancamentos.json?v=' + Date.now()),
       fetch('data/dividendos_historico.json?v=' + Date.now()),
-      fetch('data/ativos_financeiros.json?v=' + Date.now())
+      fetch('data/contra_cheque.json?v=' + Date.now())
     ]);
     
     const lancData = await lancReq.json();
     const divData = await divReq.json();
-    const ativosData = await ativosReq.json();
+    const contraData = await contraReq.json();
     
-    // Mapear ticker → classe
-    ativosData.ativos.forEach(a => {
-      const ticker = a.nome.split('_')[0];
-      tickerClassMap[ticker] = a.macro_classe;
-    });
-    
-    // Processar lançamentos
+    // Processar lançamentos (2023+)
     const lancamentos = Array.isArray(lancData) ? lancData : (lancData.lancamentos || []);
     const receitas = lancamentos.filter(r => r.categoria === 'receitas');
     
@@ -961,20 +761,32 @@ async function init() {
     allData.outrasReceitas = receitas.filter(r => r.subcategoria === 'Outras Receitas');
     allData.despesas = lancamentos.filter(r => r.categoria !== 'receitas');
     
-    // Processar dividendos
+    // Processar contra-cheque (2012-2022)
+    contraData.forEach(c => {
+      const data = parseMesReferencia(c.mes_referencia);
+      if (!data) return;
+      
+      allData.salario.push({
+        data,
+        valor: c.salario_liquido,
+        categoria: 'receitas',
+        subcategoria: 'Salário',
+        origem: 'contra_cheque'
+      });
+    });
+    
+    // Processar TODOS os proventos
     const dividendos = divData.movimentacoes || [];
     dividendos.forEach(d => {
-      if (!['PROVENTO_DIVIDENDO', 'PROVENTO_JCP'].includes(d.tipo)) return;
+      if (!d.tipo || !d.tipo.startsWith('PROVENTO_')) return;
       
-      const ticker = d.ativo.split('_')[0];
-      const classe = tickerClassMap[ticker];
-      const item = { ...d, valor: d.valor_total };
-      
-      if (classe === '3_acoes_brasil') {
-        allData.dividendosAcoes.push(item);
-      } else if (classe === '4_ativos_reais') {
-        allData.dividendosFIIs.push(item);
-      }
+      allData.proventos.push({
+        data: d.data,
+        valor: d.valor_total,
+        categoria: 'receitas',
+        subcategoria: 'Proventos',
+        origem: d.ativo
+      });
     });
     
     applyFilter12M();
