@@ -457,13 +457,21 @@
         fluxoConsolidado[k] = (fluxoConsolidado[k] || 0) + fluxoUS[k];
       });
 
-      // Ordenar do MAIOR para o MENOR (não por valor absoluto)
-      const ativos = Object.entries(fluxoConsolidado)
-        .sort((a,b) => b[1] - a[1]); // Maior primeiro
+      // Separar positivos e negativos
+      const positivos = Object.entries(fluxoConsolidado).filter(a => a[1] >= 0);
+      const negativos = Object.entries(fluxoConsolidado).filter(a => a[1] < 0);
+
+      // Ordenar: positivos do maior→menor, negativos do menos negativo→mais negativo
+      positivos.sort((a,b) => b[1] - a[1]);
+      negativos.sort((a,b) => b[1] - a[1]);
+
+      // Concatenar: positivos primeiro, negativos depois
+      const ativos = [...positivos, ...negativos];
 
       const labels = ativos.map(a => a[0]);
-      const valores = ativos.map(a => a[1]);
-      const cores = valores.map(v => v >= 0 ? '#4CAF50' : '#f44336');
+      const valoresReais = ativos.map(a => a[1]);
+      const valoresAbsolutos = valoresReais.map(v => Math.abs(v)); // Para exibição
+      const cores = valoresReais.map(v => v >= 0 ? '#4CAF50' : '#f44336');
 
       // Altura dinâmica baseada no número de ativos
       const container = document.getElementById('containerFluxoAtivo');
@@ -480,7 +488,7 @@
         data: {
           labels,
           datasets: [{
-            data: valores,
+            data: valoresAbsolutos,
             backgroundColor: cores,
             borderRadius: 4,
             barPercentage: 0.7
@@ -507,7 +515,10 @@
             legend: { display: false },
             tooltip: {
               callbacks: {
-                label: (ctx) => brl(ctx.parsed.x)
+                label: (ctx) => {
+                  const valorReal = valoresReais[ctx.dataIndex];
+                  return brl(valorReal);
+                }
               }
             }
           }
