@@ -343,16 +343,6 @@ function anosUnicos(arr) {
   return [...new Set(arr.map(r => r.data.substring(0, 4)))].sort();
 }
 
-function parseMesReferencia(mesRef) {
-  if (!mesRef) return null;
-  const meses = {jan:1,fev:2,mar:3,abr:4,mai:5,jun:6,jul:7,ago:8,set:9,out:10,nov:11,dez:12};
-  const [mes, ano] = mesRef.split('/');
-  if (!mes || !ano) return null;
-  const anoCompleto = parseInt(ano) < 50 ? `20${ano}` : `19${ano}`;
-  const mesNum = String(meses[mes]).padStart(2, '0');
-  return `${anoCompleto}-${mesNum}-01`;
-}
-
 // ─── THEME ───
 function updateMetaThemeColor(isDark) {
   const color = isDark ? '#1a202c' : '#f7fafc';
@@ -770,44 +760,28 @@ async function init() {
   initTheme();
   
   try {
-    const [lancReq, divReq, contraReq] = await Promise.all([
+    const [lancReq, divReq] = await Promise.all([
       fetch('data/lancamentos.json?v=' + Date.now()),
-      fetch('data/dividendos_historico.json?v=' + Date.now()),
-      fetch('data/contra_cheque.json?v=' + Date.now())
+      fetch('data/dividendos_historico.json?v=' + Date.now())
     ]);
     
     const lancData = await lancReq.json();
     const divData = await divReq.json();
-    const contraData = await contraReq.json();
     
-    // 1. Processar contra-cheque (TODOS os anos: 2012-2025)
-    contraData.forEach(c => {
-      const data = parseMesReferencia(c.mes_referencia);
-      if (!data) return;
-      
-      allData.salario.push({
-        data,
-        valor: c.salario_liquido,
-        categoria: 'receitas',
-        subcategoria: 'Salário',
-        origem: 'contra_cheque'
-      });
-    });
-    
-    // 2. Processar lançamentos (IGNORAR subcategoria "Salário")
+    // 1. Processar lançamentos (FILTRO: >= 2023)
     const lancamentos = Array.isArray(lancData) ? lancData : (lancData.lancamentos || []);
-    const receitas = lancamentos.filter(r => r.categoria === 'receitas');
+    const receitas = lancamentos.filter(r => r.categoria === 'receitas' && r.data >= '2023-01-01');
     
+    allData.salario = receitas.filter(r => r.subcategoria === 'Salário');
     allData.beneficios = receitas.filter(r => r.subcategoria === 'Benefícios');
     allData.outrasReceitas = receitas.filter(r => r.subcategoria === 'Outras Receitas');
-    // NÃO processar subcategoria "Salário" de lancamentos.json
     
-    allData.despesas = lancamentos.filter(r => r.categoria !== 'receitas');
+    allData.despesas = lancamentos.filter(r => r.categoria !== 'receitas' && r.data >= '2023-01-01');
     
-    // 3. Processar TODOS os proventos
+    // 2. Processar proventos (FILTRO: >= 2023)
     const dividendos = divData.movimentacoes || [];
     dividendos.forEach(d => {
-      if (!d.tipo || !d.tipo.startsWith('PROVENTO_')) return;
+      if (!d.tipo || !d.tipo.startsWith('PROVENTO_') || d.data < '2023-01-01') return;
       
       allData.proventos.push({
         data: d.data,
