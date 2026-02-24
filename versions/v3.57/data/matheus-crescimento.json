@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "nome": "Matheus",
+    "sexo": "masculino",
+    "data_nascimento": "2025-09-18",
+    "ultima_atualizacao": "2026-02-07T20:41:00Z"
+  },
+  "medicoes": [
+    {
+      "data": "2025-09-18",
+      "idade_meses": 0.0,
+      "peso_kg": 2.16,
+      "altura_cm": 44.5,
+      "observacoes": "Nascimento"
+    },
+    {
+      "data": "2025-10-01",
+      "idade_meses": 0.43,
+      "peso_kg": 2.21,
+      "altura_cm": null,
+      "observacoes": "Semana 2"
+    },
+    {
+      "data": "2025-10-07",
+      "idade_meses": 0.62,
+      "peso_kg": 2.61,
+      "altura_cm": null,
+      "observacoes": "Semana 3"
+    },
+    {
+      "data": "2025-10-17",
+      "idade_meses": 0.95,
+      "peso_kg": 3.11,
+      "altura_cm": 50.2,
+      "observacoes": "Semana 5"
+    },
+    {
+      "data": "2025-11-07",
+      "idade_meses": 1.64,
+      "peso_kg": 4.16,
+      "altura_cm": 54.0,
+      "observacoes": "Semana 8"
+    },
+    {
+      "data": "2025-11-19",
+      "idade_meses": 2.04,
+      "peso_kg": 4.74,
+      "altura_cm": 54.5,
+      "observacoes": "Semana 9"
+    },
+    {
+      "data": "2025-12-12",
+      "idade_meses": 2.79,
+      "peso_kg": 5.54,
+      "altura_cm": 59.0,
+      "observacoes": "Semana 13"
+    },
+    {
+      "data": "2025-12-19",
+      "idade_meses": 3.02,
+      "peso_kg": 5.9,
+      "altura_cm": null,
+      "observacoes": "Semana 14"
+    },
+    {
+      "data": "2026-01-02",
+      "idade_meses": 3.48,
+      "peso_kg": 6.2,
+      "altura_cm": null,
+      "observacoes": "Semana 16"
+    },
+    {
+      "data": "2026-01-07",
+      "idade_meses": 3.65,
+      "peso_kg": 6.42,
+      "altura_cm": null,
+      "observacoes": "Semana 16"
+    },
+    {
+      "data": "2026-01-16",
+      "idade_meses": 3.94,
+      "peso_kg": 6.54,
+      "altura_cm": 64.5,
+      "observacoes": "Semana 18"
+    },
+    {
+      "data": "2026-01-23",
+      "idade_meses": 4.17,
+      "peso_kg": 6.8,
+      "altura_cm": null,
+      "observacoes": "Semana 19"
+    },
+    {
+      "data": "2026-02-03",
+      "idade_meses": 4.53,
+      "peso_kg": 6.91,
+      "altura_cm": null,
+      "observacoes": "Semana 20"
+    }
+  ]
+}

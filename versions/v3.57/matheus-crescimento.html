@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crescimento do Matheus - Hub Família</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    /* === DESIGN SYSTEM === */
+    :root {
+      --primary: #667eea;
+      --primary-dark: #5568d3;
+      --success: #48bb78;
+      --warning: #ed8936;
+      --danger: #f56565;
+      --bg: #f7fafc;
+      --surface: #ffffff;
+      --text: #2d3748;
+      --text-muted: #718096;
+      --border: #e2e8f0;
+      --card-bg: var(--surface);
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    }
+
+    body.dark-mode {
+      --bg: #1a202c;
+      --surface: #2d3748;
+      --text: #f7fafc;
+      --text-muted: #cbd5e0;
+      --border: #4a5568;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 1rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* === NAVBAR === */
+    .nav-link {
+      text-decoration: none;
+      color: var(--primary);
+      font-size: 0.9rem;
+      margin: 10px 0 15px 10px;
+      display: inline-block;
+    }
+
+    h1 { 
+      text-align: center; 
+      font-size: 1.5rem; 
+      margin: 10px 0 5px 0; 
+      font-weight: 800; 
+      color: var(--text); 
+    }
+    
+    .subtitle { 
+      text-align: center; 
+      font-size: 0.75rem; 
+      color: var(--text-muted); 
+      margin-bottom: 20px; 
+    }
+    
+    #theme-toggle { 
+      position: absolute; 
+      top: 15px; 
+      right: 15px; 
+      background: rgba(0,0,0,0.05);
+      border: none; 
+      font-size: 1.2rem; 
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+
+    body.dark-mode #theme-toggle {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* KPIs Style similar to Dividendos */
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .kpi-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 8px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .kpi-label {
+        font-size: 0.6rem;
+        font-weight: 800;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        order: 1;
+    }
+    .kpi-value {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--text);
+        line-height: 1.2;
+        order: 2;
+    }
+    .kpi-sub {
+        font-size: 0.65rem;
+        color: var(--text-muted);
+        font-weight: 600;
+        order: 3;
+    }
+
+    /* Filters Style */
+    .filter-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-filter {
+      background: var(--border);
+      border: none;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-filter:hover { opacity: 0.8; }
+    .btn-filter.active { background: var(--primary); color: white; }
+
+    /* === CARDS === */
+    .card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .chart-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 10px;
+    }
+
+    .chart-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .chart-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 450px; /* Aumentado conforme solicitado */
+      width: 100%;
+    }
+
+    /* === CARDS === */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border: 4px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Desktop */
+    @media (min-width: 768px) {
+      body { max-width: 960px; margin: 0 auto; padding: 16px 16px 60px 16px; }
+      h1 { font-size: 1.75rem; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <button id="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro">🌙</button>
+  <a href="index.html" class="nav-link">← Voltar</a>
+  <h1>📊 Crescimento do Matheus</h1>
+  <div class="subtitle" id="last-update">Carregando dados...</div>
+
+  <!-- Loading -->
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <p style="margin-top: 1rem;">Carregando dados...</p>
+  </div>
+
+  <!-- Content (hidden initially) -->
+  <div id="content" style="display: none;">
+    
+    <!-- KPIs Style similar to Dividendos -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <span class="kpi-label">Peso Atual</span>
+            <span class="kpi-value" id="statPeso">-</span>
+            <span class="kpi-sub" id="statPesoData">-</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-label">Altura Atual</span>
+            <span class="kpi-value" id="statAltura">-</span>
+            <span class="kpi-sub" id="statAlturaData">-</span>
+        </div>
+    </div>
+
+    <!-- Peso -->
+    <div class="card">
+      <div class="chart-header">
+        <div class="chart-title">⚖️ Peso por Idade (Curvas OMS)</div>
+        <div class="filter-group">
+          <button class="btn-filter" onclick="updateChartFilter('peso', '3', this)">3M</button>
+          <button class="btn-filter" onclick="updateChartFilter('peso', '6', this)">6M</button>
+          <button class="btn-filter active" onclick="updateChartFilter('peso', 'all', this)">Tudo</button>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chartPeso"></canvas>
+      </div>
+    </div>
+
+    <!-- Altura -->
+    <div class="card">
+      <div class="chart-header">
+        <div class="chart-title">📏 Altura por Idade (Curvas OMS)</div>
+        <div class="filter-group">
+          <button class="btn-filter" onclick="updateChartFilter('altura', '3', this)">3M</button>
+          <button class="btn-filter" onclick="updateChartFilter('altura', '6', this)">6M</button>
+          <button class="btn-filter active" onclick="updateChartFilter('altura', 'all', this)">Tudo</button>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="chartAltura"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // === DATA LOADED FROM matheus-crescimento.html original ===
+    const PESO_REF_EMBEDDED = {"metadata":{"fonte":"OMS/Ministério da Saúde Brasil","unidade":"kg","ultima_atualizacao":"2026-02-07","descricao":"Curvas de referência de peso por idade (0-36 meses)"},"masculino":{"p3":[{"idade_meses":0,"valor":2.36},{"idade_meses":1,"valor":3.22},{"idade_meses":2,"valor":3.91},{"idade_meses":3,"valor":4.61},{"idade_meses":4,"valor":5.31},{"idade_meses":5,"valor":6.0},{"idade_meses":6,"valor":6.7},{"idade_meses":7,"valor":6.94},{"idade_meses":8,"valor":7.18},{"idade_meses":9,"valor":7.42},{"idade_meses":10,"valor":7.66},{"idade_meses":11,"valor":7.9},{"idade_meses":12,"valor":8.14},{"idade_meses":13,"valor":8.31},{"idade_meses":14,"valor":8.49},{"idade_meses":15,"valor":8.66},{"idade_meses":16,"valor":8.83},{"idade_meses":17,"valor":9.01},{"idade_meses":18,"valor":9.18},{"idade_meses":19,"valor":9.36},{"idade_meses":20,"valor":9.53},{"idade_meses":21,"valor":9.7},{"idade_meses":22,"valor":9.88},{"idade_meses":23,"valor":10.05},{"idade_meses":24,"valor":10.22},{"idade_meses":25,"valor":10.36},{"idade_meses":26,"valor":10.5},{"idade_meses":27,"valor":10.64},{"idade_meses":28,"valor":10.78},{"idade_meses":29,"valor":10.92},{"idade_meses":30,"valor":11.06},{"idade_meses":31,"valor":11.2},{"idade_meses":32,"valor":11.34},{"idade_meses":33,"valor":11.48},{"idade_meses":34,"valor":11.62},{"idade_meses":35,"valor":11.76},{"idade_meses":36,"valor":11.9}],"p10":[{"idade_meses":0,"valor":2.66},{"idade_meses":1,"valor":3.53},{"idade_meses":2,"valor":4.24},{"idade_meses":3,"valor":4.95},{"idade_meses":4,"valor":5.66},{"idade_meses":5,"valor":6.37},{"idade_meses":6,"valor":7.08},{"idade_meses":7,"valor":7.34},{"idade_meses":8,"valor":7.59},{"idade_meses":9,"valor":7.85},{"idade_meses":10,"valor":8.1},{"idade_meses":11,"valor":8.35},{"idade_meses":12,"valor":8.61},{"idade_meses":13,"valor":8.79},{"idade_meses":14,"valor":8.98},{"idade_meses":15,"valor":9.17},{"idade_meses":16,"valor":9.36},{"idade_meses":17,"valor":9.54},{"idade_meses":18,"valor":9.73},{"idade_meses":19,"valor":9.92},{"idade_meses":20,"valor":10.1},{"idade_meses":21,"valor":10.29},{"idade_meses":22,"valor":10.48},{"idade_meses":23,"valor":10.67},{"idade_meses":24,"valor":10.85},{"idade_meses":25,"valor":11.01},{"idade_meses":26,"valor":11.16},{"idade_meses":27,"valor":11.32},{"idade_meses":28,"valor":11.47},{"idade_meses":29,"valor":11.62},{"idade_meses":30,"valor":11.78},{"idade_meses":31,"valor":11.93},{"idade_meses":32,"valor":12.08},{"idade_meses":33,"valor":12.24},{"idade_meses":34,"valor":12.39},{"idade_meses":35,"valor":12.55},{"idade_meses":36,"valor":12.7}],"p20":[{"idade_meses":0,"valor":2.88},{"idade_meses":1,"valor":3.76},{"idade_meses":2,"valor":4.48},{"idade_meses":3,"valor":5.2},{"idade_meses":4,"valor":5.92},{"idade_meses":5,"valor":6.64},{"idade_meses":6,"valor":7.36},{"idade_meses":7,"valor":7.63},{"idade_meses":8,"valor":7.89},{"idade_meses":9,"valor":8.16},{"idade_meses":10,"valor":8.42},{"idade_meses":11,"valor":8.68},{"idade_meses":12,"valor":8.95},{"idade_meses":13,"valor":9.15},{"idade_meses":14,"valor":9.34},{"idade_meses":15,"valor":9.54},{"idade_meses":16,"valor":9.74},{"idade_meses":17,"valor":9.93},{"idade_meses":18,"valor":10.13},{"idade_meses":19,"valor":10.33},{"idade_meses":20,"valor":10.53},{"idade_meses":21,"valor":10.72},{"idade_meses":22,"valor":10.92},{"idade_meses":23,"valor":11.12},{"idade_meses":24,"valor":11.32},{"idade_meses":25,"valor":11.48},{"idade_meses":26,"valor":11.64},{"idade_meses":27,"valor":11.81},{"idade_meses":28,"valor":11.97},{"idade_meses":29,"valor":12.14},{"idade_meses":30,"valor":12.3},{"idade_meses":31,"valor":12.46},{"idade_meses":32,"valor":12.63},{"idade_meses":33,"valor":12.79},{"idade_meses":34,"valor":12.96},{"idade_meses":35,"valor":13.12},{"idade_meses":36,"valor":13.28}],"p25":[{"idade_meses":0,"valor":2.95},{"idade_meses":1,"valor":3.84},{"idade_meses":2,"valor":4.57},{"idade_meses":3,"valor":5.3},{"idade_meses":4,"valor":6.02},{"idade_meses":5,"valor":6.75},{"idade_meses":6,"valor":7.48},{"idade_meses":7,"valor":7.73},{"idade_meses":8,"valor":8.0},{"idade_meses":9,"valor":8.27},{"idade_meses":10,"valor":8.54},{"idade_meses":11,"valor":8.81},{"idade_meses":12,"valor":9.07},{"idade_meses":13,"valor":9.27},{"idade_meses":14,"valor":9.47},{"idade_meses":15,"valor":9.68},{"idade_meses":16,"valor":9.88},{"idade_meses":17,"valor":10.08},{"idade_meses":18,"valor":10.28},{"idade_meses":19,"valor":10.48},{"idade_meses":20,"valor":10.68},{"idade_meses":21,"valor":10.88},{"idade_meses":22,"valor":11.08},{"idade_meses":23,"valor":11.28},{"idade_meses":24,"valor":11.48},{"idade_meses":25,"valor":11.65},{"idade_meses":26,"valor":11.81},{"idade_meses":27,"valor":11.98},{"idade_meses":28,"valor":12.15},{"idade_meses":29,"valor":12.32},{"idade_meses":30,"valor":12.49},{"idade_meses":31,"valor":12.65},{"idade_meses":32,"valor":12.82},{"idade_meses":33,"valor":12.99},{"idade_meses":34,"valor":13.16},{"idade_meses":35,"valor":13.33},{"idade_meses":36,"valor":13.49}],"p30":[{"idade_meses":0,"valor":3.04},{"idade_meses":1,"valor":3.93},{"idade_meses":2,"valor":4.66},{"idade_meses":3,"valor":5.38},{"idade_meses":4,"valor":6.11},{"idade_meses":5,"valor":6.84},{"idade_meses":6,"valor":7.57},{"idade_meses":7,"valor":7.84},{"idade_meses":8,"valor":8.11},{"idade_meses":9,"valor":8.38},{"idade_meses":10,"valor":8.65},{"idade_meses":11,"valor":8.93},{"idade_meses":12,"valor":9.2},{"idade_meses":13,"valor":9.4},{"idade_meses":14,"valor":9.61},{"idade_meses":15,"valor":9.81},{"idade_meses":16,"valor":10.02},{"idade_meses":17,"valor":10.22},{"idade_meses":18,"valor":10.42},{"idade_meses":19,"valor":10.63},{"idade_meses":20,"valor":10.83},{"idade_meses":21,"valor":11.04},{"idade_meses":22,"valor":11.24},{"idade_meses":23,"valor":11.45},{"idade_meses":24,"valor":11.65},{"idade_meses":25,"valor":11.82},{"idade_meses":12.0},{"idade_meses":27,"valor":12.17},{"idade_meses":28,"valor":12.34},{"idade_meses":29,"valor":12.51},{"idade_meses":30,"valor":12.68},{"idade_meses":31,"valor":12.85},{"idade_meses":32,"valor":13.02},{"idade_meses":33,"valor":13.2},{"idade_meses":34,"valor":13.37},{"idade_meses":35,"valor":13.54},{"idade_meses":36,"valor":13.71}],"p40":[{"idade_meses":0,"valor":3.17},{"idade_meses":1,"valor":4.07},{"idade_meses":2,"valor":4.8},{"idade_meses":3,"valor":5.54},{"idade_meses":4,"valor":6.27},{"idade_meses":5,"valor":7.01},{"idade_meses":6,"valor":7.74},{"idade_meses":7,"valor":8.02},{"idade_meses":8,"valor":8.3},{"idade_meses":9,"valor":8.57},{"idade_meses":10,"valor":8.85},{"idade_meses":11,"valor":9.13},{"idade_meses":12,"valor":9.41},{"idade_meses":13,"valor":9.62},{"idade_meses":14,"valor":9.83},{"idade_meses":15,"valor":10.04},{"idade_meses":16,"valor":10.25},{"idade_meses":17,"valor":10.46},{"idade_meses":18,"valor":10.67},{"idade_meses":19,"valor":10.88},{"idade_meses":20,"valor":11.09},{"idade_meses":21,"valor":11.3},{"idade_meses":22,"valor":11.52},{"idade_meses":23,"valor":11.73},{"idade_meses":24,"valor":11.94},{"idade_meses":25,"valor":12.11},{"idade_meses":26,"valor":12.29},{"idade_meses":27,"valor":12.47},{"idade_meses":28,"valor":12.65},{"idade_meses":29,"valor":12.82},{"idade_meses":30,"valor":13.0},{"idade_meses":31,"valor":13.18},{"idade_meses":32,"valor":13.36},{"idade_meses":33,"valor":13.54},{"idade_meses":34,"valor":13.71},{"idade_meses":35,"valor":13.89},{"idade_meses":36,"valor":14.07}],"p50":[{"idade_meses":0,"valor":3.3},{"idade_meses":1,"valor":4.2},{"idade_meses":2,"valor":4.94},{"idade_meses":3,"valor":5.68},{"idade_meses":4,"valor":6.42},{"idade_meses":5,"valor":7.16},{"idade_meses":6,"valor":7.9},{"idade_meses":7,"valor":8.18},{"idade_meses":8,"valor":8.47},{"idade_meses":9,"valor":8.75},{"idade_meses":10,"valor":9.03},{"idade_meses":11,"valor":9.32},{"idade_meses":12,"valor":9.6},{"idade_meses":13,"valor":9.82},{"idade_meses":14,"valor":10.03},{"idade_meses":15,"valor":10.25},{"idade_meses":16,"valor":10.47},{"idade_meses":17,"valor":10.68},{"idade_meses":18,"valor":10.9},{"idade_meses":19,"valor":11.12},{"idade_meses":20,"valor":11.33},{"idade_meses":21,"valor":11.55},{"idade_meses":22,"valor":11.77},{"idade_meses":23,"valor":11.98},{"idade_meses":24,"valor":12.2},{"idade_meses":25,"valor":12.38},{"idade_meses":26,"valor":12.57},{"idade_meses":27,"valor":12.75},{"idade_meses":28,"valor":12.93},{"idade_meses":29,"valor":13.12},{"idade_meses":30,"valor":13.3},{"idade_meses":31,"valor":13.48},{"idade_meses":32,"valor":13.67},{"idade_meses":33,"valor":13.85},{"idade_meses":34,"valor":14.03},{"idade_meses":35,"valor":14.22},{"idade_meses":36,"valor":14.4}],"p60":[{"idade_meses":0,"valor":3.42},{"idade_meses":1,"valor":4.33},{"idade_meses":2,"valor":5.08},{"idade_meses":3,"valor":5.82},{"idade_meses":4,"valor":6.57},{"idade_meses":5,"valor":7.31},{"idade_meses":6,"valor":8.06},{"idade_meses":7,"valor":8.35},{"idade_meses":8,"valor":8.64},{"idade_meses":9,"valor":8.93},{"idade_meses":10,"valor":9.22},{"idade_meses":11,"valor":9.5},{"idade_meses":12,"valor":9.79},{"idade_meses":13,"valor":10.02},{"idade_meses":14,"valor":10.24},{"idade_meses":15,"valor":10.46},{"idade_meses":16,"valor":10.68},{"idade_meses":17,"valor":10.91},{"idade_meses":18,"valor":11.13},{"idade_meses":19,"valor":11.35},{"idade_meses":20,"valor":11.57},{"idade_meses":21,"valor":11.8},{"idade_meses":22,"valor":12.02},{"idade_meses":23,"valor":12.24},{"idade_meses":24,"valor":12.46},{"idade_meses":25,"valor":12.65},{"idade_meses":26,"valor":12.84},{"idade_meses":27,"valor":13.03},{"idade_meses":28,"valor":13.22},{"idade_meses":29,"valor":13.41},{"idade_meses":30,"valor":13.6},{"idade_meses":31,"valor":13.79},{"idade_meses":32,"valor":13.98},{"idade_meses":33,"valor":14.16},{"idade_meses":34,"valor":14.35},{"idade_meses":35,"valor":14.54},{"idade_meses":36,"valor":14.73}],"p70":[{"idade_meses":0,"valor":3.56},{"idade_meses":1,"valor":4.47},{"idade_meses":2,"valor":5.22},{"idade_meses":3,"valor":5.98},{"idade_meses":4,"valor":6.73},{"idade_meses":5,"valor":7.48},{"idade_meses":6,"valor":8.23},{"idade_meses":7,"valor":8.53},{"idade_meses":8,"valor":8.82},{"idade_meses":9,"valor":9.12},{"idade_meses":10,"valor":9.41},{"idade_meses":11,"valor":9.71},{"idade_meses":12,"valor":10.0},{"idade_meses":13,"valor":10.23},{"idade_meses":14,"valor":10.46},{"idade_meses":15,"valor":10.69},{"idade_meses":16,"valor":10.92},{"idade_meses":17,"valor":11.15},{"idade_meses":18,"valor":11.38},{"idade_meses":19,"valor":11.6},{"idade_meses":20,"valor":11.83},{"idade_meses":21,"valor":12.06},{"idade_meses":22,"valor":12.29},{"idade_meses":23,"valor":12.52},{"idade_meses":24,"valor":12.75},{"idade_meses":25,"valor":12.94},{"idade_meses":26,"valor":13.14},{"idade_meses":27,"valor":13.33},{"idade_meses":28,"valor":13.53},{"idade_meses":29,"valor":13.72},{"idade_meses":30,"valor":13.92},{"idade_meses":31,"valor":14.11},{"idade_meses":32,"valor":14.31},{"idade_meses":33,"valor":14.5},{"idade_meses":34,"valor":14.7},{"idade_meses":35,"valor":14.9},{"idade_meses":36,"valor":15.09}],"p75":[{"idade_meses":0,"valor":3.63},{"idade_meses":1,"valor":4.55},{"idade_meses":2,"valor":5.31},{"idade_meses":3,"valor":6.07},{"idade_meses":4,"valor":6.83},{"idade_meses":5,"valor":7.58},{"idade_meses":6,"valor":8.34},{"idade_meses":7,"valor":8.64},{"idade_meses":8,"valor":8.93},{"idade_meses":9,"valor":9.23},{"idade_meses":10,"valor":9.53},{"idade_meses":11,"valor":9.83},{"idade_meses":12,"valor":10.13},{"idade_meses":13,"valor":10.36},{"idade_meses":14,"valor":10.59},{"idade_meses":15,"valor":10.83},{"idade_meses":16,"valor":11.06},{"idade_meses":17,"valor":11.29},{"idade_meses":18,"valor":11.52},{"idade_meses":19,"valor":11.76},{"idade_meses":20,"valor":11.99},{"idade_meses":21,"valor":12.22},{"idade_meses":22,"valor":12.45},{"idade_meses":23,"valor":12.69},{"idade_meses":24,"valor":12.92},{"idade_meses":25,"valor":13.11},{"idade_meses":26,"valor":13.31},{"idade_meses":27,"valor":13.51},{"idade_meses":28,"valor":13.71},{"idade_meses":29,"valor":13.9},{"idade_meses":30,"valor":14.1},{"idade_meses":31,"valor":14.3},{"idade_meses":32,"valor":14.5},{"idade_meses":33,"valor":14.7},{"idade_meses":34,"valor":14.9},{"idade_meses":35,"valor":15.1},{"idade_meses":36,"valor":15.3}],"p80":[{"idade_meses":0,"valor":3.72},{"idade_meses":1,"valor":4.64},{"idade_meses":2,"valor":5.4},{"idade_meses":3,"valor":6.16},{"idade_meses":4,"valor":6.92},{"idade_meses":5,"valor":7.68},{"idade_meses":6,"valor":8.44},{"idade_meses":7,"valor":8.74},{"idade_meses":8,"valor":9.04},{"idade_meses":9,"valor":9.34},{"idade_meses":10,"valor":9.65},{"idade_meses":11,"valor":9.95},{"idade_meses":12,"valor":10.25},{"idade_meses":13,"valor":10.49},{"idade_meses":14,"valor":10.72},{"idade_meses":15,"valor":10.96},{"idade_meses":16,"valor":11.2},{"idade_meses":17,"valor":11.43},{"idade_meses":18,"valor":11.67},{"idade_meses":19,"valor":11.9},{"idade_meses":20,"valor":12.14},{"idade_meses":21,"valor":12.38},{"idade_meses":22,"valor":12.61},{"idade_meses":23,"valor":12.85},{"idade_meses":24,"valor":13.08},{"idade_meses":25,"valor":13.29},{"idade_meses":26,"valor":13.49},{"idade_meses":27,"valor":13.69},{"idade_meses":28,"valor":13.89},{"idade_meses":29,"valor":14.1},{"idade_meses":30,"valor":14.3},{"idade_meses":31,"valor":14.5},{"idade_meses":32,"valor":14.7},{"idade_meses":33,"valor":14.91},{"idade_meses":34,"valor":15.11},{"idade_meses":35,"valor":15.31},{"idade_meses":36,"valor":15.52}],"p90":[{"idade_meses":0,"valor":3.94},{"idade_meses":1,"valor":4.87},{"idade_meses":2,"valor":5.64},{"idade_meses":3,"valor":6.41},{"idade_meses":4,"valor":7.18},{"idade_meses":5,"valor":7.95},{"idade_meses":6,"valor":8.72},{"idade_meses":7,"valor":9.03},{"idade_meses":8,"valor":9.34},{"idade_meses":9,"valor":9.65},{"idade_meses":10,"valor":9.97},{"idade_meses":11,"valor":10.28},{"idade_meses":12,"valor":10.59},{"idade_meses":13,"valor":10.84},{"idade_meses":14,"valor":11.09},{"idade_meses":15,"valor":11.33},{"idade_meses":16,"valor":11.58},{"idade_meses":17,"valor":11.82},{"idade_meses":18,"valor":12.07},{"idade_meses":19,"valor":12.32},{"idade_meses":20,"valor":12.56},{"idade_meses":21,"valor":12.81},{"idade_meses":22,"valor":13.05},{"idade_meses":23,"valor":13.3},{"idade_meses":24,"valor":13.55},{"idade_meses":25,"valor":13.76},{"idade_meses":26,"valor":13.97},{"idade_meses":27,"valor":14.18},{"idade_meses":28,"valor":14.4},{"idade_meses":29,"valor":14.61},{"idade_meses":30,"valor":14.82},{"idade_meses":31,"valor":15.04},{"idade_meses":32,"valor":15.25},{"idade_meses":33,"valor":15.46},{"idade_meses":34,"valor":15.67},{"idade_meses":35,"valor":15.89},{"idade_meses":36,"valor":16.1}],"p97":[{"idade_meses":0,"valor":4.24},{"idade_meses":1,"valor":5.18},{"idade_meses":2,"valor":5.97},{"idade_meses":3,"valor":6.75},{"idade_meses":4,"valor":7.53},{"idade_meses":5,"valor":8.32},{"idade_meses":6,"valor":9.1},{"idade_meses":7,"valor":9.43},{"idade_meses":8,"valor":9.75},{"idade_meses":9,"valor":10.08},{"idade_meses":10,"valor":10.41},{"idade_meses":11,"valor":10.73},{"idade_meses":12,"valor":11.06},{"idade_meses":13,"valor":11.32},{"idade_meses":14,"valor":11.58},{"idade_meses":15,"valor":11.84},{"idade_meses":16,"valor":12.1},{"idade_meses":17,"valor":12.36},{"idade_meses":18,"valor":12.62},{"idade_meses":19,"valor":12.88},{"idade_meses":20,"valor":13.14},{"idade_meses":21,"valor":13.4},{"idade_meses":22,"valor":13.66},{"idade_meses":23,"valor":13.92},{"idade_meses":24,"valor":14.18},{"idade_meses":25,"valor":14.4},{"idade_meses":26,"valor":14.63},{"idade_meses":27,"valor":14.86},{"idade_meses":28,"valor":15.08},{"idade_meses":29,"valor":15.31},{"idade_meses":30,"valor":15.54},{"idade_meses":31,"valor":15.76},{"idade_meses":32,"valor":15.99},{"idade_meses":33,"valor":16.22},{"idade_meses":34,"valor":16.44},{"idade_meses":35,"valor":16.67},{"idade_meses":36,"valor":16.9}]},"feminino":{}};
+    const ALTURA_REF_EMBEDDED = {"metadata":{"fonte":"OMS/Ministério da Saúde Brasil","unidade":"cm","ultima_atualizacao":"2026-02-07","descricao":"Curvas de referência de altura por idade (0-36 meses)"},"masculino":{"p3":[{"idade_meses":0,"valor":47.0},{"idade_meses":1,"valor":51.6},{"idade_meses":2,"valor":54.1},{"idade_meses":3,"valor":56.6},{"idade_meses":4,"valor":59.1},{"idade_meses":5,"valor":61.6},{"idade_meses":6,"valor":64.1},{"idade_meses":7,"valor":65.5},{"idade_meses":8,"valor":66.8},{"idade_meses":9,"valor":68.2},{"idade_meses":10,"valor":69.6},{"idade_meses":11,"valor":71.0},{"idade_meses":12,"valor":72.4},{"idade_meses":13,"valor":73.2},{"idade_meses":14,"valor":74.1},{"idade_meses":15,"valor":75.0},{"idade_meses":16,"valor":75.8},{"idade_meses":17,"valor":76.7},{"idade_meses":18,"valor":77.6},{"idade_meses":19,"valor":78.4},{"idade_meses":20,"valor":79.3},{"idade_meses":21,"valor":80.2},{"idade_meses":22,"valor":81.0},{"idade_meses":23,"valor":81.9},{"idade_meses":24,"valor":82.8},{"idade_meses":25,"valor":83.3},{"idade_meses":26,"valor":83.8},{"idade_meses":27,"valor":84.3},{"idade_meses":28,"valor":84.9},{"idade_meses":29,"valor":85.4},{"idade_meses":30,"valor":85.9},{"idade_meses":31,"valor":86.4},{"idade_meses":32,"valor":87.0},{"idade_meses":33,"valor":87.5},{"idade_meses":34,"valor":88.0},{"idade_meses":35,"valor":88.5},{"idade_meses":36,"valor":89.0}],"p10":[{"idade_meses":0,"valor":48.0},{"idade_meses":1,"valor":52.6},{"idade_meses":2,"valor":55.1},{"idade_meses":3,"valor":57.6},{"idade_meses":4,"valor":60.2},{"idade_meses":5,"valor":62.7},{"idade_meses":6,"valor":65.2},{"idade_meses":7,"valor":66.6},{"idade_meses":8,"valor":68.0},{"idade_meses":9,"valor":69.4},{"idade_meses":10,"valor":70.8},{"idade_meses":11,"valor":72.3},{"idade_meses":12,"valor":73.7},{"idade_meses":13,"valor":74.6},{"idade_meses":14,"valor":75.4},{"idade_meses":15,"valor":76.3},{"idade_meses":16,"valor":77.2},{"idade_meses":17,"valor":78.1},{"idade_meses":18,"valor":79.0},{"idade_meses":19,"valor":79.9},{"idade_meses":20,"valor":80.8},{"idade_meses":21,"valor":81.7},{"idade_meses":22,"valor":82.6},{"idade_meses":23,"valor":83.5},{"idade_meses":24,"valor":84.4},{"idade_meses":25,"valor":84.9},{"idade_meses":26,"valor":85.5},{"idade_meses":27,"valor":86.0},{"idade_meses":28,"valor":86.6},{"idade_meses":29,"valor":87.1},{"idade_meses":30,"valor":87.7},{"idade_meses":31,"valor":88.2},{"idade_meses":32,"valor":88.8},{"idade_meses":33,"valor":89.3},{"idade_meses":34,"valor":89.9},{"idade_meses":35,"valor":90.4},{"idade_meses":36,"valor":91.0}],"p20":[{"idade_meses":0,"valor":48.7},{"idade_meses":1,"valor":53.3},{"idade_meses":2,"valor":55.9},{"idade_meses":3,"valor":58.4},{"idade_meses":4,"valor":60.9},{"idade_meses":5,"valor":63.5},{"idade_meses":6,"valor":66.0},{"idade_meses":7,"valor":67.5},{"idade_meses":8,"valor":68.9},{"idade_meses":9,"valor":70.3},{"idade_meses":10,"valor":71.7},{"idade_meses":11,"valor":73.2},{"idade_meses":12,"valor":74.6},{"idade_meses":13,"valor":75.5},{"idade_meses":14,"valor":76.4},{"idade_meses":15,"valor":77.3},{"idade_meses":16,"valor":78.3},{"idade_meses":17,"valor":79.2},{"idade_meses":18,"valor":80.1},{"idade_meses":19,"valor":81.0},{"idade_meses":20,"valor":81.9},{"idade_meses":21,"valor":82.8},{"idade_meses":22,"valor":83.7},{"idade_meses":23,"valor":84.6},{"idade_meses":24,"valor":85.5},{"idade_meses":25,"valor":86.1},{"idade_meses":26,"valor":86.7},{"idade_meses":27,"valor":87.3},{"idade_meses":28,"valor":87.8},{"idade_meses":29,"valor":88.4},{"idade_meses":30,"valor":89.0},{"idade_meses":31,"valor":89.5},{"idade_meses":32,"valor":90.1},{"idade_meses":33,"valor":90.7},{"idade_meses":34,"valor":91.3},{"idade_meses":35,"valor":91.8},{"idade_meses":36,"valor":92.4}],"p25":[{"idade_meses":0,"valor":49.0},{"idade_meses":1,"valor":53.6},{"idade_meses":2,"valor":56.2},{"idade_meses":3,"valor":58.7},{"idade_meses":4,"valor":61.2},{"idade_meses":5,"valor":63.8},{"idade_meses":6,"valor":66.3},{"idade_meses":7,"valor":67.8},{"idade_meses":8,"valor":69.2},{"idade_meses":9,"valor":70.6},{"idade_meses":10,"valor":72.1},{"idade_meses":11,"valor":73.5},{"idade_meses":12,"valor":74.9},{"idade_meses":13,"valor":75.9},{"idade_meses":14,"valor":76.8},{"idade_meses":15,"valor":77.7},{"idade_meses":16,"valor":78.6},{"idade_meses":17,"valor":79.5},{"idade_meses":18,"valor":80.5},{"idade_meses":19,"valor":81.4},{"idade_meses":20,"valor":82.3},{"idade_meses":21,"valor":83.2},{"idade_meses":22,"valor":84.1},{"idade_meses":23,"valor":85.1},{"idade_meses":24,"valor":86.0},{"idade_meses":25,"valor":86.5},{"idade_meses":26,"valor":87.1},{"idade_meses":27,"valor":87.6},{"idade_meses":28,"valor":88.2},{"idade_meses":29,"valor":88.8},{"idade_meses":30,"valor":89.3},{"idade_meses":31,"valor":89.9},{"idade_meses":32,"valor":90.5},{"idade_meses":33,"valor":91.0},{"idade_meses":34,"valor":91.6},{"idade_meses":35,"valor":92.1},{"idade_meses":36,"valor":92.7}],"p30":[{"idade_meses":0,"valor":49.2},{"idade_meses":1,"valor":53.8},{"idade_meses":2,"valor":56.4},{"idade_meses":3,"valor":59.0},{"idade_meses":4,"valor":61.5},{"idade_meses":5,"valor":64.1},{"idade_meses":6,"valor":66.6},{"idade_meses":7,"valor":68.1},{"idade_meses":8,"valor":69.5},{"idade_meses":10,"valor":72.4},{"idade_meses":11,"valor":73.8},{"idade_meses":12,"valor":75.3},{"idade_meses":13,"valor":76.2},{"idade_meses":14,"valor":77.1},{"idade_meses":15,"valor":78.1},{"idade_meses":16,"valor":79.0},{"idade_meses":17,"valor":79.9},{"idade_meses":18,"valor":80.8},{"idade_meses":19,"valor":81.8},{"idade_meses":20,"valor":82.7},{"idade_meses":21,"valor":83.6},{"idade_meses":22,"valor":84.6},{"idade_meses":23,"valor":85.5},{"idade_meses":24,"valor":86.4},{"idade_meses":25,"valor":87.0},{"idade_meses":26,"valor":87.6},{"idade_meses":27,"valor":88.2},{"idade_meses":28,"valor":88.7},{"idade_meses":29,"valor":89.3},{"idade_meses":30,"valor":89.9},{"idade_meses":31,"valor":90.5},{"idade_meses":32,"valor":91.1},{"idade_meses":33,"valor":91.7},{"idade_meses":34,"valor":92.3},{"idade_meses":35,"valor":92.8},{"idade_meses":36,"valor":93.4}],"p40":[{"idade_meses":0,"valor":49.6},{"idade_meses":1,"valor":54.3},{"idade_meses":2,"valor":56.9},{"idade_meses":3,"valor":59.4},{"idade_meses":4,"valor":62.0},{"idade_meses":5,"valor":64.6},{"idade_meses":6,"valor":67.1},{"idade_meses":7,"valor":68.6},{"idade_meses":8,"valor":70.0},{"idade_meses":9,"valor":71.5},{"idade_meses":10,"valor":73.0},{"idade_meses":11,"valor":74.4},{"idade_meses":12,"valor":75.9},{"idade_meses":13,"valor":76.8},{"idade_meses":14,"valor":77.7},{"idade_meses":15,"valor":78.7},{"idade_meses":16,"valor":79.6},{"idade_meses":17,"valor":80.6},{"idade_meses":18,"valor":81.5},{"idade_meses":19,"valor":82.4},{"idade_meses":20,"valor":83.4},{"idade_meses":21,"valor":84.3},{"idade_meses":22,"valor":85.3},{"idade_meses":23,"valor":86.2},{"idade_meses":24,"valor":87.1},{"idade_meses":25,"valor":87.7},{"idade_meses":26,"valor":88.3},{"idade_meses":27,"valor":88.9},{"idade_meses":28,"valor":89.5},{"idade_meses":29,"valor":90.1},{"idade_meses":30,"valor":90.7},{"idade_meses":31,"valor":91.3},{"idade_meses":32,"valor":91.9},{"idade_meses":33,"valor":92.5},{"idade_meses":34,"valor":93.1},{"idade_meses":35,"valor":93.7},{"idade_meses":36,"valor":94.3}],"p50":[{"idade_meses":0,"valor":50.0},{"idade_meses":1,"valor":54.7},{"idade_meses":2,"valor":57.3},{"idade_meses":3,"valor":59.9},{"idade_meses":4,"valor":62.4},{"idade_meses":5,"valor":65.0},{"idade_meses":6,"valor":67.6},{"idade_meses":7,"valor":69.1},{"idade_meses":8,"valor":70.5},{"idade_meses":9,"valor":72.0},{"idade_meses":10,"valor":73.5},{"idade_meses":11,"valor":74.9},{"idade_meses":12,"valor":76.4},{"idade_meses":13,"valor":77.4},{"idade_meses":14,"valor":78.3},{"idade_meses":15,"valor":79.2},{"idade_meses":16,"valor":80.2},{"idade_meses":17,"valor":81.2},{"idade_meses":18,"valor":82.1},{"idade_meses":19,"valor":83.0},{"idade_meses":20,"valor":84.0},{"idade_meses":21,"valor":85.0},{"idade_meses":22,"valor":85.9},{"idade_meses":23,"valor":86.8},{"idade_meses":24,"valor":87.8},{"idade_meses":25,"valor":88.4},{"idade_meses":26,"valor":89.0},{"idade_meses":27,"valor":89.6},{"idade_meses":28,"valor":90.2},{"idade_meses":29,"valor":90.8},{"idade_meses":30,"valor":91.4},{"idade_meses":31,"valor":92.1},{"idade_meses":32,"valor":92.7},{"idade_meses":33,"valor":93.3},{"idade_meses":34,"valor":93.9},{"idade_meses":35,"valor":94.5},{"idade_meses":36,"valor":95.1}],"p60":[{"idade_meses":0,"valor":50.4},{"idade_meses":1,"valor":55.1},{"idade_meses":2,"valor":57.7},{"idade_meses":3,"valor":60.3},{"idade_meses":4,"valor":62.9},{"idade_meses":5,"valor":65.5},{"idade_meses":6,"valor":68.1},{"idade_meses":7,"valor":69.5},{"idade_meses":8,"valor":71.0},{"idade_meses":9,"valor":72.5},{"idade_meses":10,"valor":74.0},{"idade_meses":11,"valor":75.5},{"idade_meses":12,"valor":76.9},{"idade_meses":13,"valor":77.9},{"idade_meses":14,"valor":78.9},{"idade_meses":15,"valor":79.8},{"idade_meses":16,"valor":80.8},{"idade_meses":17,"valor":81.7},{"idade_meses":18,"valor":82.7},{"idade_meses":19,"valor":83.7},{"idade_meses":20,"valor":84.6},{"idade_meses":21,"valor":85.6},{"idade_meses":22,"valor":86.5},{"idade_meses":23,"valor":87.5},{"idade_meses":24,"valor":88.5},{"idade_meses":25,"valor":89.1},{"idade_meses":26,"valor":89.7},{"idade_meses":27,"valor":90.3},{"idade_meses":28,"valor":90.9},{"idade_meses":29,"valor":91.6},{"idade_meses":30,"valor":92.2},{"idade_meses":31,"valor":92.8},{"idade_meses":32,"valor":93.4},{"idade_meses":33,"valor":94.0},{"idade_meses":34,"valor":94.7},{"idade_meses":35,"valor":95.3},{"idade_meses":36,"valor":95.9}],"p70":[{"idade_meses":0,"valor":50.8},{"idade_meses":1,"valor":55.6},{"idade_meses":2,"valor":58.2},{"idade_meses":3,"valor":60.8},{"idade_meses":4,"valor":63.4},{"idade_meses":5,"valor":66.0},{"idade_meses":6,"valor":68.6},{"idade_meses":7,"valor":70.1},{"idade_meses":8,"valor":71.6},{"idade_meses":9,"valor":73.0},{"idade_meses":10,"valor":74.5},{"idade_meses":11,"valor":76.0},{"idade_meses":12,"valor":77.5},{"idade_meses":13,"valor":78.5},{"idade_meses":14,"valor":79.5},{"idade_meses":15,"valor":80.4},{"idade_meses":16,"valor":81.4},{"idade_meses":17,"valor":82.4},{"idade_meses":18,"valor":83.4},{"idade_meses":19,"valor":84.3},{"idade_meses":20,"valor":85.3},{"idade_meses":21,"valor":86.3},{"idade_meses":22,"valor":87.2},{"idade_meses":23,"valor":88.2},{"idade_meses":24,"valor":89.2},{"idade_meses":25,"valor":89.8},{"idade_meses":26,"valor":90.5},{"idade_meses":27,"valor":91.1},{"idade_meses":28,"valor":91.7},{"idade_meses":29,"valor":92.4},{"idade_meses":30,"valor":93.0},{"idade_meses":31,"valor":93.6},{"idade_meses":32,"valor":94.2},{"idade_meses":33,"valor":94.9},{"idade_meses":34,"valor":95.5},{"idade_meses":35,"valor":96.1},{"idade_meses":36,"valor":96.8}],"p75":[{"idade_meses":0,"valor":51.0},{"idade_meses":1,"valor":55.8},{"idade_meses":2,"valor":58.5},{"idade_meses":3,"valor":61.1},{"idade_meses":4,"valor":63.7},{"idade_meses":5,"valor":66.3},{"idade_meses":6,"valor":68.9},{"idade_meses":7,"valor":70.4},{"idade_meses":8,"valor":71.9},{"idade_meses":9,"valor":73.3},{"idade_meses":10,"valor":74.8},{"idade_meses":11,"valor":76.3},{"idade_meses":12,"valor":77.8},{"idade_meses":13,"valor":78.8},{"idade_meses":14,"valor":79.7},{"idade_meses":15,"valor":80.7},{"idade_meses":16,"valor":81.7},{"idade_meses":17,"valor":82.7},{"idade_meses":18,"valor":83.7},{"idade_meses":19,"valor":84.6},{"idade_meses":20,"valor":83.9},{"idade_meses":21,"valor":86.6},{"idade_meses":22,"valor":87.6},{"idade_meses":23,"valor":88.6},{"idade_meses":24,"valor":89.5},{"idade_meses":25,"valor":90.2},{"idade_meses":26,"valor":90.8},{"idade_meses":27,"valor":91.4},{"idade_meses":28,"valor":92.1},{"idade_meses":29,"valor":92.7},{"idade_meses":30,"valor":93.3},{"idade_meses":31,"valor":94.0},{"idade_meses":32,"valor":94.6},{"idade_meses":33,"valor":95.2},{"idade_meses":34,"valor":95.9},{"idade_meses":35,"valor":96.5},{"idade_meses":36,"valor":97.2}],"p80":[{"idade_meses":0,"valor":51.3},{"idade_meses":1,"valor":56.1},{"idade_meses":2,"valor":58.7},{"idade_meses":3,"valor":61.3},{"idade_meses":4,"valor":63.9},{"idade_meses":5,"valor":66.6},{"idade_meses":6,"valor":69.2},{"idade_meses":7,"valor":70.7},{"idade_meses":8,"valor":72.2},{"idade_meses":9,"valor":73.7},{"idade_meses":10,"valor":75.2},{"idade_meses":11,"valor":76.7},{"idade_meses":12,"valor":78.2},{"idade_meses":13,"valor":79.2},{"idade_meses":14,"valor":80.2},{"idade_meses":15,"valor":81.2},{"idade_meses":16,"valor":82.1},{"idade_meses":17,"valor":83.1},{"idade_meses":18,"valor":84.1},{"idade_meses":19,"valor":85.1},{"idade_meses":20,"valor":86.1},{"idade_meses":21,"valor":87.1},{"idade_meses":22,"valor":88.1},{"idade_meses":23,"valor":89.1},{"idade_meses":24,"valor":90.1},{"idade_meses":25,"valor":90.7},{"idade_meses":26,"valor":91.3},{"idade_meses":27,"valor":92.0},{"idade_meses":28,"valor":92.6},{"idade_meses":29,"valor":93.3},{"idade_meses":30,"valor":93.9},{"idade_meses":31,"valor":94.6},{"idade_meses":32,"valor":95.2},{"idade_meses":33,"valor":95.9},{"idade_meses":34,"valor":96.5},{"idade_meses":35,"valor":97.2},{"idade_meses":36,"valor":97.8}],"p90":[{"idade_meses":0,"valor":52.0},{"idade_meses":1,"valor":56.8},{"idade_meses":2,"valor":59.4},{"idade_meses":3,"valor":62.1},{"idade_meses":4,"valor":64.7},{"idade_meses":5,"valor":67.4},{"idade_meses":6,"valor":70.0},{"idade_meses":7,"valor":71.5},{"idade_meses":8,"valor":73.0},{"idade_meses":9,"valor":74.6},{"idade_meses":10,"valor":76.1},{"idade_meses":11,"valor":77.6},{"idade_meses":12,"valor":79.1},{"idade_meses":13,"valor":80.1},{"idade_meses":14,"valor":81.2},{"idade_meses":15,"valor":82.2},{"idade_meses":16,"valor":83.2},{"idade_meses":17,"valor":84.2},{"idade_meses":18,"valor":85.2},{"idade_meses":19,"valor":86.2},{"idade_meses":20,"valor":87.2},{"idade_meses":21,"valor":88.2},{"idade_meses":22,"valor":89.2},{"idade_meses":23,"valor":90.2},{"idade_meses":24,"valor":91.2},{"idade_meses":25,"valor":91.9},{"idade_meses":26,"valor":92.6},{"idade_meses":27,"valor":93.2},{"idade_meses":28,"valor":93.9},{"idade_meses":29,"valor":94.6},{"idade_meses":30,"valor":95.2},{"idade_meses":31,"valor":95.9},{"idade_meses":32,"valor":96.6},{"idade_meses":33,"valor":97.2},{"idade_meses":34,"valor":97.9},{"idade_meses":35,"valor":98.6},{"idade_meses":36,"valor":99.2}],"p97":[{"idade_meses":0,"valor":53.0},{"idade_meses":1,"valor":57.8},{"idade_meses":2,"valor":60.5},{"idade_meses":3,"valor":63.1},{"idade_meses":4,"valor":65.8},{"idade_meses":5,"valor":68.5},{"idade_meses":6,"valor":71.1},{"idade_meses":7,"valor":72.7},{"idade_meses":8,"valor":74.2},{"idade_meses":9,"valor":75.8},{"idade_meses":10,"valor":77.3},{"idade_meses":11,"valor":78.9},{"idade_meses":12,"valor":80.4},{"idade_meses":13,"valor":81.5},{"idade_meses":14,"valor":82.5},{"idade_meses":15,"valor":83.5},{"idade_meses":16,"valor":84.6},{"idade_meses":17,"valor":85.6},{"idade_meses":18,"valor":86.6},{"idade_meses":19,"valor":87.7},{"idade_meses":20,"valor":88.7},{"idade_meses":21,"valor":89.7},{"idade_meses":22,"valor":90.8},{"idade_meses":23,"valor":91.8},{"idade_meses":24,"valor":92.8},{"idade_meses":25,"valor":93.5},{"idade_meses":26,"valor":94.2},{"idade_meses":27,"valor":94.9},{"idade_meses":28,"valor":95.6},{"idade_meses":29,"valor":96.3},{"idade_meses":30,"valor":97.0},{"idade_meses":31,"valor":97.7},{"idade_meses":32,"valor":98.4},{"idade_meses":33,"valor":99.1},{"idade_meses":34,"valor":99.8},{"idade_meses":35,"valor":100.5},{"idade_meses":36,"valor":101.2}]},"feminino":{}};
+
+    // === GLOBAL STATE ===
+    let globalData = null;
+    let chartInstances = {};
+    let currentFilters = { peso: 'all', altura: 'all' };
+
+    // === THEME HANDLING ===
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.classList.add('dark-mode');
+        document.getElementById('theme-toggle').innerHTML = '☀️';
+        Chart.defaults.color = '#f7fafc';
+        Chart.defaults.borderColor = '#4a5568';
+      }
+    }
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      document.getElementById('theme-toggle').innerHTML = isDark ? '☀️' : '🌙';
+      Chart.defaults.color = isDark ? '#f7fafc' : '#2d3748';
+      Chart.defaults.borderColor = isDark ? '#4a5568' : '#e2e8f0';
+      Object.values(chartInstances).forEach(c => c.update());
+    }
+
+    // === DATA LOADING ===
+    async function loadData() {
+      const resp = await fetch(`data/matheus-crescimento.json?v=${Date.now()}`);
+      const crianca = await resp.json();
+      return { pesoRef: PESO_REF_EMBEDDED, alturaRef: ALTURA_REF_EMBEDDED, crianca };
+    }
+
+    // === UTILS ===
+    function interpolar(idade, curva) {
+      for (let i = 0; i < curva.length - 1; i++) {
+        if (idade >= curva[i].idade_meses && idade <= curva[i + 1].idade_meses) {
+          const p1 = curva[i], p2 = curva[i + 1];
+          return p1.valor + (idade - p1.idade_meses) * (p2.valor - p1.valor) / (p2.idade_meses - p1.idade_meses);
+        }
+      }
+      return curva[curva.length - 1].valor;
+    }
+
+    function calculatePercentil(idade, valor, refData, sexo) {
+      const percentis = [3, 10, 20, 30, 40, 50, 60, 70, 80, 90, 97];
+      const pKeys = percentis.map(p => 'p'+p);
+      const vals = pKeys.map(k => interpolar(idade, refData[sexo][k]));
+      if (valor <= vals[0]) return 'P3';
+      if (valor >= vals[vals.length-1]) return 'P97';
+      for(let i=0; i<vals.length-1; i++) {
+        if(valor >= vals[i] && valor <= vals[i+1]) return 'P'+Math.round(percentis[i] + (valor-vals[i])*(percentis[i+1]-percentis[i])/(vals[i+1]-vals[i]));
+      }
+      return 'P?';
+    }
+
+    function filterByPeriod(medicoes, period) {
+      if (period === 'all') return medicoes;
+      const maxAge = Math.max(...medicoes.map(m => m.idade_meses));
+      return medicoes.filter(m => m.idade_meses >= maxAge - period);
+    }
+
+    function calculateYRange(values, padding = 0.05) {
+      const min = Math.min(...values), max = Math.max(...values), r = max - min;
+      return { min: Math.max(0, min - r * padding), max: max + r * padding };
+    }
+
+    // === RENDER CHARTS ===
+    function renderChart(id, type, data, options) {
+      if (chartInstances[id]) chartInstances[id].destroy();
+      chartInstances[id] = new Chart(document.getElementById(id), { type, data, options });
+    }
+
+    function getRefDatasets(ref, sexo, minA, maxA) {
+      const keys = ['p10', 'p50', 'p90'];
+      const colors = { p10: '#f59e0b', p50: '#667eea', p90: '#f59e0b' };
+      return keys.map(k => ({
+        label: k.toUpperCase(),
+        data: ref[sexo][k].filter(d => d.idade_meses >= minA && d.idade_meses <= maxA).map(d => ({ x: d.idade_meses, y: d.valor })),
+        borderColor: colors[k],
+        borderWidth: k === 'p50' ? 3 : 1.5,
+        pointRadius: 0,
+        tension: 0.4,
+        fill: false
+      }));
+    }
+
+    function renderPeso(data, period) {
+      const sexo = data.crianca.metadata.sexo;
+      const med = data.crianca.medicoes.filter(m => m.peso_kg);
+      const filt = filterByPeriod(med, period);
+      const minA = period === 'all' ? 0 : Math.max(0, Math.max(...med.map(m => m.idade_meses)) - period);
+      const maxA = Math.max(...med.map(m => m.idade_meses)) + 0.5;
+      
+      const dsRef = getRefDatasets(data.pesoRef, sexo, minA, maxA);
+      const dsMatheus = {
+        label: 'Matheus',
+        data: filt.map(m => ({ x: m.idade_meses, y: m.peso_kg })),
+        borderColor: '#48bb78', backgroundColor: '#48bb78', pointRadius: 4, tension: 0.3
+      };
+      
+      const allY = [...filt.map(m => m.peso_kg), ...dsRef.flatMap(d => d.data.map(p => p.y))];
+      renderChart('chartPeso', 'line', { datasets: [...dsRef, dsMatheus] }, {
+        responsive: true, maintainAspectRatio: false,
+        scales: { x: { type: 'linear', min: minA, max: maxA }, y: { min: calculateYRange(allY).min, max: calculateYRange(allY).max } },
+        plugins: { legend: { position: 'bottom' } }
+      });
+    }
+
+    function renderAltura(data, period) {
+      const sexo = data.crianca.metadata.sexo;
+      const med = data.crianca.medicoes.filter(m => m.altura_cm);
+      const filt = filterByPeriod(med, period);
+      const minA = period === 'all' ? 0 : Math.max(0, Math.max(...med.map(m => m.idade_meses)) - period);
+      const maxA = Math.max(...med.map(m => m.idade_meses)) + 0.5;
+      
+      const dsRef = getRefDatasets(data.alturaRef, sexo, minA, maxA);
+      const dsMatheus = {
+        label: 'Matheus',
+        data: filt.map(m => ({ x: m.idade_meses, y: m.altura_cm })),
+        borderColor: '#48bb78', backgroundColor: '#48bb78', pointRadius: 4, tension: 0.3
+      };
+      
+      const allY = [...filt.map(m => m.altura_cm), ...dsRef.flatMap(d => d.data.map(p => p.y))];
+      renderChart('chartAltura', 'line', { datasets: [...dsRef, dsMatheus] }, {
+        responsive: true, maintainAspectRatio: false,
+        scales: { x: { type: 'linear', min: minA, max: maxA }, y: { min: calculateYRange(allY).min, max: calculateYRange(allY).max } },
+        plugins: { legend: { position: 'bottom' } }
+      });
+    }
+
+    // === INIT ===
+    initTheme();
+    loadData().then(data => {
+      globalData = data;
+      const m = data.crianca.medicoes;
+      const lastP = [...m].reverse().find(x => x.peso_kg);
+      const lastA = [...m].reverse().find(x => x.altura_cm);
+      
+      if(lastP) {
+        document.getElementById('statPeso').textContent = lastP.peso_kg + ' kg';
+        const perc = calculatePercentil(lastP.idade_meses, lastP.peso_kg, data.pesoRef, data.crianca.metadata.sexo);
+        document.getElementById('statPesoData').textContent = new Date(lastP.data).toLocaleDateString() + ' (' + perc + ')';
+      }
+      if(lastA) {
+        document.getElementById('statAltura').textContent = lastA.altura_cm + ' cm';
+        const perc = calculatePercentil(lastA.idade_meses, lastA.altura_cm, data.alturaRef, data.crianca.metadata.sexo);
+        document.getElementById('statAlturaData').textContent = new Date(lastA.data).toLocaleDateString() + ' (' + perc + ')';
+      }
+      
+      document.getElementById('last-update').textContent = 'Última atualização: ' + new Date(data.crianca.metadata.ultima_atualizacao).toLocaleDateString();
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+      
+      renderPeso(data, 'all');
+      renderAltura(data, 'all');
+      
+      window.updateChartFilter = (type, val, btn) => {
+        const parent = btn.parentNode;
+        parent.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const p = val === 'all' ? 'all' : parseInt(val);
+        if(type === 'peso') renderPeso(data, p);
+        else renderAltura(data, p);
+      };
+    });
+  </script>
+</body>
+</html>
