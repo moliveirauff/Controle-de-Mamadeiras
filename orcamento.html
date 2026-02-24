@@ -289,17 +289,19 @@ Chart.defaults.set('plugins.datalabels', { display: false });
 
 // ─── CONFIG ───
 const COLORS = {
-  salario: '#48bb78',      // Verde
-  beneficios: '#667eea',   // Roxo
-  outras: '#9b59b6',       // Roxo claro
-  proventos: '#f39c12'     // Laranja
+  salario: '#48bb78',          // Verde
+  beneficios: '#667eea',       // Roxo
+  outras: '#9b59b6',           // Roxo claro
+  proventos: '#f39c12',        // Laranja
+  receitaIndireta: '#3498db'   // Azul
 };
 
 const LABELS = {
   salario: 'Salário',
   beneficios: 'Benefícios',
   outras: 'Outras Receitas',
-  proventos: 'Proventos'
+  proventos: 'Proventos',
+  receitaIndireta: 'Receita Indireta'
 };
 
 // ─── STATE ───
@@ -308,6 +310,7 @@ let allData = {
   beneficios: [],
   outrasReceitas: [],
   proventos: [],
+  receitaIndireta: [],
   despesas: []
 };
 let filteredData12M = {};
@@ -412,11 +415,12 @@ function applyFilter12M() {
     ...allData.salario,
     ...allData.beneficios,
     ...allData.outrasReceitas,
-    ...allData.proventos
+    ...allData.proventos,
+    ...allData.receitaIndireta
   ];
   
   if (!combinedReceitas.length) {
-    filteredData12M = { salario: [], beneficios: [], outrasReceitas: [], proventos: [], despesas: [] };
+    filteredData12M = { salario: [], beneficios: [], outrasReceitas: [], proventos: [], receitaIndireta: [], despesas: [] };
     return;
   }
 
@@ -431,6 +435,7 @@ function applyFilter12M() {
     beneficios: allData.beneficios.filter(r => r.data.substring(0, 7) >= cutKey),
     outrasReceitas: allData.outrasReceitas.filter(r => r.data.substring(0, 7) >= cutKey),
     proventos: allData.proventos.filter(r => r.data.substring(0, 7) >= cutKey),
+    receitaIndireta: allData.receitaIndireta.filter(r => r.data.substring(0, 7) >= cutKey),
     despesas: allData.despesas.filter(r => r.data.substring(0, 7) >= cutKey)
   };
 }
@@ -440,11 +445,12 @@ function applyFilterMensal() {
     ...allData.salario,
     ...allData.beneficios,
     ...allData.outrasReceitas,
-    ...allData.proventos
+    ...allData.proventos,
+    ...allData.receitaIndireta
   ];
   
   if (!combinedReceitas.length) {
-    filteredDataMensal = { salario: [], beneficios: [], outrasReceitas: [], proventos: [], despesas: [] };
+    filteredDataMensal = { salario: [], beneficios: [], outrasReceitas: [], proventos: [], receitaIndireta: [], despesas: [] };
     return;
   }
 
@@ -465,6 +471,7 @@ function applyFilterMensal() {
     beneficios: allData.beneficios.filter(r => r.data.substring(0, 7) >= cutKey),
     outrasReceitas: allData.outrasReceitas.filter(r => r.data.substring(0, 7) >= cutKey),
     proventos: allData.proventos.filter(r => r.data.substring(0, 7) >= cutKey),
+    receitaIndireta: allData.receitaIndireta.filter(r => r.data.substring(0, 7) >= cutKey),
     despesas: allData.despesas.filter(r => r.data.substring(0, 7) >= cutKey)
   };
 }
@@ -483,19 +490,21 @@ function updateKPIs() {
   const totalBeneficios = somaValores(filteredData12M.beneficios);
   const totalOutras = somaValores(filteredData12M.outrasReceitas);
   const totalProventos = somaValores(filteredData12M.proventos);
-  const totalReceitas = totalSalario + totalBeneficios + totalOutras + totalProventos;
+  const totalReceitaIndireta = somaValores(filteredData12M.receitaIndireta);
+  const totalReceitas = totalSalario + totalBeneficios + totalOutras + totalProventos + totalReceitaIndireta;
   const totalDespesas = somaValores(filteredData12M.despesas);
   
   const allReceitas = [
     ...filteredData12M.salario,
     ...filteredData12M.beneficios,
     ...filteredData12M.outrasReceitas,
-    ...filteredData12M.proventos
+    ...filteredData12M.proventos,
+    ...filteredData12M.receitaIndireta
   ];
   const meses = mesesUnicos(allReceitas) || 1;
   
   const mediaTotal = totalReceitas / meses;
-  const mediaPassiva = (totalBeneficios + totalOutras + totalProventos) / meses;
+  const mediaPassiva = (totalBeneficios + totalOutras + totalProventos + totalReceitaIndireta) / meses;
   const taxaPoupanca = totalReceitas > 0 ? ((totalReceitas - totalDespesas) / totalReceitas) * 100 : 0;
   
   document.getElementById('kpiTotal').textContent = brl(totalReceitas);
@@ -513,7 +522,8 @@ function renderAnual() {
     ...allData.salario,
     ...allData.beneficios,
     ...allData.outrasReceitas,
-    ...allData.proventos
+    ...allData.proventos,
+    ...allData.receitaIndireta
   ]);
   
   const datasets = [
@@ -521,25 +531,36 @@ function renderAnual() {
       label: LABELS.salario,
       data: allYears.map(y => somaValores(allData.salario.filter(r => r.data.substring(0, 4) === y))),
       backgroundColor: COLORS.salario,
-      borderRadius: 4
+      borderRadius: 4,
+      stack: 'Stack0'
     },
     {
       label: LABELS.beneficios,
       data: allYears.map(y => somaValores(allData.beneficios.filter(r => r.data.substring(0, 4) === y))),
       backgroundColor: COLORS.beneficios,
-      borderRadius: 4
+      borderRadius: 4,
+      stack: 'Stack0'
     },
     {
       label: LABELS.outras,
       data: allYears.map(y => somaValores(allData.outrasReceitas.filter(r => r.data.substring(0, 4) === y))),
       backgroundColor: COLORS.outras,
-      borderRadius: 4
+      borderRadius: 4,
+      stack: 'Stack0'
     },
     {
       label: LABELS.proventos,
       data: allYears.map(y => somaValores(allData.proventos.filter(r => r.data.substring(0, 4) === y))),
       backgroundColor: COLORS.proventos,
-      borderRadius: 4
+      borderRadius: 4,
+      stack: 'Stack0'
+    },
+    {
+      label: LABELS.receitaIndireta,
+      data: allYears.map(y => somaValores(allData.receitaIndireta.filter(r => r.data.substring(0, 4) === y))),
+      backgroundColor: COLORS.receitaIndireta,
+      borderRadius: 4,
+      stack: 'Stack0'
     }
   ];
   
@@ -578,7 +599,8 @@ function renderMensal() {
     ...filteredDataMensal.salario.map(r => r.data.substring(0, 7)),
     ...filteredDataMensal.beneficios.map(r => r.data.substring(0, 7)),
     ...filteredDataMensal.outrasReceitas.map(r => r.data.substring(0, 7)),
-    ...filteredDataMensal.proventos.map(r => r.data.substring(0, 7))
+    ...filteredDataMensal.proventos.map(r => r.data.substring(0, 7)),
+    ...filteredDataMensal.receitaIndireta.map(r => r.data.substring(0, 7))
   ])].sort();
   
   const datasets = [
@@ -607,6 +629,13 @@ function renderMensal() {
       label: LABELS.proventos,
       data: allMonths.map(m => somaValores(filteredDataMensal.proventos.filter(r => r.data.substring(0, 7) === m))),
       backgroundColor: COLORS.proventos,
+      borderRadius: 4,
+      stack: 'Stack0'
+    },
+    {
+      label: LABELS.receitaIndireta,
+      data: allMonths.map(m => somaValores(filteredDataMensal.receitaIndireta.filter(r => r.data.substring(0, 7) === m))),
+      backgroundColor: COLORS.receitaIndireta,
       borderRadius: 4,
       stack: 'Stack0'
     }
@@ -651,7 +680,8 @@ function renderDonut() {
     salario: somaValores(filteredData12M.salario),
     beneficios: somaValores(filteredData12M.beneficios),
     outras: somaValores(filteredData12M.outrasReceitas),
-    proventos: somaValores(filteredData12M.proventos)
+    proventos: somaValores(filteredData12M.proventos),
+    receitaIndireta: somaValores(filteredData12M.receitaIndireta)
   };
   
   const entries = Object.entries(totals).filter(([k, v]) => v > 0);
@@ -696,7 +726,8 @@ function renderTaxaAnual() {
     ...allData.salario,
     ...allData.beneficios,
     ...allData.outrasReceitas,
-    ...allData.proventos
+    ...allData.proventos,
+    ...allData.receitaIndireta
   ];
   const years = anosUnicos([...allReceitas, ...allData.despesas]).filter(y => parseInt(y) >= 2023);
   
@@ -705,7 +736,8 @@ function renderTaxaAnual() {
       ...allData.salario.filter(r => r.data.substring(0, 4) === y),
       ...allData.beneficios.filter(r => r.data.substring(0, 4) === y),
       ...allData.outrasReceitas.filter(r => r.data.substring(0, 4) === y),
-      ...allData.proventos.filter(r => r.data.substring(0, 4) === y)
+      ...allData.proventos.filter(r => r.data.substring(0, 4) === y),
+      ...allData.receitaIndireta.filter(r => r.data.substring(0, 4) === y)
     ]);
     const despesasAno = somaValores(allData.despesas.filter(r => r.data.substring(0, 4) === y));
     return receitasAno > 0 ? ((receitasAno - despesasAno) / receitasAno) * 100 : 0;
@@ -760,13 +792,15 @@ async function init() {
   initTheme();
   
   try {
-    const [lancReq, divReq] = await Promise.all([
+    const [lancReq, divReq, contraReq] = await Promise.all([
       fetch('data/lancamentos.json?v=' + Date.now()),
-      fetch('data/dividendos_historico.json?v=' + Date.now())
+      fetch('data/dividendos_historico.json?v=' + Date.now()),
+      fetch('data/contra_cheque.json?v=' + Date.now())
     ]);
     
     const lancData = await lancReq.json();
     const divData = await divReq.json();
+    const contraData = await contraReq.json();
     
     // 1. Processar lançamentos (FILTRO: >= 2023)
     const lancamentos = Array.isArray(lancData) ? lancData : (lancData.lancamentos || []);
@@ -789,6 +823,30 @@ async function init() {
         categoria: 'receitas',
         subcategoria: 'Proventos',
         origem: d.ativo
+      });
+    });
+    
+    // 3. Processar receita indireta (previdência privada >= 2023)
+    contraData.forEach(c => {
+      if (!c.mes_referencia || !c.descontos?.previdencia_privada) return;
+      
+      // Converter mes_referencia ("jan/23") para data ISO
+      const meses = {jan:1,fev:2,mar:3,abr:4,mai:5,jun:6,jul:7,ago:8,set:9,out:10,nov:11,dez:12};
+      const [mes, ano] = c.mes_referencia.split('/');
+      if (!mes || !ano) return;
+      
+      const anoCompleto = parseInt(ano) < 50 ? `20${ano}` : `19${ano}`;
+      const mesNum = String(meses[mes]).padStart(2, '0');
+      const data = `${anoCompleto}-${mesNum}-01`;
+      
+      if (data < '2023-01-01') return;
+      
+      allData.receitaIndireta.push({
+        data,
+        valor: c.descontos.previdencia_privada,
+        categoria: 'receitas',
+        subcategoria: 'Receita Indireta',
+        origem: 'contra_cheque'
       });
     });
     
