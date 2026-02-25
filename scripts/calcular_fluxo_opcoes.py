@@ -105,17 +105,18 @@ def calcular_fluxo_us(opcoes_us):
         
         # Fluxo de ABERTURA
         preco_abertura = op.get('preco_opcao_abertura') or 0
-        quantidade = op.get('quantidade_opcoes') or 0
-        taxas = op.get('taxas') or 0
+        quantidade = op.get('quantidade') or 0  # Campo correto: 'quantidade'
+        taxas_abertura = op.get('taxas_abertura') or 0
+        taxas_fechamento = op.get('taxas_fechamento') or 0
         
         if op['operacao'] == 'Venda':
             # Venda: Entrada em USD → BRL
-            fluxo_abertura_usd = (preco_abertura * quantidade) - taxas
+            fluxo_abertura_usd = (preco_abertura * quantidade) - taxas_abertura
             fluxo_abertura_brl = fluxo_abertura_usd * cotacao
             fluxo_mensal[mes_abertura]['entradas'] += fluxo_abertura_brl
         else:  # Compra
             # Compra: Saída em USD → BRL
-            fluxo_abertura_usd = (preco_abertura * quantidade) + taxas
+            fluxo_abertura_usd = (preco_abertura * quantidade) + taxas_abertura
             fluxo_abertura_brl = fluxo_abertura_usd * cotacao
             fluxo_mensal[mes_abertura]['saidas'] += fluxo_abertura_brl
         
@@ -126,12 +127,12 @@ def calcular_fluxo_us(opcoes_us):
             
             if op['operacao'] == 'Venda':
                 # Recompra (Saída)
-                fluxo_fechamento_usd = (preco_fechamento * quantidade) + taxas
+                fluxo_fechamento_usd = (preco_fechamento * quantidade) + taxas_fechamento
                 fluxo_fechamento_brl = fluxo_fechamento_usd * cotacao  # Mesma cotação!
                 fluxo_mensal[mes_fechamento]['saidas'] += fluxo_fechamento_brl
             else:  # Compra
                 # Venda (Entrada)
-                fluxo_fechamento_usd = (preco_fechamento * quantidade) - taxas
+                fluxo_fechamento_usd = (preco_fechamento * quantidade) - taxas_fechamento
                 fluxo_fechamento_brl = fluxo_fechamento_usd * cotacao
                 fluxo_mensal[mes_fechamento]['entradas'] += fluxo_fechamento_brl
         

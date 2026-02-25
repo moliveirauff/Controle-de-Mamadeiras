@@ -1,15 +1,15 @@
 {
-  "versao": "2.1",
-  "data_atualizacao": "2026-02-24 18:49:09",
+  "versao": "2.2",
+  "data_atualizacao": "2026-02-25 16:52:40",
   "descricao": "Operações de opções US - taxa abertura (CSV) + $0,12 por 100 contratos fechamento",
   "estatisticas": {
-    "total_operacoes": 168,
-    "operacoes_fechadas": 162,
+    "total_operacoes": 170,
+    "operacoes_fechadas": 164,
     "operacoes_abertas": 6,
-    "resultado_total_realizado_usd": 7652.75,
-    "vitorias": 77,
-    "derrotas": 85,
-    "win_rate_percentual": 47.53
+    "resultado_total_realizado_usd": 7769.99,
+    "vitorias": 78,
+    "derrotas": 86,
+    "win_rate_percentual": 47.56
   },
   "operacoes": [
     {
@@ -3138,14 +3138,14 @@
       "strike": 41.0,
       "quantidade": 700,
       "preco_opcao_abertura": 0.28,
-      "data_fechamento": null,
-      "preco_acao_fechamento": null,
-      "preco_opcao_fechamento": null,
+      "data_fechamento": "2026-02-25",
+      "preco_acao_fechamento": 40.5,
+      "preco_opcao_fechamento": 0.06,
       "taxas_abertura": 0.0,
-      "taxas_fechamento": 0.0,
-      "taxas_total": 0.0,
-      "resultado": null,
-      "status": "aberta"
+      "taxas_fechamento": 0.87,
+      "taxas_total": 0.87,
+      "resultado": 153.13,
+      "status": "fechada"
     },
     {
       "ticker": "IBIT",
@@ -3157,14 +3157,14 @@
       "strike": 43.5,
       "quantidade": 700,
       "preco_opcao_abertura": 0.07,
-      "data_fechamento": null,
-      "preco_acao_fechamento": null,
-      "preco_opcao_fechamento": null,
+      "data_fechamento": "2026-02-25",
+      "preco_acao_fechamento": 40.5,
+      "preco_opcao_fechamento": 0.02,
       "taxas_abertura": 0.0,
-      "taxas_fechamento": 0.0,
-      "taxas_total": 0.0,
-      "resultado": null,
-      "status": "aberta"
+      "taxas_fechamento": 0.89,
+      "taxas_total": 0.89,
+      "resultado": -35.89,
+      "status": "fechada"
     },
     {
       "ticker": "IBIT",
@@ -3201,6 +3201,44 @@
       "taxas_abertura": 0.0,
       "taxas_fechamento": 0.0,
       "taxas_total": 0.0,
+      "resultado": null,
+      "status": "aberta"
+    },
+    {
+      "ticker": "IBIT",
+      "data_operacao": "2026-02-25",
+      "preco_acao_na_operacao": 40.5,
+      "operacao": "Compra",
+      "tipo_contrato": "CALL",
+      "vencimento": "2026-03-06",
+      "strike": 43.0,
+      "quantidade": 700,
+      "preco_opcao_abertura": 0.21,
+      "data_fechamento": null,
+      "preco_acao_fechamento": null,
+      "preco_opcao_fechamento": null,
+      "taxas_abertura": 7.87,
+      "taxas_fechamento": null,
+      "taxas_total": 7.87,
+      "resultado": null,
+      "status": "aberta"
+    },
+    {
+      "ticker": "IBIT",
+      "data_operacao": "2026-02-25",
+      "preco_acao_na_operacao": 40.5,
+      "operacao": "Venda",
+      "tipo_contrato": "CALL",
+      "vencimento": "2026-03-06",
+      "strike": 41.0,
+      "quantidade": 700,
+      "preco_opcao_abertura": 0.56,
+      "data_fechamento": null,
+      "preco_acao_fechamento": null,
+      "preco_opcao_fechamento": null,
+      "taxas_abertura": 7.89,
+      "taxas_fechamento": null,
+      "taxas_total": 7.89,
       "resultado": null,
       "status": "aberta"
     }
