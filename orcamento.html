@@ -293,6 +293,7 @@ const COLORS = {
   beneficios: '#667eea',       // Roxo
   outras: '#9b59b6',           // Roxo claro
   proventos: '#f39c12',        // Laranja
+  opcoes: '#e74c3c',           // Vermelho
   receitaIndireta: '#3498db'   // Azul
 };
 
@@ -301,6 +302,7 @@ const LABELS = {
   beneficios: 'Benefícios',
   outras: 'Outras Receitas',
   proventos: 'Proventos',
+  opcoes: 'Opções',
   receitaIndireta: 'Receita Indireta'
 };
 
@@ -310,6 +312,7 @@ let allData = {
   beneficios: [],
   outrasReceitas: [],
   proventos: [],
+  opcoes: [],
   receitaIndireta: [],
   despesas: []
 };
@@ -416,11 +419,12 @@ function applyFilter12M() {
     ...allData.beneficios,
     ...allData.outrasReceitas,
     ...allData.proventos,
+    ...allData.opcoes,
     ...allData.receitaIndireta
   ];
   
   if (!combinedReceitas.length) {
-    filteredData12M = { salario: [], beneficios: [], outrasReceitas: [], proventos: [], receitaIndireta: [], despesas: [] };
+    filteredData12M = { salario: [], beneficios: [], outrasReceitas: [], proventos: [], opcoes: [], receitaIndireta: [], despesas: [] };
     return;
   }
 
@@ -435,6 +439,7 @@ function applyFilter12M() {
     beneficios: allData.beneficios.filter(r => r.data.substring(0, 7) >= cutKey),
     outrasReceitas: allData.outrasReceitas.filter(r => r.data.substring(0, 7) >= cutKey),
     proventos: allData.proventos.filter(r => r.data.substring(0, 7) >= cutKey),
+    opcoes: allData.opcoes.filter(r => r.data.substring(0, 7) >= cutKey),
     receitaIndireta: allData.receitaIndireta.filter(r => r.data.substring(0, 7) >= cutKey),
     despesas: allData.despesas.filter(r => r.data.substring(0, 7) >= cutKey)
   };
@@ -446,11 +451,12 @@ function applyFilterMensal() {
     ...allData.beneficios,
     ...allData.outrasReceitas,
     ...allData.proventos,
+    ...allData.opcoes,
     ...allData.receitaIndireta
   ];
   
   if (!combinedReceitas.length) {
-    filteredDataMensal = { salario: [], beneficios: [], outrasReceitas: [], proventos: [], receitaIndireta: [], despesas: [] };
+    filteredDataMensal = { salario: [], beneficios: [], outrasReceitas: [], proventos: [], opcoes: [], receitaIndireta: [], despesas: [] };
     return;
   }
 
@@ -471,6 +477,7 @@ function applyFilterMensal() {
     beneficios: allData.beneficios.filter(r => r.data.substring(0, 7) >= cutKey),
     outrasReceitas: allData.outrasReceitas.filter(r => r.data.substring(0, 7) >= cutKey),
     proventos: allData.proventos.filter(r => r.data.substring(0, 7) >= cutKey),
+    opcoes: allData.opcoes.filter(r => r.data.substring(0, 7) >= cutKey),
     receitaIndireta: allData.receitaIndireta.filter(r => r.data.substring(0, 7) >= cutKey),
     despesas: allData.despesas.filter(r => r.data.substring(0, 7) >= cutKey)
   };
@@ -490,8 +497,9 @@ function updateKPIs() {
   const totalBeneficios = somaValores(filteredData12M.beneficios);
   const totalOutras = somaValores(filteredData12M.outrasReceitas);
   const totalProventos = somaValores(filteredData12M.proventos);
+  const totalOpcoes = somaValores(filteredData12M.opcoes);
   const totalReceitaIndireta = somaValores(filteredData12M.receitaIndireta);
-  const totalReceitas = totalSalario + totalBeneficios + totalOutras + totalProventos + totalReceitaIndireta;
+  const totalReceitas = totalSalario + totalBeneficios + totalOutras + totalProventos + totalOpcoes + totalReceitaIndireta;
   const totalDespesas = somaValores(filteredData12M.despesas);
   
   const allReceitas = [
@@ -499,12 +507,13 @@ function updateKPIs() {
     ...filteredData12M.beneficios,
     ...filteredData12M.outrasReceitas,
     ...filteredData12M.proventos,
+    ...filteredData12M.opcoes,
     ...filteredData12M.receitaIndireta
   ];
   const meses = mesesUnicos(allReceitas) || 1;
   
   const mediaTotal = totalReceitas / meses;
-  const mediaPassiva = (totalBeneficios + totalOutras + totalProventos + totalReceitaIndireta) / meses;
+  const mediaPassiva = (totalBeneficios + totalOutras + totalProventos + totalOpcoes + totalReceitaIndireta) / meses;
   const taxaPoupanca = totalReceitas > 0 ? ((totalReceitas - totalDespesas) / totalReceitas) * 100 : 0;
   
   document.getElementById('kpiTotal').textContent = brl(totalReceitas);
@@ -523,6 +532,7 @@ function renderAnual() {
     ...allData.beneficios,
     ...allData.outrasReceitas,
     ...allData.proventos,
+    ...allData.opcoes,
     ...allData.receitaIndireta
   ]);
   
@@ -552,6 +562,13 @@ function renderAnual() {
       label: LABELS.proventos,
       data: allYears.map(y => somaValores(allData.proventos.filter(r => r.data.substring(0, 4) === y))),
       backgroundColor: COLORS.proventos,
+      borderRadius: 4,
+      stack: 'Stack0'
+    },
+    {
+      label: LABELS.opcoes,
+      data: allYears.map(y => somaValores(allData.opcoes.filter(r => r.data.substring(0, 4) === y))),
+      backgroundColor: COLORS.opcoes,
       borderRadius: 4,
       stack: 'Stack0'
     },
@@ -600,6 +617,7 @@ function renderMensal() {
     ...filteredDataMensal.beneficios.map(r => r.data.substring(0, 7)),
     ...filteredDataMensal.outrasReceitas.map(r => r.data.substring(0, 7)),
     ...filteredDataMensal.proventos.map(r => r.data.substring(0, 7)),
+    ...filteredDataMensal.opcoes.map(r => r.data.substring(0, 7)),
     ...filteredDataMensal.receitaIndireta.map(r => r.data.substring(0, 7))
   ])].sort();
   
@@ -629,6 +647,13 @@ function renderMensal() {
       label: LABELS.proventos,
       data: allMonths.map(m => somaValores(filteredDataMensal.proventos.filter(r => r.data.substring(0, 7) === m))),
       backgroundColor: COLORS.proventos,
+      borderRadius: 4,
+      stack: 'Stack0'
+    },
+    {
+      label: LABELS.opcoes,
+      data: allMonths.map(m => somaValores(filteredDataMensal.opcoes.filter(r => r.data.substring(0, 7) === m))),
+      backgroundColor: COLORS.opcoes,
       borderRadius: 4,
       stack: 'Stack0'
     },
@@ -681,6 +706,7 @@ function renderDonut() {
     beneficios: somaValores(filteredData12M.beneficios),
     outras: somaValores(filteredData12M.outrasReceitas),
     proventos: somaValores(filteredData12M.proventos),
+    opcoes: somaValores(filteredData12M.opcoes),
     receitaIndireta: somaValores(filteredData12M.receitaIndireta)
   };
   
@@ -727,6 +753,7 @@ function renderTaxaAnual() {
     ...allData.beneficios,
     ...allData.outrasReceitas,
     ...allData.proventos,
+    ...allData.opcoes,
     ...allData.receitaIndireta
   ];
   const years = anosUnicos([...allReceitas, ...allData.despesas]).filter(y => parseInt(y) >= 2023);
@@ -737,6 +764,7 @@ function renderTaxaAnual() {
       ...allData.beneficios.filter(r => r.data.substring(0, 4) === y),
       ...allData.outrasReceitas.filter(r => r.data.substring(0, 4) === y),
       ...allData.proventos.filter(r => r.data.substring(0, 4) === y),
+      ...allData.opcoes.filter(r => r.data.substring(0, 4) === y),
       ...allData.receitaIndireta.filter(r => r.data.substring(0, 4) === y)
     ]);
     const despesasAno = somaValores(allData.despesas.filter(r => r.data.substring(0, 4) === y));
@@ -792,15 +820,17 @@ async function init() {
   initTheme();
   
   try {
-    const [lancReq, divReq, contraReq] = await Promise.all([
+    const [lancReq, divReq, contraReq, opcoesReq] = await Promise.all([
       fetch('data/lancamentos.json?v=' + Date.now()),
       fetch('data/dividendos_historico.json?v=' + Date.now()),
-      fetch('data/contra_cheque.json?v=' + Date.now())
+      fetch('data/contra_cheque.json?v=' + Date.now()),
+      fetch('data/fluxo_caixa_opcoes_mensal.json?v=' + Date.now()).catch(() => null)
     ]);
     
     const lancData = await lancReq.json();
     const divData = await divReq.json();
     const contraData = await contraReq.json();
+    const opcoesData = opcoesReq ? await opcoesReq.json() : { fluxo_mensal: [] };
     
     // 1. Processar lançamentos (FILTRO: >= 2023)
     const lancamentos = Array.isArray(lancData) ? lancData : (lancData.lancamentos || []);
@@ -847,6 +877,25 @@ async function init() {
         categoria: 'receitas',
         subcategoria: 'Receita Indireta',
         origem: 'contra_cheque'
+      });
+    });
+    
+    // 4. Processar opções (FILTRO: >= 2023)
+    const fluxoMensal = opcoesData.fluxo_mensal || [];
+    fluxoMensal.forEach(f => {
+      if (!f.mes || !f.total_brl) return;
+      
+      // Converter "2023-01" para "2023-01-01"
+      const data = f.mes + '-01';
+      
+      if (data < '2023-01-01') return;
+      
+      allData.opcoes.push({
+        data,
+        valor: f.total_brl,
+        categoria: 'receitas',
+        subcategoria: 'Opções',
+        origem: 'fluxo_caixa_opcoes_mensal'
       });
     });
     

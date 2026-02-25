@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔄 Movimentações Financeiras - Hub Família</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg: #f7fafc;
+            --text: #2d3748;
+            --surface: #ffffff;
+            --card-bg: var(--surface);
+            --border: #e2e8f0;
+            --text-muted: #718096;
+            --subtext: var(--text-muted);
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --accent: var(--primary);
+            --success: #48bb78;
+            --warning: #ed8936;
+            --danger: #f56565;
+            --green: #48bb78;
+            --red: #f56565;
+            --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+        }
+        body.dark-mode {
+            --bg: #1a202c;
+            --text: #f7fafc;
+            --surface: #2d3748;
+            --card-bg: var(--surface);
+            --border: #4a5568;
+            --text-muted: #cbd5e0;
+            --subtext: var(--text-muted);
+            --primary: #7f9cf5;
+            --accent: var(--primary);
+            --green: #68d391;
+            --red: #fc8181;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background-color 0.3s, color 0.3s;
+            padding: 10px 10px 60px 10px;
+        }
+        #theme-toggle {
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
+            padding: 8px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10; transition: background 0.2s;
+        }
+        body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin: 10px 0 0 4px;
+            display: inline-block;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 10px 44px 20px 44px;
+            color: var(--text);
+        }
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        .editor-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+            min-width: 140px;
+        }
+        .filter-item label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--subtext);
+            text-transform: uppercase;
+        }
+        .f-select, .f-input {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text);
+            outline: none;
+            width: 100%;
+        }
+        .ed-summary {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            padding: 0 5px;
+        }
+        .btn-add {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: opacity 0.2s;
+        }
+        .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: var(--surface); }
+        th { background: var(--bg); padding: 12px 10px; text-align: left; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--subtext); }
+        td { padding: 12px 10px; border-top: 1px solid var(--border); }
+        .val-pos { color: var(--green); font-weight: 700; }
+        .val-neg { color: var(--red); font-weight: 700; }
+        .btn-action { border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 700; color: white; }
+        .btn-edit { background: var(--primary); margin-right: 5px; }
+        .btn-del { background: var(--red); }
+        
+        /* Modal */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+            z-index: 1000; align-items: center; justify-content: center; padding: 15px;
+        }
+        .modal-box {
+            background: var(--surface); border-radius: 16px; padding: 25px;
+            width: 100%; max-width: 450px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .modal-grid { display: grid; gap: 15px; }
+        .btn-save { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .btn-close { background: var(--border); color: var(--text); border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+
+        @media (min-width: 768px) { body { max-width: 1100px; margin: 0 auto; } }
+    </style>
+</head>
+<body>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <a href="index.html" class="nav-link">← Voltar</a>
+    <h1>🔄 Movimentações</h1>
+
+    <div class="card">
+        <div class="editor-filters">
+            <div class="filter-item">
+                <label>📅 Mês</label>
+                <select id="f-month" class="f-select" onchange="render()"><option value="all">Todos</option></select>
+            </div>
+            <div class="filter-item">
+                <label>🗂️ Categoria</label>
+                <select id="f-cat" class="f-select" onchange="onCatFilterChange()"><option value="all">Todas</option></select>
+            </div>
+            <div class="filter-item">
+                <label>📂 Subcategoria</label>
+                <select id="f-subcat" class="f-select" onchange="render()"><option value="all">Todas</option></select>
+            </div>
+            <div class="filter-item">
+                <label>🔍 Busca</label>
+                <input type="text" id="f-search" class="f-input" placeholder="Descrição..." oninput="render()">
+            </div>
+        </div>
+    </div>
+
+    <div id="summary" class="ed-summary"></div>
+    
+    <button class="btn-add" onclick="openModal()">➕ Novo Lançamento</button>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Subcategoria</th>
+                    <th style="text-align:right;">Valor</th>
+                    <th>Origem</th>
+                    <th style="text-align:center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <h2 id="modal-title" style="margin-bottom:20px;">Lançamento</h2>
+            <div class="modal-grid">
+                <div class="filter-item"><label>Data</label><input type="date" id="m-data" class="f-input"></div>
+                <div class="filter-item"><label>Descrição</label><input type="text" id="m-desc" class="f-input"></div>
+                <div style="display:flex; gap:10px;">
+                    <div class="filter-item"><label>Categoria</label><select id="m-cat" class="f-select" onchange="updateModalSubcats()"></select></div>
+                    <div class="filter-item"><label>Subcategoria</label><select id="m-subcat" class="f-select"></select></div>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <div class="filter-item"><label>Valor</label><input type="number" step="0.01" id="m-valor" class="f-input" placeholder="Negativo para despesa"></div>
+                    <div class="filter-item"><label>Origem</label><select id="m-orig" class="f-select"></select></div>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:10px;">
+                    <button class="btn-close" style="flex:1;" onclick="closeModal()">Cancelar</button>
+                    <button class="btn-save" style="flex:1;" onclick="save()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allData = [];
+        let cats = {}; // id -> {nome, tipo}
+        let subcatsByCat = {}; 
+        let origens = {};
+        let editingIdx = null;
+
+        async function init() {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark') document.body.classList.add('dark-mode');
+            
+            try {
+                const [lReq, cReq, oReq] = await Promise.all([
+                    fetch('data/lancamentos.json?v='+Date.now()),
+                    fetch('data/categorias.json?v='+Date.now()),
+                    fetch('data/origens.json?v='+Date.now())
+                ]);
+                const lJson = await lReq.json();
+                const cJson = await cReq.json();
+                const oJson = await oReq.json();
+
+                allData = lJson.lancamentos || lJson;
+                cJson.categorias.forEach(c => { cats[c.id] = c; });
+                oJson.origens.forEach(o => { origens[o.id] = o.nome; });
+
+                allData.forEach(r => {
+                    if (r.categoria && r.subcategoria) {
+                        if (!subcatsByCat[r.categoria]) subcatsByCat[r.categoria] = new Set();
+                        subcatsByCat[r.categoria].add(r.subcategoria);
+                    }
+                });
+
+                populateFilters();
+                render();
+            } catch(e) { console.error(e); }
+        }
+
+        function populateFilters() {
+            const fMonth = document.getElementById('f-month');
+            const months = [...new Set(allData.map(r => r.data.substring(0,7)))].sort().reverse();
+            months.forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m; opt.textContent = m.split('-').reverse().join('/');
+                fMonth.appendChild(opt);
+            });
+
+            const fCat = document.getElementById('f-cat');
+            Object.values(cats).sort((a,b) => a.nome.localeCompare(b.nome)).forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id; opt.textContent = (c.tipo === 'receita' ? '📥 ' : '💸 ') + c.nome;
+                fCat.appendChild(opt);
+            });
+        }
+
+        function onCatFilterChange() {
+            const catId = document.getElementById('f-cat').value;
+            const fSub = document.getElementById('f-subcat');
+            fSub.innerHTML = '<option value="all">Todas</option>';
+            if (catId !== 'all' && subcatsByCat[catId]) {
+                Array.from(subcatsByCat[catId]).sort().forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s; opt.textContent = s;
+                    fSub.appendChild(opt);
+                });
+            }
+            render();
+        }
+
+        function render() {
+            const month = document.getElementById('f-month').value;
+            const cat = document.getElementById('f-cat').value;
+            const subcat = document.getElementById('f-subcat').value;
+            const search = document.getElementById('f-search').value.toLowerCase();
+
+            const filtered = allData.map((r, i) => ({...r, i}))
+                .filter(r => {
+                    if (month !== 'all' && !r.data.startsWith(month)) return false;
+                    if (cat !== 'all' && r.categoria !== cat) return false;
+                    if (subcat !== 'all' && r.subcategoria !== subcat) return false;
+                    if (search && !r.descricao.toLowerCase().includes(search)) return false;
+                    return true;
+                }).sort((a,b) => b.data.localeCompare(a.data));
+
+            const total = filtered.reduce((s, r) => s + r.valor, 0);
+            document.getElementById('summary').innerHTML = `<strong>${filtered.length}</strong> lançamentos · Saldo: <span class="${total>=0?'val-pos':'val-neg'}">${brl(total)}</span>`;
+
+            document.getElementById('tbody').innerHTML = filtered.map(r => `
+                <tr>
+                    <td style="white-space:nowrap;">${r.data.split('-').reverse().join('/')}</td>
+                    <td>${r.descricao}</td>
+                    <td>${cats[r.categoria]?.nome || r.categoria}</td>
+                    <td>${r.subcategoria || ''}</td>
+                    <td style="text-align:right;" class="${r.valor>=0?'val-pos':'val-neg'}">${r.valor >= 0 ? '+' : ''}${brl(r.valor)}</td>
+                    <td>${origens[r.origem] || r.origem || ''}</td>
+                    <td style="text-align:center; white-space:nowrap;">
+                        <button class="btn-action btn-edit" onclick="openModal(${r.i})">✏️</button>
+                        <button class="btn-action btn-del" onclick="remove(${r.i})">🗑️</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openModal(idx = null) {
+            editingIdx = idx;
+            document.getElementById('modal-title').textContent = idx === null ? '➕ Novo Lançamento' : '✏️ Editar Lançamento';
+            
+            const mCat = document.getElementById('m-cat');
+            mCat.innerHTML = '<option value="">-- Selecione --</option>';
+            Object.values(cats).sort((a,b) => a.nome.localeCompare(b.nome)).forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id; opt.textContent = c.nome;
+                mCat.appendChild(opt);
+            });
+
+            const mOrig = document.getElementById('m-orig');
+            mOrig.innerHTML = '<option value="">-- Selecione --</option>';
+            Object.entries(origens).forEach(([id, nome]) => {
+                const opt = document.createElement('option');
+                opt.value = id; opt.textContent = nome;
+                mOrig.appendChild(opt);
+            });
+
+            if (idx !== null) {
+                const r = allData[idx];
+                document.getElementById('m-data').value = r.data;
+                document.getElementById('m-desc').value = r.descricao;
+                document.getElementById('m-cat').value = r.categoria;
+                updateModalSubcats();
+                document.getElementById('m-subcat').value = r.subcategoria;
+                document.getElementById('m-valor').value = r.valor;
+                document.getElementById('m-orig').value = r.origem;
+            } else {
+                document.getElementById('m-data').value = new Date().toISOString().split('T')[0];
+                document.getElementById('m-desc').value = '';
+                document.getElementById('m-cat').value = '';
+                document.getElementById('m-subcat').innerHTML = '';
+                document.getElementById('m-valor').value = '';
+                document.getElementById('m-orig').value = '';
+            }
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function updateModalSubcats() {
+            const catId = document.getElementById('m-cat').value;
+            const mSub = document.getElementById('m-subcat');
+            mSub.innerHTML = '<option value="">-- Selecione --</option>';
+            if (subcatsByCat[catId]) {
+                Array.from(subcatsByCat[catId]).sort().forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s; opt.textContent = s;
+                    mSub.appendChild(opt);
+                });
+            }
+        }
+
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+        function save() {
+            const r = {
+                data: document.getElementById('m-data').value,
+                descricao: document.getElementById('m-desc').value,
+                categoria: document.getElementById('m-cat').value,
+                subcategoria: document.getElementById('m-subcat').value,
+                valor: parseFloat(document.getElementById('m-valor').value),
+                origem: document.getElementById('m-orig').value
+            };
+            if (!r.data || !r.descricao || isNaN(r.valor)) return alert('Preencha os campos obrigatórios');
+            
+            if (editingIdx === null) allData.push(r);
+            else allData[editingIdx] = r;
+            
+            closeModal();
+            render();
+        }
+
+        function remove(idx) {
+            if (confirm('Excluir este lançamento?')) {
+                allData.splice(idx, 1);
+                render();
+            }
+        }
+
+        function brl(v) { return Math.abs(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        init();
+    </script>
+</body>
+</html>
