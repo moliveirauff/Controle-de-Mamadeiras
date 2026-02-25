@@ -333,6 +333,7 @@
               <th>Ativo</th>
               <th>Ticker</th>
               <th>Tipo</th>
+              <th>Strike</th>
               <th>Dias</th>
               <th>Vencimento</th>
               <th>Qtd</th>
@@ -796,10 +797,15 @@
           ? 'R$ ' + op.preco_opcao_abertura.toFixed(2)
           : '$' + op.preco_opcao_abertura.toFixed(2);
 
+        const strike = op.strike 
+          ? (op.moeda === 'BRL' ? 'R$ ' + op.strike.toFixed(2) : '$' + op.strike.toFixed(2))
+          : '--';
+
         tr.innerHTML = `
           <td>${op.ativo}</td>
           <td>${op.tickerOpcao || '--'}</td>
           <td>${op.tipo_contrato}</td>
+          <td>${strike}</td>
           <td>${dias}</td>
           <td>${formatDate(op.vencimento)}</td>
           <td>${op.quantidade}</td>
