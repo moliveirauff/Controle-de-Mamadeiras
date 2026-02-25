@@ -336,7 +336,7 @@ function monthLabel(key) {
 }
 
 function somaValores(arr) {
-  return arr.reduce((sum, r) => sum + Math.abs(r.valor || r.valor_total || 0), 0);
+  return arr.reduce((sum, r) => sum + (r.valor || r.valor_total || 0), 0);
 }
 
 function mesesUnicos(arr) {
@@ -498,7 +498,7 @@ function updateKPIs() {
   const totalOpcoes = somaValores(filteredData12M.opcoes);
   const totalReceitaIndireta = somaValores(filteredData12M.receitaIndireta);
   const totalReceitas = totalSalario + totalBeneficios + totalOutras + totalProventos + totalOpcoes + totalReceitaIndireta;
-  const totalDespesas = somaValores(filteredData12M.despesas);
+  const totalDespesas = Math.abs(somaValores(filteredData12M.despesas));
   
   const allReceitas = [
     ...filteredData12M.salario,
@@ -765,7 +765,7 @@ function renderTaxaAnual() {
       ...allData.opcoes.filter(r => r.data.substring(0, 4) === y),
       ...allData.receitaIndireta.filter(r => r.data.substring(0, 4) === y)
     ]);
-    const despesasAno = somaValores(allData.despesas.filter(r => r.data.substring(0, 4) === y));
+    const despesasAno = Math.abs(somaValores(allData.despesas.filter(r => r.data.substring(0, 4) === y)));
     return receitasAno > 0 ? ((receitasAno - despesasAno) / receitasAno) * 100 : 0;
   });
   

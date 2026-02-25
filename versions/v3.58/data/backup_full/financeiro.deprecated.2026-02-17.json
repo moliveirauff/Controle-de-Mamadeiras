@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "ultima_atualizacao": "2026-02-14",
+    "moeda": "BRL",
+    "versao": "1.0",
+    "familia": "Donato Suárez"
+  },
+  "categorias_despesa": [
+    { "id": "moradia", "nome": "Moradia", "icone": "🏠", "cor": "#667eea", "orcamento_mensal": 3000 },
+    { "id": "alimentacao", "nome": "Alimentação", "icone": "🛒", "cor": "#48bb78", "orcamento_mensal": 2000 },
+    { "id": "saude", "nome": "Saúde", "icone": "🏥", "cor": "#f56565", "orcamento_mensal": 500 },
+    { "id": "transporte", "nome": "Transporte", "icone": "🚗", "cor": "#ed8936", "orcamento_mensal": 800 },
+    { "id": "bebe", "nome": "Bebê (Matheus)", "icone": "🍼", "cor": "#9f7aea", "orcamento_mensal": 600 },
+    { "id": "lazer", "nome": "Lazer", "icone": "🎮", "cor": "#38b2ac", "orcamento_mensal": 400 },
+    { "id": "educacao", "nome": "Educação", "icone": "📚", "cor": "#4299e1", "orcamento_mensal": 300 },
+    { "id": "outros", "nome": "Outros", "icone": "📦", "cor": "#a0aec0", "orcamento_mensal": 500 }
+  ],
+  "categorias_receita": [
+    { "id": "salario", "nome": "Salário", "icone": "💼", "cor": "#48bb78" },
+    { "id": "freelance", "nome": "Freelance", "icone": "💻", "cor": "#4299e1" },
+    { "id": "investimentos", "nome": "Investimentos", "icone": "📈", "cor": "#ed8936" },
+    { "id": "outros_receita", "nome": "Outros", "icone": "💰", "cor": "#9f7aea" }
+  ],
+  "transacoes": [
+    { "id": "t001", "data": "2026-02-01", "tipo": "receita", "categoria": "salario", "descricao": "Salário Mauricio", "valor": 8500.00, "pago": true },
+    { "id": "t002", "data": "2026-02-05", "tipo": "receita", "categoria": "salario", "descricao": "Salário Camila", "valor": 6200.00, "pago": true },
+    { "id": "t003", "data": "2026-02-03", "tipo": "despesa", "categoria": "moradia", "descricao": "Aluguel", "valor": 2800.00, "pago": true },
+    { "id": "t004", "data": "2026-02-05", "tipo": "despesa", "categoria": "moradia", "descricao": "Condomínio", "valor": 420.00, "pago": true },
+    { "id": "t005", "data": "2026-02-07", "tipo": "despesa", "categoria": "alimentacao", "descricao": "Supermercado Extra", "valor": 680.00, "pago": true },
+    { "id": "t006", "data": "2026-02-10", "tipo": "despesa", "categoria": "saude", "descricao": "Plano de Saúde", "valor": 450.00, "pago": true },
+    { "id": "t007", "data": "2026-02-10", "tipo": "despesa", "categoria": "bebe", "descricao": "Fralda + Lenço Matheus", "valor": 180.00, "pago": true },
+    { "id": "t008", "data": "2026-02-11", "tipo": "despesa", "categoria": "transporte", "descricao": "Combustível", "valor": 250.00, "pago": true },
+    { "id": "t009", "data": "2026-02-12", "tipo": "receita", "categoria": "freelance", "descricao": "Consultoria TI", "valor": 1500.00, "pago": true },
+    { "id": "t010", "data": "2026-02-13", "tipo": "despesa", "categoria": "alimentacao", "descricao": "Restaurante", "valor": 120.00, "pago": true },
+    { "id": "t011", "data": "2026-02-14", "tipo": "despesa", "categoria": "lazer", "descricao": "Netflix + Spotify", "valor": 75.00, "pago": true },
+    { "id": "t012", "data": "2026-02-14", "tipo": "despesa", "categoria": "bebe", "descricao": "Consulta Pediatra", "valor": 220.00, "pago": false },
+
+    { "id": "t101", "data": "2026-01-02", "tipo": "receita", "categoria": "salario", "descricao": "Salário Mauricio", "valor": 8500.00, "pago": true },
+    { "id": "t102", "data": "2026-01-05", "tipo": "receita", "categoria": "salario", "descricao": "Salário Camila", "valor": 6200.00, "pago": true },
+    { "id": "t103", "data": "2026-01-03", "tipo": "despesa", "categoria": "moradia", "descricao": "Aluguel", "valor": 2800.00, "pago": true },
+    { "id": "t104", "data": "2026-01-05", "tipo": "despesa", "categoria": "moradia", "descricao": "Condomínio", "valor": 420.00, "pago": true },
+    { "id": "t105", "data": "2026-01-08", "tipo": "despesa", "categoria": "alimentacao", "descricao": "Supermercado", "valor": 750.00, "pago": true },
+    { "id": "t106", "data": "2026-01-10", "tipo": "despesa", "categoria": "saude", "descricao": "Plano de Saúde", "valor": 450.00, "pago": true },
+    { "id": "t107", "data": "2026-01-12", "tipo": "despesa", "categoria": "bebe", "descricao": "Fralda Matheus", "valor": 150.00, "pago": true },
+    { "id": "t108", "data": "2026-01-15", "tipo": "despesa", "categoria": "transporte", "descricao": "Combustível", "valor": 300.00, "pago": true },
+    { "id": "t109", "data": "2026-01-18", "tipo": "despesa", "categoria": "lazer", "descricao": "Cinema + Jantar", "valor": 180.00, "pago": true },
+    { "id": "t110", "data": "2026-01-20", "tipo": "receita", "categoria": "investimentos", "descricao": "Rendimento Tesouro Direto", "valor": 320.00, "pago": true },
+    { "id": "t111", "data": "2026-01-22", "tipo": "despesa", "categoria": "educacao", "descricao": "Curso Online", "valor": 199.00, "pago": true },
+    { "id": "t112", "data": "2026-01-25", "tipo": "despesa", "categoria": "outros", "descricao": "Presente Aniversário", "valor": 150.00, "pago": true },
+
+    { "id": "t201", "data": "2025-12-02", "tipo": "receita", "categoria": "salario", "descricao": "Salário Mauricio", "valor": 8500.00, "pago": true },
+    { "id": "t202", "data": "2025-12-05", "tipo": "receita", "categoria": "salario", "descricao": "Salário Camila", "valor": 6200.00, "pago": true },
+    { "id": "t203", "data": "2025-12-10", "tipo": "receita", "categoria": "salario", "descricao": "13º Salário Mauricio", "valor": 8500.00, "pago": true },
+    { "id": "t204", "data": "2025-12-03", "tipo": "despesa", "categoria": "moradia", "descricao": "Aluguel", "valor": 2800.00, "pago": true },
+    { "id": "t205", "data": "2025-12-05", "tipo": "despesa", "categoria": "moradia", "descricao": "Condomínio", "valor": 420.00, "pago": true },
+    { "id": "t206", "data": "2025-12-15", "tipo": "despesa", "categoria": "alimentacao", "descricao": "Ceia de Natal", "valor": 850.00, "pago": true },
+    { "id": "t207", "data": "2025-12-18", "tipo": "despesa", "categoria": "lazer", "descricao": "Viagem Réveillon", "valor": 1200.00, "pago": true },
+    { "id": "t208", "data": "2025-12-10", "tipo": "despesa", "categoria": "saude", "descricao": "Plano de Saúde", "valor": 450.00, "pago": true },
+    { "id": "t209", "data": "2025-12-20", "tipo": "despesa", "categoria": "bebe", "descricao": "Enxoval Matheus", "valor": 380.00, "pago": true },
+    { "id": "t210", "data": "2025-12-22", "tipo": "despesa", "categoria": "outros", "descricao": "Presentes de Natal", "valor": 600.00, "pago": true },
+
+    { "id": "t301", "data": "2025-11-02", "tipo": "receita", "categoria": "salario", "descricao": "Salário Mauricio", "valor": 8500.00, "pago": true },
+    { "id": "t302", "data": "2025-11-05", "tipo": "receita", "categoria": "salario", "descricao": "Salário Camila", "valor": 6200.00, "pago": true },
+    { "id": "t303", "data": "2025-11-03", "tipo": "despesa", "categoria": "moradia", "descricao": "Aluguel", "valor": 2800.00, "pago": true },
+    { "id": "t304", "data": "2025-11-05", "tipo": "despesa", "categoria": "moradia", "descricao": "Condomínio", "valor": 420.00, "pago": true },
+    { "id": "t305", "data": "2025-11-08", "tipo": "despesa", "categoria": "alimentacao", "descricao": "Supermercado", "valor": 700.00, "pago": true },
+    { "id": "t306", "data": "2025-11-10", "tipo": "despesa", "categoria": "saude", "descricao": "Plano de Saúde", "valor": 450.00, "pago": true },
+    { "id": "t307", "data": "2025-11-12", "tipo": "despesa", "categoria": "transporte", "descricao": "IPVA", "valor": 650.00, "pago": true },
+    { "id": "t308", "data": "2025-11-15", "tipo": "receita", "categoria": "freelance", "descricao": "Consultoria", "valor": 2000.00, "pago": true },
+    { "id": "t309", "data": "2025-11-20", "tipo": "despesa", "categoria": "bebe", "descricao": "Consulta Pré-natal", "valor": 280.00, "pago": true },
+    { "id": "t310", "data": "2025-11-25", "tipo": "despesa", "categoria": "outros", "descricao": "Manutenção Carro", "valor": 320.00, "pago": true }
+  ]
+}

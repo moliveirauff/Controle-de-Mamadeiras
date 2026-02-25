@@ -1,0 +1,167 @@
+{
+  "versao": "2026.2.1",
+  "data_atualizacao": "2026-02-19",
+  "descricao": "Historico de aportes, retiradas e movimentações de capital da Argos",
+  "movimentacoes": [
+    {
+      "ativo": "Argos",
+      "data": "2023-12-30",
+      "tipo": "APORTE",
+      "valor_total": 50000.0,
+      "preco_unitario": 150000.0,
+      "quantidade": 0.3
+    },
+    {
+      "ativo": "Argos",
+      "data": "2024-09-01",
+      "tipo": "APORTE",
+      "valor_total": 4000.0,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2024-10-30",
+      "tipo": "APORTE",
+      "valor_total": 2000.0,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2024-11-30",
+      "tipo": "APORTE",
+      "valor_total": 2000.0,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2024-12-24",
+      "tipo": "APORTE",
+      "valor_total": 6666.67,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2024-12-24",
+      "tipo": "APORTE",
+      "valor_total": 2000.0,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-01-30",
+      "tipo": "APORTE",
+      "valor_total": 6666.66,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-03-30",
+      "tipo": "APORTE",
+      "valor_total": 23333.33,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-04-07",
+      "tipo": "APORTE",
+      "valor_total": 3000.0,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-05-08",
+      "tipo": "APORTE",
+      "valor_total": 25000.0,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-05-08",
+      "tipo": "APORTE",
+      "valor_total": 4251.6,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-05-26",
+      "tipo": "APORTE",
+      "valor_total": 1715.08,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-06-10",
+      "tipo": "APORTE",
+      "valor_total": 430.03,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-06-26",
+      "tipo": "APORTE",
+      "valor_total": 25333.33,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-07-30",
+      "tipo": "APORTE",
+      "valor_total": 18427.43,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-08-30",
+      "tipo": "APORTE",
+      "valor_total": 11771.58,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-09-30",
+      "tipo": "APORTE",
+      "valor_total": 11773.63,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-10-31",
+      "tipo": "APORTE",
+      "valor_total": 21772.14,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-11-30",
+      "tipo": "APORTE",
+      "valor_total": 31771.2,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Argos",
+      "data": "2025-12-30",
+      "tipo": "APORTE",
+      "valor_total": 31771.5,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    }
+  ]
+}
