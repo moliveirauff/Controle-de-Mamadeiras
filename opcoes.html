@@ -7,6 +7,7 @@
   <meta name="supported-color-schemes" content="light">
   <title>📊 Dashboard de Opções</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
   <style>
     :root {
       color-scheme: only light !important;
@@ -29,6 +30,20 @@
       --yellow: #FFC107;
     }
 
+    body.dark-mode {
+      color-scheme: only dark !important;
+      --bg: #1a202c;
+      --text: #f7fafc;
+      --surface: #2d3748;
+      --card-bg: var(--surface);
+      --border: #4a5568;
+      --text-muted: #cbd5e0;
+      --subtext: var(--text-muted);
+      --primary: #7f9cf5;
+      --accent: var(--primary);
+      background-color: var(--bg);
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html {
       background-color: var(--bg);
@@ -36,14 +51,32 @@
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=');
-      background-repeat: repeat;
       background-color: var(--bg);
       color: var(--text);
       transition: background-color 0.3s, color 0.3s;
       padding: 10px 10px 60px 10px;
       min-height: 100vh;
     }
+
+    #theme-toggle {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.05);
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+
+    body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+    body:not(.dark-mode) #theme-toggle { background: rgba(0,0,0,0.05); }
 
     .nav-link {
       text-decoration: none;
@@ -73,56 +106,60 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 16px;
+      padding: 12px 8px;
+      text-align: center;
       box-shadow: var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .kpi-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: background-color 0.3s, border-color 0.3s;
     }
 
     .kpi-label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      font-weight: 600;
+      font-size: 0.6rem;
+      font-weight: 800;
+      color: var(--subtext);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.05em;
+      order: 1;
     }
 
     .kpi-value {
-      font-size: 1.8rem;
-      font-weight: 700;
+      font-size: 1.05rem;
+      font-weight: 800;
       color: var(--text);
+      line-height: 1.2;
+      order: 2;
     }
 
     .kpi-value.positive { color: var(--green); }
     .kpi-value.negative { color: var(--red); }
     .kpi-value.warning { color: var(--yellow); }
 
-    /* Cards */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
+    .kpi-sub {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      order: 3;
     }
 
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      transition: background-color 0.3s, border-color 0.3s;
     }
 
     .card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 16px;
+      font-size: 1rem;
+      margin-bottom: 12px;
       color: var(--text);
       font-weight: 700;
+      text-align: center;
     }
 
     /* Charts */
@@ -135,15 +172,25 @@
 
     .chart-container {
       position: relative;
-      height: 320px;
+      height: 300px;
+    }
+
+    #chartFluxoAtivo {
+      height: auto !important;
     }
 
     @media (min-width: 768px) {
       .kpi-grid {
         grid-template-columns: repeat(4, 1fr);
       }
+      .kpi-value {
+        font-size: 1.3rem;
+      }
       .charts-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+      .chart-container {
+        height: 380px;
       }
     }
 
@@ -151,7 +198,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px;
+      font-size: 0.85rem;
     }
 
     thead {
@@ -159,14 +206,29 @@
       font-weight: bold;
     }
 
+    body.dark-mode thead {
+      background: var(--border);
+    }
+
     th, td {
-      padding: 12px;
+      padding: 10px;
       text-align: left;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
     }
 
     tr:hover {
-      background: #f9f9f9;
+      background: rgba(0,0,0,0.02);
+    }
+
+    body.dark-mode tr:hover {
+      background: rgba(255,255,255,0.05);
     }
 
     .venc-7dias {
@@ -175,6 +237,14 @@
 
     .venc-3dias {
       background: #FFE0B2 !important;
+    }
+
+    body.dark-mode .venc-7dias {
+      background: rgba(255,249,196,0.2) !important;
+    }
+
+    body.dark-mode .venc-3dias {
+      background: rgba(255,224,178,0.3) !important;
     }
 
     footer {
@@ -200,6 +270,7 @@
   </style>
 </head>
 <body>
+  <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
   <a href="index.html" class="nav-link">← Voltar ao Hub</a>
   
   <h1>📊 Dashboard de Opções</h1>
@@ -214,15 +285,15 @@
         <div class="kpi-value" id="kpiFluxoTotal">--</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Fluxo Mês Atual</div>
+        <div class="kpi-label">Fluxo Mês</div>
         <div class="kpi-value" id="kpiFluxoMes">--</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Operações Abertas</div>
+        <div class="kpi-label">Ops Abertas</div>
         <div class="kpi-value" id="kpiAbertas">--</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Vencendo em 7 dias</div>
+        <div class="kpi-label">Venc. 7 Dias</div>
         <div class="kpi-value" id="kpiVencendo">--</div>
       </div>
     </div>
@@ -237,10 +308,18 @@
       </div>
 
       <div class="card">
-        <h3>🎯 Fluxo por Ativo (Top 10)</h3>
+        <h3>📊 % Retorno Mensal + Acumulado</h3>
         <div class="chart-container">
-          <canvas id="chartFluxoAtivo"></canvas>
+          <canvas id="chartRetorno"></canvas>
         </div>
+      </div>
+    </div>
+
+    <!-- Gráfico Full Width -->
+    <div class="card">
+      <h3>🎯 Resultado por Ativo</h3>
+      <div class="chart-container" id="containerFluxoAtivo">
+        <canvas id="chartFluxoAtivo"></canvas>
       </div>
     </div>
 
@@ -252,12 +331,12 @@
           <thead>
             <tr>
               <th>Ativo</th>
-              <th>Ticker Opção</th>
+              <th>Ticker</th>
               <th>Tipo</th>
+              <th>Dias</th>
               <th>Vencimento</th>
               <th>Qtd</th>
-              <th>Preço Abertura</th>
-              <th>Dias</th>
+              <th>Preço</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -271,6 +350,68 @@
   </div>
 
   <script>
+    // Desabilitar datalabels globalmente
+    Chart.defaults.set('plugins.datalabels', { display: false });
+
+    // ─── THEME ───
+    function updateMetaThemeColor(isDark) {
+      const color = isDark ? '#1a202c' : '#f7fafc';
+      const scheme = isDark ? 'only dark' : 'only light';
+      
+      let metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (!metaTheme) {
+        metaTheme = document.createElement('meta');
+        metaTheme.name = 'theme-color';
+        document.head.appendChild(metaTheme);
+      }
+      metaTheme.content = color;
+
+      let metaScheme = document.querySelector('meta[name="color-scheme"]');
+      if (!metaScheme) {
+        metaScheme = document.createElement('meta');
+        metaScheme.name = 'color-scheme';
+        document.head.appendChild(metaScheme);
+      }
+      metaScheme.content = scheme;
+    }
+
+    function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      let isDark = false;
+      if (savedTheme === 'dark') {
+        isDark = true;
+      } else if (savedTheme === 'light') {
+        isDark = false;
+      } else if (prefersDark) {
+        isDark = true;
+      }
+      
+      if (isDark) {
+        document.body.classList.add('dark-mode');
+        document.getElementById('theme-toggle').textContent = '☀️';
+      } else {
+        document.body.classList.remove('dark-mode');
+        document.getElementById('theme-toggle').textContent = '🌙';
+      }
+      updateMetaThemeColor(isDark);
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+      updateMetaThemeColor(isDark);
+      
+      setTimeout(() => {
+        if (window.chartsRendered) {
+          renderAll();
+        }
+      }, 50);
+    }
+
     // ─── HELPERS ───
     function brl(v) {
       return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -283,7 +424,9 @@
 
     function diasAteVencimento(dataVenc) {
       const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
       const venc = new Date(dataVenc);
+      venc.setHours(0, 0, 0, 0);
       const diff = Math.ceil((venc - hoje) / (1000*60*60*24));
       return diff;
     }
@@ -302,12 +445,10 @@
         const ativo = op[campoAtivo];
         if (!fluxo[ativo]) fluxo[ativo] = 0;
         
-        // Fluxo de abertura
         const sinal_ab = (op.operacao === 'Venda') ? 1 : -1;
         const fc_ab = (op.preco_opcao_abertura * op.quantidade * sinal_ab) - op.taxas_abertura;
         fluxo[ativo] += fc_ab;
         
-        // Fluxo de fechamento
         if (op.status === 'fechada') {
           const sinal_fc = (op.operacao === 'Venda') ? -1 : 1;
           const fc_fc = (op.preco_opcao_fechamento * op.quantidade * sinal_fc) - op.taxas_fechamento;
@@ -330,45 +471,47 @@
       }).length;
     }
 
+    // ─── GLOBAL DATA ───
+    let globalData = {};
+
     // ─── RENDER KPIs ───
     function renderKPIs(fluxoData, brData, usData) {
-      // KPI 1: Fluxo Total
       const fluxoTotal = fluxoData.totais.total_geral_brl;
       const el1 = document.getElementById('kpiFluxoTotal');
       el1.textContent = brl(fluxoTotal);
       el1.className = 'kpi-value ' + (fluxoTotal >= 0 ? 'positive' : 'negative');
 
-      // KPI 2: Fluxo Mês Atual
       const mesAtual = new Date().toISOString().slice(0,7);
       const fluxoMes = fluxoData.fluxo_mensal.find(m => m.mes === mesAtual)?.total_brl || 0;
       const el2 = document.getElementById('kpiFluxoMes');
       el2.textContent = brl(fluxoMes);
       el2.className = 'kpi-value ' + (fluxoMes >= 0 ? 'positive' : 'negative');
 
-      // KPI 3: Operações Abertas
       const ops_br = brData.estatisticas.operacoes_abertas;
       const ops_us = usData.estatisticas.operacoes_abertas;
       const total_abertas = ops_br + ops_us;
-      document.getElementById('kpiAbertas').textContent = total_abertas + ' ops';
+      document.getElementById('kpiAbertas').textContent = total_abertas;
 
-      // KPI 4: Vencendo em 7 dias
       const vencBR = contarVencimentos(brData.operacoes);
       const vencUS = contarVencimentos(usData.operacoes);
       const total_vencendo = vencBR + vencUS;
       const el4 = document.getElementById('kpiVencendo');
-      el4.textContent = total_vencendo + ' ops';
+      el4.textContent = total_vencendo;
       el4.className = 'kpi-value ' + (total_vencendo > 0 ? 'warning' : '');
     }
 
     // ─── RENDER GRÁFICO FLUXO MENSAL ───
     function renderFluxoMensal(fluxoData) {
       const ctx = document.getElementById('chartFluxoMensal').getContext('2d');
+      const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+      const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
       
       const labels = fluxoData.fluxo_mensal.map(m => monthLabel(m.mes));
       const dataBR = fluxoData.fluxo_mensal.map(m => m.br_brl);
       const dataUS = fluxoData.fluxo_mensal.map(m => m.us_brl);
 
-      new Chart(ctx, {
+      if (globalData.chartFluxoMensal) globalData.chartFluxoMensal.destroy();
+      globalData.chartFluxoMensal = new Chart(ctx, {
         type: 'bar',
         data: {
           labels,
@@ -391,18 +534,25 @@
           responsive: true,
           maintainAspectRatio: false,
           scales: {
-            x: { stacked: true, grid: { display: false } },
+            x: { 
+              stacked: true, 
+              grid: { display: false },
+              ticks: { font: { size: 10 }, color: textColor }
+            },
             y: { 
               stacked: true,
               ticks: {
-                callback: (value) => brl(value)
-              }
+                callback: (value) => brl(value),
+                font: { size: 10 },
+                color: textColor
+              },
+              grid: { color: gridColor }
             }
           },
           plugins: {
             legend: { 
               position: 'bottom',
-              labels: { boxWidth: 12, font: { size: 10 } }
+              labels: { boxWidth: 12, font: { size: 10 }, color: textColor }
             },
             tooltip: {
               callbacks: {
@@ -414,59 +564,200 @@
       });
     }
 
+    // ─── RENDER GRÁFICO % RETORNO ───
+    function renderRetorno(fluxoData, investData) {
+      const ctx = document.getElementById('chartRetorno').getContext('2d');
+      const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+      const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
+
+      // Buscar saldo total de ações + internacional + cripto
+      const alocacao = investData.alocacao || [];
+      const saldoAcoes = alocacao.find(a => a.categoria === '3_acoes_brasil')?.real_rs || 0;
+      const saldoInternacional = alocacao.find(a => a.categoria === '5_internacional')?.real_rs || 0;
+      const saldoCripto = alocacao.find(a => a.categoria === '6_criptoativos')?.real_rs || 0;
+      const saldoTotal = saldoAcoes + saldoInternacional + saldoCripto;
+
+      if (saldoTotal === 0) {
+        // Criar gráfico vazio se não houver saldo
+        return;
+      }
+
+      const labels = fluxoData.fluxo_mensal.map(m => monthLabel(m.mes));
+      
+      // Calcular % retorno mensal
+      const retornoMensal = fluxoData.fluxo_mensal.map(m => 
+        (m.total_brl / saldoTotal) * 100
+      );
+
+      // Calcular % retorno acumulado
+      let acumulado = 0;
+      const retornoAcumulado = fluxoData.fluxo_mensal.map(m => {
+        acumulado += m.total_brl;
+        return (acumulado / saldoTotal) * 100;
+      });
+
+      if (globalData.chartRetorno) globalData.chartRetorno.destroy();
+      globalData.chartRetorno = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            {
+              type: 'bar',
+              label: '% Retorno Mês',
+              data: retornoMensal,
+              backgroundColor: retornoMensal.map(v => v >= 0 ? '#4CAF50' : '#f44336'),
+              borderRadius: 4,
+              yAxisID: 'y'
+            },
+            {
+              type: 'line',
+              label: '% Retorno Acumulado',
+              data: retornoAcumulado,
+              borderColor: '#667eea',
+              backgroundColor: 'rgba(102, 126, 234, 0.1)',
+              borderWidth: 2,
+              tension: 0.3,
+              yAxisID: 'y1',
+              pointRadius: 3,
+              pointHoverRadius: 5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { 
+              grid: { display: false },
+              ticks: { font: { size: 10 }, color: textColor }
+            },
+            y: {
+              type: 'linear',
+              position: 'left',
+              ticks: {
+                callback: (value) => value.toFixed(1) + '%',
+                font: { size: 10 },
+                color: textColor
+              },
+              grid: { color: gridColor }
+            },
+            y1: {
+              type: 'linear',
+              position: 'right',
+              ticks: {
+                callback: (value) => value.toFixed(1) + '%',
+                font: { size: 10 },
+                color: textColor
+              },
+              grid: { display: false }
+            }
+          },
+          plugins: {
+            legend: { 
+              position: 'bottom',
+              labels: { boxWidth: 12, font: { size: 10 }, color: textColor }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(2) + '%'
+              }
+            }
+          }
+        }
+      });
+    }
+
     // ─── RENDER GRÁFICO FLUXO POR ATIVO ───
     function renderFluxoAtivo(brData, usData) {
-      const ctx = document.getElementById('chartFluxoAtivo').getContext('2d');
-      
+      const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+      const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
+
       const fluxoBR = calcularFluxoPorAtivo(brData.operacoes, 'acao');
       const fluxoUS = calcularFluxoPorAtivo(usData.operacoes, 'ticker');
 
-      // Converter US para BRL (cotação média 5.50)
       const cotacaoMedia = 5.50;
       Object.keys(fluxoUS).forEach(k => {
         fluxoUS[k] *= cotacaoMedia;
       });
 
-      // Consolidar
       const fluxoConsolidado = {...fluxoBR};
       Object.keys(fluxoUS).forEach(k => {
         fluxoConsolidado[k] = (fluxoConsolidado[k] || 0) + fluxoUS[k];
       });
 
-      // Ordenar por valor absoluto (top 10)
-      const ativos = Object.entries(fluxoConsolidado)
-        .sort((a,b) => Math.abs(b[1]) - Math.abs(a[1]))
-        .slice(0, 10);
+      const positivos = Object.entries(fluxoConsolidado).filter(a => a[1] >= 0);
+      const negativos = Object.entries(fluxoConsolidado).filter(a => a[1] < 0);
+
+      positivos.sort((a,b) => b[1] - a[1]);
+      negativos.sort((a,b) => b[1] - a[1]);
+
+      const ativos = [...positivos, ...negativos];
 
       const labels = ativos.map(a => a[0]);
-      const valores = ativos.map(a => a[1]);
-      const cores = valores.map(v => v >= 0 ? '#4CAF50' : '#f44336');
+      const valoresReais = ativos.map(a => a[1]);
+      const valoresAbsolutos = valoresReais.map(v => Math.abs(v));
+      const cores = valoresReais.map(v => v >= 0 ? '#4CAF50' : '#f44336');
 
-      new Chart(ctx, {
+      const container = document.getElementById('containerFluxoAtivo');
+      const alturaBase = 30;
+      const alturaPadding = 40;
+      const alturaTotal = (ativos.length * alturaBase) + alturaPadding;
+      container.style.height = alturaTotal + 'px';
+
+      const canvas = document.getElementById('chartFluxoAtivo');
+      canvas.style.height = alturaTotal + 'px';
+
+      if (globalData.chartFluxoAtivo) globalData.chartFluxoAtivo.destroy();
+      globalData.chartFluxoAtivo = new Chart(canvas.getContext('2d'), {
         type: 'bar',
         data: {
           labels,
           datasets: [{
-            data: valores,
+            data: valoresAbsolutos,
             backgroundColor: cores,
-            borderRadius: 4
+            borderRadius: 4,
+            barPercentage: 0.7,
+            datalabels: {
+              display: true,
+              anchor: 'end',
+              align: 'end',
+              offset: 4,
+              formatter: (value, ctx) => brl(valoresReais[ctx.dataIndex]),
+              font: { size: 8, weight: 'bold' },
+              color: textColor
+            }
           }]
         },
         options: {
           indexAxis: 'y',
           responsive: true,
           maintainAspectRatio: false,
+          layout: { padding: { right: 80 } },
           scales: {
             x: {
               ticks: {
-                callback: (value) => brl(value)
-              }
+                callback: (value) => brl(value),
+                font: { size: 9 },
+                color: textColor
+              },
+              grid: { color: gridColor }
+            },
+            y: {
+              ticks: { font: { size: 9 }, color: textColor },
+              grid: { display: false }
             }
           },
           plugins: {
-            legend: { display: false }
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => brl(valoresReais[ctx.dataIndex])
+              }
+            }
           }
-        }
+        },
+        plugins: [ChartDataLabels]
       });
     }
 
@@ -474,7 +765,6 @@
     function renderTabela(brData, usData) {
       const tbody = document.querySelector('#tabelaAbertas tbody');
       
-      // Filtrar operações abertas
       const abertas = [
         ...brData.operacoes.filter(op => op.status === 'aberta').map(op => ({
           ...op,
@@ -490,15 +780,12 @@
         }))
       ];
 
-      // Ordenar por vencimento
       abertas.sort((a, b) => new Date(a.vencimento) - new Date(b.vencimento));
 
-      // Renderizar linhas
       abertas.forEach(op => {
         const dias = diasAteVencimento(op.vencimento);
         const tr = document.createElement('tr');
         
-        // Aplicar destaque
         if (dias <= 3) {
           tr.className = 'venc-3dias';
         } else if (dias <= 7) {
@@ -513,39 +800,53 @@
           <td>${op.ativo}</td>
           <td>${op.tickerOpcao || '--'}</td>
           <td>${op.tipo_contrato}</td>
+          <td>${dias}</td>
           <td>${formatDate(op.vencimento)}</td>
           <td>${op.quantidade}</td>
           <td>${preco}</td>
-          <td>${dias}</td>
         `;
         
         tbody.appendChild(tr);
       });
     }
 
+    // ─── RENDER ALL ───
+    function renderAll() {
+      if (!globalData.fluxoData || !globalData.brData || !globalData.usData || !globalData.investData) {
+        return;
+      }
+
+      renderKPIs(globalData.fluxoData, globalData.brData, globalData.usData);
+      renderFluxoMensal(globalData.fluxoData);
+      renderRetorno(globalData.fluxoData, globalData.investData);
+      renderFluxoAtivo(globalData.brData, globalData.usData);
+    }
+
     // ─── INIT ───
     async function init() {
       try {
-        const [fluxoReq, brReq, usReq] = await Promise.all([
+        const [fluxoReq, brReq, usReq, investReq] = await Promise.all([
           fetch('data/fluxo_caixa_opcoes_mensal.json?v=' + Date.now()),
           fetch('data/opcoes_br.json?v=' + Date.now()),
-          fetch('data/opcoes_intl.json?v=' + Date.now())
+          fetch('data/opcoes_intl.json?v=' + Date.now()),
+          fetch('data/dashboard_investimentos.json?v=' + Date.now())
         ]);
 
-        const fluxoData = await fluxoReq.json();
-        const brData = await brReq.json();
-        const usData = await usReq.json();
+        globalData.fluxoData = await fluxoReq.json();
+        globalData.brData = await brReq.json();
+        globalData.usData = await usReq.json();
+        globalData.investData = await investReq.json();
 
-        renderKPIs(fluxoData, brData, usData);
-        renderFluxoMensal(fluxoData);
-        renderFluxoAtivo(brData, usData);
-        renderTabela(brData, usData);
+        renderAll();
+        renderTabela(globalData.brData, globalData.usData);
 
         document.getElementById('dataAtualizacao').textContent = 
-          brData.data_atualizacao || fluxoData.data_geracao || '--';
+          globalData.brData.data_atualizacao || globalData.fluxoData.data_geracao || '--';
 
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('content').classList.remove('hidden');
+
+        window.chartsRendered = true;
 
       } catch(err) {
         alert('Erro ao carregar dados: ' + err.message);
@@ -553,6 +854,7 @@
       }
     }
 
+    initTheme();
     init();
   </script>
 </body>
