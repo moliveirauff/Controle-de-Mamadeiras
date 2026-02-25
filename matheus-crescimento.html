@@ -376,7 +376,7 @@
       const med = data.crianca.medicoes.filter(m => m.peso_kg);
       const filt = filterByPeriod(med, period);
       const minA = period === 'all' ? 0 : Math.max(0, Math.max(...med.map(m => m.idade_meses)) - period);
-      const maxA = Math.max(...med.map(m => m.idade_meses)) + 0.5;
+      const maxA = Math.max(7, Math.max(...med.map(m => m.idade_meses)) + 0.5);
       
       const dsRef = getRefDatasets(data.pesoRef, sexo, minA, maxA);
       const dsMatheus = {
@@ -398,7 +398,7 @@
       const med = data.crianca.medicoes.filter(m => m.altura_cm);
       const filt = filterByPeriod(med, period);
       const minA = period === 'all' ? 0 : Math.max(0, Math.max(...med.map(m => m.idade_meses)) - period);
-      const maxA = Math.max(...med.map(m => m.idade_meses)) + 0.5;
+      const maxA = Math.max(7, Math.max(...med.map(m => m.idade_meses)) + 0.5);
       
       const dsRef = getRefDatasets(data.alturaRef, sexo, minA, maxA);
       const dsMatheus = {
