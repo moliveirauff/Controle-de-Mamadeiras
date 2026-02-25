@@ -238,7 +238,7 @@
     <div class="kpi-card">
       <span class="kpi-label">🎁 Média Passiva</span>
       <span class="kpi-value" id="kpiPassiva">—</span>
-      <span class="kpi-sub">Sem salário (12M)</span>
+      <span class="kpi-sub">Sem salário/benefícios (12M)</span>
     </div>
   </div>
 
@@ -511,7 +511,7 @@ function updateKPIs() {
   const meses = mesesUnicos(allReceitas) || 1;
   
   const mediaTotal = totalReceitas / meses;
-  const mediaPassiva = (totalBeneficios + totalOutras + totalProventos + totalOpcoes + totalReceitaIndireta) / meses;
+  const mediaPassiva = (totalOutras + totalProventos + totalOpcoes + totalReceitaIndireta) / meses;
   const taxaPoupanca = totalReceitas > 0 ? ((totalReceitas - totalDespesas) / totalReceitas) * 100 : 0;
   
   document.getElementById('kpiTotal').textContent = brl(totalReceitas);

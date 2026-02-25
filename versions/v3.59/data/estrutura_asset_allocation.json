@@ -1,0 +1,161 @@
+{
+  "versao": "2026.2.2",
+  "ultimo_ajuste": "2026-02-18",
+  "taxonomia": {
+    "1_renda_fixa_soberana": {
+      "nome": "Renda Fixa Soberana & Liquidez",
+      "subclasses": {
+        "1.1_liquidez": {
+          "nome": "Liquidez / Caixa",
+          "definicao": "Recursos com disponibilidade imediata e risco de crédito zero ou bancário.",
+          "exemplo": "Tesouro Selic, Fundos DI Simples",
+          "benchmark": "CDI / Selic (Defesa)"
+        },
+        "1.2_ipca_curto": {
+          "nome": "Soberano Inflação (Curto)",
+          "definicao": "Títulos públicos IPCA+ curtos (< 5 anos). Proteção de poder de compra com menor volatilidade.",
+          "benchmark": "IMA-B 5"
+        },
+        "1.3_ipca_longo": {
+          "nome": "Soberano Inflação (Longo)",
+          "definicao": "Títulos públicos IPCA+ longos (> 10 anos). Foco em aposentadoria, mas com risco de mercado similar à bolsa.",
+          "benchmark": "IMA-B 5+"
+        },
+        "1.4_prefixado": {
+          "nome": "Prefixado (Tático)",
+          "definicao": "Títulos com taxa travada. Aposta na queda de juros (fechamento da curva).",
+          "benchmark": "IRF-M"
+        }
+      }
+    },
+    "2_credito_privado": {
+      "nome": "Crédito Privado & Renda",
+      "subclasses": {
+        "2.1_high_grade": {
+          "nome": "Crédito High Grade",
+          "definicao": "Dívida de empresas AAA (Risco Baixo).",
+          "exemplo": "Debêntures de Infraestrutura, LCI/LCA de grandes bancos",
+          "benchmark": "IDA-DI / CDI (Motor de Yield)"
+        },
+        "2.2_high_yield": {
+          "nome": "Crédito High Yield (Papel)",
+          "definicao": "Atenção: Dívida com maior risco/retorno.",
+          "exemplo": "FIIs de Papel (CRI), Fiagro de Crédito (CRA), FIDCs e Debêntures HY",
+          "benchmark": "IFIX Papel / CDI+"
+        },
+        "2.3_prev_rf": {
+          "nome": "Renda Fixa Ativa (Prev)",
+          "definicao": "Fundos de Previdência classificados como 'Renda Fixa' ou Conservadores (Gestão de Juros/Crédito).",
+          "benchmark": "CDI / IMA-B"
+        }
+      }
+    },
+    "3_acoes_brasil": {
+      "nome": "Ações Brasil (Equity)",
+      "subclasses": {
+        "3.1_beta_commodities": {
+          "nome": "Beta & Commodities",
+          "definicao": "Grandes empresas, estatais e exportadoras. Alta correlação com o ciclo macro global.",
+          "exemplo": "Vale, Petrobras",
+          "benchmark": "Ibovespa / IBrX (Crescimento)"
+        },
+        "3.2_small_caps": {
+          "nome": "Small Caps (Fator)",
+          "definicao": "Empresas menores focadas na economia doméstica. Maior potencial de crescimento e risco.",
+          "exemplo": "Varejo, Construção",
+          "benchmark": "SMLL"
+        },
+        "3.3_dividendos": {
+          "nome": "Dividendos & Qualidade",
+          "definicao": "Empresas maduras, geradoras de caixa previsível e resilientes.",
+          "exemplo": "Elétricas, Bancos, Seguros, Saneamento",
+          "benchmark": "IDIV"
+        }
+      }
+    },
+    "4_ativos_reais": {
+      "nome": "Ativos Reais (Tijolo)",
+      "subclasses": {
+        "4.1_logistico": {
+          "nome": "Imobiliário Logístico",
+          "definicao": "Galpões logísticos e industriais físicos. Proteção inflacionária real.",
+          "benchmark": "IFIX Tijolo (Proteção Patrimonial)"
+        },
+        "4.2_urbano": {
+          "nome": "Imobiliário Urbano",
+          "definicao": "Shoppings, Lajes Corporativas, Varejo (Renda Urbana) e Híbridos de Tijolo.",
+          "benchmark": "IFIX Tijolo"
+        },
+        "4.3_agro": {
+          "nome": "Terras & Agro",
+          "definicao": "Fiagro de Terras (Land Equity). Valorização da terra produtiva e arrendamento.",
+          "benchmark": "IPCA + Yield"
+        },
+        "4.4_desenvolvimento": {
+          "nome": "Desenvolvimento",
+          "definicao": "FIIs que constroem para vender (Incorporação/Loteamento). Risco de execução mais alto.",
+          "benchmark": "INCC + Prêmio"
+        }
+      }
+    },
+    "5_internacional": {
+      "nome": "Internacional",
+      "subclasses": {
+        "5.1_acoes_globais": {
+          "nome": "Ações Globais",
+          "definicao": "Exposição a empresas no exterior (EUA, Europa, Ásia).",
+          "exemplo": "Stocks, ETFs de S&P 500",
+          "benchmark": "S&P 500 / MSCI (Diversificação)"
+        },
+        "5.2_real_estate": {
+          "nome": "Real Estate Global",
+          "definicao": "Imóveis no exterior.",
+          "exemplo": "REITs Americanos",
+          "benchmark": "VNQ / REIT Index"
+        },
+        "5.3_bonds": {
+          "nome": "Renda Fixa Global",
+          "definicao": "Títulos em Dólar.",
+          "exemplo": "Treasuries (Livres de Risco) ou Corporate Bonds",
+          "benchmark": "US Treasury Yield"
+        }
+      }
+    },
+    "6_criptoativos": {
+      "nome": "Criptoativos",
+      "subclasses": {
+        "6.1_reserva_valor": {
+          "nome": "Reserva de Valor",
+          "definicao": "Escassez digital e descorrelação monetária.",
+          "exemplo": "Bitcoin (BTC)",
+          "benchmark": "BTC/USD (Assimetria)"
+        },
+        "6.2_plataforma_utility": {
+          "nome": "Plataforma / Utility",
+          "definicao": "Tecnologia de contratos inteligentes.",
+          "exemplo": "Ethereum (ETH), Solana",
+          "benchmark": "ETH/USD"
+        }
+      }
+    },
+    "7_alternativos_estratega": {
+      "nome": "Alternativos & Estratégia",
+      "subclasses": {
+        "7.1_multimercado": {
+          "nome": "Multimercado (Macro)",
+          "definicao": "Fundos com gestão ativa livre, Fundos de Fundos (FoF) e Previdência Multimercado. Risco de Gestor.",
+          "benchmark": "CDI + Alpha (Risco de Gestão/Iliquidez)"
+        },
+        "7.2_private_equity": {
+          "nome": "Private Equity / Ilíquidos",
+          "definicao": "Investimentos em empresas de capital fechado, Venture Capital ou Special Situations.",
+          "benchmark": "IPCA + Prêmio"
+        }
+      }
+    }
+  },
+  "alocacao": {
+    "target_allocation_pct": {},
+    "current_allocation_pct": {}
+  }
+}
