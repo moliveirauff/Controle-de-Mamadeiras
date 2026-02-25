@@ -238,7 +238,7 @@
     <div class="kpi-card">
       <span class="kpi-label">🎁 Média Passiva</span>
       <span class="kpi-value" id="kpiPassiva">—</span>
-      <span class="kpi-sub">Sem salário/benefícios (12M)</span>
+      <span class="kpi-sub">Proventos + Opções (12M)</span>
     </div>
   </div>
 
@@ -279,6 +279,20 @@
     </div>
     <div class="chart-container"><canvas id="cTaxaAnual"></canvas></div>
   </div>
+
+  <!-- Chart: Renda Passiva -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title"><span>📈</span> Renda Passiva por Mês</div>
+      <div class="controls">
+        <button class="btn-period active" onclick="setPeriodPassiva('12m', this)">12M</button>
+        <button class="btn-period" onclick="setPeriodPassiva('24m', this)">24M</button>
+        <button class="btn-period" onclick="setPeriodPassiva('36m', this)">36M</button>
+        <button class="btn-period" onclick="setPeriodPassiva('todos', this)">Todos</button>
+      </div>
+    </div>
+    <div class="chart-container"><canvas id="cPassiva"></canvas></div>
+  </div>
 </main>
 
 <script>
@@ -316,7 +330,9 @@ let allData = {
 };
 let filteredData12M = {};
 let filteredDataMensal = {};
+let filteredDataPassiva = {};
 let currentPeriodMensal = '12m';
+let currentPeriodPassiva = '12m';
 let charts = {};
 
 // ─── HELPERS ───
@@ -411,6 +427,15 @@ function setPeriodMensal(period, btn) {
   renderMensal();
 }
 
+function setPeriodPassiva(period, btn) {
+  currentPeriodPassiva = period;
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.btn-period').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilterPassiva();
+  renderPassiva();
+}
+
 function applyFilter12M() {
   const combinedReceitas = [
     ...allData.salario,
@@ -481,6 +506,33 @@ function applyFilterMensal() {
   };
 }
 
+function applyFilterPassiva() {
+  const combinedPassiva = [...allData.proventos, ...allData.opcoes];
+  
+  if (!combinedPassiva.length) {
+    filteredDataPassiva = { proventos: [], opcoes: [], despesas: [] };
+    return;
+  }
+
+  const lastKey = combinedPassiva.reduce((max, r) => r.data > max ? r.data : max, '');
+  const refDate = lastKey ? new Date(lastKey + 'T00:00') : new Date();
+
+  let cutKey = '';
+  if (currentPeriodPassiva === 'todos') {
+    cutKey = '0000-00';
+  } else {
+    const months = parseInt(currentPeriodPassiva);
+    const cutoff = new Date(refDate.getFullYear(), refDate.getMonth() - months + 1, 1);
+    cutKey = `${cutoff.getFullYear()}-${String(cutoff.getMonth() + 1).padStart(2, '0')}`;
+  }
+
+  filteredDataPassiva = {
+    proventos: allData.proventos.filter(r => r.data.substring(0, 7) >= cutKey),
+    opcoes: allData.opcoes.filter(r => r.data.substring(0, 7) >= cutKey),
+    despesas: allData.despesas.filter(r => r.data.substring(0, 7) >= cutKey)
+  };
+}
+
 // ─── RENDER ───
 function renderAll() {
   updateKPIs();
@@ -488,6 +540,7 @@ function renderAll() {
   renderMensal();
   renderDonut();
   renderTaxaAnual();
+  renderPassiva();
 }
 
 function updateKPIs() {
@@ -511,7 +564,7 @@ function updateKPIs() {
   const meses = mesesUnicos(allReceitas) || 1;
   
   const mediaTotal = totalReceitas / meses;
-  const mediaPassiva = (totalOutras + totalProventos + totalOpcoes + totalReceitaIndireta) / meses;
+  const mediaPassiva = (totalProventos + totalOpcoes) / meses;
   const taxaPoupanca = totalReceitas > 0 ? ((totalReceitas - totalDespesas) / totalReceitas) * 100 : 0;
   
   document.getElementById('kpiTotal').textContent = brl(totalReceitas);
@@ -813,6 +866,107 @@ function renderTaxaAnual() {
   });
 }
 
+function renderPassiva() {
+  const ctx = document.getElementById('cPassiva').getContext('2d');
+  const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+  const gridColor = getComputedStyle(document.body).getPropertyValue('--border').trim();
+  
+  const allMonths = [...new Set([
+    ...filteredDataPassiva.proventos.map(r => r.data.substring(0, 7)),
+    ...filteredDataPassiva.opcoes.map(r => r.data.substring(0, 7))
+  ])].sort();
+  
+  // Calcular valores por mês
+  const valoresPassiva = allMonths.map(m => {
+    const prov = somaValores(filteredDataPassiva.proventos.filter(r => r.data.substring(0, 7) === m));
+    const opc = somaValores(filteredDataPassiva.opcoes.filter(r => r.data.substring(0, 7) === m));
+    return prov + opc;
+  });
+  
+  // Calcular % cobertura de despesas
+  const pctCobertura = allMonths.map(m => {
+    const passiva = valoresPassiva[allMonths.indexOf(m)];
+    const desp = Math.abs(somaValores(filteredDataPassiva.despesas.filter(r => r.data.substring(0, 7) === m)));
+    return desp > 0 ? (passiva / desp) * 100 : 0;
+  });
+  
+  const labels = allMonths.map(monthLabel);
+  
+  if (charts.passiva) charts.passiva.destroy();
+  charts.passiva = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Renda Passiva (R$)',
+          data: valoresPassiva,
+          backgroundColor: '#48bb78',
+          borderRadius: 4,
+          yAxisID: 'yValor',
+          order: 2
+        },
+        {
+          label: '% Cobertura de Despesas',
+          data: pctCobertura,
+          type: 'line',
+          borderColor: '#667eea',
+          backgroundColor: 'rgba(102, 126, 234, 0.1)',
+          borderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 6,
+          tension: 0.3,
+          yAxisID: 'yPct',
+          order: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      scales: {
+        x: { 
+          grid: { display: false }, 
+          ticks: { maxRotation: 45, font: { size: 10 }, color: textColor } 
+        },
+        yValor: {
+          type: 'linear',
+          position: 'left',
+          ticks: { callback: v => compactFmt(v), color: textColor },
+          grid: { color: gridColor }
+        },
+        yPct: {
+          type: 'linear',
+          position: 'right',
+          ticks: { 
+            callback: v => v.toFixed(0) + '%', 
+            color: textColor 
+          },
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: { 
+          position: 'bottom', 
+          labels: { boxWidth: 12, font: { size: 10 }, color: textColor } 
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              if (ctx.dataset.yAxisID === 'yValor') {
+                return 'Renda Passiva: ' + brl(ctx.raw);
+              } else {
+                return 'Cobertura: ' + ctx.raw.toFixed(1) + '%';
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
 // ─── INIT ───
 async function init() {
   initTheme();
@@ -899,6 +1053,7 @@ async function init() {
     
     applyFilter12M();
     applyFilterMensal();
+    applyFilterPassiva();
     renderAll();
     document.getElementById('loading').classList.add('hidden');
     
