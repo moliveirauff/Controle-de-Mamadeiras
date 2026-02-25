@@ -351,6 +351,38 @@
   </div>
 
   <script>
+    /*
+    ╔══════════════════════════════════════════════════════════════════════════════╗
+    ║ ESTRUTURA ESPERADA DO JSON: fluxo_caixa_opcoes_mensal.json                  ║
+    ╠══════════════════════════════════════════════════════════════════════════════╣
+    ║                                                                              ║
+    ║ {                                                                            ║
+    ║   "versao": "1.0",                                                           ║
+    ║   "data_geracao": "YYYY-MM-DD HH:MM:SS",                                     ║
+    ║   "totais": {                                                                ║
+    ║     "br_total_brl": number,                                                  ║
+    ║     "us_total_usd": number,                                                  ║
+    ║     "us_total_brl": number,                                                  ║
+    ║     "total_geral_brl": number  ← USADO NO DASHBOARD                         ║
+    ║   },                                                                         ║
+    ║   "fluxo_mensal": [            ← ARRAY COM ESTE NOME (não detalhamento_mensal) ║
+    ║     {                                                                        ║
+    ║       "mes": "YYYY-MM",                                                      ║
+    ║       "br_brl": number,        ← CAMPOS COM ESTE NOME (não fluxo_br)        ║
+    ║       "us_usd": number,                                                      ║
+    ║       "us_brl": number,        ← (não fluxo_us)                              ║
+    ║       "total_brl": number      ← (não fluxo_total)                           ║
+    ║     },                                                                       ║
+    ║     ...                                                                      ║
+    ║   ]                                                                          ║
+    ║ }                                                                            ║
+    ║                                                                              ║
+    ║ ⚠️  NÃO deve conter registro com mes: "TOTAL" no array fluxo_mensal         ║
+    ║ ⚠️  Totais devem estar APENAS no objeto "totais" no topo                    ║
+    ║                                                                              ║
+    ╚══════════════════════════════════════════════════════════════════════════════╝
+    */
+
     // Desabilitar datalabels globalmente
     Chart.defaults.set('plugins.datalabels', { display: false });
 
