@@ -330,11 +330,8 @@ function updateKPIs() {
 // === CALCULAR INVESTIMENTO ACUMULADO POR ANO ===
 function calcularInvestidoAteAno() {
   const movs = aportesHistorico.movimentacoes || [];
-  const investidoPorAno = {};
-  
-  let acumulado = 0;
   const aportesPorAno = {};
-  
+
   // Agrupar aportes por ano
   movs.forEach(m => {
     if (m.tipo === 'APORTE' && m.data) {
@@ -343,14 +340,18 @@ function calcularInvestidoAteAno() {
       aportesPorAno[ano] += m.valor_total || 0;
     }
   });
-  
-  // Calcular acumulado até cada ano
-  const anos = Object.keys(aportesPorAno).sort();
-  anos.forEach(ano => {
-    acumulado += aportesPorAno[ano];
+
+  // Percorrer TODOS os anos do dashboard em ordem,
+  // propagando o acumulado para anos sem aportes (ex: 2024, 2025)
+  const todosAnos = data.series.valor_por_ano.map(s => s.ano).sort((a, b) => a - b);
+  const investidoPorAno = {};
+  let acumulado = 0;
+
+  todosAnos.forEach(ano => {
+    acumulado += aportesPorAno[ano] || 0; // 0 se não houve aporte naquele ano
     investidoPorAno[ano] = acumulado;
   });
-  
+
   return investidoPorAno;
 }
 
