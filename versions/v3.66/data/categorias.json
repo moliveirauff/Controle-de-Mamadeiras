@@ -1,0 +1,64 @@
+{
+  "categorias": [
+    {
+      "id": "alimentacao",
+      "nome": "Alimentação",
+      "tipo": "despesa",
+      "subcategorias": ["Delivery", "Mercado", "Restaurante", "Almoço", "Outros Alimentação"]
+    },
+    {
+      "id": "compras",
+      "nome": "Compras",
+      "tipo": "despesa",
+      "subcategorias": ["Móveis e Utensílios Domésticos", "Presentes", "Eletrônicos", "Vestuário", "Outras Compras"]
+    },
+    {
+      "id": "despesas_pessoais",
+      "nome": "Despesas Pessoais",
+      "tipo": "despesa",
+      "subcategorias": ["Cabeleireiro", "Academia", "Aula de Tênis", "Equipamentos Esportivos", "Mensalidade de Clube", "Celular", "Outros Despesas Pessoais"]
+    },
+    {
+      "id": "educacao",
+      "nome": "Educação",
+      "tipo": "despesa",
+      "subcategorias": ["MBA", "Cursos", "Materiais Escolares", "Ferramentas AI", "Outros Educação"]
+    },
+    {
+      "id": "lazer",
+      "nome": "Lazer",
+      "tipo": "despesa",
+      "subcategorias": ["Bares", "Cinema", "Viagem", "Passeios", "Streaming", "Outros Lazer"]
+    },
+    {
+      "id": "moradia",
+      "nome": "Moradia",
+      "tipo": "despesa",
+      "subcategorias": ["Aluguel", "IPTU", "Conta de Luz", "Conta de Gás", "Internet", "Empregados", "Outros Moradia"]
+    },
+    {
+      "id": "saude",
+      "nome": "Saúde",
+      "tipo": "despesa",
+      "subcategorias": ["Dentista", "Farmácia", "Médicos e Terapeutas", "Suplementos", "Outros Saúde"]
+    },
+    {
+      "id": "transporte",
+      "nome": "Transporte",
+      "tipo": "despesa",
+      "subcategorias": ["Aluguel de Veículo", "Combustível", "Estacionamento", "Multa", "Transporte Público", "Táxi e Uber", "Outros Transporte"]
+    },
+    {
+      "id": "outros",
+      "nome": "Outros",
+      "tipo": "despesa",
+      "subcategorias": ["Tarifas Bancárias", "Juros", "Seguros", "Outros Outros"]
+    },
+    {
+      "id": "receitas",
+      "nome": "Receitas",
+      "tipo": "receita",
+      "subcategorias": ["Salário", "Benefícios", "Outras Receitas"]
+    }
+  ]
+}

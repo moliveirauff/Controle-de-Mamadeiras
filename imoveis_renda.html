@@ -354,19 +354,48 @@ function calcularInvestidoAteAno() {
   return investidoPorAno;
 }
 
+// === CALCULAR ALUGUÉIS ACUMULADOS POR ANO ===
+function calcularAlugueisAteAno() {
+  const movs = alugueisHistorico.movimentacoes || [];
+  const alugueisPorAno = {};
+  
+  let acumulado = 0;
+  
+  // Agrupar aluguéis por ano
+  const recebidasPorAno = {};
+  movs.forEach(m => {
+    if (m.tipo === 'PROVENTO_ALUGUEL' && m.data) {
+      const ano = parseInt(m.data.substring(0, 4));
+      if (!recebidasPorAno[ano]) recebidasPorAno[ano] = 0;
+      recebidasPorAno[ano] += m.valor_total || 0;
+    }
+  });
+  
+  // Calcular acumulado até cada ano
+  const anos = Object.keys(recebidasPorAno).sort();
+  anos.forEach(ano => {
+    acumulado += recebidasPorAno[ano];
+    alugueisPorAno[ano] = acumulado;
+  });
+  
+  return alugueisPorAno;
+}
+
 // === GRÁFICO 1: VALOR DO IMÓVEL + RENTABILIDADE ACUMULADA ===
 function renderValor() {
   const ctx = getCtx('chartValor');
   const seriesValor = data.series.valor_por_ano;
   const investidoPorAno = calcularInvestidoAteAno();
+  const alugueisAteAno = calcularAlugueisAteAno();
   
   const anos = seriesValor.map(s => s.ano);
   const valores = seriesValor.map(s => s.valor);
   
-  // Recalcular rentabilidade: (valor_final_ano / investido_ate_ano) - 1
+  // Recalcular rentabilidade: ((valor + aluguéis - investido) / investido) × 100
   const rentabilidades = seriesValor.map(s => {
     const investido = investidoPorAno[s.ano] || 1;
-    return ((s.valor / investido) - 1) * 100;
+    const alugueis = alugueisAteAno[s.ano] || 0;
+    return (((s.valor + alugueis - investido) / investido) * 100);
   });
 
   if (charts.valor) charts.valor.destroy();
