@@ -291,10 +291,11 @@ let currentFilterMensal = 12;
 // === INIT ===
 async function init() {
   try {
+    const v = Date.now();
     const [dashResp, alugResp, aportResp] = await Promise.all([
-      fetch('data/imoveis_renda_dashboard.json'),
-      fetch('data/recebimento_aluguel_historico.json'),
-      fetch('data/imovel_trulli_historico.json')
+      fetch(`data/imoveis_renda_dashboard.json?v=${v}`),
+      fetch(`data/recebimento_aluguel_historico.json?v=${v}`),
+      fetch(`data/imovel_trulli_historico.json?v=${v}`)
     ]);
     
     data = await dashResp.json();
@@ -394,7 +395,8 @@ function renderValor() {
   
   // Recalcular rentabilidade: ((valor + aluguéis - investido) / investido) × 100
   const rentabilidades = seriesValor.map(s => {
-    const investido = investidoPorAno[s.ano] || 1;
+    const investido = investidoPorAno[s.ano];
+    if (!investido || investido <= 0) return 0;
     const alugueis = alugueisAteAno[s.ano] || 0;
     return (((s.valor + alugueis - investido) / investido) * 100);
   });
