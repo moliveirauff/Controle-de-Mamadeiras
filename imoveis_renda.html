@@ -152,13 +152,39 @@
       width: 100%;
       justify-content: center;
     }
+    .card-header .controls {
+      width: 100%;
+      justify-content: center;
+    }
 
     /* Chart */
     .chart-container {
       position: relative;
-      height: 450px;
+      height: 300px;
       width: 100%;
     }
+
+    /* Controls */
+    .controls { 
+      display: flex; 
+      gap: 6px; 
+      align-items: center; 
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .filter-btn {
+      background: var(--border);
+      border: none;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { opacity: 0.8; }
+    .filter-btn.active { background: var(--accent); color: white; }
 
     /* Loading */
     #loading {
@@ -180,6 +206,7 @@
       body { max-width: 960px; margin: 0 auto; padding: 16px 16px 60px 16px; }
       h1 { font-size: 1.75rem; }
       .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+      .chart-container { height: 380px; }
     }
   </style>
 </head>
@@ -240,6 +267,12 @@
   <div class="card">
     <div class="card-header">
       <div class="card-title"><span>📅</span> Aluguéis Recebidos por Mês</div>
+      <div class="controls">
+        <button class="filter-btn active" onclick="filterMensal(12)">12M</button>
+        <button class="filter-btn" onclick="filterMensal(24)">24M</button>
+        <button class="filter-btn" onclick="filterMensal(36)">36M</button>
+        <button class="filter-btn" onclick="filterMensal(0)">Todos</button>
+      </div>
     </div>
     <div class="chart-container">
       <canvas id="chartAlugueisMensal"></canvas>
@@ -251,18 +284,22 @@
 // === STATE ===
 let data = null;
 let alugueisHistorico = null;
+let aportesHistorico = null;
 let charts = {};
+let currentFilterMensal = 12;
 
 // === INIT ===
 async function init() {
   try {
-    const [dashResp, alugResp] = await Promise.all([
+    const [dashResp, alugResp, aportResp] = await Promise.all([
       fetch('data/imoveis_renda_dashboard.json'),
-      fetch('data/recebimento_aluguel_historico.json')
+      fetch('data/recebimento_aluguel_historico.json'),
+      fetch('data/imovel_trulli_historico.json')
     ]);
     
     data = await dashResp.json();
     alugueisHistorico = await alugResp.json();
+    aportesHistorico = await aportResp.json();
     
     renderAll();
     document.getElementById('loading').classList.add('hidden');
@@ -290,15 +327,47 @@ function updateKPIs() {
   setTxt('kpiRentabilidade', kpis.rentabilidade_total.toFixed(2) + '%');
 }
 
+// === CALCULAR INVESTIMENTO ACUMULADO POR ANO ===
+function calcularInvestidoAteAno() {
+  const movs = aportesHistorico.movimentacoes || [];
+  const investidoPorAno = {};
+  
+  let acumulado = 0;
+  const aportesPorAno = {};
+  
+  // Agrupar aportes por ano
+  movs.forEach(m => {
+    if (m.tipo === 'APORTE' && m.data) {
+      const ano = parseInt(m.data.substring(0, 4));
+      if (!aportesPorAno[ano]) aportesPorAno[ano] = 0;
+      aportesPorAno[ano] += m.valor_total || 0;
+    }
+  });
+  
+  // Calcular acumulado até cada ano
+  const anos = Object.keys(aportesPorAno).sort();
+  anos.forEach(ano => {
+    acumulado += aportesPorAno[ano];
+    investidoPorAno[ano] = acumulado;
+  });
+  
+  return investidoPorAno;
+}
+
 // === GRÁFICO 1: VALOR DO IMÓVEL + RENTABILIDADE ACUMULADA ===
 function renderValor() {
   const ctx = getCtx('chartValor');
   const seriesValor = data.series.valor_por_ano;
-  const seriesRent = data.series.rentabilidade_acumulada;
+  const investidoPorAno = calcularInvestidoAteAno();
   
   const anos = seriesValor.map(s => s.ano);
   const valores = seriesValor.map(s => s.valor);
-  const rentabilidades = seriesRent.map(s => s.percentual);
+  
+  // Recalcular rentabilidade: (valor_final_ano / investido_ate_ano) - 1
+  const rentabilidades = seriesValor.map(s => {
+    const investido = investidoPorAno[s.ano] || 1;
+    return ((s.valor / investido) - 1) * 100;
+  });
 
   if (charts.valor) charts.valor.destroy();
   charts.valor = new Chart(ctx, {
@@ -310,7 +379,7 @@ function renderValor() {
           label: 'Valor do Imóvel',
           data: valores,
           backgroundColor: '#10b981',
-          borderRadius: 8,
+          borderRadius: 4,
           barPercentage: 0.6,
           yAxisID: 'y'
         },
@@ -346,7 +415,8 @@ function renderValor() {
           labels: {
             color: getTextColor(),
             usePointStyle: true,
-            padding: 15
+            padding: 15,
+            font: { family: 'Inter', size: 11 }
           }
         },
         tooltip: {
@@ -363,7 +433,7 @@ function renderValor() {
       },
       scales: {
         x: {
-          ticks: { color: getTextColor() },
+          ticks: { color: getTextColor(), font: { family: 'Inter' } },
           grid: { display: false }
         },
         y: {
@@ -371,7 +441,8 @@ function renderValor() {
           position: 'left',
           ticks: {
             callback: (v) => compactFmt(v),
-            color: getTextColor()
+            color: getTextColor(),
+            font: { family: 'Inter' }
           },
           grid: { color: getBorderColor() }
         },
@@ -380,13 +451,14 @@ function renderValor() {
           position: 'right',
           ticks: {
             callback: (v) => v.toFixed(1) + '%',
-            color: getTextColor()
+            color: getTextColor(),
+            font: { family: 'Inter' }
           },
           grid: { display: false }
         }
       },
       animation: {
-        duration: 1000,
+        duration: 800,
         easing: 'easeInOutQuart'
       }
     }
@@ -419,7 +491,7 @@ function renderAlugueis() {
           label: 'Aluguéis Recebidos',
           data: valores,
           backgroundColor: '#3b82f6',
-          borderRadius: 8,
+          borderRadius: 4,
           barPercentage: 0.6,
           yAxisID: 'y'
         },
@@ -455,7 +527,8 @@ function renderAlugueis() {
           labels: {
             color: getTextColor(),
             usePointStyle: true,
-            padding: 15
+            padding: 15,
+            font: { family: 'Inter', size: 11 }
           }
         },
         tooltip: {
@@ -472,7 +545,7 @@ function renderAlugueis() {
       },
       scales: {
         x: {
-          ticks: { color: getTextColor() },
+          ticks: { color: getTextColor(), font: { family: 'Inter' } },
           grid: { display: false }
         },
         y: {
@@ -480,7 +553,8 @@ function renderAlugueis() {
           position: 'left',
           ticks: {
             callback: (v) => compactFmt(v),
-            color: getTextColor()
+            color: getTextColor(),
+            font: { family: 'Inter' }
           },
           grid: { color: getBorderColor() }
         },
@@ -489,13 +563,14 @@ function renderAlugueis() {
           position: 'right',
           ticks: {
             callback: (v) => v.toFixed(1) + '%',
-            color: getTextColor()
+            color: getTextColor(),
+            font: { family: 'Inter' }
           },
           grid: { display: false }
         }
       },
       animation: {
-        duration: 1000,
+        duration: 800,
         easing: 'easeInOutQuart'
       }
     }
@@ -520,12 +595,45 @@ function renderAlugueisMensal() {
     }
   });
   
-  // Ordenar por mês
-  const meses = Object.keys(alugueisMensais).sort();
-  const valores = meses.map(m => alugueisMensais[m]);
+  // Ordenar todos os meses (sem pular zeros)
+  const mesesUnicos = Object.keys(alugueisMensais).sort();
+  if (mesesUnicos.length === 0) return;
+  
+  const primeiroMes = mesesUnicos[0];
+  const ultimoMes = mesesUnicos[mesesUnicos.length - 1];
+  
+  // Gerar range contínuo de meses
+  const todosMeses = [];
+  let mesAtual = primeiroMes;
+  
+  while (mesAtual <= ultimoMes) {
+    todosMeses.push(mesAtual);
+    
+    // Incrementar mês
+    let [ano, mes] = mesAtual.split('-').map(Number);
+    mes++;
+    if (mes > 12) {
+      mes = 1;
+      ano++;
+    }
+    mesAtual = `${ano}-${String(mes).padStart(2, '0')}`;
+  }
+  
+  // Preencher valores (0 se não houver)
+  const valores = todosMeses.map(m => alugueisMensais[m] || 0);
+  
+  // Aplicar filtro temporal
+  let mesesFiltrados = todosMeses;
+  let valoresFiltrados = valores;
+  
+  if (currentFilterMensal > 0) {
+    const inicio = Math.max(0, todosMeses.length - currentFilterMensal);
+    mesesFiltrados = todosMeses.slice(inicio);
+    valoresFiltrados = valores.slice(inicio);
+  }
   
   // Formatar labels (MMM/YY)
-  const labels = meses.map(m => {
+  const labels = mesesFiltrados.map(m => {
     const [ano, mes] = m.split('-');
     const mesesNome = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
     return `${mesesNome[parseInt(mes) - 1]}/${ano.substring(2)}`;
@@ -538,9 +646,9 @@ function renderAlugueisMensal() {
       labels: labels,
       datasets: [{
         label: 'Aluguéis Mensais',
-        data: valores,
+        data: valoresFiltrados,
         backgroundColor: '#1abc9c',
-        borderRadius: 8,
+        borderRadius: 4,
         barPercentage: 0.7
       }]
     },
@@ -560,7 +668,8 @@ function renderAlugueisMensal() {
           ticks: {
             color: getTextColor(),
             maxRotation: 45,
-            minRotation: 45
+            minRotation: 45,
+            font: { family: 'Inter', size: 10 }
           },
           grid: {
             display: false
@@ -569,7 +678,8 @@ function renderAlugueisMensal() {
         y: {
           ticks: {
             callback: (v) => compactFmt(v),
-            color: getTextColor()
+            color: getTextColor(),
+            font: { family: 'Inter' }
           },
           grid: {
             color: getBorderColor()
@@ -577,11 +687,24 @@ function renderAlugueisMensal() {
         }
       },
       animation: {
-        duration: 1000,
+        duration: 800,
         easing: 'easeInOutQuart'
       }
     }
   });
+}
+
+// === FILTER MENSAL ===
+function filterMensal(months) {
+  currentFilterMensal = months;
+  
+  // Update button states
+  document.querySelectorAll('.controls .filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+  
+  renderAlugueisMensal();
 }
 
 // === UTILS ===

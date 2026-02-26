@@ -1,0 +1,11 @@
+{
+  "origens": [
+    { "id": "conta_corrente_itau", "nome": "Conta Corrente Itaú", "tipo": "conta_bancaria" },
+    { "id": "cartao_itau", "nome": "Cartão de Crédito Itaú", "tipo": "cartao_credito" },
+    { "id": "cartao_xp", "nome": "Cartão de Crédito XP", "tipo": "cartao_credito" },
+    { "id": "ticket_alimentacao", "nome": "Ticket Alimentação", "tipo": "beneficio" },
+    { "id": "ticket_restaurante", "nome": "Ticket Restaurante", "tipo": "beneficio" },
+    { "id": "flash", "nome": "Flash", "tipo": "beneficio" },
+    { "id": "dinheiro", "nome": "Dinheiro", "tipo": "especie" }
+  ]
+}
