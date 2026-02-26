@@ -3,7 +3,7 @@
     "nome": "Matheus",
     "sexo": "masculino",
     "data_nascimento": "2025-09-18",
-    "ultima_atualizacao": "2026-02-25T20:06:37Z"
+    "ultima_atualizacao": "2026-02-26T18:00:00Z"
   },
   "medicoes": [
     {
@@ -102,6 +102,13 @@
       "idade_meses": 5.26,
       "peso_kg": 7.6,
       "altura_cm": null,
+      "observacoes": "Semana 23"
+    },
+    {
+      "data": "2026-02-26",
+      "idade_meses": 5.29,
+      "peso_kg": 7.6,
+      "altura_cm": 68.5,
       "observacoes": "Semana 23"
     }
   ]
