@@ -1,0 +1,14 @@
+{
+  "orcamento_mensal": {
+    "alimentacao": 5750,
+    "compras": 5500,
+    "despesas_pessoais": 1500,
+    "educacao": 1250,
+    "lazer": 1500,
+    "moradia": 10500,
+    "outros": 250,
+    "saude": 3500,
+    "transporte": 1250
+  },
+  "nota": "Valores baseados na média mensal real de 2025 (jan-dez), arredondados para múltiplos de R$ 250. Atualizado em 2026-02-22."
+}
