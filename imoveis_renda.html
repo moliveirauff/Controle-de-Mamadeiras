@@ -413,7 +413,8 @@ function renderValor() {
           backgroundColor: '#10b981',
           borderRadius: 4,
           barPercentage: 0.6,
-          yAxisID: 'y'
+          yAxisID: 'y',
+          order: 1
         },
         {
           label: 'Rentabilidade Acumulada (%)',
@@ -426,10 +427,11 @@ function renderValor() {
           tension: 0.4,
           pointRadius: 6,
           pointHoverRadius: 8,
-          pointBackgroundColor: rentabilidades.map(r => r >= 0 ? '#10b981' : '#ef4444'),
+          pointBackgroundColor: '#667eea',
           pointBorderColor: '#fff',
           pointBorderWidth: 2,
-          yAxisID: 'y1'
+          yAxisID: 'y1',
+          order: 0
         }
       ]
     },
@@ -525,7 +527,8 @@ function renderAlugueis() {
           backgroundColor: '#3b82f6',
           borderRadius: 4,
           barPercentage: 0.6,
-          yAxisID: 'y'
+          yAxisID: 'y',
+          order: 1
         },
         {
           label: 'DY Anual (%)',
@@ -541,7 +544,8 @@ function renderAlugueis() {
           pointBackgroundColor: '#f39c12',
           pointBorderColor: '#fff',
           pointBorderWidth: 2,
-          yAxisID: 'y1'
+          yAxisID: 'y1',
+          order: 0
         }
       ]
     },

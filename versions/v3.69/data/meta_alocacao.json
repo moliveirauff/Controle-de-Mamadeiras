@@ -1,0 +1,13 @@
+{
+  "versao": "2026.Q1",
+  "estrategia": "Conservador/Moderado",
+  "ultima_revisao": "2026-02-01",
+  "metas": {
+    "1_renda_fixa_soberana": 0.35,
+    "2_credito_privado": 0.15,
+    "3_acoes_brasil": 0.25,
+    "4_ativos_reais": 0.10,
+    "5_internacional": 0.10,
+    "6_criptoativos": 0.05
+  }
+}
