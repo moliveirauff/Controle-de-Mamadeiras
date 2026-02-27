@@ -751,9 +751,9 @@
       .slice(0, 10)
       .sort((a, b) => b.v - a.v); // reordenar: positivos primeiro, negativos ao fundo
 
-    // Chart.js horizontal bar: primeiro item do array = topo, então inverter
-    const labels = sorted.map(s => s.ativo).reverse();
-    const data   = sorted.map(s => s.v).reverse();
+    // Chart.js horizontal bar: primeiro item do array = topo → não inverter
+    const labels = sorted.map(s => s.ativo);
+    const data   = sorted.map(s => s.v);
     const colors = data.map(v => v >= 0 ? '#48bb78' : '#f56565');
 
     // Altura dinâmica: 38px por barra
