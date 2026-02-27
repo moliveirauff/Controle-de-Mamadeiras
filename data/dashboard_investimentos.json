@@ -1,9 +1,9 @@
 {
   "kpis": {
-    "patrimonio_total": 2307047.87,
+    "patrimonio_total": 2309023.16,
     "aportes_liquido_total": 1728120.89,
-    "rentabilidade_nominal": 33.5,
-    "cagr_5anos": 20.22
+    "rentabilidade_nominal": 33.61,
+    "cagr_5anos": 20.24
   },
   "anual": {
     "evolucao": [
@@ -65,7 +65,7 @@
       },
       {
         "ano": 2026,
-        "patrimonio": 2307047.87
+        "patrimonio": 2309023.16
       }
     ],
     "evolucao_por_cat": {
@@ -128,7 +128,7 @@
         },
         {
           "ano": 2026,
-          "patrimonio": 75438.72
+          "patrimonio": 77414.01
         }
       ],
       "2_credito_privado": [
@@ -1363,9 +1363,9 @@
       },
       {
         "ano": 2026,
-        "valorizacao": 440910.2,
+        "valorizacao": 442885.49,
         "dividendos": 8510.15,
-        "total": 449420.35
+        "total": 451395.64
       }
     ],
     "rentabilidade_pct": [
@@ -1497,8 +1497,8 @@
       },
       {
         "ano": 2026,
-        "sem_dividendos": 23.17,
-        "com_dividendos": 23.63,
+        "sem_dividendos": 23.28,
+        "com_dividendos": 23.73,
         "cdi": 12.0,
         "ifix": 5.0,
         "dolar": 2.0,
@@ -1579,8 +1579,8 @@
         },
         {
           "ano": 2026,
-          "sem_dividendos": -7.25,
-          "com_dividendos": -7.05
+          "sem_dividendos": -4.81,
+          "com_dividendos": -4.61
         }
       ],
       "2_credito_privado": [
@@ -2800,11 +2800,11 @@
       },
       {
         "mes": "2026-01",
-        "patrimonio": 2298683.49
+        "patrimonio": 2306190.34
       },
       {
         "mes": "2026-02",
-        "patrimonio": 2307047.87
+        "patrimonio": 2309023.16
       }
     ],
     "evolucao_por_cat": {
@@ -3483,11 +3483,11 @@
         },
         {
           "mes": "2026-01",
-          "patrimonio": 76076.64
+          "patrimonio": 78051.93
         },
         {
           "mes": "2026-02",
-          "patrimonio": 75438.72
+          "patrimonio": 77414.01
         }
       ],
       "2_credito_privado": [
@@ -4165,7 +4165,7 @@
         },
         {
           "mes": "2026-01",
-          "patrimonio": 521801.99
+          "patrimonio": 525129.08
         },
         {
           "mes": "2026-02",
@@ -4847,7 +4847,7 @@
         },
         {
           "mes": "2026-01",
-          "patrimonio": 498774.58
+          "patrimonio": 496288.83
         },
         {
           "mes": "2026-02",
@@ -5529,7 +5529,7 @@
         },
         {
           "mes": "2026-01",
-          "patrimonio": 267134.82
+          "patrimonio": 268668.76
         },
         {
           "mes": "2026-02",
@@ -7575,7 +7575,7 @@
         },
         {
           "mes": "2026-01",
-          "patrimonio": 388941.38
+          "patrimonio": 392097.66
         },
         {
           "mes": "2026-02",
@@ -10298,47 +10298,47 @@
       },
       {
         "mes": "2026-01",
-        "valorizacao": 457891.77,
+        "valorizacao": 465398.62,
         "dividendos": 4893.61,
-        "total": 462785.38
+        "total": 470292.23
       },
       {
         "mes": "2026-02",
-        "valorizacao": -16981.57,
+        "valorizacao": -22513.13,
         "dividendos": 3616.54,
-        "total": -13365.03
+        "total": -18896.59
       }
     ]
   },
   "alocacao": [
     {
       "categoria": "1_renda_fixa_soberana",
-      "meta_rs": 807466.75,
+      "meta_rs": 808158.11,
       "real_rs": 75438.72
     },
     {
       "categoria": "2_credito_privado",
-      "meta_rs": 346057.18,
+      "meta_rs": 346353.47,
       "real_rs": 519328.89
     },
     {
       "categoria": "3_acoes_brasil",
-      "meta_rs": 576761.97,
+      "meta_rs": 577255.79,
       "real_rs": 469945.08
     },
     {
       "categoria": "4_ativos_reais",
-      "meta_rs": 230704.79,
+      "meta_rs": 230902.32,
       "real_rs": 230112.68
     },
     {
       "categoria": "5_internacional",
-      "meta_rs": 230704.79,
+      "meta_rs": 230902.32,
       "real_rs": 49066.0
     },
     {
       "categoria": "6_criptoativos",
-      "meta_rs": 115352.39,
+      "meta_rs": 115451.16,
       "real_rs": 131049.92
     }
   ],
@@ -10720,5 +10720,5 @@
       "categoria": "1_renda_fixa_soberana"
     }
   ],
-  "last_update": "2026-02-27 18:08"
+  "last_update": "2026-02-27 18:11"
 }
