@@ -4,8 +4,8 @@
   "ativos": [
     {
       "nome": "SGOV",
-      "macro_classe": "5_internacional",
-      "subclasse": "5.3_renda_fixa_global",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.1_liquidez",
       "status": "aberto"
     },
     {
