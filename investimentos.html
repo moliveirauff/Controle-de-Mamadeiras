@@ -172,7 +172,20 @@
       border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
     }
-    
+    .filter-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover:not(:disabled) { opacity: 0.75; }
+    .filter-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
     /* --- TABLE --- */
     .table-container {
       width: 100%;
@@ -370,6 +383,21 @@
     <div class="chart-container"><canvas id="chartLucroMes"></canvas></div>
   </div>
 
+  <!-- TOP 10 VARIAÇÕES MENSAIS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📊 Maiores Variações do Mês (%)</div>
+      <div class="controls">
+        <button class="filter-btn" id="btnVarPrev" onclick="navVariacoes(-1)">←</button>
+        <span id="labelVarMes" style="font-size:0.9rem; font-weight:700; padding: 0 8px; min-width:72px; text-align:center; display:inline-block;">—</span>
+        <button class="filter-btn" id="btnVarNext" onclick="navVariacoes(1)">→</button>
+      </div>
+    </div>
+    <div class="chart-container" id="containerVariacoes">
+      <canvas id="chartVariacoes"></canvas>
+    </div>
+  </div>
+
   <!-- SEÇÃO ALOCAÇÃO E TABELA -->
   <div class="card">
     <div class="card-header"><div class="card-title">⚖️ Alocação Tática (Meta vs Real)</div></div>
@@ -396,6 +424,9 @@
 
 <script>
   let rawData = null;
+  let cotacoesData = null;
+  let mesesDisp = [];
+  let currentVarMesIdx = 0;
   let charts = {};
   const COLORS = { 
     carteira: '#667eea', cdi: '#4299e1', ifix: '#ed8936', dolar: '#48bb78', imovel: '#f56565',
@@ -413,11 +444,17 @@
 
   async function init() {
     try {
-      const resp = await fetch('data/dashboard_investimentos.json?v=' + Date.now());
+      const v = Date.now();
+      const [resp, respCot] = await Promise.all([
+        fetch('data/dashboard_investimentos.json?v=' + v),
+        fetch('data/invest_cotacoes_mensais.json?v=' + v)
+      ]);
       rawData = await resp.json();
+      cotacoesData = await respCot.json();
       updateKPIs();
       populateFilters();
       renderAll();
+      initVariacoes();
       document.getElementById('loading').style.display = 'none';
     } catch (e) {
       console.error(e);
@@ -651,11 +688,132 @@
     });
   }
 
+  // === VARIAÇÕES MENSAIS ===
+  const MESES_NOMES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  const MESES_MAP   = { jan:0,fev:1,mar:2,abr:3,mai:4,jun:5,jul:6,ago:7,set:8,out:9,nov:10,dez:11 };
+
+  function initVariacoes() {
+    // Coletar todos os meses disponíveis (que têm pelo menos 1 ativo com valor)
+    const mesesSet = new Set();
+    Object.values(cotacoesData).forEach(vals => {
+      Object.entries(vals).forEach(([m, v]) => { if (v !== null) mesesSet.add(m); });
+    });
+
+    // Ordenar cronologicamente
+    mesesDisp = [...mesesSet].sort((a, b) => {
+      const [ma, ya] = a.split('/');
+      const [mb, yb] = b.split('/');
+      return new Date(parseInt(ya), MESES_MAP[ma]) - new Date(parseInt(yb), MESES_MAP[mb]);
+    });
+
+    // Iniciar no mês mais recente
+    currentVarMesIdx = mesesDisp.length - 1;
+    renderVariacoes();
+  }
+
+  function navVariacoes(dir) {
+    const novo = currentVarMesIdx + dir;
+    if (novo < 0 || novo >= mesesDisp.length) return;
+    currentVarMesIdx = novo;
+    renderVariacoes();
+  }
+
+  function renderVariacoes() {
+    const mesAlvo = mesesDisp[currentVarMesIdx];
+    const [mesNome, ano] = mesAlvo.split('/');
+    const mesIdx = MESES_MAP[mesNome];
+    const prevIdx = mesIdx === 0 ? 11 : mesIdx - 1;
+    const prevAno = mesIdx === 0 ? parseInt(ano) - 1 : parseInt(ano);
+    const mesPrev = MESES_NOMES[prevIdx] + '/' + prevAno;
+
+    // Atualiza label e botões nav
+    document.getElementById('labelVarMes').textContent = mesAlvo;
+    document.getElementById('btnVarPrev').disabled = currentVarMesIdx === 0;
+    document.getElementById('btnVarNext').disabled = currentVarMesIdx === mesesDisp.length - 1;
+
+    // Calcular variações mensais (deduplicando por nome limpo)
+    const seen = {};
+    Object.entries(cotacoesData).forEach(([ativo, vals]) => {
+      const va = vals[mesAlvo];
+      const vp = vals[mesPrev];
+      if (va == null || vp == null || vp === 0) return;
+      const varPct = ((va - vp) / Math.abs(vp)) * 100;
+      const nome = ativo.replace(/_\d{4}\.\d{2}\.\d{2}$/, '');
+      if (seen[nome] == null || Math.abs(varPct) > Math.abs(seen[nome])) {
+        seen[nome] = varPct;
+      }
+    });
+
+    // Ordenar: maior positivo no topo → maior negativo no fundo; pegar top 10 absolutos
+    const sorted = Object.entries(seen)
+      .map(([ativo, v]) => ({ ativo, v: parseFloat(v.toFixed(2)) }))
+      .sort((a, b) => Math.abs(b.v) - Math.abs(a.v))
+      .slice(0, 10)
+      .sort((a, b) => b.v - a.v); // reordenar: positivos primeiro, negativos ao fundo
+
+    // Chart.js horizontal bar: primeiro item do array = topo, então inverter
+    const labels = sorted.map(s => s.ativo).reverse();
+    const data   = sorted.map(s => s.v).reverse();
+    const colors = data.map(v => v >= 0 ? '#48bb78' : '#f56565');
+
+    // Altura dinâmica: 38px por barra
+    const container = document.getElementById('containerVariacoes');
+    const alturaPx = Math.max(300, sorted.length * 42 + 40);
+    container.style.height = alturaPx + 'px';
+
+    if (charts.variacoes) charts.variacoes.destroy();
+    charts.variacoes = new Chart(document.getElementById('chartVariacoes'), {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          data,
+          backgroundColor: colors,
+          borderRadius: 4,
+          barPercentage: 0.65
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => (ctx.raw >= 0 ? '+' : '') + ctx.raw.toFixed(2) + '%'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              callback: v => v.toFixed(1) + '%',
+              color: getComputedStyle(document.body).getPropertyValue('--text').trim()
+            },
+            grid: { color: getComputedStyle(document.body).getPropertyValue('--border').trim() }
+          },
+          y: {
+            ticks: {
+              font: { weight: '600', size: 11 },
+              color: getComputedStyle(document.body).getPropertyValue('--text').trim()
+            },
+            grid: { display: false }
+          }
+        },
+        animation: { duration: 400, easing: 'easeInOutQuart' }
+      }
+    });
+  }
+
   function toggleTheme() {
     document.body.classList.toggle('dark-mode');
     localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     document.getElementById('theme-toggle').textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-    setTimeout(() => Object.values(charts).forEach(c => c && c.update()), 100);
+    setTimeout(() => {
+      Object.values(charts).forEach(c => c && c.update());
+      if (cotacoesData) renderVariacoes(); // re-render para atualizar cores dos eixos
+    }, 100);
   }
   if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('theme-toggle').textContent = '☀️'; }
   init();

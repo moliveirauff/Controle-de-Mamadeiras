@@ -1,0 +1,98 @@
+{
+  "versao": "1.0",
+  "data_geracao": "2026-02-27 18:51:58",
+  "descricao": "Fluxo de caixa mensal de operações de opções (BR + US)",
+  "observacao": "Valores positivos = entrada de caixa, valores negativos = saída de caixa",
+  "totais": {
+    "br_total_brl": -2948.16,
+    "us_total_usd": 8915.75,
+    "us_total_brl": 47417.24,
+    "total_geral_brl": 44469.08
+  },
+  "fluxo_mensal": [
+    {
+      "mes": "2025-03",
+      "br_brl": 1358.0,
+      "us_usd": 0,
+      "us_brl": 0,
+      "total_brl": 1358.0
+    },
+    {
+      "mes": "2025-04",
+      "br_brl": 2702.0,
+      "us_usd": 0,
+      "us_brl": 0,
+      "total_brl": 2702.0
+    },
+    {
+      "mes": "2025-05",
+      "br_brl": 225.5,
+      "us_usd": 0,
+      "us_brl": 0,
+      "total_brl": 225.5
+    },
+    {
+      "mes": "2025-06",
+      "br_brl": 2607.5,
+      "us_usd": 0,
+      "us_brl": 0,
+      "total_brl": 2607.5
+    },
+    {
+      "mes": "2025-07",
+      "br_brl": 5514.5,
+      "us_usd": 406.75,
+      "us_brl": 2264.73,
+      "total_brl": 7779.23
+    },
+    {
+      "mes": "2025-08",
+      "br_brl": 1085.5,
+      "us_usd": 1696.51,
+      "us_brl": 9075.98,
+      "total_brl": 10161.48
+    },
+    {
+      "mes": "2025-09",
+      "br_brl": 591.0,
+      "us_usd": 625.24,
+      "us_brl": 2946.25,
+      "total_brl": 3537.25
+    },
+    {
+      "mes": "2025-10",
+      "br_brl": 8956.5,
+      "us_usd": 1944.07,
+      "us_brl": 10788.29,
+      "total_brl": 19744.79
+    },
+    {
+      "mes": "2025-11",
+      "br_brl": -5717.38,
+      "us_usd": 1253.14,
+      "us_brl": 6501.62,
+      "total_brl": 784.24
+    },
+    {
+      "mes": "2025-12",
+      "br_brl": 3013.91,
+      "us_usd": 743.32,
+      "us_brl": 4051.34,
+      "total_brl": 7065.25
+    },
+    {
+      "mes": "2026-01",
+      "br_brl": -3774.29,
+      "us_usd": 783.44,
+      "us_brl": 4204.46,
+      "total_brl": 430.17
+    },
+    {
+      "mes": "2026-02",
+      "br_brl": -19510.9,
+      "us_usd": 1463.28,
+      "us_brl": 7584.56,
+      "total_brl": -11926.34
+    }
+  ]
+}
