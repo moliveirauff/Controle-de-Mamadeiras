@@ -1,6 +1,6 @@
 {
   "versao": "2026.2.7",
-  "data_atualizacao": "2026-02-19",
+  "data_atualizacao": "2026-02-27",
   "movimentacoes": [
     {
       "ativo": "Sulamérica Previ_2019.02.21",
@@ -16001,6 +16001,14 @@
       "preco_unitario": 0.0,
       "quantidade": 0.1,
       "tipo": "APORTE (Ajuste Zeramento)"
+    },
+    {
+      "ativo": "Icatu Previ",
+      "data": "2026-01-29",
+      "tipo": "APORTE",
+      "valor_total": 7898.1,
+      "preco_unitario": 1.8081173,
+      "quantidade": 4368.13474436
     }
   ],
   "descricao": "Historico de aportes e retiradas (trades) de ativos financeiros"
