@@ -458,10 +458,9 @@
     function diasAteVencimento(dataVenc) {
       const hoje = new Date();
       hoje.setHours(0, 0, 0, 0);
-      const venc = new Date(dataVenc);
-      venc.setHours(0, 0, 0, 0);
-      const diff = Math.ceil((venc - hoje) / (1000*60*60*24));
-      return diff;
+      const [y, m, d] = dataVenc.split('-').map(Number);
+      const venc = new Date(y, m - 1, d); // local time — evita bug de UTC parsing
+      return Math.round((venc - hoje) / (1000 * 60 * 60 * 24));
     }
 
     function monthLabel(mesStr) {
