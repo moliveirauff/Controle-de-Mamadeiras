@@ -653,8 +653,8 @@
       },
       {
         "ano": 2026,
-        "aporte_real": -893.94,
-        "dividendos": 893.94,
+        "aporte_real": -8510.15,
+        "dividendos": 8510.15,
         "total": 0.0
       }
     ],
@@ -809,8 +809,8 @@
         },
         {
           "ano": 2026,
-          "aporte_real": 0.0,
-          "dividendos": 0.0
+          "aporte_real": -1860.08,
+          "dividendos": 1860.08
         }
       ],
       "3_acoes_brasil": [
@@ -886,8 +886,8 @@
         },
         {
           "ano": 2026,
-          "aporte_real": 0.0,
-          "dividendos": 0.0
+          "aporte_real": -1206.47,
+          "dividendos": 1206.47
         }
       ],
       "4_ativos_reais": [
@@ -963,8 +963,8 @@
         },
         {
           "ano": 2026,
-          "aporte_real": 0.0,
-          "dividendos": 0.0
+          "aporte_real": -4549.66,
+          "dividendos": 4549.66
         }
       ],
       "5_internacional": [
@@ -1364,8 +1364,8 @@
       {
         "ano": 2026,
         "valorizacao": 5342.93,
-        "dividendos": 893.94,
-        "total": 6236.87
+        "dividendos": 8510.15,
+        "total": 13853.08
       }
     ],
     "rentabilidade_pct": [
@@ -1497,7 +1497,7 @@
       },
       {
         "ano": 2026,
-        "sem_dividendos": 0.24,
+        "sem_dividendos": -0.17,
         "com_dividendos": 0.29,
         "cdi": 12.0,
         "ifix": 5.0,
@@ -1656,7 +1656,7 @@
         },
         {
           "ano": 2026,
-          "sem_dividendos": -0.32,
+          "sem_dividendos": -0.68,
           "com_dividendos": -0.32
         }
       ],
@@ -1733,7 +1733,7 @@
         },
         {
           "ano": 2026,
-          "sem_dividendos": 14.2,
+          "sem_dividendos": 13.9,
           "com_dividendos": 14.2
         }
       ],
@@ -1810,7 +1810,7 @@
         },
         {
           "ano": 2026,
-          "sem_dividendos": -1.9,
+          "sem_dividendos": -3.84,
           "com_dividendos": -1.9
         }
       ],
@@ -9276,14 +9276,14 @@
       },
       {
         "mes": "2026-01",
-        "aporte_real": -730.05,
-        "dividendos": 730.05,
+        "aporte_real": -4893.61,
+        "dividendos": 4893.61,
         "total": 0.0
       },
       {
         "mes": "2026-02",
-        "aporte_real": -163.89,
-        "dividendos": 163.89,
+        "aporte_real": -3616.54,
+        "dividendos": 3616.54,
         "total": 0.0
       }
     ],
@@ -10299,14 +10299,14 @@
       {
         "mes": "2026-01",
         "valorizacao": 16812.77,
-        "dividendos": 730.05,
-        "total": 17542.82
+        "dividendos": 4893.61,
+        "total": 21706.38
       },
       {
         "mes": "2026-02",
         "valorizacao": -11469.84,
-        "dividendos": 163.89,
-        "total": -11305.95
+        "dividendos": 3616.54,
+        "total": -7853.3
       }
     ]
   },
@@ -10704,5 +10704,5 @@
       "categoria": "3_acoes_brasil"
     }
   ],
-  "last_update": "2026-02-27 11:39"
+  "last_update": "2026-02-27 16:49"
 }
