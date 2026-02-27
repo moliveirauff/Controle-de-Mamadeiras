@@ -1,5 +1,5 @@
 {
-  "versao": "2026.2.27",
+  "versao": "2026.2.27b",
   "data_atualizacao": "2026-02-27",
   "descricao": "Historico de dividendos, JCP e rendimentos de ativos financeiros",
   "movimentacoes": [
@@ -16254,7 +16254,7 @@
     {
       "ativo": "ABEV3_2020.10.13",
       "data": "2025-01-07",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 380.51,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -16446,7 +16446,7 @@
     {
       "ativo": "ODPV3_2025.06.27",
       "data": "2025-01-29",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 38.65,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -16638,7 +16638,7 @@
     {
       "ativo": "EQTL3",
       "data": "2025-02-20",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 19.09,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -16694,8 +16694,16 @@
     {
       "ativo": "ITUB4",
       "data": "2025-03-07",
-      "tipo": "PROVENTO_??",
-      "valor_total": 1079.0,
+      "tipo": "PROVENTO_JCP",
+      "valor_total": 456.39,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "ITUB4",
+      "data": "2025-03-07",
+      "tipo": "PROVENTO_DIVIDENDO",
+      "valor_total": 622.61,
       "preco_unitario": 0.0,
       "quantidade": 0.0
     },
@@ -16718,8 +16726,16 @@
     {
       "ativo": "WEGE3",
       "data": "2025-03-12",
-      "tipo": "PROVENTO_??",
-      "valor_total": 75.68,
+      "tipo": "PROVENTO_JCP",
+      "valor_total": 25.06,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "WEGE3",
+      "data": "2025-03-12",
+      "tipo": "PROVENTO_DIVIDENDO",
+      "valor_total": 50.62,
       "preco_unitario": 0.0,
       "quantidade": 0.0
     },
@@ -16894,7 +16910,7 @@
     {
       "ativo": "MDIA3_2025.12.16",
       "data": "2025-04-01",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 102.29,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -16926,8 +16942,16 @@
     {
       "ativo": "ODPV3_2025.06.27",
       "data": "2025-04-03",
-      "tipo": "PROVENTO_??",
-      "valor_total": 179.56,
+      "tipo": "PROVENTO_JCP",
+      "valor_total": 14.52,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "ODPV3_2025.06.27",
+      "data": "2025-04-03",
+      "tipo": "PROVENTO_DIVIDENDO",
+      "valor_total": 165.04,
       "preco_unitario": 0.0,
       "quantidade": 0.0
     },
@@ -16942,7 +16966,7 @@
     {
       "ativo": "RDOR3",
       "data": "2025-04-04",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 73.73,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -16950,7 +16974,7 @@
     {
       "ativo": "ABEV3_2020.10.13",
       "data": "2025-04-04",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 114.83,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -16974,7 +16998,7 @@
     {
       "ativo": "VIVT3",
       "data": "2025-04-08",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 409.81,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -17166,7 +17190,7 @@
     {
       "ativo": "MDIA3_2025.12.16",
       "data": "2025-04-30",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 10.95,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -17358,7 +17382,7 @@
     {
       "ativo": "EGIE3",
       "data": "2025-05-27",
-      "tipo": "PROVENTO_???",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 457.29,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -17366,7 +17390,7 @@
     {
       "ativo": "TAEE11_2025.11.21",
       "data": "2025-05-28",
-      "tipo": "PROVENTO_???",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 260.05,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -17374,15 +17398,23 @@
     {
       "ativo": "EQTL3",
       "data": "2025-05-28",
-      "tipo": "PROVENTO_???",
-      "valor_total": 237.54,
+      "tipo": "PROVENTO_JCP",
+      "valor_total": 57.19,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "EQTL3",
+      "data": "2025-05-28",
+      "tipo": "PROVENTO_DIVIDENDO",
+      "valor_total": 180.35,
       "preco_unitario": 0.0,
       "quantidade": 0.0
     },
     {
       "ativo": "VIVT3",
       "data": "2025-05-28",
-      "tipo": "PROVENTO_???",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 1598.51,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -17414,7 +17446,7 @@
     {
       "ativo": "MDIA3_2025.12.16",
       "data": "2025-05-30",
-      "tipo": "PROVENTO_???",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 10.95,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -17614,7 +17646,7 @@
     {
       "ativo": "MDIA3_2025.12.16",
       "data": "2025-06-30",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 15.0,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -17750,7 +17782,7 @@
     {
       "ativo": "ABEV3_2020.10.13",
       "data": "2025-07-07",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 64.0,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -17854,7 +17886,7 @@
     {
       "ativo": "VIVT3",
       "data": "2025-07-15",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 431.67,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -18118,7 +18150,7 @@
     {
       "ativo": "TAEE11_2025.11.21",
       "data": "2025-08-27",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 218.34,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -18142,7 +18174,7 @@
     {
       "ativo": "MDIA3_2025.12.16",
       "data": "2025-08-29",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 15.0,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -18350,7 +18382,7 @@
     {
       "ativo": "MDIA3_2025.12.16",
       "data": "2025-09-29",
-      "tipo": "PROVENTO_????",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 65.0,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -18454,7 +18486,7 @@
     {
       "ativo": "FLRY3",
       "data": "2025-10-03",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 249.09,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -18830,7 +18862,7 @@
     {
       "ativo": "EQTL3",
       "data": "2025-11-17",
-      "tipo": "PROVENTO_???",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 493.01,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -18910,8 +18942,16 @@
     {
       "ativo": "TAEE11_2025.11.21",
       "data": "2025-11-27",
-      "tipo": "PROVENTO_???",
-      "valor_total": 514.76,
+      "tipo": "PROVENTO_JCP",
+      "valor_total": 276.15,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "TAEE11_2025.11.21",
+      "data": "2025-11-27",
+      "tipo": "PROVENTO_DIVIDENDO",
+      "valor_total": 238.61,
       "preco_unitario": 0.0,
       "quantidade": 0.0
     },
@@ -18982,7 +19022,7 @@
     {
       "ativo": "VIVT3",
       "data": "2025-12-02",
-      "tipo": "PROVENTO_???",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 69.72,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -18990,7 +19030,7 @@
     {
       "ativo": "RADL3",
       "data": "2025-12-05",
-      "tipo": "PROVENTO_???",
+      "tipo": "PROVENTO_JCP",
       "valor_total": 39.24,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -19166,8 +19206,16 @@
     {
       "ativo": "WEGE3",
       "data": "2025-12-12",
-      "tipo": "PROVENTO_???",
-      "valor_total": 174.52,
+      "tipo": "PROVENTO_JCP",
+      "valor_total": 68.64,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "WEGE3",
+      "data": "2025-12-12",
+      "tipo": "PROVENTO_DIVIDENDO",
+      "valor_total": 105.88,
       "preco_unitario": 0.0,
       "quantidade": 0.0
     },
@@ -19198,8 +19246,16 @@
     {
       "ativo": "HYPE3_2025.11.21",
       "data": "2025-12-17",
-      "tipo": "PROVENTO_???",
-      "valor_total": 311.25,
+      "tipo": "PROVENTO_JCP",
+      "valor_total": 268.01,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "HYPE3_2025.11.21",
+      "data": "2025-12-17",
+      "tipo": "PROVENTO_DIVIDENDO",
+      "valor_total": 43.24,
       "preco_unitario": 0.0,
       "quantidade": 0.0
     },
@@ -19262,7 +19318,7 @@
     {
       "ativo": "ITUB4",
       "data": "2025-12-19",
-      "tipo": "PROVENTO_???",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 1307.75,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -19310,7 +19366,7 @@
     {
       "ativo": "EGIE3",
       "data": "2025-12-23",
-      "tipo": "PROVENTO_???",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 350.59,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -19326,7 +19382,7 @@
     {
       "ativo": "RADL3",
       "data": "2025-12-29",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 60.71,
       "preco_unitario": 0.0,
       "quantidade": 0.0
@@ -19334,7 +19390,7 @@
     {
       "ativo": "ABEV3_2020.10.13",
       "data": "2025-12-30",
-      "tipo": "PROVENTO_??",
+      "tipo": "PROVENTO_DIVIDENDO",
       "valor_total": 645.67,
       "preco_unitario": 0.0,
       "quantidade": 0.0
