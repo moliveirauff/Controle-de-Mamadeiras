@@ -1,5 +1,5 @@
 {
-  "versao": "2026.2.7",
+  "versao": "2026.2.27",
   "data_atualizacao": "2026-02-27",
   "movimentacoes": [
     {
@@ -16025,6 +16025,14 @@
       "valor_total": 997.0,
       "preco_unitario": 1246.25,
       "quantidade": 0.8
+    },
+    {
+      "ativo": "IBIT",
+      "data": "2026-02-12",
+      "tipo": "APORTE",
+      "valor_total": 25345.95,
+      "preco_unitario": 253.20,
+      "quantidade": 100.0
     }
   ],
   "descricao": "Historico de aportes e retiradas (trades) de ativos financeiros"

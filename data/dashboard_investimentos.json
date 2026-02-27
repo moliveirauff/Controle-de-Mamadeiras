@@ -1,9 +1,9 @@
 {
   "kpis": {
-    "patrimonio_total": 1843807.87,
-    "aportes_liquido_total": 1702774.94,
-    "rentabilidade_nominal": 8.28,
-    "cagr_5anos": 14.95
+    "patrimonio_total": 1863643.87,
+    "aportes_liquido_total": 1728120.89,
+    "rentabilidade_nominal": 7.84,
+    "cagr_5anos": 15.19
   },
   "anual": {
     "evolucao": [
@@ -65,7 +65,7 @@
       },
       {
         "ano": 2026,
-        "patrimonio": 1843807.87
+        "patrimonio": 1863643.87
       }
     ],
     "evolucao_por_cat": {
@@ -438,7 +438,7 @@
         },
         {
           "ano": 2026,
-          "patrimonio": 111213.92
+          "patrimonio": 131049.92
         }
       ],
       "7_alternativos_estratega": [
@@ -653,9 +653,9 @@
       },
       {
         "ano": 2026,
-        "aporte_real": 1388.4,
+        "aporte_real": 26734.35,
         "dividendos": 8510.15,
-        "total": 9898.55
+        "total": 35244.5
       }
     ],
     "aportes_por_cat": {
@@ -1117,7 +1117,7 @@
         },
         {
           "ano": 2026,
-          "aporte_real": 0.0,
+          "aporte_real": 25345.95,
           "dividendos": 0.0
         }
       ],
@@ -1363,9 +1363,9 @@
       },
       {
         "ano": 2026,
-        "valorizacao": 3263.34,
+        "valorizacao": -2246.61,
         "dividendos": 8510.15,
-        "total": 11773.49
+        "total": 6263.54
       }
     ],
     "rentabilidade_pct": [
@@ -1497,8 +1497,8 @@
       },
       {
         "ano": 2026,
-        "sem_dividendos": -0.29,
-        "com_dividendos": 0.18,
+        "sem_dividendos": -0.58,
+        "com_dividendos": -0.12,
         "cdi": 12.0,
         "ifix": 5.0,
         "dolar": 2.0,
@@ -1964,8 +1964,8 @@
         },
         {
           "ano": 2026,
-          "sem_dividendos": -28.11,
-          "com_dividendos": -28.11
+          "sem_dividendos": -27.21,
+          "com_dividendos": -27.21
         }
       ],
       "7_alternativos_estratega": [
@@ -2804,7 +2804,7 @@
       },
       {
         "mes": "2026-02",
-        "patrimonio": 1843807.87
+        "patrimonio": 1863643.87
       }
     ],
     "evolucao_por_cat": {
@@ -6897,7 +6897,7 @@
         },
         {
           "mes": "2026-02",
-          "patrimonio": 111213.92
+          "patrimonio": 131049.92
         }
       ],
       "7_alternativos_estratega": [
@@ -9282,9 +9282,9 @@
       },
       {
         "mes": "2026-02",
-        "aporte_real": -3616.54,
+        "aporte_real": 21729.41,
         "dividendos": 3616.54,
-        "total": 0.0
+        "total": 25345.95
       }
     ],
     "lucro_reais": [
@@ -10304,42 +10304,42 @@
       },
       {
         "mes": "2026-02",
-        "valorizacao": -11469.84,
+        "valorizacao": -16979.79,
         "dividendos": 3616.54,
-        "total": -7853.3
+        "total": -13363.25
       }
     ]
   },
   "alocacao": [
     {
       "categoria": "1_renda_fixa_soberana",
-      "meta_rs": 645332.75,
+      "meta_rs": 652275.35,
       "real_rs": 75438.72
     },
     {
       "categoria": "2_credito_privado",
-      "meta_rs": 276571.18,
+      "meta_rs": 279546.58,
       "real_rs": 519090.09
     },
     {
       "categoria": "3_acoes_brasil",
-      "meta_rs": 460951.97,
+      "meta_rs": 465910.97,
       "real_rs": 469945.08
     },
     {
       "categoria": "4_ativos_reais",
-      "meta_rs": 184380.79,
+      "meta_rs": 186364.39,
       "real_rs": 230112.68
     },
     {
       "categoria": "5_internacional",
-      "meta_rs": 184380.79,
+      "meta_rs": 186364.39,
       "real_rs": 49066.0
     },
     {
       "categoria": "6_criptoativos",
-      "meta_rs": 92190.39,
-      "real_rs": 111213.92
+      "meta_rs": 93182.19,
+      "real_rs": 131049.92
     }
   ],
   "ranking_ativos": [
@@ -10376,20 +10376,20 @@
       "categoria": "7_alternativos_estratega"
     },
     {
+      "ticker": "IBIT",
+      "quantidade": 622.0,
+      "investido": 183203.16,
+      "atual": 123379.92,
+      "rent_pct": -32.65,
+      "categoria": "6_criptoativos"
+    },
+    {
       "ticker": "XP Superprev 2",
       "quantidade": 85769.7,
       "investido": 88131.22,
       "atual": 122650.67,
       "rent_pct": 39.17,
       "categoria": "7_alternativos_estratega"
-    },
-    {
-      "ticker": "IBIT",
-      "quantidade": 522.0,
-      "investido": 157857.21,
-      "atual": 103543.92,
-      "rent_pct": -34.41,
-      "categoria": "6_criptoativos"
     },
     {
       "ticker": "SGOV",
@@ -10720,5 +10720,5 @@
       "categoria": "1_renda_fixa_soberana"
     }
   ],
-  "last_update": "2026-02-27 17:46"
+  "last_update": "2026-02-27 17:56"
 }
