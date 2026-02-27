@@ -16033,6 +16033,14 @@
       "valor_total": 25345.95,
       "preco_unitario": 253.2,
       "quantidade": 100.0
+    },
+    {
+      "ativo": "Arca Grão RF Previ",
+      "data": "2026-01-15",
+      "tipo": "APORTE",
+      "valor_total": 1045.6,
+      "preco_unitario": 1.55807076,
+      "quantidade": 671.08633761
     }
   ],
   "descricao": "Historico de aportes e retiradas (trades) de ativos financeiros"
