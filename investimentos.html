@@ -694,9 +694,11 @@
 
   function initVariacoes() {
     // Coletar todos os meses disponíveis (que têm pelo menos 1 ativo com valor)
+    // Ignorar chaves de metadados (ex: data_atualizacao) cujo valor não é objeto de cotações
     const mesesSet = new Set();
     Object.values(cotacoesData).forEach(vals => {
-      Object.entries(vals).forEach(([m, v]) => { if (v !== null) mesesSet.add(m); });
+      if (!vals || typeof vals !== 'object' || Array.isArray(vals)) return;
+      Object.entries(vals).forEach(([m, v]) => { if (v !== null && m.includes('/')) mesesSet.add(m); });
     });
 
     // Ordenar cronologicamente
@@ -732,8 +734,10 @@
     document.getElementById('btnVarNext').disabled = currentVarMesIdx === mesesDisp.length - 1;
 
     // Calcular variações mensais (deduplicando por nome limpo)
+    // Ignorar chaves de metadados (data_atualizacao, etc.)
     const seen = {};
     Object.entries(cotacoesData).forEach(([ativo, vals]) => {
+      if (!vals || typeof vals !== 'object' || Array.isArray(vals)) return;
       const va = vals[mesAlvo];
       const vp = vals[mesPrev];
       if (va == null || vp == null || vp === 0) return;
