@@ -16009,6 +16009,22 @@
       "valor_total": 7898.1,
       "preco_unitario": 1.8081173,
       "quantidade": 4368.13474436
+    },
+    {
+      "ativo": "Tesouro IPCA+ 2050",
+      "data": "2026-01-05",
+      "tipo": "APORTE",
+      "valor_total": 1003.45,
+      "preco_unitario": 888.00885,
+      "quantidade": 1.13
+    },
+    {
+      "ativo": "Tesouro Educa+ 2043",
+      "data": "2026-01-05",
+      "tipo": "APORTE",
+      "valor_total": 997.0,
+      "preco_unitario": 1246.25,
+      "quantidade": 0.8
     }
   ],
   "descricao": "Historico de aportes e retiradas (trades) de ativos financeiros"

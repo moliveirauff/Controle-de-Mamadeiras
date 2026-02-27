@@ -1,6 +1,6 @@
 {
   "versao": "2026.2.5",
-  "data_atualizacao": "2026-02-19",
+  "data_atualizacao": "2026-02-27",
   "ativos": [
     {
       "nome": "SGOV",
@@ -1279,6 +1279,18 @@
       "macro_classe": "5_internacional",
       "subclasse": "5.1_acoes_globais",
       "status": "fechado"
+    },
+    {
+      "nome": "Tesouro IPCA+ 2050",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.3_ipca_longo",
+      "status": "aberto"
+    },
+    {
+      "nome": "Tesouro Educa+ 2043",
+      "macro_classe": "1_renda_fixa_soberana",
+      "subclasse": "1.3_ipca_longo",
+      "status": "aberto"
     }
   ]
 }

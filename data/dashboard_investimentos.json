@@ -1,8 +1,8 @@
 {
   "kpis": {
     "patrimonio_total": 1843807.87,
-    "aportes_liquido_total": 1700774.49,
-    "rentabilidade_nominal": 8.41,
+    "aportes_liquido_total": 1702774.94,
+    "rentabilidade_nominal": 8.28,
     "cagr_5anos": 14.95
   },
   "anual": {
@@ -653,9 +653,9 @@
       },
       {
         "ano": 2026,
-        "aporte_real": -612.05,
+        "aporte_real": 1388.4,
         "dividendos": 8510.15,
-        "total": 7898.1
+        "total": 9898.55
       }
     ],
     "aportes_por_cat": {
@@ -732,7 +732,7 @@
         },
         {
           "ano": 2026,
-          "aporte_real": -163.89,
+          "aporte_real": 1836.56,
           "dividendos": 163.89
         }
       ],
@@ -1363,9 +1363,9 @@
       },
       {
         "ano": 2026,
-        "valorizacao": 5263.79,
+        "valorizacao": 3263.34,
         "dividendos": 8510.15,
-        "total": 13773.94
+        "total": 11773.49
       }
     ],
     "rentabilidade_pct": [
@@ -1497,8 +1497,8 @@
       },
       {
         "ano": 2026,
-        "sem_dividendos": -0.18,
-        "com_dividendos": 0.29,
+        "sem_dividendos": -0.29,
+        "com_dividendos": 0.18,
         "cdi": 12.0,
         "ifix": 5.0,
         "dolar": 2.0,
@@ -1579,8 +1579,8 @@
         },
         {
           "ano": 2026,
-          "sem_dividendos": -4.9,
-          "com_dividendos": -4.7
+          "sem_dividendos": -7.25,
+          "com_dividendos": -7.05
         }
       ],
       "2_credito_privado": [
@@ -9276,9 +9276,9 @@
       },
       {
         "mes": "2026-01",
-        "aporte_real": 3004.49,
+        "aporte_real": 5004.94,
         "dividendos": 4893.61,
-        "total": 7898.1
+        "total": 9898.55
       },
       {
         "mes": "2026-02",
@@ -10298,9 +10298,9 @@
       },
       {
         "mes": "2026-01",
-        "valorizacao": 16733.63,
+        "valorizacao": 14733.18,
         "dividendos": 4893.61,
-        "total": 21627.24
+        "total": 19626.79
       },
       {
         "mes": "2026-02",
@@ -10702,7 +10702,23 @@
       "atual": 0.0,
       "rent_pct": -100.0,
       "categoria": "3_acoes_brasil"
+    },
+    {
+      "ticker": "Tesouro IPCA+ 2050",
+      "quantidade": 1.13,
+      "investido": 1003.45,
+      "atual": 0.0,
+      "rent_pct": -100.0,
+      "categoria": "1_renda_fixa_soberana"
+    },
+    {
+      "ticker": "Tesouro Educa+ 2043",
+      "quantidade": 0.8,
+      "investido": 997.0,
+      "atual": 0.0,
+      "rent_pct": -100.0,
+      "categoria": "1_renda_fixa_soberana"
     }
   ],
-  "last_update": "2026-02-27 17:43"
+  "last_update": "2026-02-27 17:46"
 }
