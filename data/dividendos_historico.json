@@ -1,6 +1,6 @@
 {
-    "versao": "2026.2.1",
-    "data_atualizacao": "2026-02-19",
+    "versao": "2026.2.27",
+    "data_atualizacao": "2026-02-27",
     "descricao": "Historico de dividendos, JCP e rendimentos de ativos financeiros",
     "movimentacoes": [
         {
@@ -19354,6 +19354,30 @@
             "valor_total": 1274.05,
             "preco_unitario": 0.0,
             "quantidade": 0.0
+        },
+        {
+            "ativo": "SPY",
+            "data": "2026-01-30",
+            "tipo": "PROVENTO_DIVIDENDO",
+            "valor_total": 730.05,
+            "preco_unitario": 0.0,
+            "quantidade": 0.0,
+            "valor_usd": 139.54,
+            "valor_bruto_usd": 199.34,
+            "wht_usd": -59.80,
+            "cotacao_usd_brl": 5.2301
+        },
+        {
+            "ativo": "SGOV",
+            "data": "2026-02-05",
+            "tipo": "PROVENTO_DIVIDENDO",
+            "valor_total": 163.89,
+            "preco_unitario": 0.0,
+            "quantidade": 0.0,
+            "valor_usd": 31.17,
+            "valor_bruto_usd": 44.53,
+            "wht_usd": -13.36,
+            "cotacao_usd_brl": 5.2580
         }
     ]
 }
