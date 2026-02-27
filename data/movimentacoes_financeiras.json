@@ -14680,7 +14680,7 @@
       "tipo": "APORTE",
       "valor_total": 1498.85,
       "preco_unitario": 83.27,
-      "quantidade": 18.0
+      "quantidade": 20.0
     },
     {
       "ativo": "VALE3",
@@ -15568,7 +15568,7 @@
       "tipo": "APORTE",
       "valor_total": 3100.0,
       "preco_unitario": 77.5,
-      "quantidade": 40.0
+      "quantidade": 41.0
     },
     {
       "ativo": "FATN11",
@@ -16031,7 +16031,7 @@
       "data": "2026-02-12",
       "tipo": "APORTE",
       "valor_total": 25345.95,
-      "preco_unitario": 253.20,
+      "preco_unitario": 253.2,
       "quantidade": 100.0
     }
   ],
