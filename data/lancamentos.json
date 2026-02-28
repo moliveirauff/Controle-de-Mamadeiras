@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "UBER CASH",
+    "data": "2026-01-11",
+    "categoria": "transporte",
+    "subcategoria": "Táxi e Uber",
+    "valor": -200.0,
+    "origem": "flash"
+  },
+  {
     "descricao": "POSTO PIT STOP",
     "data": "2026-01-20",
     "categoria": "transporte",
