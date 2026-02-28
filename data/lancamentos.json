@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "ERFOLG ESTACIONAMENT",
+    "data": "2026-01-26",
+    "categoria": "transporte",
+    "subcategoria": "Estacionamento",
+    "valor": -70.0,
+    "origem": "flash"
+  },
+  {
     "descricao": "Depósito de Mobilidade",
     "data": "2026-01-29",
     "categoria": "receitas",
