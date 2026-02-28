@@ -1,6 +1,14 @@
 [
   {
     "descricao": "POSTO 3D",
+    "data": "2026-02-21",
+    "categoria": "transporte",
+    "subcategoria": "Combustível",
+    "valor": -228.26,
+    "origem": "flash"
+  },
+  {
+    "descricao": "POSTO 3D",
     "data": "2026-02-24",
     "categoria": "transporte",
     "subcategoria": "Combustível",
