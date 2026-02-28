@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "RSC COMERCIO DE ALIMENTOS E CHOCOLATES LTDA",
+    "data": "2026-02-19",
+    "categoria": "alimentacao",
+    "subcategoria": "Outros",
+    "valor": -34.92,
+    "origem": "ticket_restaurante"
+  },
+  {
     "descricao": "DEGUSTER PRIME",
     "data": "2026-02-20",
     "categoria": "alimentacao",
