@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "POSTO PIT STOP",
+    "data": "2026-01-20",
+    "categoria": "transporte",
+    "subcategoria": "Combustível",
+    "valor": -270.91,
+    "origem": "flash"
+  },
+  {
     "descricao": "NR PARKING",
     "data": "2026-01-23",
     "categoria": "transporte",
