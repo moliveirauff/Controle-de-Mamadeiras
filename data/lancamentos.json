@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "SPOLETO",
+    "data": "2026-02-14",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -63.0,
+    "origem": "ticket_restaurante"
+  },
+  {
     "descricao": "DEGUSTER PRIME",
     "data": "2026-02-19",
     "categoria": "alimentacao",
