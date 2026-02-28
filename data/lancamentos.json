@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "NR PARKING",
+    "data": "2026-01-23",
+    "categoria": "transporte",
+    "subcategoria": "Estacionamento",
+    "valor": -24.0,
+    "origem": "flash"
+  },
+  {
     "descricao": "ERFOLG ESTACIONAMENT",
     "data": "2026-01-26",
     "categoria": "transporte",
