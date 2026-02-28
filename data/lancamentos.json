@@ -4,6 +4,14 @@
     "data": "2026-01-29",
     "categoria": "receitas",
     "subcategoria": "Benefícios",
+    "valor": 70.0,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "Disponibilidade de crédito",
+    "data": "2026-01-29",
+    "categoria": "receitas",
+    "subcategoria": "Benefícios",
     "valor": 665.0,
     "origem": "ticket_restaurante"
   },
