@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "CITYFRUIT",
+    "data": "2026-02-25",
+    "categoria": "alimentacao",
+    "subcategoria": "Mercado",
+    "valor": -100.05,
+    "origem": "ticket_alimentacao"
+  },
+  {
     "descricao": "Disponibilidade de crédito",
     "data": "2026-01-29",
     "categoria": "receitas",
