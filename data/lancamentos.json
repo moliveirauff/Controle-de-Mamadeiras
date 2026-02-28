@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "Disponibilidade de crédito",
+    "data": "2026-02-26",
+    "categoria": "receitas",
+    "subcategoria": "Benefícios",
+    "valor": 1820.0,
+    "origem": "ticket_alimentacao"
+  },
+  {
     "descricao": "PONEY POSTO",
     "data": "2026-02-05",
     "categoria": "transporte",
