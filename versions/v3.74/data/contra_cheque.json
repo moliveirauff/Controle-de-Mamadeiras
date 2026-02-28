@@ -1,0 +1,2199 @@
+[
+  {
+    "mes_referencia": "jan/12",
+    "salario_base": 5856.0,
+    "salario_bruto": 10778.94,
+    "salario_liquido": 8258.95,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 2089.2,
+      "previdencia_privada": 0.0,
+      "outros": 0.0
+    },
+    "fgts": 862.32
+  },
+  {
+    "mes_referencia": "fev/12",
+    "salario_base": 5856.0,
+    "salario_bruto": 5856.0,
+    "salario_liquido": 4689.83,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 735.4,
+      "previdencia_privada": 0.0,
+      "outros": 0.0
+    },
+    "fgts": 468.48
+  },
+  {
+    "mes_referencia": "mar/12",
+    "salario_base": 5856.0,
+    "salario_bruto": 13808.45,
+    "salario_liquido": 10260.15,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 2922.32,
+      "previdencia_privada": 0.0,
+      "outros": 195.2
+    },
+    "fgts": 1104.68
+  },
+  {
+    "mes_referencia": "abr/12",
+    "salario_base": 6441.6,
+    "salario_bruto": 11732.14,
+    "salario_liquido": 9144.83,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 2156.53,
+      "previdencia_privada": 0.0,
+      "outros": 0.0
+    },
+    "fgts": 938.57
+  },
+  {
+    "mes_referencia": "mai/12",
+    "salario_base": 6755.95,
+    "salario_bruto": 6755.95,
+    "salario_liquido": 5342.28,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 982.89,
+      "previdencia_privada": 0.0,
+      "outros": 0.0
+    },
+    "fgts": 540.48
+  },
+  {
+    "mes_referencia": "jun/12",
+    "salario_base": 6755.95,
+    "salario_bruto": 6755.95,
+    "salario_liquido": 5072.04,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 982.89,
+      "previdencia_privada": 270.24,
+      "outros": 0.0
+    },
+    "fgts": 540.48
+  },
+  {
+    "mes_referencia": "jul/12",
+    "salario_base": 6755.95,
+    "salario_bruto": 6755.95,
+    "salario_liquido": 5072.04,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 982.89,
+      "previdencia_privada": 270.24,
+      "outros": 0.0
+    },
+    "fgts": 540.48
+  },
+  {
+    "mes_referencia": "ago/12",
+    "salario_base": 6828.24,
+    "salario_bruto": 7045.11,
+    "salario_liquido": 5278.79,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 1062.41,
+      "previdencia_privada": 273.13,
+      "outros": 0.0
+    },
+    "fgts": 563.61
+  },
+  {
+    "mes_referencia": "set/12",
+    "salario_base": 6828.24,
+    "salario_bruto": 6828.24,
+    "salario_liquido": 5121.56,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 1002.77,
+      "previdencia_privada": 273.13,
+      "outros": 0.0
+    },
+    "fgts": 546.26
+  },
+  {
+    "mes_referencia": "out/12",
+    "salario_base": 7511.06,
+    "salario_bruto": 11516.96,
+    "salario_liquido": 8493.58,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 2292.17,
+      "previdencia_privada": 300.44,
+      "outros": 0.0
+    },
+    "fgts": 921.36
+  },
+  {
+    "mes_referencia": "nov/12",
+    "salario_base": 7511.06,
+    "salario_bruto": 11016.22,
+    "salario_liquido": 8130.54,
+    "descontos": {
+      "inss": 430.78,
+      "irrf": 2154.46,
+      "previdencia_privada": 300.44,
+      "outros": 0.0
+    },
+    "fgts": 881.3
+  },
+  {
+    "mes_referencia": "dez/12",
+    "salario_base": 7511.06,
+    "salario_bruto": 17156.51,
+    "salario_liquido": 13026.47,
+    "descontos": {
+      "inss": 861.56,
+      "irrf": 2968.04,
+      "previdencia_privada": 300.44,
+      "outros": 0.0
+    },
+    "fgts": 1372.52
+  },
+  {
+    "mes_referencia": "jan/13",
+    "salario_base": 7511.06,
+    "salario_bruto": 14958.89,
+    "salario_liquido": 12381.65,
+    "descontos": {
+      "inss": 792.96,
+      "irrf": 1456.34,
+      "previdencia_privada": 300.44,
+      "outros": 27.5
+    },
+    "fgts": 1196.71
+  },
+  {
+    "mes_referencia": "fev/13",
+    "salario_base": 7511.06,
+    "salario_bruto": 7010.32,
+    "salario_liquido": 5462.91,
+    "descontos": {
+      "inss": 122.02,
+      "irrf": 1103.7,
+      "previdencia_privada": 300.44,
+      "outros": 21.25
+    },
+    "fgts": 560.83
+  },
+  {
+    "mes_referencia": "mar/13",
+    "salario_base": 7511.06,
+    "salario_bruto": 7511.06,
+    "salario_liquido": 5578.97,
+    "descontos": {
+      "inss": 457.49,
+      "irrf": 1149.15,
+      "previdencia_privada": 300.44,
+      "outros": 25.0
+    },
+    "fgts": 600.88
+  },
+  {
+    "mes_referencia": "abr/13",
+    "salario_base": 8262.17,
+    "salario_bruto": 12167.92,
+    "salario_liquido": 9999.24,
+    "descontos": {
+      "inss": 457.49,
+      "irrf": 1355.7,
+      "previdencia_privada": 330.49,
+      "outros": 25.0
+    },
+    "fgts": 973.43
+  },
+  {
+    "mes_referencia": "mai/13",
+    "salario_base": 8262.17,
+    "salario_bruto": 14139.33,
+    "salario_liquido": 10354.43,
+    "descontos": {
+      "inss": 457.49,
+      "irrf": 2971.92,
+      "previdencia_privada": 330.49,
+      "outros": 25.0
+    },
+    "fgts": 1131.15
+  },
+  {
+    "mes_referencia": "jun/13",
+    "salario_base": 8262.17,
+    "salario_bruto": 8262.17,
+    "salario_liquido": 6093.49,
+    "descontos": {
+      "inss": 457.49,
+      "irrf": 1355.7,
+      "previdencia_privada": 330.49,
+      "outros": 25.0
+    },
+    "fgts": 660.97
+  },
+  {
+    "mes_referencia": "jul/13",
+    "salario_base": 8881.83,
+    "salario_bruto": 10561.94,
+    "salario_liquido": 7732.29,
+    "descontos": {
+      "inss": 457.49,
+      "irrf": 1988.14,
+      "previdencia_privada": 355.27,
+      "outros": 28.75
+    },
+    "fgts": 844.96
+  },
+  {
+    "mes_referencia": "ago/13",
+    "salario_base": 8881.83,
+    "salario_bruto": 19294.5,
+    "salario_liquido": 14051.9,
+    "descontos": {
+      "inss": 457.49,
+      "irrf": 4389.59,
+      "previdencia_privada": 355.27,
+      "outros": 40.25
+    },
+    "fgts": 1543.56
+  },
+  {
+    "mes_referencia": "set/13",
+    "salario_base": 8881.83,
+    "salario_bruto": 8881.83,
+    "salario_liquido": 6513.56,
+    "descontos": {
+      "inss": 457.49,
+      "irrf": 1526.11,
+      "previdencia_privada": 355.27,
+      "outros": 29.4
+    },
+    "fgts": 710.55
+  },
+  {
+    "mes_referencia": "out/13",
+    "salario_base": 9770.01,
+    "salario_bruto": 9770.01,
+    "salario_liquido": 7119.16,
+    "descontos": {
+      "inss": 457.49,
+      "irrf": 1770.36,
+      "previdencia_privada": 390.8,
+      "outros": 32.2
+    },
+    "fgts": 781.6
+  },
+  {
+    "mes_referencia": "nov/13",
+    "salario_base": 9770.01,
+    "salario_bruto": 23669.47,
+    "salario_liquido": 17220.07,
+    "descontos": {
+      "inss": 457.49,
+      "irrf": 5592.71,
+      "previdencia_privada": 390.8,
+      "outros": 8.4
+    },
+    "fgts": 1893.56
+  },
+  {
+    "mes_referencia": "dez/13",
+    "salario_base": 9770.01,
+    "salario_bruto": 23113.03,
+    "salario_liquido": 17283.95,
+    "descontos": {
+      "inss": 914.98,
+      "irrf": 4523.3,
+      "previdencia_privada": 390.8,
+      "outros": 0.0
+    },
+    "fgts": 1849.04
+  },
+  {
+    "mes_referencia": "jan/14",
+    "salario_base": 9770.01,
+    "salario_bruto": 21875.39,
+    "salario_liquido": 18128.59,
+    "descontos": {
+      "inss": 582.92,
+      "irrf": 2773.08,
+      "previdencia_privada": 390.8,
+      "outros": 0.0
+    },
+    "fgts": 1750.03
+  },
+  {
+    "mes_referencia": "fev/14",
+    "salario_base": 9770.01,
+    "salario_bruto": 31654.84,
+    "salario_liquido": 23107.5,
+    "descontos": {
+      "inss": 382.92,
+      "irrf": 7773.62,
+      "previdencia_privada": 390.8,
+      "outros": 0.0
+    },
+    "fgts": 2532.39
+  },
+  {
+    "mes_referencia": "mar/14",
+    "salario_base": 9770.01,
+    "salario_bruto": 9770.01,
+    "salario_liquido": 7168.5,
+    "descontos": {
+      "inss": 482.92,
+      "irrf": 1727.79,
+      "previdencia_privada": 390.8,
+      "outros": 0.0
+    },
+    "fgts": 781.6
+  },
+  {
+    "mes_referencia": "abr/14",
+    "salario_base": 9770.01,
+    "salario_bruto": 9770.01,
+    "salario_liquido": 7168.5,
+    "descontos": {
+      "inss": 482.92,
+      "irrf": 1727.79,
+      "previdencia_privada": 390.8,
+      "outros": 0.0
+    },
+    "fgts": 781.6
+  },
+  {
+    "mes_referencia": "mai/14",
+    "salario_base": 9770.01,
+    "salario_bruto": 22405.88,
+    "salario_liquido": 16329.5,
+    "descontos": {
+      "inss": 482.92,
+      "irrf": 5202.66,
+      "previdencia_privada": 390.8,
+      "outros": 0.0
+    },
+    "fgts": 1792.47
+  },
+  {
+    "mes_referencia": "jun/14",
+    "salario_base": 9770.01,
+    "salario_bruto": 9770.01,
+    "salario_liquido": 7168.5,
+    "descontos": {
+      "inss": 482.92,
+      "irrf": 1727.79,
+      "previdencia_privada": 390.8,
+      "outros": 0.0
+    },
+    "fgts": 781.6
+  },
+  {
+    "mes_referencia": "jul/14",
+    "salario_base": 10453.91,
+    "salario_bruto": 19804.42,
+    "salario_liquido": 14416.08,
+    "descontos": {
+      "inss": 482.92,
+      "irrf": 4487.26,
+      "previdencia_privada": 418.16,
+      "outros": 0.0
+    },
+    "fgts": 1584.35
+  },
+  {
+    "mes_referencia": "ago/14",
+    "salario_base": 10453.91,
+    "salario_bruto": 33630.23,
+    "salario_liquido": 24439.79,
+    "descontos": {
+      "inss": 482.92,
+      "irrf": 8289.36,
+      "previdencia_privada": 418.16,
+      "outros": 0.0
+    },
+    "fgts": 2690.42
+  },
+  {
+    "mes_referencia": "set/14",
+    "salario_base": 10976.61,
+    "salario_bruto": 27858.64,
+    "salario_liquido": 20234.49,
+    "descontos": {
+      "inss": 482.92,
+      "irrf": 6702.17,
+      "previdencia_privada": 439.06,
+      "outros": 0.0
+    },
+    "fgts": 2228.69
+  },
+  {
+    "mes_referencia": "out/14",
+    "salario_base": 10976.61,
+    "salario_bruto": 10976.61,
+    "salario_liquido": 7995.02,
+    "descontos": {
+      "inss": 482.92,
+      "irrf": 2059.61,
+      "previdencia_privada": 439.06,
+      "outros": 0.0
+    },
+    "fgts": 878.13
+  },
+  {
+    "mes_referencia": "nov/14",
+    "salario_base": 10976.61,
+    "salario_bruto": 10976.61,
+    "salario_liquido": 7995.02,
+    "descontos": {
+      "inss": 482.92,
+      "irrf": 2059.61,
+      "previdencia_privada": 439.06,
+      "outros": 0.0
+    },
+    "fgts": 878.13
+  },
+  {
+    "mes_referencia": "dez/14",
+    "salario_base": 10976.61,
+    "salario_bruto": 41662.2,
+    "salario_liquido": 30718.11,
+    "descontos": {
+      "inss": 965.84,
+      "irrf": 9539.19,
+      "previdencia_privada": 439.06,
+      "outros": 0.0
+    },
+    "fgts": 3332.98
+  },
+  {
+    "mes_referencia": "jan/15",
+    "salario_base": 10976.61,
+    "salario_bruto": 23705.22,
+    "salario_liquido": 17812.04,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 4941.11,
+      "previdencia_privada": 439.06,
+      "outros": 0.0
+    },
+    "fgts": 1896.42
+  },
+  {
+    "mes_referencia": "fev/15",
+    "salario_base": 10976.61,
+    "salario_bruto": 10976.61,
+    "salario_liquido": 7973.2,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 2051.34,
+      "previdencia_privada": 439.06,
+      "outros": 0.0
+    },
+    "fgts": 878.13
+  },
+  {
+    "mes_referencia": "mar/15",
+    "salario_base": 10976.61,
+    "salario_bruto": 10976.61,
+    "salario_liquido": 7643.9,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 2051.34,
+      "previdencia_privada": 768.36,
+      "outros": 0.0
+    },
+    "fgts": 878.13
+  },
+  {
+    "mes_referencia": "abr/15",
+    "salario_base": 10976.61,
+    "salario_bruto": 37225.35,
+    "salario_liquido": 29663.45,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 6280.53,
+      "previdencia_privada": 768.36,
+      "outros": 0.0
+    },
+    "fgts": 2978.03
+  },
+  {
+    "mes_referencia": "mai/15",
+    "salario_base": 10976.61,
+    "salario_bruto": 11966.5,
+    "salario_liquido": 8404.79,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 2280.34,
+      "previdencia_privada": 768.36,
+      "outros": 0.0
+    },
+    "fgts": 957.32
+  },
+  {
+    "mes_referencia": "jun/15",
+    "salario_base": 10976.61,
+    "salario_bruto": 25407.2,
+    "salario_liquido": 18149.29,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 5976.54,
+      "previdencia_privada": 768.36,
+      "outros": 0.0
+    },
+    "fgts": 2032.58
+  },
+  {
+    "mes_referencia": "jul/15",
+    "salario_base": 11854.74,
+    "salario_bruto": 25134.55,
+    "salario_liquido": 17890.15,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 5901.56,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 2010.76
+  },
+  {
+    "mes_referencia": "ago/15",
+    "salario_base": 11854.74,
+    "salario_bruto": 11854.74,
+    "salario_liquido": 8262.29,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 2249.61,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 948.38
+  },
+  {
+    "mes_referencia": "set/15",
+    "salario_base": 11854.74,
+    "salario_bruto": 47848.7,
+    "salario_liquido": 37738.86,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 8767.0,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 3827.9
+  },
+  {
+    "mes_referencia": "out/15",
+    "salario_base": 11854.74,
+    "salario_bruto": 11854.74,
+    "salario_liquido": 8262.29,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 2249.61,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 948.38
+  },
+  {
+    "mes_referencia": "nov/15",
+    "salario_base": 11854.74,
+    "salario_bruto": 25851.24,
+    "salario_liquido": 18409.75,
+    "descontos": {
+      "inss": 513.01,
+      "irrf": 6098.65,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 2068.1
+  },
+  {
+    "mes_referencia": "dez/15",
+    "salario_base": 11854.74,
+    "salario_bruto": 36798.02,
+    "salario_liquido": 27675.77,
+    "descontos": {
+      "inss": 1077.32,
+      "irrf": 7215.1,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 2943.84
+  },
+  {
+    "mes_referencia": "jan/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 19520.8,
+    "salario_liquido": 13815.42,
+    "descontos": {
+      "inss": 519.58,
+      "irrf": 4355.97,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 1561.66
+  },
+  {
+    "mes_referencia": "fev/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 22868.7,
+    "salario_liquido": 16205.45,
+    "descontos": {
+      "inss": 570.88,
+      "irrf": 5262.54,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 1829.5
+  },
+  {
+    "mes_referencia": "mar/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 32609.76,
+    "salario_liquido": 22694.74,
+    "descontos": {
+      "inss": 570.88,
+      "irrf": 7723.99,
+      "previdencia_privada": 829.83,
+      "outros": 790.32
+    },
+    "fgts": 2608.78
+  },
+  {
+    "mes_referencia": "abr/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 27265.9,
+    "salario_liquido": 22396.49,
+    "descontos": {
+      "inss": 570.88,
+      "irrf": 3468.7,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 2181.27
+  },
+  {
+    "mes_referencia": "mai/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 11854.74,
+    "salario_liquido": 8220.33,
+    "descontos": {
+      "inss": 570.88,
+      "irrf": 2233.7,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 948.38
+  },
+  {
+    "mes_referencia": "jun/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 11854.74,
+    "salario_liquido": 8220.33,
+    "descontos": {
+      "inss": 570.88,
+      "irrf": 2233.7,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 948.38
+  },
+  {
+    "mes_referencia": "jul/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 21928.1,
+    "salario_liquido": 17675.57,
+    "descontos": {
+      "inss": 627.96,
+      "irrf": 2794.74,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 1754.25
+  },
+  {
+    "mes_referencia": "ago/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 10669.27,
+    "salario_liquido": 7402.25,
+    "descontos": {
+      "inss": 513.8,
+      "irrf": 1923.39,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 853.54
+  },
+  {
+    "mes_referencia": "set/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 17070.82,
+    "salario_liquido": 12001.99,
+    "descontos": {
+      "inss": 570.88,
+      "irrf": 3668.12,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 1365.67
+  },
+  {
+    "mes_referencia": "out/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 17624.05,
+    "salario_liquido": 12398.58,
+    "descontos": {
+      "inss": 570.88,
+      "irrf": 3820.26,
+      "previdencia_privada": 829.83,
+      "outros": 4.5
+    },
+    "fgts": 1409.92
+  },
+  {
+    "mes_referencia": "nov/16",
+    "salario_base": 11854.74,
+    "salario_bruto": 11854.74,
+    "salario_liquido": 8220.33,
+    "descontos": {
+      "inss": 570.88,
+      "irrf": 2233.7,
+      "previdencia_privada": 829.83,
+      "outros": 0.0
+    },
+    "fgts": 948.38
+  },
+  {
+    "mes_referencia": "dez/16",
+    "salario_base": 12803.12,
+    "salario_bruto": 52240.47,
+    "salario_liquido": 38064.32,
+    "descontos": {
+      "inss": 1141.76,
+      "irrf": 11673.44,
+      "previdencia_privada": 1360.95,
+      "outros": 0.0
+    },
+    "fgts": 4179.24
+  },
+  {
+    "mes_referencia": "jan/17",
+    "salario_base": 12803.12,
+    "salario_bruto": 20228.93,
+    "salario_liquido": 14198.0,
+    "descontos": {
+      "inss": 608.44,
+      "irrf": 4526.27,
+      "previdencia_privada": 896.22,
+      "outros": 0.0
+    },
+    "fgts": 1618.31
+  },
+  {
+    "mes_referencia": "fev/17",
+    "salario_base": 12803.12,
+    "salario_bruto": 17540.27,
+    "salario_liquido": 12240.22,
+    "descontos": {
+      "inss": 608.44,
+      "irrf": 3786.89,
+      "previdencia_privada": 896.22,
+      "outros": 8.5
+    },
+    "fgts": 1403.22
+  },
+  {
+    "mes_referencia": "mar/17",
+    "salario_base": 12803.12,
+    "salario_bruto": 20826.42,
+    "salario_liquido": 14622.68,
+    "descontos": {
+      "inss": 608.44,
+      "irrf": 4690.58,
+      "previdencia_privada": 896.22,
+      "outros": 8.5
+    },
+    "fgts": 1666.11
+  },
+  {
+    "mes_referencia": "abr/17",
+    "salario_base": 12803.12,
+    "salario_bruto": 28679.0,
+    "salario_liquido": 22839.66,
+    "descontos": {
+      "inss": 608.44,
+      "irrf": 4324.74,
+      "previdencia_privada": 896.22,
+      "outros": 9.94
+    },
+    "fgts": 2294.32
+  },
+  {
+    "mes_referencia": "mai/17",
+    "salario_base": 12803.12,
+    "salario_bruto": 20527.68,
+    "salario_liquido": 14406.09,
+    "descontos": {
+      "inss": 608.44,
+      "irrf": 4608.43,
+      "previdencia_privada": 896.22,
+      "outros": 8.5
+    },
+    "fgts": 1642.21
+  },
+  {
+    "mes_referencia": "jun/17",
+    "salario_base": 12803.12,
+    "salario_bruto": 20826.42,
+    "salario_liquido": 14623.38,
+    "descontos": {
+      "inss": 608.44,
+      "irrf": 4690.58,
+      "previdencia_privada": 896.22,
+      "outros": 7.8
+    },
+    "fgts": 1666.11
+  },
+  {
+    "mes_referencia": "jul/17",
+    "salario_base": 13315.24,
+    "salario_bruto": 43276.77,
+    "salario_liquido": 34181.8,
+    "descontos": {
+      "inss": 851.81,
+      "irrf": 7231.23,
+      "previdencia_privada": 1003.77,
+      "outros": 8.16
+    },
+    "fgts": 3462.14
+  },
+  {
+    "mes_referencia": "ago/17",
+    "salario_base": 13315.24,
+    "salario_bruto": 15090.6,
+    "salario_liquido": 10598.57,
+    "descontos": {
+      "inss": 365.07,
+      "irrf": 3180.16,
+      "previdencia_privada": 932.07,
+      "outros": 14.73
+    },
+    "fgts": 1207.25
+  },
+  {
+    "mes_referencia": "set/17",
+    "salario_base": 13315.24,
+    "salario_bruto": 13315.24,
+    "salario_liquido": 9096.65,
+    "descontos": {
+      "inss": 608.44,
+      "irrf": 2625.01,
+      "previdencia_privada": 932.07,
+      "outros": 53.07
+    },
+    "fgts": 1065.22
+  },
+  {
+    "mes_referencia": "out/17",
+    "salario_base": 13315.24,
+    "salario_bruto": 13315.24,
+    "salario_liquido": 9146.09,
+    "descontos": {
+      "inss": 608.44,
+      "irrf": 2625.01,
+      "previdencia_privada": 932.07,
+      "outros": 3.63
+    },
+    "fgts": 1065.22
+  },
+  {
+    "mes_referencia": "nov/17",
+    "salario_base": 13315.24,
+    "salario_bruto": 14025.73,
+    "salario_liquido": 9641.75,
+    "descontos": {
+      "inss": 608.44,
+      "irrf": 2820.39,
+      "previdencia_privada": 932.07,
+      "outros": 23.08
+    },
+    "fgts": 1122.06
+  },
+  {
+    "mes_referencia": "dez/17",
+    "salario_base": 14380.0,
+    "salario_bruto": 37800.25,
+    "salario_liquido": 27180.55,
+    "descontos": {
+      "inss": 1216.88,
+      "irrf": 8321.69,
+      "previdencia_privada": 1081.13,
+      "outros": 0.0
+    },
+    "fgts": 3024.02
+  },
+  {
+    "mes_referencia": "jan/18",
+    "salario_base": 14380.0,
+    "salario_bruto": 14623.15,
+    "salario_liquido": 10014.3,
+    "descontos": {
+      "inss": 621.03,
+      "irrf": 2981.22,
+      "previdencia_privada": 1006.6,
+      "outros": 0.0
+    },
+    "fgts": 1169.85
+  },
+  {
+    "mes_referencia": "fev/18",
+    "salario_base": 14380.0,
+    "salario_bruto": 14380.0,
+    "salario_liquido": 9838.02,
+    "descontos": {
+      "inss": 621.03,
+      "irrf": 2914.35,
+      "previdencia_privada": 1006.6,
+      "outros": 0.0
+    },
+    "fgts": 1150.4
+  },
+  {
+    "mes_referencia": "mar/18",
+    "salario_base": 14380.0,
+    "salario_bruto": 14380.0,
+    "salario_liquido": 9828.03,
+    "descontos": {
+      "inss": 621.03,
+      "irrf": 2914.35,
+      "previdencia_privada": 1006.6,
+      "outros": 9.99
+    },
+    "fgts": 1150.4
+  },
+  {
+    "mes_referencia": "abr/18",
+    "salario_base": 14380.0,
+    "salario_bruto": 33682.17,
+    "salario_liquido": 26883.62,
+    "descontos": {
+      "inss": 621.03,
+      "irrf": 5170.92,
+      "previdencia_privada": 1006.6,
+      "outros": 0.0
+    },
+    "fgts": 2694.57
+  },
+  {
+    "mes_referencia": "mai/18",
+    "salario_base": 14380.0,
+    "salario_bruto": 37351.33,
+    "salario_liquido": 29785.84,
+    "descontos": {
+      "inss": 807.34,
+      "irrf": 5751.55,
+      "previdencia_privada": 1006.6,
+      "outros": 0.0
+    },
+    "fgts": 2988.11
+  },
+  {
+    "mes_referencia": "jun/18",
+    "salario_base": 14380.0,
+    "salario_bruto": 10066.0,
+    "salario_liquido": 6845.44,
+    "descontos": {
+      "inss": 434.72,
+      "irrf": 1779.24,
+      "previdencia_privada": 1006.6,
+      "outros": 0.0
+    },
+    "fgts": 805.28
+  },
+  {
+    "mes_referencia": "jul/18",
+    "salario_base": 14380.0,
+    "salario_bruto": 14380.0,
+    "salario_liquido": 9838.02,
+    "descontos": {
+      "inss": 621.03,
+      "irrf": 2914.35,
+      "previdencia_privada": 1006.6,
+      "outros": 0.0
+    },
+    "fgts": 1150.4
+  },
+  {
+    "mes_referencia": "ago/18",
+    "salario_base": 14380.0,
+    "salario_bruto": 14380.0,
+    "salario_liquido": 9838.02,
+    "descontos": {
+      "inss": 621.03,
+      "irrf": 2914.35,
+      "previdencia_privada": 1006.6,
+      "outros": 0.0
+    },
+    "fgts": 1150.4
+  },
+  {
+    "mes_referencia": "set/18",
+    "salario_base": 14380.0,
+    "salario_bruto": 14380.0,
+    "salario_liquido": 9838.02,
+    "descontos": {
+      "inss": 621.03,
+      "irrf": 2914.35,
+      "previdencia_privada": 1006.6,
+      "outros": 0.0
+    },
+    "fgts": 1150.4
+  },
+  {
+    "mes_referencia": "out/18",
+    "salario_base": 14380.0,
+    "salario_bruto": 14691.73,
+    "salario_liquido": 10064.02,
+    "descontos": {
+      "inss": 621.03,
+      "irrf": 3000.08,
+      "previdencia_privada": 1006.6,
+      "outros": 0.0
+    },
+    "fgts": 1175.34
+  },
+  {
+    "mes_referencia": "nov/18",
+    "salario_base": 15818.0,
+    "salario_bruto": 15818.0,
+    "salario_liquido": 10858.76,
+    "descontos": {
+      "inss": 621.03,
+      "irrf": 3309.8,
+      "previdencia_privada": 1006.6,
+      "outros": 21.81
+    },
+    "fgts": 1265.44
+  },
+  {
+    "mes_referencia": "dez/18",
+    "salario_base": 15818.0,
+    "salario_bruto": 31904.15,
+    "salario_liquido": 22839.57,
+    "descontos": {
+      "inss": 1242.06,
+      "irrf": 6693.34,
+      "previdencia_privada": 1107.26,
+      "outros": 21.92
+    },
+    "fgts": 2552.33
+  },
+  {
+    "mes_referencia": "jan/19",
+    "salario_base": 15818.0,
+    "salario_bruto": 15818.0,
+    "salario_liquido": 10750.47,
+    "descontos": {
+      "inss": 642.33,
+      "irrf": 3303.94,
+      "previdencia_privada": 1107.26,
+      "outros": 14.0
+    },
+    "fgts": 1265.44
+  },
+  {
+    "mes_referencia": "fev/19",
+    "salario_base": 15818.0,
+    "salario_bruto": 19642.8,
+    "salario_liquido": 14489.77,
+    "descontos": {
+      "inss": 642.33,
+      "irrf": 3303.94,
+      "previdencia_privada": 1107.26,
+      "outros": 99.5
+    },
+    "fgts": 1571.42
+  },
+  {
+    "mes_referencia": "mar/19",
+    "salario_base": 15818.0,
+    "salario_bruto": 15818.0,
+    "salario_liquido": 10750.47,
+    "descontos": {
+      "inss": 642.33,
+      "irrf": 3303.94,
+      "previdencia_privada": 1107.26,
+      "outros": 14.0
+    },
+    "fgts": 1265.44
+  },
+  {
+    "mes_referencia": "abr/19",
+    "salario_base": 15818.0,
+    "salario_bruto": 36381.4,
+    "salario_liquido": 28660.79,
+    "descontos": {
+      "inss": 642.33,
+      "irrf": 5907.35,
+      "previdencia_privada": 1107.26,
+      "outros": 63.67
+    },
+    "fgts": 2910.51
+  },
+  {
+    "mes_referencia": "mai/19",
+    "salario_base": 15818.0,
+    "salario_bruto": 15818.0,
+    "salario_liquido": 10630.33,
+    "descontos": {
+      "inss": 642.33,
+      "irrf": 3303.94,
+      "previdencia_privada": 1107.26,
+      "outros": 134.14
+    },
+    "fgts": 1265.44
+  },
+  {
+    "mes_referencia": "jun/19",
+    "salario_base": 18982.0,
+    "salario_bruto": 18982.0,
+    "salario_liquido": 12998.33,
+    "descontos": {
+      "inss": 642.33,
+      "irrf": 4174.04,
+      "previdencia_privada": 1107.26,
+      "outros": 60.04
+    },
+    "fgts": 1518.56
+  },
+  {
+    "mes_referencia": "jul/19",
+    "salario_base": 18982.0,
+    "salario_bruto": 43425.35,
+    "salario_liquido": 33550.77,
+    "descontos": {
+      "inss": 1006.32,
+      "irrf": 7484.36,
+      "previdencia_privada": 1328.74,
+      "outros": 55.16
+    },
+    "fgts": 3474.03
+  },
+  {
+    "mes_referencia": "ago/19",
+    "salario_base": 18982.0,
+    "salario_bruto": 8375.53,
+    "salario_liquido": 5402.84,
+    "descontos": {
+      "inss": 278.34,
+      "irrf": 1316.11,
+      "previdencia_privada": 1328.74,
+      "outros": 49.5
+    },
+    "fgts": 670.04
+  },
+  {
+    "mes_referencia": "set/19",
+    "salario_base": 19944.39,
+    "salario_bruto": 24469.84,
+    "salario_liquido": 17165.24,
+    "descontos": {
+      "inss": 642.33,
+      "irrf": 5276.78,
+      "previdencia_privada": 1328.74,
+      "outros": 56.75
+    },
+    "fgts": 1957.59
+  },
+  {
+    "mes_referencia": "out/19",
+    "salario_base": 19944.39,
+    "salario_bruto": 20094.39,
+    "salario_liquido": 13522.16,
+    "descontos": {
+      "inss": 642.33,
+      "irrf": 4438.7,
+      "previdencia_privada": 1396.11,
+      "outros": 95.09
+    },
+    "fgts": 1607.55
+  },
+  {
+    "mes_referencia": "nov/19",
+    "salario_base": 19944.39,
+    "salario_bruto": 20094.39,
+    "salario_liquido": 13570.52,
+    "descontos": {
+      "inss": 642.33,
+      "irrf": 4438.7,
+      "previdencia_privada": 1396.11,
+      "outros": 46.73
+    },
+    "fgts": 1607.55
+  },
+  {
+    "mes_referencia": "dez/19",
+    "salario_base": 20443.0,
+    "salario_bruto": 69156.65,
+    "salario_liquido": 49512.35,
+    "descontos": {
+      "inss": 1284.66,
+      "irrf": 16884.82,
+      "previdencia_privada": 1396.11,
+      "outros": 78.71
+    },
+    "fgts": 5532.53
+  },
+  {
+    "mes_referencia": "jan/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 23859.64,
+    "salario_liquido": 16243.99,
+    "descontos": {
+      "inss": 671.11,
+      "irrf": 5466.23,
+      "previdencia_privada": 1431.01,
+      "outros": 47.3
+    },
+    "fgts": 1908.77
+  },
+  {
+    "mes_referencia": "fev/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 20593.0,
+    "salario_liquido": 13882.76,
+    "descontos": {
+      "inss": 671.11,
+      "irrf": 4567.9,
+      "previdencia_privada": 1431.02,
+      "outros": 40.21
+    },
+    "fgts": 1647.44
+  },
+  {
+    "mes_referencia": "mar/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 20593.0,
+    "salario_liquido": 13840.51,
+    "descontos": {
+      "inss": 713.08,
+      "irrf": 4556.36,
+      "previdencia_privada": 1431.02,
+      "outros": 52.03
+    },
+    "fgts": 1647.44
+  },
+  {
+    "mes_referencia": "abr/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 53710.66,
+    "salario_liquido": 40909.43,
+    "descontos": {
+      "inss": 713.07,
+      "irrf": 10612.2,
+      "previdencia_privada": 1431.02,
+      "outros": 44.94
+    },
+    "fgts": 4296.85
+  },
+  {
+    "mes_referencia": "mai/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 20593.0,
+    "salario_liquido": 13845.24,
+    "descontos": {
+      "inss": 713.07,
+      "irrf": 4556.37,
+      "previdencia_privada": 1431.02,
+      "outros": 47.3
+    },
+    "fgts": 1635.44
+  },
+  {
+    "mes_referencia": "jun/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 20593.0,
+    "salario_liquido": 13845.25,
+    "descontos": {
+      "inss": 713.07,
+      "irrf": 4556.37,
+      "previdencia_privada": 1431.01,
+      "outros": 47.3
+    },
+    "fgts": 1635.44
+  },
+  {
+    "mes_referencia": "jul/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 20593.0,
+    "salario_liquido": 13838.15,
+    "descontos": {
+      "inss": 713.08,
+      "irrf": 4556.36,
+      "previdencia_privada": 1431.01,
+      "outros": 54.4
+    },
+    "fgts": 1635.44
+  },
+  {
+    "mes_referencia": "ago/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 20593.0,
+    "salario_liquido": 13832.88,
+    "descontos": {
+      "inss": 713.08,
+      "irrf": 4556.36,
+      "previdencia_privada": 1431.01,
+      "outros": 49.67
+    },
+    "fgts": 1635.44
+  },
+  {
+    "mes_referencia": "set/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 51306.75,
+    "salario_liquido": 42016.16,
+    "descontos": {
+      "inss": 950.77,
+      "irrf": 6753.9,
+      "previdencia_privada": 1431.01,
+      "outros": 154.91
+    },
+    "fgts": 2636.19
+  },
+  {
+    "mes_referencia": "out/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 28777.09,
+    "salario_liquido": 19913.13,
+    "descontos": {
+      "inss": 475.39,
+      "irrf": 6872.35,
+      "previdencia_privada": 1431.01,
+      "outros": 85.21
+    },
+    "fgts": 1818.47
+  },
+  {
+    "mes_referencia": "nov/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 20593.0,
+    "salario_liquido": 13827.95,
+    "descontos": {
+      "inss": 713.08,
+      "irrf": 4556.36,
+      "previdencia_privada": 1431.01,
+      "outros": 64.6
+    },
+    "fgts": 1635.44
+  },
+  {
+    "mes_referencia": "dez/20",
+    "salario_base": 20443.0,
+    "salario_bruto": 59286.9,
+    "salario_liquido": 39351.82,
+    "descontos": {
+      "inss": 1426.16,
+      "irrf": 16942.63,
+      "previdencia_privada": 1431.01,
+      "outros": 135.28
+    },
+    "fgts": 2453.16
+  },
+  {
+    "mes_referencia": "jan/21",
+    "salario_base": 23000.0,
+    "salario_bruto": 23150.0,
+    "salario_liquido": 15650.92,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 5248.84,
+      "previdencia_privada": 1431.01,
+      "outros": 67.26
+    },
+    "fgts": 1840.0
+  },
+  {
+    "mes_referencia": "fev/21",
+    "salario_base": 23000.0,
+    "salario_bruto": 23150.0,
+    "salario_liquido": 15456.67,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 5248.84,
+      "previdencia_privada": 1610.0,
+      "outros": 82.52
+    },
+    "fgts": 1840.0
+  },
+  {
+    "mes_referencia": "mar/21",
+    "salario_base": 23000.0,
+    "salario_bruto": 23150.0,
+    "salario_liquido": 15440.08,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 5248.85,
+      "previdencia_privada": 1610.0,
+      "outros": 99.1
+    },
+    "fgts": 1840.0
+  },
+  {
+    "mes_referencia": "abr/21",
+    "salario_base": 23000.0,
+    "salario_bruto": 23150.0,
+    "salario_liquido": 15472.42,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 5248.85,
+      "previdencia_privada": 1610.0,
+      "outros": 66.76
+    },
+    "fgts": 1840.0
+  },
+  {
+    "mes_referencia": "mai/21",
+    "salario_base": 23000.0,
+    "salario_bruto": 24784.88,
+    "salario_liquido": 16623.73,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 5698.44,
+      "previdencia_privada": 1610.0,
+      "outros": 100.74
+    },
+    "fgts": 1840.0
+  },
+  {
+    "mes_referencia": "jun/21",
+    "salario_base": 23000.0,
+    "salario_bruto": 23150.0,
+    "salario_liquido": 15455.88,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 5248.85,
+      "previdencia_privada": 1610.0,
+      "outros": 83.3
+    },
+    "fgts": 1840.0
+  },
+  {
+    "mes_referencia": "jul/21",
+    "salario_base": 23000.0,
+    "salario_bruto": 23150.0,
+    "salario_liquido": 15478.68,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 5248.85,
+      "previdencia_privada": 1610.0,
+      "outros": 60.5
+    },
+    "fgts": 1840.0
+  },
+  {
+    "mes_referencia": "ago/21",
+    "salario_base": 24720.0,
+    "salario_bruto": 57636.67,
+    "salario_liquido": 48110.4,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 7089.15,
+      "previdencia_privada": 1610.0,
+      "outros": 75.15
+    },
+    "fgts": 3227.2
+  },
+  {
+    "mes_referencia": "set/21",
+    "salario_base": 24720.0,
+    "salario_bruto": 27066.92,
+    "salario_liquido": 19049.02,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 5456.64,
+      "previdencia_privada": 1730.4,
+      "outros": 78.89
+    },
+    "fgts": 2065.46
+  },
+  {
+    "mes_referencia": "out/21",
+    "salario_base": 24720.0,
+    "salario_bruto": 24045.59,
+    "salario_liquido": 15999.61,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 5495.14,
+      "previdencia_privada": 1730.4,
+      "outros": 68.47
+    },
+    "fgts": 1999.54
+  },
+  {
+    "mes_referencia": "nov/21",
+    "salario_base": 24720.0,
+    "salario_bruto": 24870.0,
+    "salario_liquido": 16617.18,
+    "descontos": {
+      "inss": 751.97,
+      "irrf": 5721.85,
+      "previdencia_privada": 1730.4,
+      "outros": 48.6
+    },
+    "fgts": 1977.6
+  },
+  {
+    "mes_referencia": "dez/21",
+    "salario_base": 24720.0,
+    "salario_bruto": 79469.96,
+    "salario_liquido": 56498.36,
+    "descontos": {
+      "inss": 1503.94,
+      "irrf": 19660.69,
+      "previdencia_privada": 1730.4,
+      "outros": 76.57
+    },
+    "fgts": 3035.2
+  },
+  {
+    "mes_referencia": "jan/22",
+    "salario_base": 24720.0,
+    "salario_bruto": 52336.67,
+    "salario_liquido": 44106.79,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 5488.62,
+      "previdencia_privada": 1730.4,
+      "outros": 182.48
+    },
+    "fgts": 3296.0
+  },
+  {
+    "mes_referencia": "fev/22",
+    "salario_base": 24720.0,
+    "salario_bruto": 24870.0,
+    "salario_liquido": 17034.94,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 5224.98,
+      "previdencia_privada": 1730.4,
+      "outros": 51.3
+    },
+    "fgts": 1977.6
+  },
+  {
+    "mes_referencia": "mar/22",
+    "salario_base": 24720.0,
+    "salario_bruto": 24870.0,
+    "salario_liquido": 16908.25,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 5224.98,
+      "previdencia_privada": 1730.4,
+      "outros": 177.99
+    },
+    "fgts": 1977.6
+  },
+  {
+    "mes_referencia": "abr/22",
+    "salario_base": 24720.0,
+    "salario_bruto": 69366.0,
+    "salario_liquido": 52348.77,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 14409.85,
+      "previdencia_privada": 1730.4,
+      "outros": 48.6
+    },
+    "fgts": 1977.6
+  },
+  {
+    "mes_referencia": "mai/22",
+    "salario_base": 24720.0,
+    "salario_bruto": 24870.0,
+    "salario_liquido": 16904.95,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 5224.98,
+      "previdencia_privada": 1730.4,
+      "outros": 181.29
+    },
+    "fgts": 1977.6
+  },
+  {
+    "mes_referencia": "jun/22",
+    "salario_base": 24720.0,
+    "salario_bruto": 24870.0,
+    "salario_liquido": 17032.24,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 5224.98,
+      "previdencia_privada": 1730.4,
+      "outros": 54.0
+    },
+    "fgts": 1977.6
+  },
+  {
+    "mes_referencia": "jul/22",
+    "salario_base": 24720.0,
+    "salario_bruto": 31294.83,
+    "salario_liquido": 21584.82,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 6991.8,
+      "previdencia_privada": 1730.4,
+      "outros": 159.43
+    },
+    "fgts": 1977.6
+  },
+  {
+    "mes_referencia": "ago/22",
+    "salario_base": 27802.58,
+    "salario_bruto": 37200.32,
+    "salario_liquido": 25902.52,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 8615.81,
+      "previdencia_privada": 1730.4,
+      "outros": 123.21
+    },
+    "fgts": 2964.03
+  },
+  {
+    "mes_referencia": "set/22",
+    "salario_base": 27802.58,
+    "salario_bruto": 27952.58,
+    "salario_liquido": 19052.94,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 6013.35,
+      "previdencia_privada": 1946.18,
+      "outros": 111.73
+    },
+    "fgts": 2224.21
+  },
+  {
+    "mes_referencia": "out/22",
+    "salario_base": 27802.58,
+    "salario_bruto": 29497.63,
+    "salario_liquido": 20983.47,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 5568.87,
+      "previdencia_privada": 1946.18,
+      "outros": 170.73
+    },
+    "fgts": 2829.76
+  },
+  {
+    "mes_referencia": "nov/22",
+    "salario_base": 36000.0,
+    "salario_bruto": 37650.0,
+    "salario_liquido": 26494.18,
+    "descontos": {
+      "inss": 828.38,
+      "irrf": 8267.64,
+      "previdencia_privada": 1946.18,
+      "outros": 113.62
+    },
+    "fgts": 2880.0
+  },
+  {
+    "mes_referencia": "dez/22",
+    "salario_base": 36000.0,
+    "salario_bruto": 98370.0,
+    "salario_liquido": 67023.56,
+    "descontos": {
+      "inss": 1656.76,
+      "irrf": 27109.68,
+      "previdencia_privada": 2520.0,
+      "outros": 60.0
+    },
+    "fgts": 4771.2
+  },
+  {
+    "mes_referencia": "jan/23",
+    "salario_base": 36000.0,
+    "salario_bruto": 37650.0,
+    "salario_liquido": 25986.9,
+    "descontos": {
+      "inss": 877.22,
+      "irrf": 8096.4,
+      "previdencia_privada": 2520.0,
+      "outros": 169.48
+    },
+    "fgts": 2880.0
+  },
+  {
+    "mes_referencia": "fev/23",
+    "salario_base": 36000.0,
+    "salario_bruto": 37650.0,
+    "salario_liquido": 26105.38,
+    "descontos": {
+      "inss": 877.22,
+      "irrf": 8096.4,
+      "previdencia_privada": 2520.0,
+      "outros": 51.0
+    },
+    "fgts": 2880.0
+  },
+  {
+    "mes_referencia": "mar/23",
+    "salario_base": 36000.0,
+    "salario_bruto": 37650.0,
+    "salario_liquido": 26025.35,
+    "descontos": {
+      "inss": 877.22,
+      "irrf": 8096.4,
+      "previdencia_privada": 2520.0,
+      "outros": 131.03
+    },
+    "fgts": 2880.0
+  },
+  {
+    "mes_referencia": "abr/23",
+    "salario_base": 36000.0,
+    "salario_bruto": 58508.0,
+    "salario_liquido": 46051.18,
+    "descontos": {
+      "inss": 877.22,
+      "irrf": 11473.82,
+      "previdencia_privada": 0.0,
+      "outros": 105.78
+    },
+    "fgts": 2880.0
+  },
+  {
+    "mes_referencia": "mai/23",
+    "salario_base": 36000.0,
+    "salario_bruto": 37650.0,
+    "salario_liquido": 27931.81,
+    "descontos": {
+      "inss": 876.95,
+      "irrf": 8773.88,
+      "previdencia_privada": 0.0,
+      "outros": 67.36
+    },
+    "fgts": 2880.0
+  },
+  {
+    "mes_referencia": "jun/23",
+    "salario_base": 36000.0,
+    "salario_bruto": 77650.0,
+    "salario_liquido": 64165.62,
+    "descontos": {
+      "inss": 876.95,
+      "irrf": 9945.92,
+      "previdencia_privada": 2520.0,
+      "outros": 141.51
+    },
+    "fgts": 4800.0
+  },
+  {
+    "mes_referencia": "jul/23",
+    "salario_base": 38520.03,
+    "salario_bruto": 40170.03,
+    "salario_liquido": 27936.19,
+    "descontos": {
+      "inss": 876.95,
+      "irrf": 8773.89,
+      "previdencia_privada": 2520.0,
+      "outros": 63.0
+    },
+    "fgts": 3081.6
+  },
+  {
+    "mes_referencia": "ago/23",
+    "salario_base": 38520.03,
+    "salario_bruto": 40170.03,
+    "salario_liquido": 27802.3,
+    "descontos": {
+      "inss": 876.95,
+      "irrf": 8725.38,
+      "previdencia_privada": 2696.4,
+      "outros": 69.0
+    },
+    "fgts": 3081.6
+  },
+  {
+    "mes_referencia": "set/23",
+    "salario_base": 38520.03,
+    "salario_bruto": 40170.03,
+    "salario_liquido": 27752.27,
+    "descontos": {
+      "inss": 876.95,
+      "irrf": 8725.38,
+      "previdencia_privada": 2696.4,
+      "outros": 119.03
+    },
+    "fgts": 3081.6
+  },
+  {
+    "mes_referencia": "out/23",
+    "salario_base": 39997.0,
+    "salario_bruto": 51904.85,
+    "salario_liquido": 37330.54,
+    "descontos": {
+      "inss": 876.95,
+      "irrf": 10940.96,
+      "previdencia_privada": 2696.4,
+      "outros": 60.0
+    },
+    "fgts": 3377.58
+  },
+  {
+    "mes_referencia": "nov/23",
+    "salario_base": 39997.0,
+    "salario_bruto": 41647.0,
+    "salario_liquido": 28741.78,
+    "descontos": {
+      "inss": 876.95,
+      "irrf": 9103.11,
+      "previdencia_privada": 2799.79,
+      "outros": 125.37
+    },
+    "fgts": 3199.76
+  },
+  {
+    "mes_referencia": "dez/23",
+    "salario_base": 39997.0,
+    "salario_bruto": 113084.0,
+    "salario_liquido": 75898.29,
+    "descontos": {
+      "inss": 1753.9,
+      "irrf": 32572.16,
+      "previdencia_privada": 2799.79,
+      "outros": 59.86
+    },
+    "fgts": 4959.52
+  },
+  {
+    "mes_referencia": "jan/24",
+    "salario_base": 39997.0,
+    "salario_bruto": 81644.67,
+    "salario_liquido": 67817.93,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 10042.76,
+      "previdencia_privada": 2799.79,
+      "outros": 75.34
+    },
+    "fgts": 4977.46
+  },
+  {
+    "mes_referencia": "fev/24",
+    "salario_base": 39997.0,
+    "salario_bruto": 41647.0,
+    "salario_liquido": 28676.72,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 9083.3,
+      "previdencia_privada": 2799.79,
+      "outros": 178.34
+    },
+    "fgts": 3199.76
+  },
+  {
+    "mes_referencia": "mar/24",
+    "salario_base": 39997.0,
+    "salario_bruto": 41647.0,
+    "salario_liquido": 28690.56,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 9083.3,
+      "previdencia_privada": 2799.79,
+      "outros": 164.5
+    },
+    "fgts": 3199.76
+  },
+  {
+    "mes_referencia": "abr/24",
+    "salario_base": 39997.0,
+    "salario_bruto": 113629.0,
+    "salario_liquido": 84102.79,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 25754.57,
+      "previdencia_privada": 2799.79,
+      "outros": 63.0
+    },
+    "fgts": 3199.76
+  },
+  {
+    "mes_referencia": "mai/24",
+    "salario_base": 44000.0,
+    "salario_bruto": 45650.0,
+    "salario_liquido": 31694.24,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 10184.12,
+      "previdencia_privada": 2799.79,
+      "outros": 63.0
+    },
+    "fgts": 3520.0
+  },
+  {
+    "mes_referencia": "jun/24",
+    "salario_base": 44000.0,
+    "salario_bruto": 52983.33,
+    "salario_liquido": 37703.75,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 11227.73,
+      "previdencia_privada": 3080.0,
+      "outros": 63.0
+    },
+    "fgts": 4106.66
+  },
+  {
+    "mes_referencia": "jul/24",
+    "salario_base": 44000.0,
+    "salario_bruto": 44150.0,
+    "salario_liquido": 29981.62,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 10107.07,
+      "previdencia_privada": 3080.0,
+      "outros": 72.46
+    },
+    "fgts": 3520.0
+  },
+  {
+    "mes_referencia": "ago/24",
+    "salario_base": 44000.0,
+    "salario_bruto": 44150.0,
+    "salario_liquido": 29827.76,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 10107.07,
+      "previdencia_privada": 3080.0,
+      "outros": 226.32
+    },
+    "fgts": 3520.0
+  },
+  {
+    "mes_referencia": "set/24",
+    "salario_base": 45421.2,
+    "salario_bruto": 51492.87,
+    "salario_liquido": 35572.06,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 11865.8,
+      "previdencia_privada": 3080.0,
+      "outros": 66.16
+    },
+    "fgts": 4107.42
+  },
+  {
+    "mes_referencia": "out/24",
+    "salario_base": 45421.2,
+    "salario_bruto": 45571.2,
+    "salario_liquido": 30724.05,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 10470.54,
+      "previdencia_privada": 3179.48,
+      "outros": 288.28
+    },
+    "fgts": 3633.69
+  },
+  {
+    "mes_referencia": "nov/24",
+    "salario_base": 45421.2,
+    "salario_bruto": 45571.2,
+    "salario_liquido": 30844.19,
+    "descontos": {
+      "inss": 908.85,
+      "irrf": 10470.54,
+      "previdencia_privada": 3179.48,
+      "outros": 168.14
+    },
+    "fgts": 3633.69
+  },
+  {
+    "mes_referencia": "dez/24",
+    "salario_base": 45421.2,
+    "salario_bruto": 70993.9,
+    "salario_liquido": 44119.85,
+    "descontos": {
+      "inss": 1817.7,
+      "irrf": 21815.44,
+      "previdencia_privada": 3179.48,
+      "outros": 61.43
+    },
+    "fgts": 5667.5
+  },
+  {
+    "mes_referencia": "jan/25",
+    "salario_base": 45421.2,
+    "salario_bruto": 90993.16,
+    "salario_liquido": 74970.74,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 11644.8,
+      "previdencia_privada": 3179.48,
+      "outros": 246.52
+    },
+    "fgts": 5652.46
+  },
+  {
+    "mes_referencia": "fev/25",
+    "salario_base": 45421.2,
+    "salario_bruto": 45571.2,
+    "salario_liquido": 30671.0,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 10458.78,
+      "previdencia_privada": 3179.48,
+      "outros": 310.32
+    },
+    "fgts": 3633.69
+  },
+  {
+    "mes_referencia": "mar/25",
+    "salario_base": 45421.2,
+    "salario_bruto": 45571.2,
+    "salario_liquido": 30676.97,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 10458.78,
+      "previdencia_privada": 3179.48,
+      "outros": 304.35
+    },
+    "fgts": 3633.69
+  },
+  {
+    "mes_referencia": "abr/25",
+    "salario_base": 45421.2,
+    "salario_bruto": 162866.2,
+    "salario_liquido": 119085.45,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 39591.13,
+      "previdencia_privada": 3179.48,
+      "outros": 58.52
+    },
+    "fgts": 3633.69
+  },
+  {
+    "mes_referencia": "mai/25",
+    "salario_base": 54500.0,
+    "salario_bruto": 64359.26,
+    "salario_liquido": 44480.57,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 15612.76,
+      "previdencia_privada": 3179.48,
+      "outros": 134.83
+    },
+    "fgts": 5086.3
+  },
+  {
+    "mes_referencia": "jun/25",
+    "salario_base": 54500.0,
+    "salario_bruto": 54650.0,
+    "salario_liquido": 37053.65,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 12767.95,
+      "previdencia_privada": 3815.0,
+      "outros": 61.78
+    },
+    "fgts": 4360.0
+  },
+  {
+    "mes_referencia": "jul/25",
+    "salario_base": 54500.0,
+    "salario_bruto": 83715.76,
+    "salario_liquido": 58826.17,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 19852.3,
+      "previdencia_privada": 3815.0,
+      "outros": 270.67
+    },
+    "fgts": 4553.7
+  },
+  {
+    "mes_referencia": "ago/25",
+    "salario_base": 54500.0,
+    "salario_bruto": 34667.58,
+    "salario_liquido": 22559.9,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 7272.78,
+      "previdencia_privada": 3815.0,
+      "outros": 68.28
+    },
+    "fgts": 4892.96
+  },
+  {
+    "mes_referencia": "set/25",
+    "salario_base": 54500.0,
+    "salario_bruto": 54650.0,
+    "salario_liquido": 36847.78,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 12767.95,
+      "previdencia_privada": 3815.0,
+      "outros": 267.65
+    },
+    "fgts": 4360.0
+  },
+  {
+    "mes_referencia": "out/25",
+    "salario_base": 56415.01,
+    "salario_bruto": 66778.23,
+    "salario_liquido": 46065.19,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 15752.13,
+      "previdencia_privada": 3815.0,
+      "outros": 194.29
+    },
+    "fgts": 5330.25
+  },
+  {
+    "mes_referencia": "nov/25",
+    "salario_base": 56415.01,
+    "salario_bruto": 56565.01,
+    "salario_liquido": 38153.49,
+    "descontos": {
+      "inss": 951.62,
+      "irrf": 13257.71,
+      "previdencia_privada": 3949.05,
+      "outros": 253.14
+    },
+    "fgts": 4513.2
+  },
+  {
+    "mes_referencia": "dez/25",
+    "salario_base": 56415.01,
+    "salario_bruto": 147311.25,
+    "salario_liquido": 104181.14,
+    "descontos": {
+      "inss": 1903.24,
+      "irrf": 37207.82,
+      "previdencia_privada": 3949.05,
+      "outros": 70.0
+    },
+    "fgts": 7359.99
+  },
+  {
+    "mes_referencia": "jan/26",
+    "salario_base": 56415.01,
+    "salario_bruto": 64692.66,
+    "salario_liquido": 52654.00,
+    "descontos": {
+      "inss": 988.07,
+      "irrf": 7042.04,
+      "previdencia_privada": 3949.05,
+      "outros": 59.50
+    },
+    "fgts": 5114.96
+  }
+]

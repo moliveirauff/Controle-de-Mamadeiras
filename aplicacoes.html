@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="only light">
+  <meta name="supported-color-schemes" content="light">
+  <title>📋 Aplicações - Hub Família</title>
+  <style>
+    /* --- CORE VARIABLES --- */
+    :root {
+      color-scheme: only light !important;
+      isolation: isolate;
+      --bg: #f7fafc;
+      --text: #2d3748;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text-muted: #718096;
+      --primary: #667eea;
+      --success: #48bb78;
+      --warning: #ed8936;
+      --danger: #f56565;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    }
+
+    /* --- DARK MODE --- */
+    body.dark-mode {
+      color-scheme: only dark !important;
+      --bg: #1a202c;
+      --text: #f7fafc;
+      --surface: #2d3748;
+      --border: #4a5568;
+      --text-muted: #cbd5e0;
+      --primary: #7f9cf5;
+      background-color: var(--bg);
+    }
+
+    /* --- BASE --- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background-color: var(--bg); min-height: 100vh; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.3s, color 0.3s;
+      padding: 10px 10px 60px 10px;
+      min-height: 100vh;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* --- HEADER --- */
+    #theme-toggle {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem;
+      cursor: pointer; padding: 8px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10; transition: background 0.2s;
+    }
+    body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+    .nav-link {
+      text-decoration: none; color: var(--primary);
+      font-size: 0.9rem; margin: 10px 0 0 4px;
+      display: inline-block; font-weight: 500;
+    }
+    h1 {
+      text-align: center; font-size: 1.5rem; font-weight: 800;
+      margin: 10px 44px 20px 44px; color: var(--text);
+    }
+
+    /* --- CARD --- */
+    .card {
+      background: var(--surface);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    /* --- ABAS --- */
+    .app-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .app-tab-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .app-tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    .app-tab-btn:hover:not(.active) { opacity: 0.75; }
+
+    /* --- FILTROS --- */
+    .app-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      align-items: flex-end;
+    }
+    .app-filter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 130px;
+    }
+    .app-filter-item label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .app-select, .app-input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--text);
+      outline: none;
+      width: 100%;
+    }
+    .app-select:focus, .app-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(102,126,234,0.2);
+    }
+
+    /* --- SUMMARY --- */
+    .app-summary {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      padding: 0 2px;
+      line-height: 2;
+    }
+    .val-pos { color: var(--success); font-weight: 700; }
+    .val-neg { color: var(--danger);  font-weight: 700; }
+
+    /* --- BADGES --- */
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .badge-pos  { background: rgba(72,187,120,0.15);  color: #276749; }
+    .badge-neg  { background: rgba(245,101,101,0.15); color: #9b2c2c; }
+    .badge-div  { background: rgba(72,187,120,0.15);  color: #276749; }
+    .badge-jcp  { background: rgba(102,126,234,0.15); color: #434190; }
+    .badge-rend { background: rgba(237,137,54,0.15);  color: #7b341e; }
+    .badge-rest { background: rgba(160,174,192,0.2);  color: #4a5568; }
+    body.dark-mode .badge-pos  { background: rgba(72,187,120,0.2);   color: #68d391; }
+    body.dark-mode .badge-neg  { background: rgba(245,101,101,0.2);  color: #fc8181; }
+    body.dark-mode .badge-div  { background: rgba(72,187,120,0.2);   color: #68d391; }
+    body.dark-mode .badge-jcp  { background: rgba(102,126,234,0.2);  color: #7f9cf5; }
+    body.dark-mode .badge-rend { background: rgba(237,137,54,0.2);   color: #fbd38d; }
+    body.dark-mode .badge-rest { background: rgba(160,174,192,0.15); color: #cbd5e0; }
+
+    /* --- TABELA --- */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    th {
+      background: rgba(0,0,0,0.02);
+      padding: 12px 10px;
+      text-align: left;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 0.7rem;
+    }
+    body.dark-mode th { background: rgba(255,255,255,0.05); }
+    td { padding: 10px; border-bottom: 1px solid var(--border); color: var(--text); }
+    tr:last-child td { border-bottom: none; }
+    .text-right { text-align: right; }
+
+    /* --- LOAD MORE --- */
+    .app-load-more { text-align: center; margin-top: 14px; }
+    .btn-load-more {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 8px 24px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-load-more:hover { opacity: 0.75; }
+
+    /* --- LOADING --- */
+    #loading {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; color: white;
+      font-weight: 600; font-size: 1.1rem;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 767px) {
+      table { font-size: 0.75rem; }
+      th, td { padding: 8px 6px; }
+    }
+    @media (min-width: 768px) {
+      body { max-width: 1200px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loading">🔄 Carregando dados...</div>
+<button id="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema">🌙</button>
+<a href="index.html" class="nav-link">← Voltar</a>
+<h1>📋 Aplicações</h1>
+
+<div class="card">
+
+  <!-- Abas -->
+  <div class="app-tabs">
+    <button class="app-tab-btn active" id="tabMovBtn" onclick="switchAba('mov')">📋 Aportes &amp; Retiradas</button>
+    <button class="app-tab-btn" id="tabDivBtn" onclick="switchAba('div')">💰 Dividendos</button>
+  </div>
+
+  <!-- Filtros Aportes & Retiradas -->
+  <div id="filtersAportes" class="app-filters">
+    <div class="app-filter-item">
+      <label>📅 Ano</label>
+      <select id="appMovAno" class="app-select" onchange="renderAportes()"><option value="all">Todos</option></select>
+    </div>
+    <div class="app-filter-item">
+      <label>📂 Classe</label>
+      <select id="appMovClasse" class="app-select" onchange="renderAportes()"><option value="all">Todas</option></select>
+    </div>
+    <div class="app-filter-item">
+      <label>🔄 Tipo</label>
+      <select id="appMovTipo" class="app-select" onchange="renderAportes()">
+        <option value="all">Todos</option>
+        <option value="APORTE">Aporte</option>
+        <option value="RETIRADA">Retirada</option>
+      </select>
+    </div>
+    <div class="app-filter-item">
+      <label>🔍 Ativo</label>
+      <input type="text" id="appMovBusca" class="app-input" placeholder="Nome do ativo..." oninput="renderAportes()">
+    </div>
+  </div>
+
+  <!-- Filtros Dividendos -->
+  <div id="filtersDividendos" class="app-filters" style="display:none">
+    <div class="app-filter-item">
+      <label>📅 Ano</label>
+      <select id="appDivAno" class="app-select" onchange="renderDividendos()"><option value="all">Todos</option></select>
+    </div>
+    <div class="app-filter-item">
+      <label>📂 Classe</label>
+      <select id="appDivClasse" class="app-select" onchange="renderDividendos()"><option value="all">Todas</option></select>
+    </div>
+    <div class="app-filter-item">
+      <label>🔄 Tipo</label>
+      <select id="appDivTipo" class="app-select" onchange="renderDividendos()">
+        <option value="all">Todos</option>
+        <option value="PROVENTO_DIVIDENDO">Dividendo</option>
+        <option value="PROVENTO_JCP">JCP</option>
+        <option value="PROVENTO_RENDIMENTO">Rendimento</option>
+        <option value="PROVENTO_RESTITUIÇÃO">Restituição</option>
+      </select>
+    </div>
+    <div class="app-filter-item">
+      <label>🔍 Ativo</label>
+      <input type="text" id="appDivBusca" class="app-input" placeholder="Nome do ativo..." oninput="renderDividendos()">
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div id="appSummary" class="app-summary"></div>
+
+  <!-- Tabela Aportes & Retiradas -->
+  <div id="tabelaAportes" class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Ativo</th>
+          <th>Classe</th>
+          <th>Tipo</th>
+          <th class="text-right">Qtde</th>
+          <th class="text-right">Preço Unit.</th>
+          <th class="text-right">Valor Total</th>
+        </tr>
+      </thead>
+      <tbody id="tbodyAportes"></tbody>
+    </table>
+  </div>
+
+  <!-- Tabela Dividendos -->
+  <div id="tabelaDividendos" class="table-container" style="display:none">
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Ativo</th>
+          <th>Classe</th>
+          <th>Tipo</th>
+          <th class="text-right">Valor</th>
+        </tr>
+      </thead>
+      <tbody id="tbodyDividendos"></tbody>
+    </table>
+  </div>
+
+  <!-- Carregar mais -->
+  <div class="app-load-more" id="btnLoadMoreWrap" style="display:none">
+    <button class="btn-load-more" onclick="loadMore()">Carregar mais ↓</button>
+  </div>
+
+</div>
+
+<script>
+  // === STATE ===
+  let movData = null;
+  let divData = null;
+  let ativosData = null;
+  let aba = 'mov';
+  let page = 0;
+  const PAGE_SIZE = 30;
+  let filteredMov = [];
+  let filteredDiv = [];
+  let ativoClasseMap = {};
+
+  const NOMES_CAT = {
+    '1_renda_fixa_soberana': 'Renda Fixa Soberana',
+    '2_credito_privado':     'Crédito Privado',
+    '3_acoes_brasil':        'Ações Brasil',
+    '4_ativos_reais':        'Ativos Reais (FIIs)',
+    '5_internacional':       'Internacional',
+    '6_criptoativos':        'Criptoativos',
+    '7_alternativos_estratega': 'Alternativos',
+    '9_uncategorized':       'Não Categorizado'
+  };
+
+  const TIPO_BADGE = {
+    'PROVENTO_DIVIDENDO':              ['badge-div',  'Dividendo'],
+    'PROVENTO_JCP':                    ['badge-jcp',  'JCP'],
+    'PROVENTO_RENDIMENTO':             ['badge-rend', 'Rendimento'],
+    'PROVENTO_RESTITUIÇÃO':            ['badge-rest', 'Restituição'],
+    'PROVENTO_RESTITUIÇÃO DE CAPITAL': ['badge-rest', 'Rest. Capital']
+  };
+
+  // === UTILS ===
+  function fmt(v) { return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+  function stripDate(s) { return s.replace(/_\d{4}\.\d{2}\.\d{2}$/, ''); }
+  function getClasse(ativoKey) { return ativoClasseMap[stripDate(ativoKey)] || '9_uncategorized'; }
+
+  // === INIT ===
+  async function init() {
+    try {
+      const v = Date.now();
+      const [respMov, respDiv, respAtivos] = await Promise.all([
+        fetch('data/movimentacoes_financeiras.json?v=' + v),
+        fetch('data/dividendos_historico.json?v=' + v),
+        fetch('data/ativos_financeiros.json?v=' + v)
+      ]);
+      movData    = await respMov.json();
+      divData    = await respDiv.json();
+      ativosData = await respAtivos.json();
+
+      // Build ativo → classe map
+      ativosData.ativos.forEach(a => { ativoClasseMap[a.nome] = a.macro_classe; });
+
+      // Populate anos — Aportes
+      [...new Set(movData.movimentacoes.map(m => m.data.slice(0, 4)))].sort().reverse().forEach(a => {
+        const opt = document.createElement('option'); opt.value = a; opt.textContent = a;
+        document.getElementById('appMovAno').appendChild(opt);
+      });
+
+      // Populate anos — Dividendos
+      [...new Set(divData.movimentacoes.map(m => m.data.slice(0, 4)))].sort().reverse().forEach(a => {
+        const opt = document.createElement('option'); opt.value = a; opt.textContent = a;
+        document.getElementById('appDivAno').appendChild(opt);
+      });
+
+      // Populate classes
+      Object.entries(NOMES_CAT).forEach(([key, nome]) => {
+        ['appMovClasse', 'appDivClasse'].forEach(id => {
+          const opt = document.createElement('option'); opt.value = key; opt.textContent = nome;
+          document.getElementById(id).appendChild(opt);
+        });
+      });
+
+      renderAportes();
+      document.getElementById('loading').style.display = 'none';
+    } catch (e) {
+      console.error(e);
+      document.getElementById('loading').innerHTML = '❌ Erro ao carregar dados.';
+    }
+  }
+
+  // === ABAS ===
+  function switchAba(novaAba) {
+    aba = novaAba;
+    page = 0;
+    document.getElementById('tabMovBtn').classList.toggle('active', aba === 'mov');
+    document.getElementById('tabDivBtn').classList.toggle('active', aba === 'div');
+    document.getElementById('filtersAportes').style.display    = aba === 'mov' ? 'flex'  : 'none';
+    document.getElementById('filtersDividendos').style.display = aba === 'div' ? 'flex'  : 'none';
+    document.getElementById('tabelaAportes').style.display     = aba === 'mov' ? 'block' : 'none';
+    document.getElementById('tabelaDividendos').style.display  = aba === 'div' ? 'block' : 'none';
+    if (aba === 'mov') renderAportes();
+    else renderDividendos();
+  }
+
+  // === ABA APORTES & RETIRADAS ===
+  function renderAportes() {
+    page = 0;
+    const ano    = document.getElementById('appMovAno').value;
+    const classe = document.getElementById('appMovClasse').value;
+    const tipo   = document.getElementById('appMovTipo').value;
+    const busca  = document.getElementById('appMovBusca').value.toLowerCase();
+
+    filteredMov = movData.movimentacoes.filter(m => {
+      if (ano !== 'all' && !m.data.startsWith(ano)) return false;
+      if (classe !== 'all' && getClasse(m.ativo) !== classe) return false;
+      if (tipo === 'APORTE'   && !m.tipo.startsWith('APORTE'))   return false;
+      if (tipo === 'RETIRADA' && !m.tipo.startsWith('RETIRADA')) return false;
+      if (busca && !stripDate(m.ativo).toLowerCase().includes(busca)) return false;
+      return true;
+    }).sort((a, b) => b.data.localeCompare(a.data));
+
+    const totalAporte   = filteredMov.filter(m => m.tipo.startsWith('APORTE')).reduce((s, m) => s + m.valor_total, 0);
+    const totalRetirada = filteredMov.filter(m => m.tipo.startsWith('RETIRADA')).reduce((s, m) => s + m.valor_total, 0);
+    const liquido = totalAporte - totalRetirada;
+
+    document.getElementById('appSummary').innerHTML =
+      `<strong>${filteredMov.length}</strong> lançamentos &nbsp;·&nbsp; ` +
+      `Aportes: <span class="val-pos">${fmt(totalAporte)}</span> &nbsp;·&nbsp; ` +
+      `Retiradas: <span class="val-neg">${fmt(totalRetirada)}</span> &nbsp;·&nbsp; ` +
+      `Líquido: <span class="${liquido >= 0 ? 'val-pos' : 'val-neg'}">${fmt(liquido)}</span>`;
+
+    renderPageAportes();
+  }
+
+  function renderPageAportes() {
+    const end = (page + 1) * PAGE_SIZE;
+    document.getElementById('tbodyAportes').innerHTML = filteredMov.slice(0, end).map(m => {
+      const isAporte = m.tipo.startsWith('APORTE');
+      const nome   = stripDate(m.ativo);
+      const classe = NOMES_CAT[getClasse(m.ativo)] || 'Outros';
+      const data   = m.data.split('-').reverse().join('/');
+      const qtde   = m.quantidade != null ? m.quantidade.toLocaleString('pt-BR', { maximumFractionDigits: 4 }) : '—';
+      const preco  = m.preco_unitario ? fmt(m.preco_unitario) : '—';
+      return `<tr>
+        <td style="white-space:nowrap;font-size:0.8rem">${data}</td>
+        <td style="font-weight:700">${nome}</td>
+        <td style="font-size:0.75rem;color:var(--text-muted)">${classe}</td>
+        <td><span class="badge ${isAporte ? 'badge-pos' : 'badge-neg'}">${isAporte ? 'Aporte' : 'Retirada'}</span></td>
+        <td class="text-right" style="font-size:0.8rem">${qtde}</td>
+        <td class="text-right" style="font-size:0.8rem">${preco}</td>
+        <td class="text-right ${isAporte ? 'val-pos' : 'val-neg'}" style="font-weight:700">${fmt(m.valor_total)}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('btnLoadMoreWrap').style.display = end < filteredMov.length ? 'block' : 'none';
+  }
+
+  // === ABA DIVIDENDOS ===
+  function renderDividendos() {
+    page = 0;
+    const ano    = document.getElementById('appDivAno').value;
+    const classe = document.getElementById('appDivClasse').value;
+    const tipo   = document.getElementById('appDivTipo').value;
+    const busca  = document.getElementById('appDivBusca').value.toLowerCase();
+
+    filteredDiv = divData.movimentacoes.filter(m => {
+      if (ano !== 'all' && !m.data.startsWith(ano)) return false;
+      if (classe !== 'all' && getClasse(m.ativo) !== classe) return false;
+      if (tipo !== 'all' && m.tipo !== tipo) return false;
+      if (busca && !stripDate(m.ativo).toLowerCase().includes(busca)) return false;
+      return true;
+    }).sort((a, b) => b.data.localeCompare(a.data));
+
+    const total = filteredDiv.reduce((s, m) => s + m.valor_total, 0);
+    const mesesUnicos = new Set(filteredDiv.map(m => m.data.slice(0, 7))).size;
+    const media = mesesUnicos > 0 ? total / mesesUnicos : 0;
+
+    document.getElementById('appSummary').innerHTML =
+      `<strong>${filteredDiv.length}</strong> proventos &nbsp;·&nbsp; ` +
+      `Total: <span class="val-pos">${fmt(total)}</span> &nbsp;·&nbsp; ` +
+      `Média/mês: <span class="val-pos">${fmt(media)}</span>`;
+
+    renderPageDividendos();
+  }
+
+  function renderPageDividendos() {
+    const end = (page + 1) * PAGE_SIZE;
+    document.getElementById('tbodyDividendos').innerHTML = filteredDiv.slice(0, end).map(m => {
+      const nome   = stripDate(m.ativo);
+      const classe = NOMES_CAT[getClasse(m.ativo)] || 'Outros';
+      const data   = m.data.split('-').reverse().join('/');
+      const [badgeClass, badgeLabel] = TIPO_BADGE[m.tipo] || ['badge-rest', m.tipo];
+      return `<tr>
+        <td style="white-space:nowrap;font-size:0.8rem">${data}</td>
+        <td style="font-weight:700">${nome}</td>
+        <td style="font-size:0.75rem;color:var(--text-muted)">${classe}</td>
+        <td><span class="badge ${badgeClass}">${badgeLabel}</span></td>
+        <td class="text-right val-pos" style="font-weight:700">${fmt(m.valor_total)}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('btnLoadMoreWrap').style.display = end < filteredDiv.length ? 'block' : 'none';
+  }
+
+  // === LOAD MORE ===
+  function loadMore() {
+    page++;
+    if (aba === 'mov') renderPageAportes();
+    else renderPageDividendos();
+  }
+
+  // === TEMA ===
+  function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    document.getElementById('theme-toggle').textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+  }
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+    document.getElementById('theme-toggle').textContent = '☀️';
+  }
+
+  init();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "versao": "2026.Q1.r2",
+  "estrategia": "Crescimento + Renda (Cenário B)",
+  "ultima_revisao": "2026-02-28",
+  "metas": {
+    "1_renda_fixa_soberana": 0.10,
+    "2_credito_privado": 0.15,
+    "3_acoes_brasil": 0.25,
+    "4_ativos_reais": 0.15,
+    "5_internacional": 0.20,
+    "6_criptoativos": 0.05,
+    "7_alternativos_estratega": 0.10
+  }
+}

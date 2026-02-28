@@ -259,94 +259,6 @@
       .kpi-value { font-size: 0.95rem; }
     }
 
-    /* --- APLICAÇÕES --- */
-    .app-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-    .app-tab-btn {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 7px 18px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .app-tab-btn.active {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: white;
-    }
-    .app-tab-btn:hover:not(.active) { opacity: 0.75; }
-    .app-filters {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-      align-items: flex-end;
-    }
-    .app-filter-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      flex: 1;
-      min-width: 130px;
-    }
-    .app-filter-item label {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-    .app-select, .app-input {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 8px 10px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      color: var(--text);
-      outline: none;
-      width: 100%;
-    }
-    .app-select:focus, .app-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(102,126,234,0.2);
-    }
-    .app-summary {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      padding: 0 2px;
-      line-height: 1.8;
-    }
-    .val-pos { color: var(--success); font-weight: 700; }
-    .val-neg { color: var(--danger); font-weight: 700; }
-    .badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 20px;
-      white-space: nowrap;
-    }
-    .badge-pos  { background: rgba(72,187,120,0.15); color: #276749; }
-    .badge-neg  { background: rgba(245,101,101,0.15); color: #9b2c2c; }
-    .badge-div  { background: rgba(72,187,120,0.15);  color: #276749; }
-    .badge-jcp  { background: rgba(102,126,234,0.15); color: #434190; }
-    .badge-rend { background: rgba(237,137,54,0.15);  color: #7b341e; }
-    .badge-rest { background: rgba(160,174,192,0.2);  color: #4a5568; }
-    body.dark-mode .badge-pos  { background: rgba(72,187,120,0.2);  color: #68d391; }
-    body.dark-mode .badge-neg  { background: rgba(245,101,101,0.2); color: #fc8181; }
-    body.dark-mode .badge-div  { background: rgba(72,187,120,0.2);  color: #68d391; }
-    body.dark-mode .badge-jcp  { background: rgba(102,126,234,0.2); color: #7f9cf5; }
-    body.dark-mode .badge-rend { background: rgba(237,137,54,0.2);  color: #fbd38d; }
-    body.dark-mode .badge-rest { background: rgba(160,174,192,0.15);color: #cbd5e0; }
-    .app-load-more { text-align: center; margin-top: 14px; }
   </style>
 </head>
 <body>
@@ -510,129 +422,14 @@
     </div>
   </div>
 
-  <!-- SEÇÃO APLICAÇÕES -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">📋 Aplicações</div>
-    </div>
-
-    <!-- Abas -->
-    <div class="app-tabs">
-      <button class="app-tab-btn active" id="tabMovBtn" onclick="switchAbaAplicacoes('mov')">📋 Aportes &amp; Retiradas</button>
-      <button class="app-tab-btn" id="tabDivBtn" onclick="switchAbaAplicacoes('div')">💰 Dividendos</button>
-    </div>
-
-    <!-- Filtros Aportes & Retiradas -->
-    <div id="filtersAportes" class="app-filters">
-      <div class="app-filter-item">
-        <label>📅 Ano</label>
-        <select id="appMovAno" class="app-select" onchange="renderAplicacoes()"><option value="all">Todos</option></select>
-      </div>
-      <div class="app-filter-item">
-        <label>📂 Classe</label>
-        <select id="appMovClasse" class="app-select" onchange="renderAplicacoes()"><option value="all">Todas</option></select>
-      </div>
-      <div class="app-filter-item">
-        <label>🔄 Tipo</label>
-        <select id="appMovTipo" class="app-select" onchange="renderAplicacoes()">
-          <option value="all">Todos</option>
-          <option value="APORTE">Aporte</option>
-          <option value="RETIRADA">Retirada</option>
-        </select>
-      </div>
-      <div class="app-filter-item">
-        <label>🔍 Ativo</label>
-        <input type="text" id="appMovBusca" class="app-input" placeholder="Nome do ativo..." oninput="renderAplicacoes()">
-      </div>
-    </div>
-
-    <!-- Filtros Dividendos -->
-    <div id="filtersDividendos" class="app-filters" style="display:none">
-      <div class="app-filter-item">
-        <label>📅 Ano</label>
-        <select id="appDivAno" class="app-select" onchange="renderDividendos()"><option value="all">Todos</option></select>
-      </div>
-      <div class="app-filter-item">
-        <label>📂 Classe</label>
-        <select id="appDivClasse" class="app-select" onchange="renderDividendos()"><option value="all">Todas</option></select>
-      </div>
-      <div class="app-filter-item">
-        <label>🔄 Tipo</label>
-        <select id="appDivTipo" class="app-select" onchange="renderDividendos()">
-          <option value="all">Todos</option>
-          <option value="PROVENTO_DIVIDENDO">Dividendo</option>
-          <option value="PROVENTO_JCP">JCP</option>
-          <option value="PROVENTO_RENDIMENTO">Rendimento</option>
-          <option value="PROVENTO_RESTITUIÇÃO">Restituição</option>
-        </select>
-      </div>
-      <div class="app-filter-item">
-        <label>🔍 Ativo</label>
-        <input type="text" id="appDivBusca" class="app-input" placeholder="Nome do ativo..." oninput="renderDividendos()">
-      </div>
-    </div>
-
-    <!-- Summary -->
-    <div id="appSummary" class="app-summary"></div>
-
-    <!-- Tabela Aportes & Retiradas -->
-    <div id="tabelaAportes" class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Ativo</th>
-            <th>Classe</th>
-            <th>Tipo</th>
-            <th class="text-right">Qtde</th>
-            <th class="text-right">Preço Unit.</th>
-            <th class="text-right">Valor Total</th>
-          </tr>
-        </thead>
-        <tbody id="tbodyAportes"></tbody>
-      </table>
-    </div>
-
-    <!-- Tabela Dividendos -->
-    <div id="tabelaDividendos" class="table-container" style="display:none">
-      <table>
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Ativo</th>
-            <th>Classe</th>
-            <th>Tipo</th>
-            <th class="text-right">Valor</th>
-          </tr>
-        </thead>
-        <tbody id="tbodyDividendos"></tbody>
-      </table>
-    </div>
-
-    <!-- Carregar mais -->
-    <div class="app-load-more" id="btnLoadMoreWrap" style="display:none">
-      <button class="filter-btn" onclick="loadMoreAplicacoes()" style="padding:8px 24px;">Carregar mais ↓</button>
-    </div>
-  </div>
 </main>
 
 <script>
   let rawData = null;
   let cotacoesData = null;
-  let movData = null;
-  let divData = null;
-  let ativosData = null;
   let mesesDisp = [];
   let currentVarMesIdx = 0;
   let charts = {};
-
-  // === APLICAÇÕES STATE ===
-  let abaAplicacoes = 'mov';
-  let aplicacoesPage = 0;
-  const PAGE_SIZE = 30;
-  let filteredMov = [];
-  let filteredDiv = [];
-  let ativoClasseMap = {};
   const COLORS = { 
     carteira: '#667eea', cdi: '#4299e1', ifix: '#ed8936', dolar: '#48bb78', imovel: '#f56565',
     success: '#48bb78', danger: '#f56565', dividend: '#f6e05e', meta_bg: 'rgba(160, 174, 192, 0.4)'
@@ -650,23 +447,16 @@
   async function init() {
     try {
       const v = Date.now();
-      const [resp, respCot, respMov, respDiv, respAtivos] = await Promise.all([
+      const [resp, respCot] = await Promise.all([
         fetch('data/dashboard_investimentos.json?v=' + v),
-        fetch('data/invest_cotacoes_mensais.json?v=' + v),
-        fetch('data/movimentacoes_financeiras.json?v=' + v),
-        fetch('data/dividendos_historico.json?v=' + v),
-        fetch('data/ativos_financeiros.json?v=' + v)
+        fetch('data/invest_cotacoes_mensais.json?v=' + v)
       ]);
       rawData = await resp.json();
       cotacoesData = await respCot.json();
-      movData = await respMov.json();
-      divData = await respDiv.json();
-      ativosData = await respAtivos.json();
       updateKPIs();
       populateFilters();
       renderAll();
       initVariacoes();
-      initAplicacoes();
       document.getElementById('loading').style.display = 'none';
     } catch (e) {
       console.error(e);
@@ -1020,167 +810,6 @@
         animation: { duration: 400, easing: 'easeInOutQuart' }
       }
     });
-  }
-
-  // === APLICAÇÕES ===
-  function stripDate(s) { return s.replace(/_\d{4}\.\d{2}\.\d{2}$/, ''); }
-
-  function buildAtivosMap() {
-    ativoClasseMap = {};
-    ativosData.ativos.forEach(a => { ativoClasseMap[a.nome] = a.macro_classe; });
-  }
-
-  function getClasseAtivo(ativoKey) {
-    return ativoClasseMap[stripDate(ativoKey)] || '9_uncategorized';
-  }
-
-  function initAplicacoes() {
-    buildAtivosMap();
-
-    // Populate anos — Aportes
-    const anosMovSet = [...new Set(movData.movimentacoes.map(m => m.data.slice(0, 4)))].sort().reverse();
-    anosMovSet.forEach(a => {
-      const opt = document.createElement('option'); opt.value = a; opt.textContent = a;
-      document.getElementById('appMovAno').appendChild(opt);
-    });
-
-    // Populate anos — Dividendos
-    const anosDivSet = [...new Set(divData.movimentacoes.map(m => m.data.slice(0, 4)))].sort().reverse();
-    anosDivSet.forEach(a => {
-      const opt = document.createElement('option'); opt.value = a; opt.textContent = a;
-      document.getElementById('appDivAno').appendChild(opt);
-    });
-
-    // Populate classes (mesmas para os dois filtros)
-    Object.entries(NOMES_CAT).forEach(([key, nome]) => {
-      ['appMovClasse', 'appDivClasse'].forEach(id => {
-        const opt = document.createElement('option'); opt.value = key; opt.textContent = nome;
-        document.getElementById(id).appendChild(opt);
-      });
-    });
-
-    renderAplicacoes();
-  }
-
-  function switchAbaAplicacoes(aba) {
-    abaAplicacoes = aba;
-    aplicacoesPage = 0;
-    document.getElementById('tabMovBtn').classList.toggle('active', aba === 'mov');
-    document.getElementById('tabDivBtn').classList.toggle('active', aba === 'div');
-    document.getElementById('filtersAportes').style.display   = aba === 'mov' ? 'flex' : 'none';
-    document.getElementById('filtersDividendos').style.display = aba === 'div' ? 'flex' : 'none';
-    document.getElementById('tabelaAportes').style.display    = aba === 'mov' ? 'block' : 'none';
-    document.getElementById('tabelaDividendos').style.display  = aba === 'div' ? 'block' : 'none';
-    if (aba === 'mov') renderAplicacoes();
-    else renderDividendos();
-  }
-
-  function renderAplicacoes() {
-    aplicacoesPage = 0;
-    const ano    = document.getElementById('appMovAno').value;
-    const classe = document.getElementById('appMovClasse').value;
-    const tipo   = document.getElementById('appMovTipo').value;
-    const busca  = document.getElementById('appMovBusca').value.toLowerCase();
-
-    filteredMov = movData.movimentacoes.filter(m => {
-      if (ano !== 'all' && !m.data.startsWith(ano)) return false;
-      if (classe !== 'all' && getClasseAtivo(m.ativo) !== classe) return false;
-      if (tipo === 'APORTE'   && !m.tipo.startsWith('APORTE'))   return false;
-      if (tipo === 'RETIRADA' && !m.tipo.startsWith('RETIRADA')) return false;
-      if (busca && !stripDate(m.ativo).toLowerCase().includes(busca)) return false;
-      return true;
-    }).sort((a, b) => b.data.localeCompare(a.data));
-
-    const totalAporte   = filteredMov.filter(m => m.tipo.startsWith('APORTE')).reduce((s, m) => s + m.valor_total, 0);
-    const totalRetirada = filteredMov.filter(m => m.tipo.startsWith('RETIRADA')).reduce((s, m) => s + m.valor_total, 0);
-    const liquido = totalAporte - totalRetirada;
-    document.getElementById('appSummary').innerHTML =
-      `<strong>${filteredMov.length}</strong> lançamentos &nbsp;·&nbsp; ` +
-      `Aportes: <span class="val-pos">${fmt(totalAporte)}</span> &nbsp;·&nbsp; ` +
-      `Retiradas: <span class="val-neg">${fmt(totalRetirada)}</span> &nbsp;·&nbsp; ` +
-      `Líquido: <span class="${liquido >= 0 ? 'val-pos' : 'val-neg'}">${fmt(liquido)}</span>`;
-
-    renderPageAplicacoes();
-  }
-
-  function renderPageAplicacoes() {
-    const end = (aplicacoesPage + 1) * PAGE_SIZE;
-    document.getElementById('tbodyAportes').innerHTML = filteredMov.slice(0, end).map(m => {
-      const isAporte = m.tipo.startsWith('APORTE');
-      const nome   = stripDate(m.ativo);
-      const classe = NOMES_CAT[getClasseAtivo(m.ativo)] || 'Outros';
-      const data   = m.data.split('-').reverse().join('/');
-      const qtde   = m.quantidade != null ? m.quantidade.toLocaleString('pt-BR', { maximumFractionDigits: 4 }) : '—';
-      const preco  = m.preco_unitario ? fmt(m.preco_unitario) : '—';
-      return `<tr>
-        <td style="white-space:nowrap;font-size:0.8rem">${data}</td>
-        <td style="font-weight:700">${nome}</td>
-        <td style="font-size:0.75rem;color:var(--text-muted)">${classe}</td>
-        <td><span class="badge ${isAporte ? 'badge-pos' : 'badge-neg'}">${isAporte ? 'Aporte' : 'Retirada'}</span></td>
-        <td class="text-right" style="font-size:0.8rem">${qtde}</td>
-        <td class="text-right" style="font-size:0.8rem">${preco}</td>
-        <td class="text-right ${isAporte ? 'val-pos' : 'val-neg'}" style="font-weight:700">${fmt(m.valor_total)}</td>
-      </tr>`;
-    }).join('');
-    document.getElementById('btnLoadMoreWrap').style.display = end < filteredMov.length ? 'block' : 'none';
-  }
-
-  function renderDividendos() {
-    aplicacoesPage = 0;
-    const ano    = document.getElementById('appDivAno').value;
-    const classe = document.getElementById('appDivClasse').value;
-    const tipo   = document.getElementById('appDivTipo').value;
-    const busca  = document.getElementById('appDivBusca').value.toLowerCase();
-
-    filteredDiv = divData.movimentacoes.filter(m => {
-      if (ano !== 'all' && !m.data.startsWith(ano)) return false;
-      if (classe !== 'all' && getClasseAtivo(m.ativo) !== classe) return false;
-      if (tipo !== 'all' && m.tipo !== tipo) return false;
-      if (busca && !stripDate(m.ativo).toLowerCase().includes(busca)) return false;
-      return true;
-    }).sort((a, b) => b.data.localeCompare(a.data));
-
-    const total = filteredDiv.reduce((s, m) => s + m.valor_total, 0);
-    const mesesUnicos = new Set(filteredDiv.map(m => m.data.slice(0, 7))).size;
-    const media = mesesUnicos > 0 ? total / mesesUnicos : 0;
-    document.getElementById('appSummary').innerHTML =
-      `<strong>${filteredDiv.length}</strong> proventos &nbsp;·&nbsp; ` +
-      `Total: <span class="val-pos">${fmt(total)}</span> &nbsp;·&nbsp; ` +
-      `Média/mês: <span class="val-pos">${fmt(media)}</span>`;
-
-    renderPageDividendos();
-  }
-
-  const TIPO_BADGE = {
-    'PROVENTO_DIVIDENDO':             ['badge-div',  'Dividendo'],
-    'PROVENTO_JCP':                   ['badge-jcp',  'JCP'],
-    'PROVENTO_RENDIMENTO':            ['badge-rend', 'Rendimento'],
-    'PROVENTO_RESTITUIÇÃO':           ['badge-rest', 'Restituição'],
-    'PROVENTO_RESTITUIÇÃO DE CAPITAL':['badge-rest', 'Rest. Capital']
-  };
-
-  function renderPageDividendos() {
-    const end = (aplicacoesPage + 1) * PAGE_SIZE;
-    document.getElementById('tbodyDividendos').innerHTML = filteredDiv.slice(0, end).map(m => {
-      const nome  = stripDate(m.ativo);
-      const classe = NOMES_CAT[getClasseAtivo(m.ativo)] || 'Outros';
-      const data  = m.data.split('-').reverse().join('/');
-      const [badgeClass, badgeLabel] = TIPO_BADGE[m.tipo] || ['badge-rest', m.tipo];
-      return `<tr>
-        <td style="white-space:nowrap;font-size:0.8rem">${data}</td>
-        <td style="font-weight:700">${nome}</td>
-        <td style="font-size:0.75rem;color:var(--text-muted)">${classe}</td>
-        <td><span class="badge ${badgeClass}">${badgeLabel}</span></td>
-        <td class="text-right val-pos" style="font-weight:700">${fmt(m.valor_total)}</td>
-      </tr>`;
-    }).join('');
-    document.getElementById('btnLoadMoreWrap').style.display = end < filteredDiv.length ? 'block' : 'none';
-  }
-
-  function loadMoreAplicacoes() {
-    aplicacoesPage++;
-    if (abaAplicacoes === 'mov') renderPageAplicacoes();
-    else renderPageDividendos();
   }
 
   function toggleTheme() {
