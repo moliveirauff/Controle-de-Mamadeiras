@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "VIACAO TERESOPOLI",
+    "data": "2026-02-14",
+    "categoria": "transporte",
+    "subcategoria": "Transporte Público",
+    "valor": -47.5,
+    "origem": "flash"
+  },
+  {
     "descricao": "BUS SERVICOS*ONIBUS",
     "data": "2026-02-15",
     "categoria": "transporte",
