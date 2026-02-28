@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "RGE COMERCIO DE ALIMENTOS EIRELI",
+    "data": "2026-01-09",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -110.88,
+    "origem": "ticket_restaurante"
+  },
+  {
     "descricao": "DEGUSTER PRIME",
     "data": "2026-01-12",
     "categoria": "alimentacao",
