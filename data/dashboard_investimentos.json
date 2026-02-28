@@ -10313,7 +10313,7 @@
   "alocacao": [
     {
       "categoria": "1_renda_fixa_soberana",
-      "meta_rs": 230037.81,
+      "meta_rs": 115018.91,
       "real_rs": 1975.29
     },
     {
@@ -10343,7 +10343,7 @@
     },
     {
       "categoria": "7_alternativos_estratega",
-      "meta_rs": 230037.81,
+      "meta_rs": 345056.72,
       "real_rs": 395674.54
     }
   ],
@@ -10725,5 +10725,5 @@
       "categoria": "1_renda_fixa_soberana"
     }
   ],
-  "last_update": "2026-02-28 12:25"
+  "last_update": "2026-02-28 12:53"
 }
