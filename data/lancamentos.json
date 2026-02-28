@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "Depósito de Mobilidade",
+    "data": "2026-02-26",
+    "categoria": "receitas",
+    "subcategoria": "Benefícios",
+    "valor": 1500.0,
+    "origem": "flash"
+  },
+  {
     "descricao": "ERFOLG ESTACIONAMENT",
     "data": "2026-01-08",
     "categoria": "transporte",
