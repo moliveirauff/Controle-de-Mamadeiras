@@ -4,13 +4,13 @@
   "ativos": [
     {
       "nome": "SGOV",
-      "macro_classe": "1_renda_fixa_soberana",
+      "macro_classe": "5_internacional",
       "subclasse": "1.1_liquidez",
       "status": "aberto"
     },
     {
       "nome": "TETHER (USDT)_2024.03.30",
-      "macro_classe": "1_renda_fixa_soberana",
+      "macro_classe": "6_criptoativos",
       "subclasse": "1.1_liquidez",
       "status": "fechado"
     },
