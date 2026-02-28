@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "SALSALITO",
+    "data": "2026-01-26",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -44.0,
+    "origem": "ticket_restaurante"
+  },
+  {
     "descricao": "PEP COMERCIO LTDA",
     "data": "2026-01-26",
     "categoria": "alimentacao",
