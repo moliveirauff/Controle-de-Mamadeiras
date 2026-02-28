@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "ERFOLG ESTACIONAMENT",
+    "data": "2026-01-08",
+    "categoria": "transporte",
+    "subcategoria": "Estacionamento",
+    "valor": -94.0,
+    "origem": "flash"
+  },
+  {
     "descricao": "UBER CASH",
     "data": "2026-01-11",
     "categoria": "transporte",
