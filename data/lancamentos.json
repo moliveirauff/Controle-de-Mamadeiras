@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "UBR* PENDING.UBER.COM",
+    "data": "2026-02-09",
+    "categoria": "transporte",
+    "subcategoria": "Táxi e Uber",
+    "valor": -285.42,
+    "origem": "flash"
+  },
+  {
     "descricao": "UBER CASH",
     "data": "2026-02-14",
     "categoria": "transporte",
