@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "ERFOLG ESTACIONAMENT",
+    "data": "2026-01-29",
+    "categoria": "transporte",
+    "subcategoria": "Estacionamento",
+    "valor": -10.0,
+    "origem": "flash"
+  },
+  {
     "descricao": "INT PAG TIT 109200842504",
     "data": "2023-01-02",
     "categoria": "moradia",
