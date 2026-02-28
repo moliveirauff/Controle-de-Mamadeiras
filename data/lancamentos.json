@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "POSTO 3D",
+    "data": "2026-02-24",
+    "categoria": "transporte",
+    "subcategoria": "Combustível",
+    "valor": -159.45,
+    "origem": "flash"
+  },
+  {
     "descricao": "UBER CASH",
     "data": "2026-02-24",
     "categoria": "transporte",
