@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "SALSALITO",
+    "data": "2026-01-30",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -49.0,
+    "origem": "ticket_restaurante"
+  },
+  {
     "descricao": "DEGUSTER PRIME",
     "data": "2026-02-02",
     "categoria": "alimentacao",
