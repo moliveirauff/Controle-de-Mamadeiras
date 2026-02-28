@@ -156,13 +156,13 @@
   },
   "alocacao": {
     "target_allocation_pct": {
-      "1_renda_fixa_soberana": 10,
+      "1_renda_fixa_soberana": 5,
       "2_credito_privado": 15,
       "3_acoes_brasil": 25,
       "4_ativos_reais": 15,
       "5_internacional": 20,
       "6_criptoativos": 5,
-      "7_alternativos_estratega": 10
+      "7_alternativos_estratega": 15
     },
     "current_allocation_pct": {}
   }

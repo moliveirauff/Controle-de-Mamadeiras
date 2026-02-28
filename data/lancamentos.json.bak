@@ -1,5 +1,149 @@
 [
   {
+    "descricao": "DEGUSTER PRIME",
+    "data": "2026-01-12",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -55.0,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "DEGUSTER PRIME",
+    "data": "2026-01-15",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -119.9,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "DEGUSTER PRIME",
+    "data": "2026-01-22",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -85.8,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "SALSALITO",
+    "data": "2026-01-26",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -44.0,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "PEP COMERCIO LTDA",
+    "data": "2026-01-26",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -13.9,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "SALSALITO",
+    "data": "2026-01-30",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -49.0,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "DEGUSTER PRIME",
+    "data": "2026-02-02",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -80.3,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "WIZMART",
+    "data": "2026-02-07",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -5.5,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "SPOLETO",
+    "data": "2026-02-14",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -63.0,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "DEGUSTER PRIME",
+    "data": "2026-02-19",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -104.5,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "RSC COMERCIO DE ALIMENTOS E CHOCOLATES LTDA",
+    "data": "2026-02-19",
+    "categoria": "alimentacao",
+    "subcategoria": "Outros",
+    "valor": -34.92,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "DEGUSTER PRIME",
+    "data": "2026-02-20",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -80.3,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "DEGUSTER PRIME",
+    "data": "2026-02-23",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -55.0,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "DEGUSTER PRIME",
+    "data": "2026-02-25",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -101.97,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "Disponibilidade de crédito",
+    "data": "2026-01-29",
+    "categoria": "receitas",
+    "subcategoria": "Benefícios",
+    "valor": 70.0,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "Disponibilidade de crédito",
+    "data": "2026-01-29",
+    "categoria": "receitas",
+    "subcategoria": "Benefícios",
+    "valor": 665.0,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "Disponibilidade de crédito",
+    "data": "2026-02-26",
+    "categoria": "receitas",
+    "subcategoria": "Benefícios",
+    "valor": 770.0,
+    "origem": "ticket_restaurante"
+  },
+  {
+    "descricao": "ZONA SUL SUPERMERCADOS",
+    "data": "2026-01-02",
+    "categoria": "alimentacao",
+    "subcategoria": "Mercado",
+    "valor": -1019.72,
+    "origem": "ticket_alimentacao"
+  },
+  {
     "descricao": "ZONA SUL SUPERMERCADOS",
     "data": "2026-01-13",
     "categoria": "alimentacao",
