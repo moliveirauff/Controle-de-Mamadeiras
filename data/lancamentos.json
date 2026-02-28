@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "RODA A VERDADEIRA CONVENIENCIA",
+    "data": "2026-01-13",
+    "categoria": "alimentacao",
+    "subcategoria": "Mercado",
+    "valor": -49.57,
+    "origem": "ticket_alimentacao"
+  },
+  {
     "descricao": "GREEN FRUIT",
     "data": "2026-01-17",
     "categoria": "alimentacao",
