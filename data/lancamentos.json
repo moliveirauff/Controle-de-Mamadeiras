@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "ZONA SUL SUPERMERCADOS",
+    "data": "2026-01-24",
+    "categoria": "alimentacao",
+    "subcategoria": "Mercado",
+    "valor": -1307.53,
+    "origem": "ticket_alimentacao"
+  },
+  {
     "descricao": "PADARIA NEMA",
     "data": "2026-01-28",
     "categoria": "alimentacao",
