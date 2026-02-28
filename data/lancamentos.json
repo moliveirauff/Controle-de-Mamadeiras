@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "DEGUSTER PRIME",
+    "data": "2026-02-02",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -80.3,
+    "origem": "ticket_restaurante"
+  },
+  {
     "descricao": "WIZMART",
     "data": "2026-02-07",
     "categoria": "alimentacao",
