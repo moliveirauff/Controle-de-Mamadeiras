@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="only light">
   <meta name="supported-color-schemes" content="light">
-  <title>📊 Dashboard FGTS</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js?v=3.27"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js?v=3.27"></script>
+  <title>🏦 Dashboard FGTS</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js?v=3.75"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js?v=3.75"></script>
   <style>
     :root {
       color-scheme: only light !important;
@@ -23,6 +23,7 @@
       --accent: var(--primary);
       --success: #48bb78;
       --warning: #ed8936;
+      --danger: #f56565;
       --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
     }
     body.dark-mode {
@@ -56,16 +57,19 @@
       display: flex; align-items: center; justify-content: center;
       z-index: 10; transition: background 0.2s;
     }
-    body.dark-mode #theme-toggle { background: rgba(255,255,255,0.1); }
+    body.dark-mode #theme-toggle  { background: rgba(255,255,255,0.1); }
     body:not(.dark-mode) #theme-toggle { background: rgba(0,0,0,0.05); }
     .nav-link {
       text-decoration: none; color: var(--primary);
-      font-size: 0.9rem; margin: 10px 0 0 4px; display: inline-block;
+      font-size: 0.9rem; font-weight: 500;
+      margin: 10px 0 0 4px; display: inline-block;
     }
     h1 {
       text-align: center; font-size: 1.5rem; font-weight: 800;
       margin: 10px 44px 20px 44px; color: var(--text);
     }
+
+    /* KPIs */
     .kpi-grid {
       display: grid; grid-template-columns: repeat(2, 1fr);
       gap: 10px; margin-bottom: 20px;
@@ -75,19 +79,14 @@
       border-radius: 12px; padding: 12px 8px;
       text-align: center; box-shadow: var(--shadow);
       display: flex; flex-direction: column; gap: 4px;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .kpi-label {
-      font-size: 0.6rem; font-weight: 800; color: var(--subtext);
-      text-transform: uppercase; letter-spacing: 0.05em; order: 1;
-    }
-    .kpi-value {
-      font-size: 1.05rem; font-weight: 800; color: var(--text);
-      line-height: 1.2; order: 2;
-    }
-    .kpi-sub {
-      font-size: 0.65rem; color: var(--text-muted);
-      font-weight: 600; order: 3;
-    }
+    .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .kpi-label { font-size: 0.6rem; font-weight: 800; color: var(--subtext); text-transform: uppercase; letter-spacing: 0.05em; order: 1; }
+    .kpi-value { font-size: 1.05rem; font-weight: 800; color: var(--text); line-height: 1.2; order: 2; }
+    .kpi-sub   { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; order: 3; }
+
+    /* Cards */
     .card {
       background: var(--surface); border-radius: 12px;
       box-shadow: var(--shadow); padding: 15px;
@@ -104,7 +103,11 @@
       text-align: center; width: 100%; justify-content: center;
     }
     .card-header .controls { width: 100%; justify-content: center; }
+
+    /* Charts */
     .chart-container { position: relative; height: 300px; width: 100%; }
+
+    /* Controls */
     .controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: center; }
     .filter-btn {
       background: var(--border); border: none; padding: 5px 12px;
@@ -113,22 +116,30 @@
     }
     .filter-btn:hover { opacity: 0.8; }
     .filter-btn.active { background: var(--accent); color: white; }
+
+    /* Method note */
     .method-note {
       font-size: 0.7rem; color: var(--text-muted); text-align: center;
-      margin-top: 8px; font-style: italic;
+      margin-top: 10px; font-style: italic; line-height: 1.5;
     }
+
+    /* Loading */
     #loading {
       position: fixed; inset: 0; background: rgba(0,0,0,0.5);
       display: flex; align-items: center; justify-content: center;
       z-index: 1000; color: white; font-weight: bold; backdrop-filter: blur(4px);
     }
     .hidden { display: none !important; }
+
+    /* Desktop */
     @media (min-width: 768px) {
       body { max-width: 960px; margin: 0 auto; padding: 16px 16px 60px 16px; }
       h1 { font-size: 1.75rem; }
-      .kpi-grid { gap: 12px; }
+      .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
       .chart-container { height: 380px; }
-      .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+      .card-header { flex-direction: row; justify-content: space-between; }
+      .card-title { justify-content: flex-start; width: auto; }
+      .card-header .controls { width: auto; justify-content: flex-end; }
     }
   </style>
 </head>
@@ -143,12 +154,22 @@
   <!-- KPIs -->
   <div class="kpi-grid">
     <div class="kpi-card">
-      <span class="kpi-label">💰 Saldo Total</span>
+      <span class="kpi-label">💰 Saldo Real</span>
       <span class="kpi-value" id="kpiSaldo">—</span>
       <span class="kpi-sub" id="kpiSaldoSub">Atualizado</span>
     </div>
     <div class="kpi-card">
-      <span class="kpi-label">📅 Investido 12M</span>
+      <span class="kpi-label">🏛️ Base Rescisória</span>
+      <span class="kpi-value" id="kpiSaldoTeorico">—</span>
+      <span class="kpi-sub">Saldo s/ saques</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-label">⚖️ Multa 40%</span>
+      <span class="kpi-value" id="kpiMulta">—</span>
+      <span class="kpi-sub">Sobre base rescisória</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-label">📅 Aportado 12M</span>
       <span class="kpi-value" id="kpiInvestido">—</span>
       <span class="kpi-sub">Últimos 12 meses</span>
     </div>
@@ -157,7 +178,7 @@
   <!-- Saldo por Ano -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title"><span>📊</span> Saldo por Ano</div>
+      <div class="card-title">📊 Saldo por Ano</div>
     </div>
     <div class="chart-container">
       <canvas id="chartAnual"></canvas>
@@ -167,23 +188,23 @@
   <!-- Saldo Mensal -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title"><span>🗓️</span> Saldo Mensal</div>
-    </div>
-    <div class="controls" style="margin-bottom: 14px;">
-      <button class="filter-btn active" onclick="setMonthRange(12, this)">12M</button>
-      <button class="filter-btn" onclick="setMonthRange(24, this)">24M</button>
-      <button class="filter-btn" onclick="setMonthRange(36, this)">36M</button>
-      <button class="filter-btn" onclick="setMonthRange(999, this)">Todos</button>
+      <div class="card-title">🗓️ Saldo Mensal</div>
+      <div class="controls">
+        <button class="filter-btn active" onclick="setMonthRange(12, this)">12M</button>
+        <button class="filter-btn" onclick="setMonthRange(24, this)">24M</button>
+        <button class="filter-btn" onclick="setMonthRange(36, this)">36M</button>
+        <button class="filter-btn" onclick="setMonthRange(999, this)">Todos</button>
+      </div>
     </div>
     <div class="chart-container">
       <canvas id="chartMensal"></canvas>
     </div>
   </div>
 
-  <!-- Rendimento Total -->
+  <!-- Rendimento por Ano -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title"><span>📈</span> Rendimento Total</div>
+      <div class="card-title">📈 Rendimento por Ano</div>
     </div>
     <div class="chart-container">
       <canvas id="chartRendimento"></canvas>
@@ -193,7 +214,7 @@
   <!-- Projeção Rescisória -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title"><span>🏛️</span> Projeção Rescisória (Multa 40%)</div>
+      <div class="card-title">🏛️ Projeção Rescisória (Multa 40%)</div>
     </div>
     <div class="chart-container">
       <canvas id="chartRescisao"></canvas>
@@ -211,17 +232,27 @@ let monthLimit = 12;
 
 const MONTH_NAMES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 
+const CHART_DEFAULTS = {
+  animation: { duration: 800, easing: 'easeInOutQuart' },
+  plugins: {
+    legend: {
+      position: 'bottom',
+      labels: { boxWidth: 12, font: { size: 10 }, usePointStyle: true }
+    }
+  }
+};
+
 function fmt(v) {
   return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 function compactFmt(v) {
-  if (Math.abs(v) >= 1e6) return 'R$ ' + (v/1e6).toFixed(1) + 'M';
-  if (Math.abs(v) >= 1e3) return 'R$ ' + (v/1e3).toFixed(0) + 'k';
+  if (Math.abs(v) >= 1e6) return 'R$ ' + (v / 1e6).toFixed(1) + 'M';
+  if (Math.abs(v) >= 1e3) return 'R$ ' + (v / 1e3).toFixed(0) + 'k';
   return 'R$ ' + v.toFixed(0);
 }
 function setTxt(id, txt) { document.getElementById(id).textContent = txt; }
-function getCtx(id) { return document.getElementById(id).getContext('2d'); }
-function getTextColor() { return getComputedStyle(document.body).getPropertyValue('--text').trim(); }
+function getTextColor()   { return getComputedStyle(document.body).getPropertyValue('--text').trim(); }
+function getBorderColor() { return getComputedStyle(document.body).getPropertyValue('--border').trim(); }
 
 function mesLabel(ym) {
   const [y, m] = ym.split('-');
@@ -230,24 +261,25 @@ function mesLabel(ym) {
 
 async function init() {
   try {
-    const resp = await fetch('data/fgts_dashboard.json');
+    const resp = await fetch('data/fgts_dashboard.json?v=' + Date.now());
     data = await resp.json();
     renderAll();
     document.getElementById('loading').classList.add('hidden');
   } catch (e) {
-    alert('Erro ao carregar dados: ' + e.message);
+    document.getElementById('loading').innerHTML = '❌ Erro ao carregar dados: ' + e.message;
   }
 }
 
 function renderAll() {
-  // KPIs
-  setTxt('kpiSaldo', fmt(data.kpis.saldo_total));
-  const [y, m] = data.kpis.ultimo_mes.split('-');
-  setTxt('kpiSaldoSub', `Atualizado ${MONTH_NAMES[parseInt(m)-1]}/${y}`);
-  setTxt('kpiInvestido', fmt(data.kpis.investido_12m));
+  const k = data.kpis;
+  const [y, m] = k.ultimo_mes.split('-');
 
-  // Rescisão note
-  setTxt('rescisaoNote', data.rescisao.metodologia);
+  setTxt('kpiSaldo',       fmt(k.saldo_total));
+  setTxt('kpiSaldoSub',   `Atualizado ${MONTH_NAMES[parseInt(m)-1]}/${y}`);
+  setTxt('kpiSaldoTeorico', fmt(k.saldo_teorico_rescisao));
+  setTxt('kpiMulta',       fmt(k.multa_40pct_teorico));
+  setTxt('kpiInvestido',   fmt(k.investido_12m));
+  setTxt('rescisaoNote',   data.rescisao.metodologia);
 
   renderAnual();
   renderMensal();
@@ -255,13 +287,13 @@ function renderAll() {
   renderRescisao();
 }
 
+// === SALDO POR ANO ===
 function renderAnual() {
-  const ctx = getCtx('chartAnual');
-  const anos = data.por_ano.map(a => a.ano);
+  const anos   = data.por_ano.map(a => a.ano);
   const saldos = data.por_ano.map(a => a.saldo_fim_ano);
 
   if (charts.anual) charts.anual.destroy();
-  charts.anual = new Chart(ctx, {
+  charts.anual = new Chart(document.getElementById('chartAnual'), {
     type: 'bar',
     data: {
       labels: anos,
@@ -273,9 +305,10 @@ function renderAnual() {
       }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      ...CHART_DEFAULTS,
+      responsive: true, maintainAspectRatio: false,
       plugins: {
+        ...CHART_DEFAULTS.plugins,
         legend: { display: false },
         tooltip: { callbacks: { label: c => fmt(c.raw) } },
         datalabels: {
@@ -287,16 +320,16 @@ function renderAnual() {
         }
       },
       scales: {
-        x: { grid: { display: false } },
-        y: { ticks: { callback: v => compactFmt(v) } }
+        x: { grid: { display: false }, ticks: { color: getTextColor() } },
+        y: { ticks: { callback: v => compactFmt(v), color: getTextColor() }, grid: { color: getBorderColor() } }
       }
     },
     plugins: [ChartDataLabels]
   });
 }
 
+// === SALDO MENSAL ===
 function renderMensal() {
-  const ctx = getCtx('chartMensal');
   let meses = data.por_mes;
   if (monthLimit !== 999) meses = meses.slice(-monthLimit);
 
@@ -304,7 +337,7 @@ function renderMensal() {
   const saldos = meses.map(m => m.saldo);
 
   if (charts.mensal) charts.mensal.destroy();
-  charts.mensal = new Chart(ctx, {
+  charts.mensal = new Chart(document.getElementById('chartMensal'), {
     type: 'bar',
     data: {
       labels,
@@ -316,112 +349,83 @@ function renderMensal() {
       }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      ...CHART_DEFAULTS,
+      responsive: true, maintainAspectRatio: false,
       plugins: {
+        ...CHART_DEFAULTS.plugins,
         legend: { display: false },
         tooltip: { callbacks: { label: c => fmt(c.raw) } },
       },
       scales: {
-        x: { grid: { display: false }, ticks: { maxRotation: 45, font: { size: 9 } } },
-        y: { ticks: { callback: v => compactFmt(v) } }
+        x: { grid: { display: false }, ticks: { maxRotation: 45, font: { size: 9 }, color: getTextColor() } },
+        y: { ticks: { callback: v => compactFmt(v), color: getTextColor() }, grid: { color: getBorderColor() } }
       }
     }
   });
 }
 
+// === RENDIMENTO POR ANO ===
 function renderRendimento() {
-  const ctx = getCtx('chartRendimento');
-  const anos = data.por_ano.map(a => a.ano);
-  const saldos = data.por_ano.map(a => a.saldo_fim_ano);
-  const rendimentos = data.por_ano.map(a => a.rendimento_acum);
-  // Rendimento % = rendimento_acum / (aportes_acum - retiradas_acum)
-  // We need cumulative aportes-retiradas per year end
-  let acumAportes = 0, acumRetiradas = 0;
-  const rendPct = data.por_ano.map(a => {
-    acumAportes += a.aportes_ano;
-    acumRetiradas += a.retiradas_ano;
-    const investido = acumAportes - acumRetiradas;
-    return investido > 0 ? (a.rendimento_acum / investido * 100) : 0;
-  });
+  const anos           = data.por_ano.map(a => a.ano);
+  const rendimentos    = data.por_ano.map(a => a.rendimento_ano);
+  const rendPct        = data.por_ano.map(a => a.rendimento_pct_ano);
 
   if (charts.rendimento) charts.rendimento.destroy();
-  charts.rendimento = new Chart(ctx, {
+  charts.rendimento = new Chart(document.getElementById('chartRendimento'), {
     type: 'bar',
     data: {
       labels: anos,
-      datasets: [
-        {
-          label: 'Saldo',
-          data: saldos,
-          backgroundColor: 'rgba(102, 126, 234, 0.5)',
-          borderRadius: 4,
-          order: 2,
-        },
-        {
-          label: 'Rendimento Acum.',
-          data: rendimentos,
-          type: 'line',
-          borderColor: '#48bb78',
-          backgroundColor: 'rgba(72, 187, 120, 0.1)',
-          fill: true,
-          tension: 0.3,
-          pointRadius: 4,
-          pointBackgroundColor: '#48bb78',
-          order: 1,
-        }
-      ]
+      datasets: [{
+        label: 'Rendimento no ano (R$)',
+        data: rendimentos,
+        backgroundColor: '#48bb78',
+        borderRadius: 4,
+      }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
+      ...CHART_DEFAULTS,
+      responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: {
-          position: 'bottom',
-          labels: { boxWidth: 12, font: { size: 10 }, color: getTextColor() }
-        },
+        ...CHART_DEFAULTS.plugins,
+        legend: { display: false },
         tooltip: {
           callbacks: {
-            afterBody: function(items) {
-              const idx = items[0].dataIndex;
-              return `Rendimento: ${rendPct[idx].toFixed(1)}%`;
-            },
-            label: c => c.dataset.label + ': ' + fmt(c.raw)
+            label: c => fmt(c.raw),
+            afterLabel: (c) => `Rendimento no ano: ${rendPct[c.dataIndex].toFixed(2)}%`
           }
         },
         datalabels: {
-          display: function(ctx) { return ctx.datasetIndex === 1; },
+          display: true,
           anchor: 'end', align: 'top',
           formatter: (v, ctx) => rendPct[ctx.dataIndex].toFixed(1) + '%',
-          font: { size: 9, weight: 'bold' },
+          font: { size: 10, weight: 'bold' },
           color: '#48bb78',
         }
       },
       scales: {
-        x: { grid: { display: false } },
-        y: { ticks: { callback: v => compactFmt(v) } }
+        x: { grid: { display: false }, ticks: { color: getTextColor() } },
+        y: { ticks: { callback: v => compactFmt(v), color: getTextColor() }, grid: { color: getBorderColor() } }
       }
     },
     plugins: [ChartDataLabels]
   });
 }
 
+// === PROJEÇÃO RESCISÓRIA ===
 function renderRescisao() {
-  const ctx = getCtx('chartRescisao');
-  const resc = data.rescisao.por_ano;
-  const anos = resc.map(r => r.ano);
-  const saldos = resc.map(r => r.saldo_fim_ano);
-  const multas = resc.map(r => r.multa_40pct);
+  const resc    = data.rescisao.por_ano;
+  const anos    = resc.map(r => r.ano);
+  const saldos  = resc.map(r => r.saldo_teorico);
+  const multas  = resc.map(r => r.multa_40pct);
 
   if (charts.rescisao) charts.rescisao.destroy();
-  charts.rescisao = new Chart(ctx, {
+  charts.rescisao = new Chart(document.getElementById('chartRescisao'), {
     type: 'bar',
     data: {
       labels: anos,
       datasets: [
         {
-          label: 'Saldo FGTS',
+          label: 'Base Rescisória',
           data: saldos,
           backgroundColor: '#667eea',
           borderRadius: 4,
@@ -435,40 +439,41 @@ function renderRescisao() {
       ]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      ...CHART_DEFAULTS,
+      responsive: true, maintainAspectRatio: false,
       plugins: {
+        ...CHART_DEFAULTS.plugins,
         legend: {
           position: 'bottom',
-          labels: { boxWidth: 12, font: { size: 10 }, color: getTextColor() }
+          labels: { boxWidth: 12, font: { size: 10 }, usePointStyle: true, color: getTextColor() }
         },
         tooltip: {
           callbacks: {
-            afterBody: function(items) {
+            label: c => `${c.dataset.label}: ${fmt(c.raw)}`,
+            afterBody: items => {
               const idx = items[0].dataIndex;
               return `Total rescisão: ${fmt(saldos[idx] + multas[idx])}`;
-            },
-            label: c => c.dataset.label + ': ' + fmt(c.raw)
+            }
           }
         },
         datalabels: {
-          display: function(ctx) { return ctx.datasetIndex === 1; },
+          display: ctx => ctx.datasetIndex === 1,
           anchor: 'end', align: 'top',
-          formatter: (v, ctx) => compactFmt(v),
+          formatter: v => compactFmt(v),
           font: { size: 9, weight: 'bold' },
           color: '#ed8936',
         }
       },
       scales: {
-        x: { grid: { display: false } },
-        y: { ticks: { callback: v => compactFmt(v) } }
+        x: { grid: { display: false }, ticks: { color: getTextColor() } },
+        y: { ticks: { callback: v => compactFmt(v), color: getTextColor() }, grid: { color: getBorderColor() } }
       }
     },
     plugins: [ChartDataLabels]
   });
 }
 
-// --- Filter controls ---
+// === FILTROS ===
 function setMonthRange(n, btn) {
   monthLimit = n;
   document.querySelectorAll('.controls .filter-btn').forEach(b => b.classList.remove('active'));
@@ -476,17 +481,16 @@ function setMonthRange(n, btn) {
   renderMensal();
 }
 
-// --- Theme toggle ---
+// === TEMA ===
 function toggleTheme() {
   document.body.classList.toggle('dark-mode');
-  const btn = document.getElementById('theme-toggle');
-  btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-  localStorage.setItem('fgts-theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-  renderAll();
+  const isDark = document.body.classList.contains('dark-mode');
+  document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  // Re-render para atualizar cores dos eixos
+  setTimeout(() => renderAll(), 50);
 }
-
-// Restore theme
-if (localStorage.getItem('fgts-theme') === 'dark') {
+if (localStorage.getItem('theme') === 'dark') {
   document.body.classList.add('dark-mode');
   document.getElementById('theme-toggle').textContent = '☀️';
 }

@@ -1,0 +1,85 @@
+{
+  "versao": "2026.2.24",
+  "data_calculo": "2026-02-25 16:54:56",
+  "descricao": "Fluxo de caixa mensal de operações com opções (BR + US)",
+  "detalhamento_mensal": [
+    {
+      "mes": "2025-03",
+      "fluxo_br": 1414.0,
+      "fluxo_us": 0,
+      "fluxo_total": 1414.0
+    },
+    {
+      "mes": "2025-04",
+      "fluxo_br": 2814.0,
+      "fluxo_us": 0,
+      "fluxo_total": 2814.0
+    },
+    {
+      "mes": "2025-05",
+      "fluxo_br": 355.0,
+      "fluxo_us": 0,
+      "fluxo_total": 355.0
+    },
+    {
+      "mes": "2025-06",
+      "fluxo_br": 2814.0,
+      "fluxo_us": 0,
+      "fluxo_total": 2814.0
+    },
+    {
+      "mes": "2025-07",
+      "fluxo_br": 5735.0,
+      "fluxo_us": 2264.73,
+      "fluxo_total": 7999.73
+    },
+    {
+      "mes": "2025-08",
+      "fluxo_br": 1257.0,
+      "fluxo_us": 9075.98,
+      "fluxo_total": 10332.98
+    },
+    {
+      "mes": "2025-09",
+      "fluxo_br": 724.0,
+      "fluxo_us": 2946.25,
+      "fluxo_total": 3670.25
+    },
+    {
+      "mes": "2025-10",
+      "fluxo_br": 9177.0,
+      "fluxo_us": 10788.29,
+      "fluxo_total": 19965.29
+    },
+    {
+      "mes": "2025-11",
+      "fluxo_br": -5398.88,
+      "fluxo_us": 6501.62,
+      "fluxo_total": 1102.74
+    },
+    {
+      "mes": "2025-12",
+      "fluxo_br": 3258.91,
+      "fluxo_us": 4051.34,
+      "fluxo_total": 7310.25
+    },
+    {
+      "mes": "2026-01",
+      "fluxo_br": -3609.79,
+      "fluxo_us": 4204.46,
+      "fluxo_total": 594.67
+    },
+    {
+      "mes": "2026-02",
+      "fluxo_br": -19353.4,
+      "fluxo_us": 7067.03,
+      "fluxo_total": -12286.37
+    },
+    {
+      "mes": "TOTAL",
+      "fluxo_br": -813.16,
+      "fluxo_us": 46899.7,
+      "fluxo_total": 46086.54
+    }
+  ]
+}
