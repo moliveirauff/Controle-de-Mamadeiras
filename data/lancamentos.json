@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "ZONA SUL SUPERMERCADOS",
+    "data": "2026-02-22",
+    "categoria": "alimentacao",
+    "subcategoria": "Mercado",
+    "valor": -492.39,
+    "origem": "ticket_alimentacao"
+  },
+  {
     "descricao": "SINDICATO DAS MASSAS",
     "data": "2026-02-24",
     "categoria": "alimentacao",
