@@ -1,6 +1,14 @@
 [
   {
     "descricao": "ZONA SUL SUPERMERCADOS",
+    "data": "2026-01-02",
+    "categoria": "alimentacao",
+    "subcategoria": "Mercado",
+    "valor": -1019.72,
+    "origem": "ticket_alimentacao"
+  },
+  {
+    "descricao": "ZONA SUL SUPERMERCADOS",
     "data": "2026-01-13",
     "categoria": "alimentacao",
     "subcategoria": "Mercado",
