@@ -1,6 +1,14 @@
 [
   {
     "descricao": "Disponibilidade de crédito",
+    "data": "2026-01-29",
+    "categoria": "receitas",
+    "subcategoria": "Benefícios",
+    "valor": 1715.0,
+    "origem": "ticket_alimentacao"
+  },
+  {
+    "descricao": "Disponibilidade de crédito",
     "data": "2026-02-26",
     "categoria": "receitas",
     "subcategoria": "Benefícios",
