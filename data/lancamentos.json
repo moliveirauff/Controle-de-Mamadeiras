@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "PONEY POSTO",
+    "data": "2026-02-05",
+    "categoria": "transporte",
+    "subcategoria": "Combustível",
+    "valor": -299.51,
+    "origem": "flash"
+  },
+  {
     "descricao": "UBER CASH",
     "data": "2026-02-06",
     "categoria": "transporte",
