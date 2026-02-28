@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "RODA A VERDADEIRA CONVENIENCIA",
+    "data": "2026-01-31",
+    "categoria": "alimentacao",
+    "subcategoria": "Mercado",
+    "valor": -17.67,
+    "origem": "ticket_alimentacao"
+  },
+  {
     "descricao": "CITYFRUIT",
     "data": "2026-02-04",
     "categoria": "alimentacao",
