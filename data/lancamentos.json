@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "SUPERMERCADO ZONA SUL",
+    "data": "2026-02-06",
+    "categoria": "alimentacao",
+    "subcategoria": "Mercado",
+    "valor": -99.45,
+    "origem": "ticket_alimentacao"
+  },
+  {
     "descricao": "GREEN FRUIT",
     "data": "2026-02-12",
     "categoria": "alimentacao",
