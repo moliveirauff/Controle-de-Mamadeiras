@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "PADARIA NEMA",
+    "data": "2026-01-28",
+    "categoria": "alimentacao",
+    "subcategoria": "Mercado",
+    "valor": -98.0,
+    "origem": "ticket_alimentacao"
+  },
+  {
     "descricao": "RODA A VERDADEIRA CONVENIENCIA",
     "data": "2026-01-31",
     "categoria": "alimentacao",
