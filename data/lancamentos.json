@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "ZONA SUL SUPERMERCADOS",
+    "data": "2026-01-13",
+    "categoria": "alimentacao",
+    "subcategoria": "Mercado",
+    "valor": -288.41,
+    "origem": "ticket_alimentacao"
+  },
+  {
     "descricao": "RODA A VERDADEIRA CONVENIENCIA",
     "data": "2026-01-13",
     "categoria": "alimentacao",
