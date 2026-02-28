@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "UBER *TRIP HELP.UBER",
+    "data": "2026-02-24",
+    "categoria": "transporte",
+    "subcategoria": "Táxi e Uber",
+    "valor": -96.46,
+    "origem": "flash"
+  },
+  {
     "descricao": "Depósito de Mobilidade",
     "data": "2026-02-26",
     "categoria": "receitas",
