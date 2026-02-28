@@ -1,5 +1,13 @@
 [
   {
+    "descricao": "WIZMART",
+    "data": "2026-02-07",
+    "categoria": "alimentacao",
+    "subcategoria": "Restaurante",
+    "valor": -5.5,
+    "origem": "ticket_restaurante"
+  },
+  {
     "descricao": "SPOLETO",
     "data": "2026-02-14",
     "categoria": "alimentacao",
