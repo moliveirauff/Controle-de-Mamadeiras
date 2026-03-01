@@ -1,0 +1,183 @@
+{
+  "versao": "2026.2.normalizado",
+  "data_atualizacao": "2026-02-19",
+  "descricao": "Historico de recebimentos de aluguel (Trulli e outros)",
+  "movimentacoes": [
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-01-09",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2103.12,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-02-07",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2002.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-03-05",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-04-05",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-05-05",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-06-05",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-07-05",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-08-05",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.26,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-09-01",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-10-08",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-11-05",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2024-12-05",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2025-01-05",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2025-02-10",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2202.25,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2025-05-10",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 803.94,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2025-06-10",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2377.47,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2025-07-10",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2377.47,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2025-08-10",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2377.47,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2025-09-10",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2377.47,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2025-10-10",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2377.47,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2025-11-10",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2377.47,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    },
+    {
+      "ativo": "Imóvel - Trulli",
+      "data": "2025-12-05",
+      "tipo": "PROVENTO_ALUGUEL",
+      "valor_total": 2377.6,
+      "preco_unitario": 0.0,
+      "quantidade": 0.0
+    }
+  ]
+}

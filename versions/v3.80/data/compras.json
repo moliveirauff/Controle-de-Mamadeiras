@@ -1,0 +1,790 @@
+{
+  "shoppingList": [
+    {
+      "Item": "Queijo minas",
+      "Categoria": "Laticínios",
+      "qty": "1",
+      "price": "51.45",
+      "checked": false,
+      "obs": ""
+    },
+    {
+      "Item": "Requeijão",
+      "Categoria": "Laticínios",
+      "qty": "1",
+      "price": "17.99",
+      "checked": false,
+      "obs": ""
+    },
+    {
+      "Item": "Sabão em Pó Lava Louças",
+      "Categoria": "Limpeza",
+      "qty": "1",
+      "price": "55",
+      "checked": false,
+      "obs": ""
+    },
+    {
+      "Item": "Farinha de trigo",
+      "Categoria": "Outros",
+      "qty": "1",
+      "price": "4.29",
+      "checked": false,
+      "obs": "Para: Panqueca Doce"
+    },
+    {
+      "Item": "Fermento em pó",
+      "Categoria": "Outros",
+      "qty": "1",
+      "price": "4.99",
+      "checked": false,
+      "obs": "Para: Panqueca Doce"
+    },
+    {
+      "Item": "Leite",
+      "Categoria": "Laticínios",
+      "qty": "2",
+      "price": "5.29",
+      "checked": false,
+      "obs": "Para: Panqueca Doce"
+    },
+    {
+      "Item": "Açúcar",
+      "Categoria": "Mercearia / Grãos",
+      "qty": "2",
+      "price": "6",
+      "checked": false,
+      "obs": "Para: Panqueca Doce"
+    },
+    {
+      "Item": "Ovo",
+      "Categoria": "Outros",
+      "qty": "1",
+      "price": "9.99",
+      "checked": false,
+      "obs": "Para: Panqueca Doce"
+    },
+    {
+      "Item": "Manteiga",
+      "Categoria": "Laticínios",
+      "qty": "1",
+      "price": "14.9",
+      "checked": false,
+      "obs": "Para: Panqueca Doce"
+    },
+    {
+      "Item": "Coca-Cola",
+      "Categoria": "Bebidas",
+      "qty": "6",
+      "price": "3.99",
+      "checked": false,
+      "obs": "Adicionado por CasaBot"
+    },
+    {
+      "Item": "Refrigerante H2O",
+      "Categoria": "Bebidas",
+      "qty": "1",
+      "price": "3.99",
+      "checked": false,
+      "obs": "Adicionado por CasaBot"
+    },
+    {
+      "Item": "Teste Item Novo",
+      "Categoria": "Limpeza",
+      "qty": "3",
+      "price": "0",
+      "checked": false,
+      "obs": "Teste de Sincronização"
+    }
+  ],
+  "masterData": [
+    {
+      "Item": "Açúcar",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "6",
+      "Observações": ""
+    },
+    {
+      "Item": "Água mineral",
+      "Marca/Descrição": "",
+      "Categoria": "Bebidas",
+      "Quantidade Típica": "12",
+      "Valor Esperado (Un)": "13,39",
+      "Observações": ""
+    },
+    {
+      "Item": "Refrigerante H2OH!",
+      "Marca/Descrição": "",
+      "Categoria": "Bebidas",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "3,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Chá mate",
+      "Marca/Descrição": "",
+      "Categoria": "Bebidas",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "3,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Refrigerante cola",
+      "Marca/Descrição": "",
+      "Categoria": "Bebidas",
+      "Quantidade Típica": "6",
+      "Valor Esperado (Un)": "3,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Carne moída",
+      "Marca/Descrição": "",
+      "Categoria": "Carnes e Frios",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "22,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Ovos",
+      "Marca/Descrição": "",
+      "Categoria": "Carnes e Frios",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "9,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Peito de frango",
+      "Marca/Descrição": "",
+      "Categoria": "Carnes e Frios",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "23,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Peito de peru",
+      "Marca/Descrição": "",
+      "Categoria": "Carnes e Frios",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "7,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Picanha",
+      "Marca/Descrição": "",
+      "Categoria": "Carnes e Frios",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "112,48",
+      "Observações": ""
+    },
+    {
+      "Item": "Sobrecoxa de frango",
+      "Marca/Descrição": "",
+      "Categoria": "Carnes e Frios",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "21,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Desodorante",
+      "Marca/Descrição": "",
+      "Categoria": "Higiene Pessoal",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "29,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Escova dental",
+      "Marca/Descrição": "",
+      "Categoria": "Higiene Pessoal",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "34,9",
+      "Observações": ""
+    },
+    {
+      "Item": "Máscara capilar",
+      "Marca/Descrição": "",
+      "Categoria": "Higiene Pessoal",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "29,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Pasta de dente",
+      "Marca/Descrição": "",
+      "Categoria": "Higiene Pessoal",
+      "Quantidade Típica": "3",
+      "Valor Esperado (Un)": "5,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Shampoo",
+      "Marca/Descrição": "",
+      "Categoria": "Higiene Pessoal",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "47,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Abacaxi",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "9,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Abóbora",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "8,49",
+      "Observações": ""
+    },
+    {
+      "Item": "Abobrinha",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "1,4",
+      "Observações": ""
+    },
+    {
+      "Item": "Alface",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "3,79",
+      "Observações": ""
+    },
+    {
+      "Item": "Alho descascado",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "7,49",
+      "Observações": ""
+    },
+    {
+      "Item": "Alho",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "23,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Batata",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "3,59",
+      "Observações": ""
+    },
+    {
+      "Item": "Cebola",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "1",
+      "Observações": ""
+    },
+    {
+      "Item": "Desengordurante",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "12,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Desengordurante spray",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "21,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Laranja",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "19,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Maçã",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "4,25",
+      "Observações": ""
+    },
+    {
+      "Item": "Mamão",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "6,49",
+      "Observações": ""
+    },
+    {
+      "Item": "Manjericão",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "3,79",
+      "Observações": ""
+    },
+    {
+      "Item": "Maracujá",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "11,24",
+      "Observações": ""
+    },
+    {
+      "Item": "Melão",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "10,38",
+      "Observações": ""
+    },
+    {
+      "Item": "Tomate",
+      "Marca/Descrição": "",
+      "Categoria": "Hortifruti",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "8,38",
+      "Observações": ""
+    },
+    {
+      "Item": "Iogurte morango",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "3,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Iogurte grego",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "11,9",
+      "Observações": ""
+    },
+    {
+      "Item": "Iogurte natural",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "3,79",
+      "Observações": ""
+    },
+    {
+      "Item": "Iogurte zero",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "16,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Iogurte proteico",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "3",
+      "Valor Esperado (Un)": "7,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Leite",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "5,29",
+      "Observações": ""
+    },
+    {
+      "Item": "Leite longa vida",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "4",
+      "Valor Esperado (Un)": "7,79",
+      "Observações": ""
+    },
+    {
+      "Item": "Manteiga",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "14,9",
+      "Observações": ""
+    },
+    {
+      "Item": "Queijo minas",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "51,45",
+      "Observações": ""
+    },
+    {
+      "Item": "Queijo parmesão",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "29,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Requeijão",
+      "Marca/Descrição": "",
+      "Categoria": "Laticínios",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "17,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Sabonete",
+      "Marca/Descrição": "",
+      "Categoria": "Higiene Pessoal",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "3,29",
+      "Observações": ""
+    },
+    {
+      "Item": "Amaciante",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "22,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Esponja de louça",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "7,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Passa fácil",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "14,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Papel higiênico",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "29,9",
+      "Observações": ""
+    },
+    {
+      "Item": "Papel toalha",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "7,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Gel sanitário",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "14,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Sabão líquido",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "36,9",
+      "Observações": ""
+    },
+    {
+      "Item": "Saco de lixo",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "21,85",
+      "Observações": ""
+    },
+    {
+      "Item": "Saponáceo",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "9,98",
+      "Observações": ""
+    },
+    {
+      "Item": "Tira manchas",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "20,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Amendoim",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "15,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Arroz",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "5,85",
+      "Observações": ""
+    },
+    {
+      "Item": "Atum em lata",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "10,69",
+      "Observações": ""
+    },
+    {
+      "Item": "Azeite",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "35,98",
+      "Observações": ""
+    },
+    {
+      "Item": "Azeitona",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "16,38",
+      "Observações": ""
+    },
+    {
+      "Item": "Biscoito queijinho",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "3,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Biscoito recheado",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "2,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Biscoito cream cracker",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "3,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Biscoito look chocolate",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "2",
+      "Valor Esperado (Un)": "2,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Biscoito maizena  pacote",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "2,95",
+      "Observações": ""
+    },
+    {
+      "Item": "Biscoito wafer recheio chocolate",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "3,39",
+      "Observações": ""
+    },
+    {
+      "Item": "Chia",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "20,29",
+      "Observações": ""
+    },
+    {
+      "Item": "Feijão",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "5,59",
+      "Observações": ""
+    },
+    {
+      "Item": "Granola",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "16,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Ovinhos de amendoim",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "9,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Sal grosso",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "3,65",
+      "Observações": ""
+    },
+    {
+      "Item": "Sal rosa",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "18,49",
+      "Observações": ""
+    },
+    {
+      "Item": "Achocolatado",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "10,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Desinfetante",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "13,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Guardanapo",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "4",
+      "Valor Esperado (Un)": "6,19",
+      "Observações": ""
+    },
+    {
+      "Item": "Macarrão",
+      "Marca/Descrição": "",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "17,91",
+      "Observações": ""
+    },
+    {
+      "Item": "Mistura para bolo",
+      "Marca/Descrição": "",
+      "Categoria": "Padaria",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "4,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Pão baguete",
+      "Marca/Descrição": "",
+      "Categoria": "Padaria",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "30,29",
+      "Observações": ""
+    },
+    {
+      "Item": "Pão de forma",
+      "Marca/Descrição": "",
+      "Categoria": "Padaria",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "17,89",
+      "Observações": ""
+    },
+    {
+      "Item": "Pão de forma artesano",
+      "Marca/Descrição": "",
+      "Categoria": "Padaria",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "13,99",
+      "Observações": ""
+    },
+    {
+      "Item": "Pão egg sponge",
+      "Marca/Descrição": "",
+      "Categoria": "Padaria",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "17,49",
+      "Observações": ""
+    },
+    {
+      "Item": "Pão francês",
+      "Marca/Descrição": "",
+      "Categoria": "Padaria",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "1,43",
+      "Observações": ""
+    },
+    {
+      "Item": "Sabão em Pó Lava Louças",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "55",
+      "Observações": ""
+    },
+    {
+      "Item": "Teste Item Novo",
+      "Marca/Descrição": "",
+      "Categoria": "Limpeza",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "0",
+      "Observações": "Criado automaticamente"
+    },
+    {
+      "Item": "Farinha de trigo",
+      "Marca/Descrição": "Tipo 1 1kg",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "4,29",
+      "Observações": "Ref: supermercadoindustrial.com.br"
+    },
+    {
+      "Item": "Fermento em pó",
+      "Marca/Descrição": "Royal 100g",
+      "Categoria": "Mercearia / Grãos",
+      "Quantidade Típica": "1",
+      "Valor Esperado (Un)": "4,99",
+      "Observações": "Ref: supermercadoindustrial.com.br"
+    }
+  ]
+}
