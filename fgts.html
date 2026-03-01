@@ -406,6 +406,7 @@ function renderRescisao() {
   const anos   = resc.map(r => r.ano);
   const saldos = resc.map(r => r.saldo_teorico);
   const multas = resc.map(r => r.multa_40pct);
+  const totais = resc.map(r => r.total_rescisao);  // saldo real + multa 40%
 
   const opts = baseOpts({
     legend: {
@@ -414,19 +415,15 @@ function renderRescisao() {
     },
     tooltip: {
       callbacks: {
-        label:     c => `${c.dataset.label}: ${fmt(c.raw)}`,
-        afterBody: items => {
-          const i = items[0].dataIndex;
-          return `Total rescisão: ${fmt(saldos[i] + multas[i])}`;
-        }
+        label: c => `${c.dataset.label}: ${fmt(c.raw)}`
       }
     },
     datalabels: {
-      display: ctx => ctx.datasetIndex === 1,
+      display: ctx => ctx.datasetIndex === 2,
       anchor: 'end', align: 'top',
       formatter: v => compactFmt(v),
       font: { size: 9, weight: 'bold' },
-      color: '#ed8936',
+      color: '#48bb78',
     }
   });
 
@@ -437,7 +434,8 @@ function renderRescisao() {
       labels: anos,
       datasets: [
         { label: 'Base Rescisória', data: saldos, backgroundColor: '#667eea', borderRadius: 4, barPercentage: 0.8 },
-        { label: 'Multa 40%',       data: multas, backgroundColor: '#ed8936', borderRadius: 4, barPercentage: 0.8 }
+        { label: 'Multa 40%',       data: multas, backgroundColor: '#ed8936', borderRadius: 4, barPercentage: 0.8 },
+        { label: 'Total Rescisão',  data: totais, backgroundColor: '#48bb78', borderRadius: 4, barPercentage: 0.8 }
       ]
     },
     options: opts,

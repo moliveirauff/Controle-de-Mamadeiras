@@ -135,11 +135,14 @@ def main():
     # --- Rescisão por ano (base teórica) ---
     rescisao_por_ano = []
     for a in por_ano:
-        st = a["saldo_teorico_rescisao"]
+        st    = a["saldo_teorico_rescisao"]
+        multa = round(st * 0.40, 2)
+        total = round(a["saldo_fim_ano"] + multa, 2)   # saldo real + multa 40%
         rescisao_por_ano.append({
             "ano": a["ano"],
             "saldo_teorico": st,
-            "multa_40pct": round(st * 0.40, 2),
+            "multa_40pct": multa,
+            "total_rescisao": total,
         })
 
     # --- Output ---
