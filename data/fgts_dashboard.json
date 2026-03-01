@@ -1,11 +1,11 @@
 {
-  "gerado_em": "2026-02-28T20:47:39.031753",
+  "gerado_em": "2026-02-28T21:54:15.231225",
   "kpis": {
-    "saldo_total": 149811.65,
-    "saldo_teorico_rescisao": 581796.93,
-    "multa_40pct_teorico": 232718.77,
-    "investido_12m": 49649.94,
-    "ultimo_mes": "2025-12"
+    "saldo_total": 163522.7,
+    "saldo_teorico_rescisao": 598983.72,
+    "multa_40pct_teorico": 239593.49,
+    "investido_12m": 62124.89,
+    "ultimo_mes": "2026-02"
   },
   "por_ano": [
     {
@@ -140,13 +140,23 @@
     },
     {
       "ano": "2025",
-      "saldo_fim_ano": 149811.65,
+      "saldo_fim_ano": 149756.55,
       "aportes_ano": 55317.44,
       "retiradas_ano": 0,
-      "rendimento_acum": 79772.45,
-      "rendimento_ano": 7419.25,
-      "rendimento_pct_ano": 8.52,
-      "saldo_teorico_rescisao": 581796.93
+      "rendimento_acum": 79717.35,
+      "rendimento_ano": 7364.15,
+      "rendimento_pct_ano": 8.46,
+      "saldo_teorico_rescisao": 581582.93
+    },
+    {
+      "ano": "2026",
+      "saldo_fim_ano": 163522.7,
+      "aportes_ano": 12474.95,
+      "retiradas_ano": 0,
+      "rendimento_acum": 81008.55,
+      "rendimento_ano": 1291.2,
+      "rendimento_pct_ano": 0.86,
+      "saldo_teorico_rescisao": 598983.72
     }
   ],
   "por_mes": [
@@ -1628,18 +1638,36 @@
     },
     {
       "mes": "2025-12",
-      "saldo": 149811.65,
+      "saldo": 149756.55,
       "aportes_mes": 4513.2,
       "retiradas_mes": 0,
       "aportes_acum": 350384.31,
       "retiradas_acum": 280345.11,
-      "rendimento_acum": 79772.45
+      "rendimento_acum": 79717.35
+    },
+    {
+      "mes": "2026-01",
+      "saldo": 157747.29,
+      "aportes_mes": 7359.99,
+      "retiradas_mes": 0,
+      "aportes_acum": 357744.3,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 80348.1
+    },
+    {
+      "mes": "2026-02",
+      "saldo": 163522.7,
+      "aportes_mes": 5114.96,
+      "retiradas_mes": 0,
+      "aportes_acum": 362859.26,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 81008.55
     }
   ],
   "rescisao": {
     "metodologia": "Multa rescisória = 40% × saldo teórico FGTS (todos os depósitos corrigidos, independente de saques). Saques reduzem o saldo real, mas não a base de cálculo da multa. Base legal: CLT Art. 18 §1º.",
-    "saldo_teorico_atual": 581796.93,
-    "multa_40pct": 232718.77,
+    "saldo_teorico_atual": 598983.72,
+    "multa_40pct": 239593.49,
     "por_ano": [
       {
         "ano": "2012",
@@ -1708,8 +1736,13 @@
       },
       {
         "ano": "2025",
-        "saldo_teorico": 581796.93,
-        "multa_40pct": 232718.77
+        "saldo_teorico": 581582.93,
+        "multa_40pct": 232633.17
+      },
+      {
+        "ano": "2026",
+        "saldo_teorico": 598983.72,
+        "multa_40pct": 239593.49
       }
     ]
   }

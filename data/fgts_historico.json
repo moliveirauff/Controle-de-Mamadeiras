@@ -1408,8 +1408,48 @@
       "data": "2025-12-30",
       "tipo": "APORTE",
       "valor_total": 4513.2,
-      "preco_unitario": 2.61,
+      "preco_unitario": 2.60904,
       "quantidade": 1729.8
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2026-01-21",
+      "tipo": "RENDIMENTO",
+      "valor_total": 630.77,
+      "preco_unitario": 2.62003,
+      "quantidade": 0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2026-01-15",
+      "tipo": "APORTE",
+      "valor_total": 2696.35,
+      "preco_unitario": 2.62003,
+      "quantidade": 1029.1
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2026-01-15",
+      "tipo": "APORTE",
+      "valor_total": 4663.64,
+      "preco_unitario": 2.62003,
+      "quantidade": 1780.0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2026-02-21",
+      "tipo": "RENDIMENTO",
+      "valor_total": 660.64,
+      "preco_unitario": 2.63100,
+      "quantidade": 0
+    },
+    {
+      "ativo": "FGTS",
+      "data": "2026-02-13",
+      "tipo": "APORTE",
+      "valor_total": 5114.96,
+      "preco_unitario": 2.63100,
+      "quantidade": 1944.1
     }
   ]
 }
