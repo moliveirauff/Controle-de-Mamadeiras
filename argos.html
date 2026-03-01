@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="only light">
+  <meta name="supported-color-schemes" content="light">
+  <title>🏢 Argos — Valuation</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      color-scheme: only light !important; isolation: isolate;
+      --bg: #f7fafc; --text: #2d3748; --surface: #ffffff;
+      --border: #e2e8f0; --text-muted: #718096;
+      --primary: #667eea; --success: #48bb78; --warning: #ed8936;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    }
+    body.dark-mode {
+      color-scheme: only dark !important;
+      --bg: #1a202c; --text: #f7fafc; --surface: #2d3748;
+      --border: #4a5568; --text-muted: #cbd5e0;
+      --primary: #7f9cf5;
+      background-color: var(--bg);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background-color: var(--bg); min-height: 100vh; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg); color: var(--text);
+      transition: background-color .3s, color .3s;
+      padding: 10px 10px 60px; min-height: 100vh; position: relative;
+    }
+    #theme-toggle {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(0,0,0,.05); border: none; font-size: 1.2rem;
+      cursor: pointer; padding: 8px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; z-index: 10;
+    }
+    body.dark-mode #theme-toggle { background: rgba(255,255,255,.1); }
+    .nav-link { text-decoration: none; color: var(--primary); font-size: .9rem; font-weight: 500; margin: 10px 0 0 4px; display: inline-block; }
+    h1 { text-align: center; font-size: 1.5rem; font-weight: 800; margin: 10px 44px 20px; color: var(--text); }
+
+    /* KPIs */
+    .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+    .kpi-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px 8px; text-align: center;
+      box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 4px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+    .kpi-label { font-size: .6rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; order: 1; }
+    .kpi-value { font-size: 1.05rem; font-weight: 800; color: var(--text); line-height: 1.2; order: 2; }
+    .kpi-sub   { font-size: .65rem; color: var(--text-muted); font-weight: 600; order: 3; }
+
+    /* Cards */
+    .card {
+      background: var(--surface); border-radius: 12px;
+      box-shadow: var(--shadow); padding: 15px; margin-bottom: 20px;
+      border: 1px solid var(--border); transition: background-color .3s, border-color .3s;
+    }
+    .card-header {
+      font-size: .95rem; font-weight: 700; color: var(--text);
+      margin-bottom: 14px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .card-title { display: flex; align-items: center; gap: 6px; text-align: center; width: 100%; justify-content: center; }
+    .card-header .controls { width: 100%; justify-content: center; }
+    .chart-container { position: relative; height: 300px; width: 100%; }
+    .controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: center; }
+    .filter-btn {
+      background: var(--border); border: none; padding: 5px 12px;
+      border-radius: 20px; font-size: .8rem; font-weight: 600;
+      color: var(--text); cursor: pointer; transition: all .2s;
+    }
+    .filter-btn:hover { opacity: .8; }
+    .filter-btn.active { background: var(--primary); color: white; }
+
+    /* Tabela de aportes */
+    .table-wrapper { overflow-x: auto; margin-top: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    th { background: var(--border); color: var(--text); font-weight: 700; padding: 8px 10px; text-align: right; }
+    th:first-child { text-align: left; }
+    td { padding: 7px 10px; text-align: right; border-bottom: 1px solid var(--border); color: var(--text); }
+    td:first-child { text-align: left; }
+    tr:last-child td { border-bottom: none; font-weight: 700; background: rgba(102,126,234,.06); }
+    .badge-pos { color: var(--success); font-weight: 700; }
+
+    .method-note { font-size: .7rem; color: var(--text-muted); text-align: center; margin-top: 10px; font-style: italic; line-height: 1.6; }
+    #loading { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center; z-index: 1000; color: white; font-weight: 600; font-size: 1.1rem; backdrop-filter: blur(4px); }
+    .hidden { display: none !important; }
+
+    @media (min-width: 768px) {
+      body { max-width: 960px; margin: 0 auto; padding: 16px 16px 60px; }
+      h1 { font-size: 1.75rem; }
+      .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+      .chart-container { height: 380px; }
+      .card-header { flex-direction: row; justify-content: space-between; }
+      .card-title { justify-content: flex-start; width: auto; }
+      .card-header .controls { width: auto; justify-content: flex-end; }
+    }
+  </style>
+</head>
+<body>
+<div id="loading">🔄 Carregando dados...</div>
+<button id="theme-toggle" onclick="toggleTheme()">🌙</button>
+<a href="index.html" class="nav-link">← Voltar</a>
+<h1>🏢 Argos — Valuation</h1>
+
+<main>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <span class="kpi-label">💰 Total Investido</span>
+      <span class="kpi-value" id="kpiInvestido">—</span>
+      <span class="kpi-sub">Aportes nominais</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-label">📈 Minha Parte</span>
+      <span class="kpi-value" id="kpiMinhaParte">—</span>
+      <span class="kpi-sub" id="kpiMinhaParteSub">1/3 corrigido</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-label">🏢 Valuation Empresa</span>
+      <span class="kpi-value" id="kpiValuation">—</span>
+      <span class="kpi-sub">Minha parte × 3</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-label">💵 Rendimento</span>
+      <span class="kpi-value" id="kpiRendimento">—</span>
+      <span class="kpi-sub" id="kpiRendimentoSub">vs aporte nominal</span>
+    </div>
+  </div>
+
+  <!-- Evolução do Valor -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📈 Evolução do Valor</div>
+      <div class="controls">
+        <button class="filter-btn active" onclick="setRange(12, this)">12M</button>
+        <button class="filter-btn" onclick="setRange(24, this)">24M</button>
+        <button class="filter-btn" onclick="setRange(999, this)">Todos</button>
+      </div>
+    </div>
+    <div class="chart-container"><canvas id="chartEvolucao"></canvas></div>
+  </div>
+
+  <!-- Aportes por Mês -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📊 Aportes por Mês</div>
+    </div>
+    <div class="chart-container"><canvas id="chartAportes"></canvas></div>
+  </div>
+
+  <!-- Valuation Empresa -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🏢 Valuation da Empresa</div>
+    </div>
+    <div class="chart-container"><canvas id="chartValuation"></canvas></div>
+  </div>
+
+  <!-- Tabela de Aportes -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📋 Detalhamento por Aporte</div>
+    </div>
+    <div class="table-wrapper">
+      <table id="tabelaAportes">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Aportado</th>
+            <th>Meses</th>
+            <th>Valor Corrigido</th>
+            <th>Rendimento</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="method-note" id="nota"></p>
+  </div>
+</main>
+
+<script>
+Chart.defaults.set('plugins.datalabels', { display: false });
+
+let data = {};
+let charts = {};
+let range = 12;
+
+const MES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+
+function fmt(v)        { return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function fmtK(v)       { return Math.abs(v) >= 1e6 ? 'R$ '+(v/1e6).toFixed(1)+'M' : Math.abs(v) >= 1e3 ? 'R$ '+(v/1e3).toFixed(0)+'k' : 'R$ '+v.toFixed(0); }
+function setTxt(id, t) { document.getElementById(id).textContent = t; }
+function txtColor()    { return getComputedStyle(document.body).getPropertyValue('--text').trim(); }
+function brdColor()    { return getComputedStyle(document.body).getPropertyValue('--border').trim(); }
+function mesLbl(ym)    { const [y,m]=ym.split('-'); return `${MES[+m-1]}/${y.slice(2)}`; }
+
+function baseOpts(extra = {}) {
+  return {
+    responsive: true, maintainAspectRatio: false,
+    animation: { duration: 800, easing: 'easeInOutQuart' },
+    interaction: { mode: 'index', intersect: false },
+    layout: { padding: { top: 20 } },
+    plugins: {
+      legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 }, usePointStyle: true, color: txtColor() } },
+      ...extra
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: txtColor(), font: { size: 10 }, maxRotation: 45, autoSkip: true, maxTicksLimit: 14 } },
+      y: { grid: { color: brdColor() }, ticks: { callback: v => fmtK(v), color: txtColor() } }
+    }
+  };
+}
+
+async function init() {
+  try {
+    const r = await fetch('data/argos_dashboard.json?v=' + Date.now());
+    data = await r.json();
+    renderAll();
+    document.getElementById('loading').classList.add('hidden');
+  } catch(e) {
+    document.getElementById('loading').innerHTML = '❌ Erro: ' + e.message;
+  }
+}
+
+function renderAll() {
+  const k = data.kpis;
+  setTxt('kpiInvestido',    fmt(k.total_investido));
+  setTxt('kpiMinhaParte',   fmt(k.valor_mercado));
+  setTxt('kpiMinhaParteSub', `+${k.rentabilidade_pct.toFixed(2)}% vs nominal`);
+  setTxt('kpiValuation',    fmt(k.valuation_empresa));
+  setTxt('kpiRendimento',   fmt(k.rendimento));
+  setTxt('kpiRendimentoSub', `${k.participacao_pct.toFixed(2)}% da empresa`);
+  setTxt('nota', data.metodologia);
+  renderEvolucao();
+  renderAportes();
+  renderValuation();
+  renderTabela();
+}
+
+function getSlice() {
+  const s = data.por_mes;
+  return range === 999 ? s : s.slice(-range);
+}
+
+function renderEvolucao() {
+  const s = getSlice();
+  const opts = baseOpts({
+    tooltip: { callbacks: { label: c => `${c.dataset.label}: ${fmt(c.raw)}` } }
+  });
+  if (charts.ev) charts.ev.destroy();
+  charts.ev = new Chart(document.getElementById('chartEvolucao'), {
+    type: 'line',
+    data: {
+      labels: s.map(m => mesLbl(m.mes)),
+      datasets: [
+        {
+          label: 'Minha Parte (corrigida)',
+          data: s.map(m => m.vm_minha_parte),
+          borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,.12)',
+          fill: true, tension: 0.3, pointRadius: 2, borderWidth: 2, order: 0
+        },
+        {
+          label: 'Investido Acumulado',
+          data: s.map(m => m.aportes_acum),
+          borderColor: '#a0aec0', backgroundColor: 'transparent',
+          borderDash: [4,3], tension: 0.3, pointRadius: 0, borderWidth: 1.5, order: 1
+        }
+      ]
+    },
+    options: opts
+  });
+}
+
+function renderAportes() {
+  const s = data.por_mes.filter(m => m.aportes_mes > 0);
+  const opts = baseOpts({
+    legend: { display: false },
+    tooltip: { callbacks: { label: c => fmt(c.raw) } },
+    datalabels: {
+      display: true, anchor: 'end', align: 'top',
+      formatter: v => fmtK(v), font: { size: 9, weight: 'bold' }, color: txtColor()
+    }
+  });
+  opts.layout.padding.top = 28;
+  if (charts.ap) charts.ap.destroy();
+  charts.ap = new Chart(document.getElementById('chartAportes'), {
+    type: 'bar',
+    data: {
+      labels: s.map(m => mesLbl(m.mes)),
+      datasets: [{ label: 'Aporte', data: s.map(m => m.aportes_mes), backgroundColor: '#667eea', borderRadius: 4, barPercentage: 0.8 }]
+    },
+    options: opts,
+    plugins: [ChartDataLabels]
+  });
+}
+
+function renderValuation() {
+  const s = data.por_mes;
+  const opts = baseOpts({
+    legend: { display: false },
+    tooltip: { callbacks: { label: c => `Valuation: ${fmt(c.raw)}` } }
+  });
+  if (charts.val) charts.val.destroy();
+  charts.val = new Chart(document.getElementById('chartValuation'), {
+    type: 'line',
+    data: {
+      labels: s.map(m => mesLbl(m.mes)),
+      datasets: [{
+        label: 'Valuation Empresa',
+        data: s.map(m => m.valuation_empresa),
+        borderColor: '#48bb78', backgroundColor: 'rgba(72,187,120,.1)',
+        fill: true, tension: 0.3, pointRadius: 2, borderWidth: 2
+      }]
+    },
+    options: opts
+  });
+}
+
+function renderTabela() {
+  const tbody = document.querySelector('#tabelaAportes tbody');
+  const rows = [...data.por_aporte];
+  let totalAp = 0, totalCor = 0, totalRend = 0;
+  tbody.innerHTML = '';
+  rows.forEach(a => {
+    const d = a.data.split('-');
+    totalAp   += a.valor_aportado;
+    totalCor  += a.valor_corrigido;
+    totalRend += a.rendimento;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${MES[+d[1]-1]}/${d[0]}</td>
+      <td>${fmt(a.valor_aportado)}</td>
+      <td>${a.meses_desde}m</td>
+      <td>${fmt(a.valor_corrigido)}</td>
+      <td class="badge-pos">+${fmt(a.rendimento)}</td>`;
+    tbody.appendChild(tr);
+  });
+  const tot = document.createElement('tr');
+  tot.innerHTML = `
+    <td>Total</td>
+    <td>${fmt(totalAp)}</td>
+    <td>—</td>
+    <td>${fmt(totalCor)}</td>
+    <td class="badge-pos">+${fmt(totalRend)}</td>`;
+  tbody.appendChild(tot);
+}
+
+function setRange(n, btn) {
+  range = n;
+  document.querySelectorAll('.controls .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderEvolucao();
+}
+
+function toggleTheme() {
+  document.body.classList.toggle('dark-mode');
+  const dark = document.body.classList.contains('dark-mode');
+  document.getElementById('theme-toggle').textContent = dark ? '☀️' : '🌙';
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
+  setTimeout(() => renderAll(), 50);
+}
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark-mode');
+  document.getElementById('theme-toggle').textContent = '☀️';
+}
+
+init();
+</script>
+</body>
+</html>
