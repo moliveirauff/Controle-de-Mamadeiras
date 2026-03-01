@@ -1,0 +1,1749 @@
+{
+  "gerado_em": "2026-02-28T21:54:15.231225",
+  "kpis": {
+    "saldo_total": 163522.7,
+    "saldo_teorico_rescisao": 598983.72,
+    "multa_40pct_teorico": 239593.49,
+    "investido_12m": 62124.89,
+    "ultimo_mes": "2026-02"
+  },
+  "por_ano": [
+    {
+      "ano": "2012",
+      "saldo_fim_ano": 9267.01,
+      "aportes_ano": 9166.73,
+      "retiradas_ano": 0,
+      "rendimento_acum": 100.28,
+      "rendimento_ano": 100.28,
+      "rendimento_pct_ano": 1.09,
+      "saldo_teorico_rescisao": 9267.01
+    },
+    {
+      "ano": "2013",
+      "saldo_fim_ano": 21620.2,
+      "aportes_ano": 11729.77,
+      "retiradas_ano": 0,
+      "rendimento_acum": 723.7,
+      "rendimento_ano": 623.42,
+      "rendimento_pct_ano": 6.73,
+      "saldo_teorico_rescisao": 21620.2
+    },
+    {
+      "ano": "2014",
+      "saldo_fim_ano": 40896.91,
+      "aportes_ano": 18160.3,
+      "retiradas_ano": 0,
+      "rendimento_acum": 1840.11,
+      "rendimento_ano": 1116.41,
+      "rendimento_pct_ano": 5.16,
+      "saldo_teorico_rescisao": 40896.91
+    },
+    {
+      "ano": "2015",
+      "saldo_fim_ano": 64072.94,
+      "aportes_ano": 20919.94,
+      "retiradas_ano": 0,
+      "rendimento_acum": 4096.2,
+      "rendimento_ano": 2256.09,
+      "rendimento_pct_ano": 5.52,
+      "saldo_teorico_rescisao": 64072.94
+    },
+    {
+      "ano": "2016",
+      "saldo_fim_ano": 85497.67,
+      "aportes_ano": 17672.2,
+      "retiradas_ano": 0,
+      "rendimento_acum": 7848.73,
+      "rendimento_ano": 3752.53,
+      "rendimento_pct_ano": 5.86,
+      "saldo_teorico_rescisao": 85497.67
+    },
+    {
+      "ano": "2017",
+      "saldo_fim_ano": 111525.96,
+      "aportes_ano": 20578.69,
+      "retiradas_ano": 0,
+      "rendimento_acum": 13298.33,
+      "rendimento_ano": 5449.6,
+      "rendimento_pct_ano": 6.37,
+      "saldo_teorico_rescisao": 111525.96
+    },
+    {
+      "ano": "2018",
+      "saldo_fim_ano": 133896.9,
+      "aportes_ano": 16792.17,
+      "retiradas_ano": 0,
+      "rendimento_acum": 18877.1,
+      "rendimento_ano": 5578.77,
+      "rendimento_pct_ano": 5.0,
+      "saldo_teorico_rescisao": 133896.9
+    },
+    {
+      "ano": "2019",
+      "saldo_fim_ano": 161498.74,
+      "aportes_ano": 19105.06,
+      "retiradas_ano": 0,
+      "rendimento_acum": 27373.88,
+      "rendimento_ano": 8496.78,
+      "rendimento_pct_ano": 6.35,
+      "saldo_teorico_rescisao": 161498.74
+    },
+    {
+      "ano": "2020",
+      "saldo_fim_ano": 189183.51,
+      "aportes_ano": 21761.45,
+      "retiradas_ano": 0,
+      "rendimento_acum": 33297.2,
+      "rendimento_ano": 5923.32,
+      "rendimento_pct_ano": 3.67,
+      "saldo_teorico_rescisao": 189183.51
+    },
+    {
+      "ano": "2021",
+      "saldo_fim_ano": 224623.83,
+      "aportes_ano": 24602.96,
+      "retiradas_ano": 0,
+      "rendimento_acum": 44134.55,
+      "rendimento_ano": 10837.35,
+      "rendimento_pct_ano": 5.73,
+      "saldo_teorico_rescisao": 224623.83
+    },
+    {
+      "ano": "2022",
+      "saldo_fim_ano": 252957.26,
+      "aportes_ano": 28612.83,
+      "retiradas_ano": 16823.47,
+      "rendimento_acum": 60678.63,
+      "rendimento_ano": 16544.08,
+      "rendimento_pct_ano": 7.37,
+      "saldo_teorico_rescisao": 270020.86
+    },
+    {
+      "ano": "2023",
+      "saldo_fim_ano": 38070.5,
+      "aportes_ano": 40387.06,
+      "retiradas_ano": 263521.64,
+      "rendimento_acum": 68926.45,
+      "rendimento_ano": 8247.82,
+      "rendimento_pct_ano": 3.26,
+      "saldo_teorico_rescisao": 422057.42
+    },
+    {
+      "ano": "2024",
+      "saldo_fim_ano": 87074.96,
+      "aportes_ano": 45577.71,
+      "retiradas_ano": 0,
+      "rendimento_acum": 72353.2,
+      "rendimento_ano": 3426.75,
+      "rendimento_pct_ano": 9.0,
+      "saldo_teorico_rescisao": 492578.38
+    },
+    {
+      "ano": "2025",
+      "saldo_fim_ano": 149756.55,
+      "aportes_ano": 55317.44,
+      "retiradas_ano": 0,
+      "rendimento_acum": 79717.35,
+      "rendimento_ano": 7364.15,
+      "rendimento_pct_ano": 8.46,
+      "saldo_teorico_rescisao": 581582.93
+    },
+    {
+      "ano": "2026",
+      "saldo_fim_ano": 163522.7,
+      "aportes_ano": 12474.95,
+      "retiradas_ano": 0,
+      "rendimento_acum": 81008.55,
+      "rendimento_ano": 1291.2,
+      "rendimento_pct_ano": 0.86,
+      "saldo_teorico_rescisao": 598983.72
+    }
+  ],
+  "por_mes": [
+    {
+      "mes": "2012-01",
+      "saldo": 1013.3,
+      "aportes_mes": 1015.04,
+      "retiradas_mes": 0,
+      "aportes_acum": 1015.04,
+      "retiradas_acum": 0,
+      "rendimento_acum": -1.74
+    },
+    {
+      "mes": "2012-02",
+      "saldo": 1690.94,
+      "aportes_mes": 665.39,
+      "retiradas_mes": 0,
+      "aportes_acum": 1680.43,
+      "retiradas_acum": 0,
+      "rendimento_acum": 10.51
+    },
+    {
+      "mes": "2012-03",
+      "saldo": 2356.84,
+      "aportes_mes": 665.39,
+      "retiradas_mes": 0,
+      "aportes_acum": 2345.82,
+      "retiradas_acum": 0,
+      "rendimento_acum": 11.02
+    },
+    {
+      "mes": "2012-04",
+      "saldo": 3458.44,
+      "aportes_mes": 1104.67,
+      "retiradas_mes": 0,
+      "aportes_acum": 3450.49,
+      "retiradas_acum": 0,
+      "rendimento_acum": 7.95
+    },
+    {
+      "mes": "2012-05",
+      "saldo": 4378.45,
+      "aportes_mes": 881.89,
+      "retiradas_mes": 0,
+      "aportes_acum": 4332.38,
+      "retiradas_acum": 0,
+      "rendimento_acum": 46.07
+    },
+    {
+      "mes": "2012-06",
+      "saldo": 4919.77,
+      "aportes_mes": 540.47,
+      "retiradas_mes": 0,
+      "aportes_acum": 4872.85,
+      "retiradas_acum": 0,
+      "rendimento_acum": 46.92
+    },
+    {
+      "mes": "2012-07",
+      "saldo": 5459.75,
+      "aportes_mes": 540.47,
+      "retiradas_mes": 0,
+      "aportes_acum": 5413.32,
+      "retiradas_acum": 0,
+      "rendimento_acum": 46.43
+    },
+    {
+      "mes": "2012-08",
+      "saldo": 5998.31,
+      "aportes_mes": 540.47,
+      "retiradas_mes": 0,
+      "aportes_acum": 5953.79,
+      "retiradas_acum": 0,
+      "rendimento_acum": 44.52
+    },
+    {
+      "mes": "2012-09",
+      "saldo": 6622.8,
+      "aportes_mes": 563.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 6517.39,
+      "retiradas_acum": 0,
+      "rendimento_acum": 105.41
+    },
+    {
+      "mes": "2012-10",
+      "saldo": 7169.62,
+      "aportes_mes": 546.25,
+      "retiradas_mes": 0,
+      "aportes_acum": 7063.64,
+      "retiradas_acum": 0,
+      "rendimento_acum": 105.98
+    },
+    {
+      "mes": "2012-11",
+      "saldo": 8089.72,
+      "aportes_mes": 921.35,
+      "retiradas_mes": 0,
+      "aportes_acum": 7984.99,
+      "retiradas_acum": 0,
+      "rendimento_acum": 104.73
+    },
+    {
+      "mes": "2012-12",
+      "saldo": 9267.01,
+      "aportes_mes": 1181.74,
+      "retiradas_mes": 0,
+      "aportes_acum": 9166.73,
+      "retiradas_acum": 0,
+      "rendimento_acum": 100.28
+    },
+    {
+      "mes": "2013-01",
+      "saldo": 10432.76,
+      "aportes_mes": 1072.07,
+      "retiradas_mes": 0,
+      "aportes_acum": 10238.8,
+      "retiradas_acum": 0,
+      "rendimento_acum": 193.96
+    },
+    {
+      "mes": "2013-02",
+      "saldo": 11345.67,
+      "aportes_mes": 814.16,
+      "retiradas_mes": 0,
+      "aportes_acum": 11052.96,
+      "retiradas_acum": 0,
+      "rendimento_acum": 292.71
+    },
+    {
+      "mes": "2013-03",
+      "saldo": 11967.58,
+      "aportes_mes": 624.58,
+      "retiradas_mes": 0,
+      "aportes_acum": 11677.54,
+      "retiradas_acum": 0,
+      "rendimento_acum": 290.04
+    },
+    {
+      "mes": "2013-04",
+      "saldo": 12684.07,
+      "aportes_mes": 600.88,
+      "retiradas_mes": 0,
+      "aportes_acum": 12278.42,
+      "retiradas_acum": 0,
+      "rendimento_acum": 405.65
+    },
+    {
+      "mes": "2013-05",
+      "saldo": 13345.19,
+      "aportes_mes": 660.97,
+      "retiradas_mes": 0,
+      "aportes_acum": 12939.39,
+      "retiradas_acum": 0,
+      "rendimento_acum": 405.8
+    },
+    {
+      "mes": "2013-06",
+      "saldo": 14473.77,
+      "aportes_mes": 1131.14,
+      "retiradas_mes": 0,
+      "aportes_acum": 14070.53,
+      "retiradas_acum": 0,
+      "rendimento_acum": 403.24
+    },
+    {
+      "mes": "2013-07",
+      "saldo": 15133.3,
+      "aportes_mes": 660.97,
+      "retiradas_mes": 0,
+      "aportes_acum": 14731.5,
+      "retiradas_acum": 0,
+      "rendimento_acum": 401.8
+    },
+    {
+      "mes": "2013-08",
+      "saldo": 16122.76,
+      "aportes_mes": 844.95,
+      "retiradas_mes": 0,
+      "aportes_acum": 15576.45,
+      "retiradas_acum": 0,
+      "rendimento_acum": 546.31
+    },
+    {
+      "mes": "2013-09",
+      "saldo": 17665.81,
+      "aportes_mes": 1543.56,
+      "retiradas_mes": 0,
+      "aportes_acum": 17120.01,
+      "retiradas_acum": 0,
+      "rendimento_acum": 545.8
+    },
+    {
+      "mes": "2013-10",
+      "saldo": 18376.07,
+      "aportes_mes": 710.54,
+      "retiradas_mes": 0,
+      "aportes_acum": 17830.55,
+      "retiradas_acum": 0,
+      "rendimento_acum": 545.52
+    },
+    {
+      "mes": "2013-11",
+      "saldo": 19155.46,
+      "aportes_mes": 781.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 18612.15,
+      "retiradas_acum": 0,
+      "rendimento_acum": 543.31
+    },
+    {
+      "mes": "2013-12",
+      "saldo": 21620.2,
+      "aportes_mes": 2284.35,
+      "retiradas_mes": 0,
+      "aportes_acum": 20896.5,
+      "retiradas_acum": 0,
+      "rendimento_acum": 723.7
+    },
+    {
+      "mes": "2014-01",
+      "saldo": 23074.96,
+      "aportes_mes": 1458.24,
+      "retiradas_mes": 0,
+      "aportes_acum": 22354.74,
+      "retiradas_acum": 0,
+      "rendimento_acum": 720.22
+    },
+    {
+      "mes": "2014-02",
+      "saldo": 24250.65,
+      "aportes_mes": 958.9,
+      "retiradas_mes": 0,
+      "aportes_acum": 23313.64,
+      "retiradas_acum": 0,
+      "rendimento_acum": 937.01
+    },
+    {
+      "mes": "2014-03",
+      "saldo": 27158.55,
+      "aportes_mes": 2907.13,
+      "retiradas_mes": 0,
+      "aportes_acum": 26220.77,
+      "retiradas_acum": 0,
+      "rendimento_acum": 937.78
+    },
+    {
+      "mes": "2014-04",
+      "saldo": 27938.23,
+      "aportes_mes": 781.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 27002.37,
+      "retiradas_acum": 0,
+      "rendimento_acum": 935.86
+    },
+    {
+      "mes": "2014-05",
+      "saldo": 28979.06,
+      "aportes_mes": 781.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 27783.97,
+      "retiradas_acum": 0,
+      "rendimento_acum": 1195.09
+    },
+    {
+      "mes": "2014-06",
+      "saldo": 30772.72,
+      "aportes_mes": 1792.47,
+      "retiradas_mes": 0,
+      "aportes_acum": 29576.44,
+      "retiradas_acum": 0,
+      "rendimento_acum": 1196.28
+    },
+    {
+      "mes": "2014-07",
+      "saldo": 31552.51,
+      "aportes_mes": 781.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 30358.04,
+      "retiradas_acum": 0,
+      "rendimento_acum": 1194.47
+    },
+    {
+      "mes": "2014-08",
+      "saldo": 33428.87,
+      "aportes_mes": 1584.35,
+      "retiradas_mes": 0,
+      "aportes_acum": 31942.39,
+      "retiradas_acum": 0,
+      "rendimento_acum": 1486.48
+    },
+    {
+      "mes": "2014-09",
+      "saldo": 36128.17,
+      "aportes_mes": 2690.41,
+      "retiradas_mes": 0,
+      "aportes_acum": 34632.8,
+      "retiradas_acum": 0,
+      "rendimento_acum": 1495.37
+    },
+    {
+      "mes": "2014-10",
+      "saldo": 38350.39,
+      "aportes_mes": 2228.69,
+      "retiradas_mes": 0,
+      "aportes_acum": 36861.49,
+      "retiradas_acum": 0,
+      "rendimento_acum": 1488.9
+    },
+    {
+      "mes": "2014-11",
+      "saldo": 39576.32,
+      "aportes_mes": 878.12,
+      "retiradas_mes": 0,
+      "aportes_acum": 37739.61,
+      "retiradas_acum": 0,
+      "rendimento_acum": 1836.71
+    },
+    {
+      "mes": "2014-12",
+      "saldo": 40896.91,
+      "aportes_mes": 1317.19,
+      "retiradas_mes": 0,
+      "aportes_acum": 39056.8,
+      "retiradas_acum": 0,
+      "rendimento_acum": 1840.11
+    },
+    {
+      "mes": "2015-01",
+      "saldo": 43779.9,
+      "aportes_mes": 2893.91,
+      "retiradas_mes": 0,
+      "aportes_acum": 41950.71,
+      "retiradas_acum": 0,
+      "rendimento_acum": 1829.19
+    },
+    {
+      "mes": "2015-02",
+      "saldo": 46070.55,
+      "aportes_mes": 1896.41,
+      "retiradas_mes": 0,
+      "aportes_acum": 43847.12,
+      "retiradas_acum": 0,
+      "rendimento_acum": 2223.43
+    },
+    {
+      "mes": "2015-03",
+      "saldo": 46947.88,
+      "aportes_mes": 878.12,
+      "retiradas_mes": 0,
+      "aportes_acum": 44725.24,
+      "retiradas_acum": 0,
+      "rendimento_acum": 2222.64
+    },
+    {
+      "mes": "2015-04",
+      "saldo": 48245.14,
+      "aportes_mes": 878.12,
+      "retiradas_mes": 0,
+      "aportes_acum": 45603.36,
+      "retiradas_acum": 0,
+      "rendimento_acum": 2641.78
+    },
+    {
+      "mes": "2015-05",
+      "saldo": 50089.32,
+      "aportes_mes": 1836.46,
+      "retiradas_mes": 0,
+      "aportes_acum": 47439.82,
+      "retiradas_acum": 0,
+      "rendimento_acum": 2649.5
+    },
+    {
+      "mes": "2015-06",
+      "saldo": 51047.38,
+      "aportes_mes": 957.32,
+      "retiradas_mes": 0,
+      "aportes_acum": 48397.14,
+      "retiradas_acum": 0,
+      "rendimento_acum": 2650.24
+    },
+    {
+      "mes": "2015-07",
+      "saldo": 53531.12,
+      "aportes_mes": 2032.57,
+      "retiradas_mes": 0,
+      "aportes_acum": 50429.71,
+      "retiradas_acum": 0,
+      "rendimento_acum": 3101.41
+    },
+    {
+      "mes": "2015-08",
+      "saldo": 55535.68,
+      "aportes_mes": 2010.76,
+      "retiradas_mes": 0,
+      "aportes_acum": 52440.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 3095.21
+    },
+    {
+      "mes": "2015-09",
+      "saldo": 56481.1,
+      "aportes_mes": 948.37,
+      "retiradas_mes": 0,
+      "aportes_acum": 53388.84,
+      "retiradas_acum": 0,
+      "rendimento_acum": 3092.26
+    },
+    {
+      "mes": "2015-10",
+      "saldo": 60060.04,
+      "aportes_mes": 3097.25,
+      "retiradas_mes": 0,
+      "aportes_acum": 56486.09,
+      "retiradas_acum": 0,
+      "rendimento_acum": 3573.95
+    },
+    {
+      "mes": "2015-11",
+      "saldo": 61527.37,
+      "aportes_mes": 948.37,
+      "retiradas_mes": 0,
+      "aportes_acum": 57434.46,
+      "retiradas_acum": 0,
+      "rendimento_acum": 4092.91
+    },
+    {
+      "mes": "2015-12",
+      "saldo": 64072.94,
+      "aportes_mes": 2542.28,
+      "retiradas_mes": 0,
+      "aportes_acum": 59976.74,
+      "retiradas_acum": 0,
+      "rendimento_acum": 4096.2
+    },
+    {
+      "mes": "2016-01",
+      "saldo": 66344.73,
+      "aportes_mes": 2277.06,
+      "retiradas_mes": 0,
+      "aportes_acum": 62253.8,
+      "retiradas_acum": 0,
+      "rendimento_acum": 4090.93
+    },
+    {
+      "mes": "2016-02",
+      "saldo": 68662.31,
+      "aportes_mes": 1754.25,
+      "retiradas_mes": 0,
+      "aportes_acum": 64008.05,
+      "retiradas_acum": 0,
+      "rendimento_acum": 4654.26
+    },
+    {
+      "mes": "2016-03",
+      "saldo": 71078.94,
+      "aportes_mes": 1829.49,
+      "retiradas_mes": 0,
+      "aportes_acum": 65837.54,
+      "retiradas_acum": 0,
+      "rendimento_acum": 5241.4
+    },
+    {
+      "mes": "2016-04",
+      "saldo": 73631.84,
+      "aportes_mes": 2545.55,
+      "retiradas_mes": 0,
+      "aportes_acum": 68383.09,
+      "retiradas_acum": 0,
+      "rendimento_acum": 5248.75
+    },
+    {
+      "mes": "2016-05",
+      "saldo": 75201.84,
+      "aportes_mes": 948.37,
+      "retiradas_mes": 0,
+      "aportes_acum": 69331.46,
+      "retiradas_acum": 0,
+      "rendimento_acum": 5870.38
+    },
+    {
+      "mes": "2016-06",
+      "saldo": 76149.24,
+      "aportes_mes": 948.37,
+      "retiradas_mes": 0,
+      "aportes_acum": 70279.83,
+      "retiradas_acum": 0,
+      "rendimento_acum": 5869.41
+    },
+    {
+      "mes": "2016-07",
+      "saldo": 77096.64,
+      "aportes_mes": 948.37,
+      "retiradas_mes": 0,
+      "aportes_acum": 71228.2,
+      "retiradas_acum": 0,
+      "rendimento_acum": 5868.44
+    },
+    {
+      "mes": "2016-08",
+      "saldo": 79394.51,
+      "aportes_mes": 1650.66,
+      "retiradas_mes": 0,
+      "aportes_acum": 72878.86,
+      "retiradas_acum": 0,
+      "rendimento_acum": 6515.65
+    },
+    {
+      "mes": "2016-09",
+      "saldo": 81099.01,
+      "aportes_mes": 1046.13,
+      "retiradas_mes": 0,
+      "aportes_acum": 73924.99,
+      "retiradas_acum": 0,
+      "rendimento_acum": 7174.02
+    },
+    {
+      "mes": "2016-10",
+      "saldo": 82462.0,
+      "aportes_mes": 1365.66,
+      "retiradas_mes": 0,
+      "aportes_acum": 75290.65,
+      "retiradas_acum": 0,
+      "rendimento_acum": 7171.35
+    },
+    {
+      "mes": "2016-11",
+      "saldo": 84550.94,
+      "aportes_mes": 1409.92,
+      "retiradas_mes": 0,
+      "aportes_acum": 76700.57,
+      "retiradas_acum": 0,
+      "rendimento_acum": 7850.37
+    },
+    {
+      "mes": "2016-12",
+      "saldo": 85497.67,
+      "aportes_mes": 948.37,
+      "retiradas_mes": 0,
+      "aportes_acum": 77648.94,
+      "retiradas_acum": 0,
+      "rendimento_acum": 7848.73
+    },
+    {
+      "mes": "2017-01",
+      "saldo": 89770.3,
+      "aportes_mes": 3570.23,
+      "retiradas_mes": 0,
+      "aportes_acum": 81219.17,
+      "retiradas_acum": 0,
+      "rendimento_acum": 8551.13
+    },
+    {
+      "mes": "2017-02",
+      "saldo": 91385.15,
+      "aportes_mes": 1618.31,
+      "retiradas_mes": 0,
+      "aportes_acum": 82837.48,
+      "retiradas_acum": 0,
+      "rendimento_acum": 8547.67
+    },
+    {
+      "mes": "2017-03",
+      "saldo": 93529.75,
+      "aportes_mes": 1403.22,
+      "retiradas_mes": 0,
+      "aportes_acum": 84240.7,
+      "retiradas_acum": 0,
+      "rendimento_acum": 9289.05
+    },
+    {
+      "mes": "2017-04",
+      "saldo": 95194.5,
+      "aportes_mes": 1666.11,
+      "retiradas_mes": 0,
+      "aportes_acum": 85906.81,
+      "retiradas_acum": 0,
+      "rendimento_acum": 9287.69
+    },
+    {
+      "mes": "2017-05",
+      "saldo": 96668.25,
+      "aportes_mes": 1474.92,
+      "retiradas_mes": 0,
+      "aportes_acum": 87381.73,
+      "retiradas_acum": 0,
+      "rendimento_acum": 9286.52
+    },
+    {
+      "mes": "2017-06",
+      "saldo": 99086.27,
+      "aportes_mes": 1642.21,
+      "retiradas_mes": 0,
+      "aportes_acum": 89023.94,
+      "retiradas_acum": 0,
+      "rendimento_acum": 10062.33
+    },
+    {
+      "mes": "2017-07",
+      "saldo": 100749.85,
+      "aportes_mes": 1666.11,
+      "retiradas_mes": 0,
+      "aportes_acum": 90690.05,
+      "retiradas_acum": 0,
+      "rendimento_acum": 10059.8
+    },
+    {
+      "mes": "2017-08",
+      "saldo": 105425.51,
+      "aportes_mes": 2270.8,
+      "retiradas_mes": 0,
+      "aportes_acum": 92960.85,
+      "retiradas_acum": 0,
+      "rendimento_acum": 12464.66
+    },
+    {
+      "mes": "2017-09",
+      "saldo": 107436.75,
+      "aportes_mes": 2014.31,
+      "retiradas_mes": 0,
+      "aportes_acum": 94975.16,
+      "retiradas_acum": 0,
+      "rendimento_acum": 12461.59
+    },
+    {
+      "mes": "2017-10",
+      "saldo": 109338.71,
+      "aportes_mes": 1065.21,
+      "retiradas_mes": 0,
+      "aportes_acum": 96040.37,
+      "retiradas_acum": 0,
+      "rendimento_acum": 13298.34
+    },
+    {
+      "mes": "2017-11",
+      "saldo": 110405.23,
+      "aportes_mes": 1065.21,
+      "retiradas_mes": 0,
+      "aportes_acum": 97105.58,
+      "retiradas_acum": 0,
+      "rendimento_acum": 13299.65
+    },
+    {
+      "mes": "2017-12",
+      "saldo": 111525.96,
+      "aportes_mes": 1122.05,
+      "retiradas_mes": 0,
+      "aportes_acum": 98227.63,
+      "retiradas_acum": 0,
+      "rendimento_acum": 13298.33
+    },
+    {
+      "mes": "2018-01",
+      "saldo": 114014.29,
+      "aportes_mes": 2491.41,
+      "retiradas_mes": 0,
+      "aportes_acum": 100719.04,
+      "retiradas_acum": 0,
+      "rendimento_acum": 13295.25
+    },
+    {
+      "mes": "2018-02",
+      "saldo": 116062.99,
+      "aportes_mes": 1169.85,
+      "retiradas_mes": 0,
+      "aportes_acum": 101888.89,
+      "retiradas_acum": 0,
+      "rendimento_acum": 14174.1
+    },
+    {
+      "mes": "2018-03",
+      "saldo": 117212.38,
+      "aportes_mes": 1150.4,
+      "retiradas_mes": 0,
+      "aportes_acum": 103039.29,
+      "retiradas_acum": 0,
+      "rendimento_acum": 14173.09
+    },
+    {
+      "mes": "2018-04",
+      "saldo": 118358.89,
+      "aportes_mes": 1150.4,
+      "retiradas_mes": 0,
+      "aportes_acum": 104189.69,
+      "retiradas_acum": 0,
+      "rendimento_acum": 14169.2
+    },
+    {
+      "mes": "2018-05",
+      "saldo": 120578.83,
+      "aportes_mes": 1314.09,
+      "retiradas_mes": 0,
+      "aportes_acum": 105503.78,
+      "retiradas_acum": 0,
+      "rendimento_acum": 15075.05
+    },
+    {
+      "mes": "2018-06",
+      "saldo": 122726.08,
+      "aportes_mes": 2148.7,
+      "retiradas_mes": 0,
+      "aportes_acum": 107652.48,
+      "retiradas_acum": 0,
+      "rendimento_acum": 15073.6
+    },
+    {
+      "mes": "2018-07",
+      "saldo": 124196.82,
+      "aportes_mes": 1475.35,
+      "retiradas_mes": 0,
+      "aportes_acum": 109127.83,
+      "retiradas_acum": 0,
+      "rendimento_acum": 15068.99
+    },
+    {
+      "mes": "2018-08",
+      "saldo": 126290.28,
+      "aportes_mes": 1150.4,
+      "retiradas_mes": 0,
+      "aportes_acum": 110278.23,
+      "retiradas_acum": 0,
+      "rendimento_acum": 16012.05
+    },
+    {
+      "mes": "2018-09",
+      "saldo": 129338.91,
+      "aportes_mes": 1150.4,
+      "retiradas_mes": 0,
+      "aportes_acum": 111428.63,
+      "retiradas_acum": 0,
+      "rendimento_acum": 17910.28
+    },
+    {
+      "mes": "2018-10",
+      "saldo": 130488.44,
+      "aportes_mes": 1150.4,
+      "retiradas_mes": 0,
+      "aportes_acum": 112579.03,
+      "retiradas_acum": 0,
+      "rendimento_acum": 17909.4
+    },
+    {
+      "mes": "2018-11",
+      "saldo": 132632.37,
+      "aportes_mes": 1175.33,
+      "retiradas_mes": 0,
+      "aportes_acum": 113754.36,
+      "retiradas_acum": 0,
+      "rendimento_acum": 18878.01
+    },
+    {
+      "mes": "2018-12",
+      "saldo": 133896.9,
+      "aportes_mes": 1265.44,
+      "retiradas_mes": 0,
+      "aportes_acum": 115019.8,
+      "retiradas_acum": 0,
+      "rendimento_acum": 18877.1
+    },
+    {
+      "mes": "2019-01",
+      "saldo": 135872.57,
+      "aportes_mes": 1977.13,
+      "retiradas_mes": 0,
+      "aportes_acum": 116996.93,
+      "retiradas_acum": 0,
+      "rendimento_acum": 18875.64
+    },
+    {
+      "mes": "2019-02",
+      "saldo": 138139.29,
+      "aportes_mes": 1265.44,
+      "retiradas_mes": 0,
+      "aportes_acum": 118262.37,
+      "retiradas_acum": 0,
+      "rendimento_acum": 19876.92
+    },
+    {
+      "mes": "2019-03",
+      "saldo": 139403.8,
+      "aportes_mes": 1265.44,
+      "retiradas_mes": 0,
+      "aportes_acum": 119527.81,
+      "retiradas_acum": 0,
+      "rendimento_acum": 19875.99
+    },
+    {
+      "mes": "2019-04",
+      "saldo": 140665.16,
+      "aportes_mes": 1265.44,
+      "retiradas_mes": 0,
+      "aportes_acum": 120793.25,
+      "retiradas_acum": 0,
+      "rendimento_acum": 19871.91
+    },
+    {
+      "mes": "2019-05",
+      "saldo": 142959.44,
+      "aportes_mes": 1265.44,
+      "retiradas_mes": 0,
+      "aportes_acum": 122058.69,
+      "retiradas_acum": 0,
+      "rendimento_acum": 20900.75
+    },
+    {
+      "mes": "2019-06",
+      "saldo": 144223.8,
+      "aportes_mes": 1265.44,
+      "retiradas_mes": 0,
+      "aportes_acum": 123324.13,
+      "retiradas_acum": 0,
+      "rendimento_acum": 20899.67
+    },
+    {
+      "mes": "2019-07",
+      "saldo": 145741.11,
+      "aportes_mes": 1518.56,
+      "retiradas_mes": 0,
+      "aportes_acum": 124842.69,
+      "retiradas_acum": 0,
+      "rendimento_acum": 20898.42
+    },
+    {
+      "mes": "2019-08",
+      "saldo": 148068.89,
+      "aportes_mes": 2335.51,
+      "retiradas_mes": 0,
+      "aportes_acum": 127178.2,
+      "retiradas_acum": 0,
+      "rendimento_acum": 20890.69
+    },
+    {
+      "mes": "2019-09",
+      "saldo": 155283.7,
+      "aportes_mes": 1845.39,
+      "retiradas_mes": 0,
+      "aportes_acum": 129023.59,
+      "retiradas_acum": 0,
+      "rendimento_acum": 26260.11
+    },
+    {
+      "mes": "2019-10",
+      "saldo": 157195.32,
+      "aportes_mes": 1910.17,
+      "retiradas_mes": 0,
+      "aportes_acum": 130933.76,
+      "retiradas_acum": 0,
+      "rendimento_acum": 26261.56
+    },
+    {
+      "mes": "2019-11",
+      "saldo": 158788.2,
+      "aportes_mes": 1595.55,
+      "retiradas_mes": 0,
+      "aportes_acum": 132529.31,
+      "retiradas_acum": 0,
+      "rendimento_acum": 26258.89
+    },
+    {
+      "mes": "2019-12",
+      "saldo": 161498.74,
+      "aportes_mes": 1595.55,
+      "retiradas_mes": 0,
+      "aportes_acum": 134124.86,
+      "retiradas_acum": 0,
+      "rendimento_acum": 27373.88
+    },
+    {
+      "mes": "2020-01",
+      "saldo": 164051.14,
+      "aportes_mes": 2551.48,
+      "retiradas_mes": 0,
+      "aportes_acum": 136676.34,
+      "retiradas_acum": 0,
+      "rendimento_acum": 27374.8
+    },
+    {
+      "mes": "2020-02",
+      "saldo": 165683.09,
+      "aportes_mes": 1635.44,
+      "retiradas_mes": 0,
+      "aportes_acum": 138311.78,
+      "retiradas_acum": 0,
+      "rendimento_acum": 27371.31
+    },
+    {
+      "mes": "2020-03",
+      "saldo": 167315.04,
+      "aportes_mes": 1635.44,
+      "retiradas_mes": 0,
+      "aportes_acum": 139947.22,
+      "retiradas_acum": 0,
+      "rendimento_acum": 27367.82
+    },
+    {
+      "mes": "2020-07",
+      "saldo": 172915.83,
+      "aportes_mes": 3278.95,
+      "retiradas_mes": 0,
+      "aportes_acum": 143226.17,
+      "retiradas_acum": 0,
+      "rendimento_acum": 29689.66
+    },
+    {
+      "mes": "2020-08",
+      "saldo": 174546.21,
+      "aportes_mes": 1635.44,
+      "retiradas_mes": 0,
+      "aportes_acum": 144861.61,
+      "retiradas_acum": 0,
+      "rendimento_acum": 29684.6
+    },
+    {
+      "mes": "2020-09",
+      "saldo": 180210.72,
+      "aportes_mes": 3283.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 148144.61,
+      "retiradas_acum": 0,
+      "rendimento_acum": 32066.11
+    },
+    {
+      "mes": "2020-10",
+      "saldo": 182839.2,
+      "aportes_mes": 2636.18,
+      "retiradas_mes": 0,
+      "aportes_acum": 150780.79,
+      "retiradas_acum": 0,
+      "rendimento_acum": 32058.41
+    },
+    {
+      "mes": "2020-11",
+      "saldo": 187549.73,
+      "aportes_mes": 3470.08,
+      "retiradas_mes": 0,
+      "aportes_acum": 154250.87,
+      "retiradas_acum": 0,
+      "rendimento_acum": 33298.86
+    },
+    {
+      "mes": "2020-12",
+      "saldo": 189183.51,
+      "aportes_mes": 1635.44,
+      "retiradas_mes": 0,
+      "aportes_acum": 155886.31,
+      "retiradas_acum": 0,
+      "rendimento_acum": 33297.2
+    },
+    {
+      "mes": "2021-01",
+      "saldo": 192908.25,
+      "aportes_mes": 2453.16,
+      "retiradas_mes": 0,
+      "aportes_acum": 158339.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 34568.78
+    },
+    {
+      "mes": "2021-02",
+      "saldo": 194749.65,
+      "aportes_mes": 1840.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 160179.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 34570.18
+    },
+    {
+      "mes": "2021-03",
+      "saldo": 196586.55,
+      "aportes_mes": 1840.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 162019.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 34567.08
+    },
+    {
+      "mes": "2021-04",
+      "saldo": 199741.74,
+      "aportes_mes": 1840.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 163859.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 35882.27
+    },
+    {
+      "mes": "2021-05",
+      "saldo": 201577.3,
+      "aportes_mes": 1840.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 165699.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 35877.83
+    },
+    {
+      "mes": "2021-06",
+      "saldo": 204755.4,
+      "aportes_mes": 1840.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 167539.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 37215.93
+    },
+    {
+      "mes": "2021-07",
+      "saldo": 206594.14,
+      "aportes_mes": 1840.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 169379.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 37214.67
+    },
+    {
+      "mes": "2021-08",
+      "saldo": 208428.33,
+      "aportes_mes": 1840.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 171219.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 37208.86
+    },
+    {
+      "mes": "2021-09",
+      "saldo": 215767.91,
+      "aportes_mes": 3227.2,
+      "retiradas_mes": 0,
+      "aportes_acum": 174446.67,
+      "retiradas_acum": 0,
+      "rendimento_acum": 41321.24
+    },
+    {
+      "mes": "2021-10",
+      "saldo": 219223.84,
+      "aportes_mes": 2065.46,
+      "retiradas_mes": 0,
+      "aportes_acum": 176512.13,
+      "retiradas_acum": 0,
+      "rendimento_acum": 42711.71
+    },
+    {
+      "mes": "2021-11",
+      "saldo": 221221.88,
+      "aportes_mes": 1999.54,
+      "retiradas_mes": 0,
+      "aportes_acum": 178511.67,
+      "retiradas_acum": 0,
+      "rendimento_acum": 42710.21
+    },
+    {
+      "mes": "2021-12",
+      "saldo": 224623.83,
+      "aportes_mes": 1977.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 180489.27,
+      "retiradas_acum": 0,
+      "rendimento_acum": 44134.55
+    },
+    {
+      "mes": "2022-01",
+      "saldo": 227652.36,
+      "aportes_mes": 3035.2,
+      "retiradas_mes": 0,
+      "aportes_acum": 183524.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 44127.89
+    },
+    {
+      "mes": "2022-02",
+      "saldo": 232401.88,
+      "aportes_mes": 3296.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 186820.47,
+      "retiradas_acum": 0,
+      "rendimento_acum": 45581.41
+    },
+    {
+      "mes": "2022-03",
+      "saldo": 234376.73,
+      "aportes_mes": 1977.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 188798.07,
+      "retiradas_acum": 0,
+      "rendimento_acum": 45578.66
+    },
+    {
+      "mes": "2022-04",
+      "saldo": 237840.63,
+      "aportes_mes": 1977.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 190775.67,
+      "retiradas_acum": 0,
+      "rendimento_acum": 47064.96
+    },
+    {
+      "mes": "2022-05",
+      "saldo": 239815.25,
+      "aportes_mes": 1977.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 192753.27,
+      "retiradas_acum": 0,
+      "rendimento_acum": 47061.98
+    },
+    {
+      "mes": "2022-06",
+      "saldo": 242297.44,
+      "aportes_mes": 1977.6,
+      "retiradas_mes": 1000.0,
+      "aportes_acum": 194730.87,
+      "retiradas_acum": 1000.0,
+      "rendimento_acum": 48566.57
+    },
+    {
+      "mes": "2022-07",
+      "saldo": 245795.16,
+      "aportes_mes": 1977.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 196708.47,
+      "retiradas_acum": 1000.0,
+      "rendimento_acum": 50086.69
+    },
+    {
+      "mes": "2022-08",
+      "saldo": 253876.43,
+      "aportes_mes": 1977.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 198686.07,
+      "retiradas_acum": 1000.0,
+      "rendimento_acum": 56190.35
+    },
+    {
+      "mes": "2022-09",
+      "saldo": 258378.0,
+      "aportes_mes": 2964.02,
+      "retiradas_mes": 0,
+      "aportes_acum": 201650.09,
+      "retiradas_acum": 1000.0,
+      "rendimento_acum": 57727.91
+    },
+    {
+      "mes": "2022-10",
+      "saldo": 246248.51,
+      "aportes_mes": 2224.2,
+      "retiradas_mes": 15823.47,
+      "aportes_acum": 203874.29,
+      "retiradas_acum": 16823.47,
+      "rendimento_acum": 59197.69
+    },
+    {
+      "mes": "2022-11",
+      "saldo": 248590.36,
+      "aportes_mes": 2347.81,
+      "retiradas_mes": 0,
+      "aportes_acum": 206222.1,
+      "retiradas_acum": 16823.47,
+      "rendimento_acum": 59191.72
+    },
+    {
+      "mes": "2022-12",
+      "saldo": 252957.26,
+      "aportes_mes": 2880.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 209102.1,
+      "retiradas_acum": 16823.47,
+      "rendimento_acum": 60678.63
+    },
+    {
+      "mes": "2023-01",
+      "saldo": 259238.23,
+      "aportes_mes": 4771.2,
+      "retiradas_mes": 0,
+      "aportes_acum": 213873.3,
+      "retiradas_acum": 16823.47,
+      "rendimento_acum": 62188.4
+    },
+    {
+      "mes": "2023-02",
+      "saldo": 2882.63,
+      "aportes_mes": 2880.0,
+      "retiradas_mes": 259021.0,
+      "aportes_acum": 216753.3,
+      "retiradas_acum": 275844.47,
+      "rendimento_acum": 61973.8
+    },
+    {
+      "mes": "2023-03",
+      "saldo": 5755.63,
+      "aportes_mes": 2880.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 219633.3,
+      "retiradas_acum": 275844.47,
+      "rendimento_acum": 61966.8
+    },
+    {
+      "mes": "2023-04",
+      "saldo": 8665.58,
+      "aportes_mes": 2880.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 222513.3,
+      "retiradas_acum": 275844.47,
+      "rendimento_acum": 61996.75
+    },
+    {
+      "mes": "2023-05",
+      "saldo": 11599.96,
+      "aportes_mes": 2880.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 225393.3,
+      "retiradas_acum": 275844.47,
+      "rendimento_acum": 62051.13
+    },
+    {
+      "mes": "2023-06",
+      "saldo": 14554.64,
+      "aportes_mes": 2880.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 228273.3,
+      "retiradas_acum": 275844.47,
+      "rendimento_acum": 62125.81
+    },
+    {
+      "mes": "2023-07",
+      "saldo": 19345.7,
+      "aportes_mes": 4800.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 233073.3,
+      "retiradas_acum": 275844.47,
+      "rendimento_acum": 62116.87
+    },
+    {
+      "mes": "2023-08",
+      "saldo": 28843.24,
+      "aportes_mes": 3081.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 236154.9,
+      "retiradas_acum": 275844.47,
+      "rendimento_acum": 68532.81
+    },
+    {
+      "mes": "2023-09",
+      "saldo": 32054.87,
+      "aportes_mes": 3081.6,
+      "retiradas_mes": 0,
+      "aportes_acum": 239236.5,
+      "retiradas_acum": 275844.47,
+      "rendimento_acum": 68662.84
+    },
+    {
+      "mes": "2023-10",
+      "saldo": 30756.03,
+      "aportes_mes": 3081.6,
+      "retiradas_mes": 4500.64,
+      "aportes_acum": 242318.1,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 68783.04
+    },
+    {
+      "mes": "2023-11",
+      "saldo": 34721.61,
+      "aportes_mes": 3971.3,
+      "retiradas_mes": 0,
+      "aportes_acum": 246289.4,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 68777.32
+    },
+    {
+      "mes": "2023-12",
+      "saldo": 38070.5,
+      "aportes_mes": 3199.76,
+      "retiradas_mes": 0,
+      "aportes_acum": 249489.16,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 68926.45
+    },
+    {
+      "mes": "2024-01",
+      "saldo": 43198.2,
+      "aportes_mes": 4959.52,
+      "retiradas_mes": 0,
+      "aportes_acum": 254448.68,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 69094.63
+    },
+    {
+      "mes": "2024-02",
+      "saldo": 48369.67,
+      "aportes_mes": 4977.45,
+      "retiradas_mes": 0,
+      "aportes_acum": 259426.13,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 69288.65
+    },
+    {
+      "mes": "2024-03",
+      "saldo": 51566.81,
+      "aportes_mes": 3199.76,
+      "retiradas_mes": 0,
+      "aportes_acum": 262625.89,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 69286.03
+    },
+    {
+      "mes": "2024-04",
+      "saldo": 54989.06,
+      "aportes_mes": 3199.76,
+      "retiradas_mes": 0,
+      "aportes_acum": 265825.65,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 69508.52
+    },
+    {
+      "mes": "2024-05",
+      "saldo": 58424.4,
+      "aportes_mes": 3199.76,
+      "retiradas_mes": 0,
+      "aportes_acum": 269025.41,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 69744.1
+    },
+    {
+      "mes": "2024-06",
+      "saldo": 62196.86,
+      "aportes_mes": 3520.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 272545.41,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 69996.56
+    },
+    {
+      "mes": "2024-07",
+      "saldo": 66297.67,
+      "aportes_mes": 4106.66,
+      "retiradas_mes": 0,
+      "aportes_acum": 276652.07,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 69990.71
+    },
+    {
+      "mes": "2024-08",
+      "saldo": 71219.39,
+      "aportes_mes": 3520.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 280172.07,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 71392.43
+    },
+    {
+      "mes": "2024-09",
+      "saldo": 75040.1,
+      "aportes_mes": 3520.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 283692.07,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 71693.14
+    },
+    {
+      "mes": "2024-10",
+      "saldo": 79142.18,
+      "aportes_mes": 4107.42,
+      "retiradas_mes": 0,
+      "aportes_acum": 287799.49,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 71687.8
+    },
+    {
+      "mes": "2024-11",
+      "saldo": 83099.32,
+      "aportes_mes": 3633.69,
+      "retiradas_mes": 0,
+      "aportes_acum": 291433.18,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 72011.25
+    },
+    {
+      "mes": "2024-12",
+      "saldo": 87074.96,
+      "aportes_mes": 3633.69,
+      "retiradas_mes": 0,
+      "aportes_acum": 295066.87,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 72353.2
+    },
+    {
+      "mes": "2025-01",
+      "saldo": 93104.36,
+      "aportes_mes": 5667.5,
+      "retiradas_mes": 0,
+      "aportes_acum": 300734.37,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 72715.1
+    },
+    {
+      "mes": "2025-02",
+      "saldo": 99141.35,
+      "aportes_mes": 5652.46,
+      "retiradas_mes": 0,
+      "aportes_acum": 306386.83,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 73099.63
+    },
+    {
+      "mes": "2025-03",
+      "saldo": 103181.14,
+      "aportes_mes": 3633.69,
+      "retiradas_mes": 0,
+      "aportes_acum": 310020.52,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 73505.73
+    },
+    {
+      "mes": "2025-04",
+      "saldo": 107237.33,
+      "aportes_mes": 3633.69,
+      "retiradas_mes": 0,
+      "aportes_acum": 313654.21,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 73928.23
+    },
+    {
+      "mes": "2025-05",
+      "saldo": 111307.75,
+      "aportes_mes": 3633.69,
+      "retiradas_mes": 0,
+      "aportes_acum": 317287.9,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 74364.96
+    },
+    {
+      "mes": "2025-06",
+      "saldo": 116846.78,
+      "aportes_mes": 5086.3,
+      "retiradas_mes": 0,
+      "aportes_acum": 322374.2,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 74817.68
+    },
+    {
+      "mes": "2025-07",
+      "saldo": 123543.04,
+      "aportes_mes": 4360.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 326734.2,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 77153.95
+    },
+    {
+      "mes": "2025-08",
+      "saldo": 128586.87,
+      "aportes_mes": 4553.7,
+      "retiradas_mes": 0,
+      "aportes_acum": 331287.9,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 77644.08
+    },
+    {
+      "mes": "2025-09",
+      "saldo": 133986.62,
+      "aportes_mes": 4892.96,
+      "retiradas_mes": 0,
+      "aportes_acum": 336180.86,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 78150.87
+    },
+    {
+      "mes": "2025-10",
+      "saldo": 138870.36,
+      "aportes_mes": 4360.0,
+      "retiradas_mes": 0,
+      "aportes_acum": 340540.86,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 78674.61
+    },
+    {
+      "mes": "2025-11",
+      "saldo": 144740.18,
+      "aportes_mes": 5330.25,
+      "retiradas_mes": 0,
+      "aportes_acum": 345871.11,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 79214.18
+    },
+    {
+      "mes": "2025-12",
+      "saldo": 149756.55,
+      "aportes_mes": 4513.2,
+      "retiradas_mes": 0,
+      "aportes_acum": 350384.31,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 79717.35
+    },
+    {
+      "mes": "2026-01",
+      "saldo": 157747.29,
+      "aportes_mes": 7359.99,
+      "retiradas_mes": 0,
+      "aportes_acum": 357744.3,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 80348.1
+    },
+    {
+      "mes": "2026-02",
+      "saldo": 163522.7,
+      "aportes_mes": 5114.96,
+      "retiradas_mes": 0,
+      "aportes_acum": 362859.26,
+      "retiradas_acum": 280345.11,
+      "rendimento_acum": 81008.55
+    }
+  ],
+  "rescisao": {
+    "metodologia": "Multa rescisória = 40% × saldo teórico FGTS (todos os depósitos corrigidos, independente de saques). Saques reduzem o saldo real, mas não a base de cálculo da multa. Base legal: CLT Art. 18 §1º.",
+    "saldo_teorico_atual": 598983.72,
+    "multa_40pct": 239593.49,
+    "por_ano": [
+      {
+        "ano": "2012",
+        "saldo_teorico": 9267.01,
+        "multa_40pct": 3706.8
+      },
+      {
+        "ano": "2013",
+        "saldo_teorico": 21620.2,
+        "multa_40pct": 8648.08
+      },
+      {
+        "ano": "2014",
+        "saldo_teorico": 40896.91,
+        "multa_40pct": 16358.76
+      },
+      {
+        "ano": "2015",
+        "saldo_teorico": 64072.94,
+        "multa_40pct": 25629.18
+      },
+      {
+        "ano": "2016",
+        "saldo_teorico": 85497.67,
+        "multa_40pct": 34199.07
+      },
+      {
+        "ano": "2017",
+        "saldo_teorico": 111525.96,
+        "multa_40pct": 44610.38
+      },
+      {
+        "ano": "2018",
+        "saldo_teorico": 133896.9,
+        "multa_40pct": 53558.76
+      },
+      {
+        "ano": "2019",
+        "saldo_teorico": 161498.74,
+        "multa_40pct": 64599.5
+      },
+      {
+        "ano": "2020",
+        "saldo_teorico": 189183.51,
+        "multa_40pct": 75673.4
+      },
+      {
+        "ano": "2021",
+        "saldo_teorico": 224623.83,
+        "multa_40pct": 89849.53
+      },
+      {
+        "ano": "2022",
+        "saldo_teorico": 270020.86,
+        "multa_40pct": 108008.34
+      },
+      {
+        "ano": "2023",
+        "saldo_teorico": 422057.42,
+        "multa_40pct": 168822.97
+      },
+      {
+        "ano": "2024",
+        "saldo_teorico": 492578.38,
+        "multa_40pct": 197031.35
+      },
+      {
+        "ano": "2025",
+        "saldo_teorico": 581582.93,
+        "multa_40pct": 232633.17
+      },
+      {
+        "ano": "2026",
+        "saldo_teorico": 598983.72,
+        "multa_40pct": 239593.49
+      }
+    ]
+  }
+}

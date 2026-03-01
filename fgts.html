@@ -6,8 +6,8 @@
   <meta name="color-scheme" content="only light">
   <meta name="supported-color-schemes" content="light">
   <title>🏦 Dashboard FGTS</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js?v=3.75"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js?v=3.75"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js?v=3.77"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js?v=3.77"></script>
   <style>
     :root {
       color-scheme: only light !important;
@@ -49,7 +49,10 @@
       transition: background-color 0.3s, color 0.3s;
       padding: 10px 10px 60px 10px;
       min-height: 100vh;
+      position: relative;
     }
+
+    /* Header */
     #theme-toggle {
       position: absolute; top: 12px; right: 12px;
       background: rgba(0,0,0,0.05); border: none; font-size: 1.2rem; cursor: pointer;
@@ -57,7 +60,7 @@
       display: flex; align-items: center; justify-content: center;
       z-index: 10; transition: background 0.2s;
     }
-    body.dark-mode #theme-toggle  { background: rgba(255,255,255,0.1); }
+    body.dark-mode #theme-toggle     { background: rgba(255,255,255,0.1); }
     body:not(.dark-mode) #theme-toggle { background: rgba(0,0,0,0.05); }
     .nav-link {
       text-decoration: none; color: var(--primary);
@@ -107,27 +110,28 @@
     /* Charts */
     .chart-container { position: relative; height: 300px; width: 100%; }
 
-    /* Controls */
+    /* Controls / filtros */
     .controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: center; }
     .filter-btn {
       background: var(--border); border: none; padding: 5px 12px;
       border-radius: 20px; font-size: 0.8rem; font-weight: 600;
       color: var(--text); cursor: pointer; transition: all 0.2s;
     }
-    .filter-btn:hover { opacity: 0.8; }
+    .filter-btn:hover  { opacity: 0.8; }
     .filter-btn.active { background: var(--accent); color: white; }
 
-    /* Method note */
+    /* Nota metodológica */
     .method-note {
       font-size: 0.7rem; color: var(--text-muted); text-align: center;
-      margin-top: 10px; font-style: italic; line-height: 1.5;
+      margin-top: 10px; font-style: italic; line-height: 1.6; padding: 0 4px;
     }
 
     /* Loading */
     #loading {
       position: fixed; inset: 0; background: rgba(0,0,0,0.5);
       display: flex; align-items: center; justify-content: center;
-      z-index: 1000; color: white; font-weight: bold; backdrop-filter: blur(4px);
+      z-index: 1000; color: white; font-weight: 600;
+      font-size: 1.1rem; backdrop-filter: blur(4px);
     }
     .hidden { display: none !important; }
 
@@ -145,7 +149,7 @@
 </head>
 <body>
 
-<div id="loading">Carregando dados...</div>
+<div id="loading">🔄 Carregando dados...</div>
 <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
 <a href="index.html" class="nav-link">← Voltar</a>
 <h1>🏦 FGTS</h1>
@@ -224,6 +228,7 @@
 </main>
 
 <script>
+// Desabilita datalabels globalmente — cada chart ativa onde precisa
 Chart.defaults.set('plugins.datalabels', { display: false });
 
 let data = {};
@@ -232,16 +237,7 @@ let monthLimit = 12;
 
 const MONTH_NAMES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 
-const CHART_DEFAULTS = {
-  animation: { duration: 800, easing: 'easeInOutQuart' },
-  plugins: {
-    legend: {
-      position: 'bottom',
-      labels: { boxWidth: 12, font: { size: 10 }, usePointStyle: true }
-    }
-  }
-};
-
+// ─── helpers ────────────────────────────────────────────────────────────────
 function fmt(v) {
   return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
@@ -251,14 +247,42 @@ function compactFmt(v) {
   return 'R$ ' + v.toFixed(0);
 }
 function setTxt(id, txt) { document.getElementById(id).textContent = txt; }
-function getTextColor()   { return getComputedStyle(document.body).getPropertyValue('--text').trim(); }
-function getBorderColor() { return getComputedStyle(document.body).getPropertyValue('--border').trim(); }
-
+function textColor()   { return getComputedStyle(document.body).getPropertyValue('--text').trim(); }
+function borderColor() { return getComputedStyle(document.body).getPropertyValue('--border').trim(); }
 function mesLabel(ym) {
   const [y, m] = ym.split('-');
   return `${MONTH_NAMES[parseInt(m) - 1]}/${y.slice(2)}`;
 }
 
+// Retorna opções base frescas a cada chamada (evita referência compartilhada)
+function baseOpts(extraPlugins = {}) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 800, easing: 'easeInOutQuart' },
+    interaction: { mode: 'index', intersect: false },
+    layout: { padding: { top: 22 } },
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { boxWidth: 12, font: { size: 10 }, usePointStyle: true, color: textColor() }
+      },
+      ...extraPlugins
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: textColor(), font: { size: 10 } }
+      },
+      y: {
+        grid: { color: borderColor() },
+        ticks: { callback: v => compactFmt(v), color: textColor() }
+      }
+    }
+  };
+}
+
+// ─── init ────────────────────────────────────────────────────────────────────
 async function init() {
   try {
     const resp = await fetch('data/fgts_dashboard.json?v=' + Date.now());
@@ -274,12 +298,12 @@ function renderAll() {
   const k = data.kpis;
   const [y, m] = k.ultimo_mes.split('-');
 
-  setTxt('kpiSaldo',       fmt(k.saldo_total));
-  setTxt('kpiSaldoSub',   `Atualizado ${MONTH_NAMES[parseInt(m)-1]}/${y}`);
+  setTxt('kpiSaldo',        fmt(k.saldo_total));
+  setTxt('kpiSaldoSub',    `Atualizado ${MONTH_NAMES[parseInt(m) - 1]}/${y}`);
   setTxt('kpiSaldoTeorico', fmt(k.saldo_teorico_rescisao));
-  setTxt('kpiMulta',       fmt(k.multa_40pct_teorico));
-  setTxt('kpiInvestido',   fmt(k.investido_12m));
-  setTxt('rescisaoNote',   data.rescisao.metodologia);
+  setTxt('kpiMulta',        fmt(k.multa_40pct_teorico));
+  setTxt('kpiInvestido',    fmt(k.investido_12m));
+  setTxt('rescisaoNote',    data.rescisao.metodologia);
 
   renderAnual();
   renderMensal();
@@ -287,136 +311,124 @@ function renderAll() {
   renderRescisao();
 }
 
-// === SALDO POR ANO ===
+// ─── Saldo por Ano ────────────────────────────────────────────────────────────
 function renderAnual() {
   const anos   = data.por_ano.map(a => a.ano);
   const saldos = data.por_ano.map(a => a.saldo_fim_ano);
+  const opts   = baseOpts({
+    legend: { display: false },
+    tooltip: { callbacks: { label: c => fmt(c.raw) } },
+    datalabels: {
+      display: true,
+      anchor: 'end', align: 'top',
+      formatter: v => compactFmt(v),
+      font: { size: 10, weight: 'bold' },
+      color: textColor(),
+    }
+  });
 
   if (charts.anual) charts.anual.destroy();
   charts.anual = new Chart(document.getElementById('chartAnual'), {
     type: 'bar',
     data: {
       labels: anos,
-      datasets: [{
-        label: 'Saldo',
-        data: saldos,
-        backgroundColor: '#667eea',
-        borderRadius: 4,
-      }]
+      datasets: [{ label: 'Saldo', data: saldos, backgroundColor: '#667eea', borderRadius: 4, barPercentage: 0.8 }]
     },
-    options: {
-      ...CHART_DEFAULTS,
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        ...CHART_DEFAULTS.plugins,
-        legend: { display: false },
-        tooltip: { callbacks: { label: c => fmt(c.raw) } },
-        datalabels: {
-          display: true,
-          anchor: 'end', align: 'top',
-          formatter: v => compactFmt(v),
-          font: { size: 10, weight: 'bold' },
-          color: getTextColor(),
-        }
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: getTextColor() } },
-        y: { ticks: { callback: v => compactFmt(v), color: getTextColor() }, grid: { color: getBorderColor() } }
-      }
-    },
+    options: opts,
     plugins: [ChartDataLabels]
   });
 }
 
-// === SALDO MENSAL ===
+// ─── Saldo Mensal ─────────────────────────────────────────────────────────────
 function renderMensal() {
   let meses = data.por_mes;
   if (monthLimit !== 999) meses = meses.slice(-monthLimit);
 
-  const labels = meses.map(m => mesLabel(m.mes));
-  const saldos = meses.map(m => m.saldo);
+  const opts = baseOpts({
+    legend: { display: false },
+    tooltip: { callbacks: { label: c => fmt(c.raw) } }
+  });
+  // X-axis: limita labels quando há muitos meses
+  opts.scales.x.ticks.maxRotation  = 45;
+  opts.scales.x.ticks.autoSkip     = true;
+  opts.scales.x.ticks.maxTicksLimit = monthLimit === 999 ? 18 : monthLimit;
+  opts.layout.padding.top = 6; // sem datalabels acima das barras
 
   if (charts.mensal) charts.mensal.destroy();
   charts.mensal = new Chart(document.getElementById('chartMensal'), {
     type: 'bar',
     data: {
-      labels,
-      datasets: [{
-        label: 'Saldo',
-        data: saldos,
-        backgroundColor: '#667eea',
-        borderRadius: 3,
-      }]
+      labels: meses.map(m => mesLabel(m.mes)),
+      datasets: [{ label: 'Saldo', data: meses.map(m => m.saldo), backgroundColor: '#667eea', borderRadius: 3, barPercentage: 0.85 }]
     },
-    options: {
-      ...CHART_DEFAULTS,
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        ...CHART_DEFAULTS.plugins,
-        legend: { display: false },
-        tooltip: { callbacks: { label: c => fmt(c.raw) } },
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { maxRotation: 45, font: { size: 9 }, color: getTextColor() } },
-        y: { ticks: { callback: v => compactFmt(v), color: getTextColor() }, grid: { color: getBorderColor() } }
-      }
-    }
+    options: opts
   });
 }
 
-// === RENDIMENTO POR ANO ===
+// ─── Rendimento por Ano ───────────────────────────────────────────────────────
 function renderRendimento() {
-  const anos           = data.por_ano.map(a => a.ano);
-  const rendimentos    = data.por_ano.map(a => a.rendimento_ano);
-  const rendPct        = data.por_ano.map(a => a.rendimento_pct_ano);
+  const anos        = data.por_ano.map(a => a.ano);
+  const rendimentos = data.por_ano.map(a => a.rendimento_ano);
+  const rendPct     = data.por_ano.map(a => a.rendimento_pct_ano);
+
+  const opts = baseOpts({
+    legend: { display: false },
+    tooltip: {
+      callbacks: {
+        label:      c => `Rendimento: ${fmt(c.raw)}`,
+        afterLabel: c => `% no ano: ${rendPct[c.dataIndex].toFixed(2)}%`
+      }
+    },
+    datalabels: {
+      display: true,
+      anchor: 'end', align: 'top',
+      formatter: (_, ctx) => rendPct[ctx.dataIndex].toFixed(1) + '%',
+      font: { size: 10, weight: 'bold' },
+      color: '#48bb78',
+    }
+  });
 
   if (charts.rendimento) charts.rendimento.destroy();
   charts.rendimento = new Chart(document.getElementById('chartRendimento'), {
     type: 'bar',
     data: {
       labels: anos,
-      datasets: [{
-        label: 'Rendimento no ano (R$)',
-        data: rendimentos,
-        backgroundColor: '#48bb78',
-        borderRadius: 4,
-      }]
+      datasets: [{ label: 'Rendimento (R$)', data: rendimentos, backgroundColor: '#48bb78', borderRadius: 4, barPercentage: 0.8 }]
     },
-    options: {
-      ...CHART_DEFAULTS,
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        ...CHART_DEFAULTS.plugins,
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: c => fmt(c.raw),
-            afterLabel: (c) => `Rendimento no ano: ${rendPct[c.dataIndex].toFixed(2)}%`
-          }
-        },
-        datalabels: {
-          display: true,
-          anchor: 'end', align: 'top',
-          formatter: (v, ctx) => rendPct[ctx.dataIndex].toFixed(1) + '%',
-          font: { size: 10, weight: 'bold' },
-          color: '#48bb78',
-        }
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: getTextColor() } },
-        y: { ticks: { callback: v => compactFmt(v), color: getTextColor() }, grid: { color: getBorderColor() } }
-      }
-    },
+    options: opts,
     plugins: [ChartDataLabels]
   });
 }
 
-// === PROJEÇÃO RESCISÓRIA ===
+// ─── Projeção Rescisória ──────────────────────────────────────────────────────
 function renderRescisao() {
-  const resc    = data.rescisao.por_ano;
-  const anos    = resc.map(r => r.ano);
-  const saldos  = resc.map(r => r.saldo_teorico);
-  const multas  = resc.map(r => r.multa_40pct);
+  const resc   = data.rescisao.por_ano;
+  const anos   = resc.map(r => r.ano);
+  const saldos = resc.map(r => r.saldo_teorico);
+  const multas = resc.map(r => r.multa_40pct);
+
+  const opts = baseOpts({
+    legend: {
+      position: 'bottom',
+      labels: { boxWidth: 12, font: { size: 10 }, usePointStyle: true, color: textColor() }
+    },
+    tooltip: {
+      callbacks: {
+        label:     c => `${c.dataset.label}: ${fmt(c.raw)}`,
+        afterBody: items => {
+          const i = items[0].dataIndex;
+          return `Total rescisão: ${fmt(saldos[i] + multas[i])}`;
+        }
+      }
+    },
+    datalabels: {
+      display: ctx => ctx.datasetIndex === 1,
+      anchor: 'end', align: 'top',
+      formatter: v => compactFmt(v),
+      font: { size: 9, weight: 'bold' },
+      color: '#ed8936',
+    }
+  });
 
   if (charts.rescisao) charts.rescisao.destroy();
   charts.rescisao = new Chart(document.getElementById('chartRescisao'), {
@@ -424,56 +436,16 @@ function renderRescisao() {
     data: {
       labels: anos,
       datasets: [
-        {
-          label: 'Base Rescisória',
-          data: saldos,
-          backgroundColor: '#667eea',
-          borderRadius: 4,
-        },
-        {
-          label: 'Multa 40%',
-          data: multas,
-          backgroundColor: '#ed8936',
-          borderRadius: 4,
-        }
+        { label: 'Base Rescisória', data: saldos, backgroundColor: '#667eea', borderRadius: 4, barPercentage: 0.8 },
+        { label: 'Multa 40%',       data: multas, backgroundColor: '#ed8936', borderRadius: 4, barPercentage: 0.8 }
       ]
     },
-    options: {
-      ...CHART_DEFAULTS,
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        ...CHART_DEFAULTS.plugins,
-        legend: {
-          position: 'bottom',
-          labels: { boxWidth: 12, font: { size: 10 }, usePointStyle: true, color: getTextColor() }
-        },
-        tooltip: {
-          callbacks: {
-            label: c => `${c.dataset.label}: ${fmt(c.raw)}`,
-            afterBody: items => {
-              const idx = items[0].dataIndex;
-              return `Total rescisão: ${fmt(saldos[idx] + multas[idx])}`;
-            }
-          }
-        },
-        datalabels: {
-          display: ctx => ctx.datasetIndex === 1,
-          anchor: 'end', align: 'top',
-          formatter: v => compactFmt(v),
-          font: { size: 9, weight: 'bold' },
-          color: '#ed8936',
-        }
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: getTextColor() } },
-        y: { ticks: { callback: v => compactFmt(v), color: getTextColor() }, grid: { color: getBorderColor() } }
-      }
-    },
+    options: opts,
     plugins: [ChartDataLabels]
   });
 }
 
-// === FILTROS ===
+// ─── Filtros ──────────────────────────────────────────────────────────────────
 function setMonthRange(n, btn) {
   monthLimit = n;
   document.querySelectorAll('.controls .filter-btn').forEach(b => b.classList.remove('active'));
@@ -481,13 +453,12 @@ function setMonthRange(n, btn) {
   renderMensal();
 }
 
-// === TEMA ===
+// ─── Tema ─────────────────────────────────────────────────────────────────────
 function toggleTheme() {
   document.body.classList.toggle('dark-mode');
   const isDark = document.body.classList.contains('dark-mode');
   document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  // Re-render para atualizar cores dos eixos
   setTimeout(() => renderAll(), 50);
 }
 if (localStorage.getItem('theme') === 'dark') {
